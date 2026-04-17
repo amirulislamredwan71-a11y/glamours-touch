@@ -99,7 +99,6 @@ const Contact = () => {
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Email Address</label>
                         <input
-                          required
                           name="email"
                           type="email"
                           value={formData.email}
