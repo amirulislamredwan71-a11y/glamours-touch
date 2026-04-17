@@ -193,7 +193,6 @@ const Contact = () => {
                     <h4 className="text-lg font-serif font-bold mb-1">Call Us</h4>
                     <p className="text-gray-500">+880 1712-426871</p>
                     <p className="text-gray-400 text-sm">We respond within 24 hours.</p>
-                    <p className="text-gray-400 text-sm">Mon-Fri, 9am - 6pm</p>
                   </div>
                 </div>
 
