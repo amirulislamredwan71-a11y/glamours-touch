@@ -1,19 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- Background circle -->
-  <circle cx="32" cy="32" r="32" fill="#1a1a2e"/>
-
-  <!-- Lipstick body -->
-  <rect x="26" y="30" width="12" height="18" rx="2" fill="#C9A84C"/>
-
-  <!-- Lipstick tip -->
-  <path d="M26 30 Q26 22 32 18 Q38 22 38 30 Z" fill="#E8C56D"/>
-
-  <!-- Lipstick shine -->
-  <path d="M29 24 Q29 20 32 18 Q33 20 33 24 Z" fill="rgba(255,255,255,0.3)"/>
-
-  <!-- Lipstick base -->
-  <rect x="24" y="46" width="16" height="4" rx="1" fill="#8B7355"/>
-
-  <!-- GT monogram -->
-  <text x="32" y="58" font-family="serif" font-size="7" font-weight="bold" fill="#C9A84C" text-anchor="middle" letter-spacing="1">GT</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Gold background -->
+  <rect width="64" height="64" rx="14" fill="#C9A84C"/>
+  <!-- Bold G -->
+  <text x="32" y="46" font-family="Georgia, serif" font-size="42" font-weight="bold" fill="#1a1a2e" text-anchor="middle">G</text>
 </svg>
