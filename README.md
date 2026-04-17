@@ -1,20 +1,82 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Glamour's Touch
 
-# Run and deploy your AI Studio app
+A modern e-commerce web application for beauty and cosmetic products, built with React, TypeScript, and Supabase.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/27c12bee-fe98-4c43-9e55-f488e229a297
+- Product browsing with category filters
+- Shopping cart with floating cart preview
+- User authentication (login/register)
+- Admin dashboard (products, orders, customers, categories)
+- Bilingual support (English & Bengali)
+- Responsive design with Tailwind CSS
+- Smooth animations with Motion
 
-## Run Locally
+## Tech Stack
 
-**Prerequisites:**  Node.js
+- **Frontend:** React 19, TypeScript, Vite
+- **Styling:** Tailwind CSS
+- **Backend/Database:** Supabase
+- **Routing:** React Router DOM v7
+- **i18n:** i18next (EN + BN)
+- **Icons:** Lucide React
 
+## Getting Started
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Prerequisites
+
+- Node.js (v18+)
+- npm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/amirulislamredwan71-a11y/glamours-touch.git
+   cd glamours-touch
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables — copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | TypeScript type check |
+
+## Project Structure
+
+```
+src/
+├── components/        # Reusable UI components
+│   └── admin/         # Admin-specific components
+├── hooks/             # Custom React hooks (auth, cart, UI)
+├── pages/             # Page components
+│   └── admin/         # Admin panel pages
+├── data/              # Static product data
+├── lib/               # Supabase client & utilities
+├── locales/           # Translation files (en, bn)
+└── types.ts           # TypeScript type definitions
+```
+
+## License
+
+MIT
