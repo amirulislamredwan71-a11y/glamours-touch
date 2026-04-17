@@ -203,7 +203,6 @@ const Contact = () => {
                   <div>
                     <h4 className="text-lg font-serif font-bold mb-1">Visit Us</h4>
                     <p className="text-gray-500">Dhaka, Bangladesh, 1207</p>
-                    <p className="text-gray-400 text-sm">Gulshan-2, Dhaka</p>
                   </div>
                 </div>
 
