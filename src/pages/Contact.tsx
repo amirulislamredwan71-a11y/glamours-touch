@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase';
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -107,6 +107,18 @@ const Contact = () => {
                           placeholder="john@example.com"
                         />
                       </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Mobile Number <span className="text-red-500">*</span></label>
+                      <input
+                        required
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
+                        placeholder="+880 1700-000000"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Subject</label>
