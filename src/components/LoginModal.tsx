@@ -95,20 +95,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               </motion.div>
             ) : (
               <div className="space-y-6">
-                <button
-                  onClick={handleGoogleSignIn}
-                  className="w-full flex items-center justify-center gap-3 py-4 px-6 bg-white border border-gray-100 rounded-2xl font-bold text-charcoal hover:bg-gray-50 transition-all shadow-sm hover:shadow-md group"
-                >
-                  <Chrome className="text-gold group-hover:scale-110 transition-transform" size={20} />
-                  {t('login.google')}
-                </button>
-
-                <div className="relative flex items-center py-2">
-                  <div className="flex-grow border-t border-gray-100"></div>
-                  <span className="flex-shrink mx-4 text-gray-400 text-xs font-bold uppercase tracking-widest">{t('login.email')}</span>
-                  <div className="flex-grow border-t border-gray-100"></div>
-                </div>
-
                 <form onSubmit={handleEmailSignIn} className="space-y-4">
                   <div className="relative">
                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
