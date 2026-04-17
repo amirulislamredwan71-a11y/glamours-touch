@@ -47,7 +47,6 @@ const Checkout = () => {
           brand: item.brand
         })),
         total: cartTotal + shippingCost,
-        shipping_cost: shippingCost,
         shipping_method: shippingMethod === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka',
         status: 'Pending',
         shipping_address: formData,
