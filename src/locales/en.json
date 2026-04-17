@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About",
+    "contact": "Contact",
+    "profile": "Profile",
+    "cart": "Cart",
+    "signIn": "Login",
+    "signOut": "Sign Out"
+  },
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Experience the touch of glamour",
+    "google": "Continue with Google",
+    "email": "Or with email",
+    "emailPlaceholder": "Your email address",
+    "sendLink": "SEND MAGIC LINK",
+    "magicLinkSent": "Magic Link Sent!",
+    "checkEmail": "Check your email at",
+    "tryAnother": "Try another email",
+    "terms": "By continuing, you agree to Glamour's Touch Terms of Service and Privacy Policy."
+  },
+  "hero": {
+    "subtitle": "The New Standard of Beauty",
+    "title": "Glamour's Touch",
+    "description": "Your beauty, our touch",
+    "shopNow": "SHOP COLLECTION",
+    "ourStory": "OUR STORY"
+  },
+  "categories": {
+    "title": "Shop by Category",
+    "subtitle": "Beauty by Design",
+    "discover": "Discover"
+  },
+  "newsletter": {
+    "title": "Join the Elite",
+    "subtitle": "The Inner Circle",
+    "description": "Subscribe to receive exclusive offers, beauty tips, and early access to new arrivals.",
+    "placeholder": "Your Email Address",
+    "button": "SUBSCRIBE",
+    "success": "THANK YOU FOR SUBSCRIBING!"
+  },
+  "footer": {
+    "authentic": "100% Authentic",
+    "authenticDesc": "Directly from premium brands in Bangladesh and India.",
+    "shipping": "Express Shipping",
+    "shippingDesc": "Fast and reliable delivery across the country and internationally.",
+    "quality": "Premium Quality",
+    "qualityDesc": "Only the most effective and luxurious products make it to our store.",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "getInTouch": "Get in Touch",
+    "allRightsReserved": "All rights reserved."
+  }
+}
