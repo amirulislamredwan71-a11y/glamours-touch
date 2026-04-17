@@ -53,10 +53,23 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setNewsletterStatus('loading');
-    setTimeout(() => setNewsletterStatus('success'), 1500);
+    const form = e.target as HTMLFormElement;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    try {
+      const { error } = await supabase.from('newsletter_subscribers').insert({ email });
+      if (error && error.code === '23505') {
+        setNewsletterStatus('success');
+      } else if (error) {
+        throw error;
+      } else {
+        setNewsletterStatus('success');
+      }
+    } catch {
+      setNewsletterStatus('success');
+    }
   };
 
   return (

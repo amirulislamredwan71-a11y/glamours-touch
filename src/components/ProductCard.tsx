@@ -10,11 +10,10 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { addToCart, clearCart } = useCart();
+  const { addToCart } = useCart();
   const navigate = useNavigate();
 
   const handleBuyNow = () => {
-    clearCart();
     addToCart(product);
     navigate('/checkout');
   };

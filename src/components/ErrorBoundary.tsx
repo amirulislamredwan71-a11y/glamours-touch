@@ -33,16 +33,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.hasError) {
       let errorMessage = "Something went wrong. Please try again later.";
       
-      try {
-        // Check if it's a Firestore error JSON
-        if (this.state.error?.message) {
-          const errorData = JSON.parse(this.state.error.message);
-          if (errorData.error && errorData.operationType) {
-            errorMessage = `A database error occurred during ${errorData.operationType}. Please check your permissions or connection.`;
-          }
-        }
-      } catch (e) {
-        // Not a JSON error, use default
+      if (this.state.error?.message) {
+        errorMessage = this.state.error.message;
       }
 
       return (

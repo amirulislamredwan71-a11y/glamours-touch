@@ -48,7 +48,7 @@ const AdminProducts = () => {
     setUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
       const filePath = `product-images/${fileName}`;
 
       const { error: uploadError, data } = await supabase.storage

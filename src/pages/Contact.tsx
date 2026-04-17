@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Globe, Send, CheckCircle2 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await supabase.from('contact_messages').insert(formData);
       setIsSubmitted(true);
-    }, 1500);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('Contact form error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -76,18 +86,24 @@ const Contact = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Your Name</label>
-                        <input 
+                        <input
                           required
-                          type="text" 
+                          name="name"
+                          type="text"
+                          value={formData.name}
+                          onChange={handleChange}
                           className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
                           placeholder="John Doe"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Email Address</label>
-                        <input 
+                        <input
                           required
-                          type="email" 
+                          name="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={handleChange}
                           className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
                           placeholder="john@example.com"
                         />
@@ -95,18 +111,24 @@ const Contact = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Subject</label>
-                      <input 
+                      <input
                         required
-                        type="text" 
+                        name="subject"
+                        type="text"
+                        value={formData.subject}
+                        onChange={handleChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
                         placeholder="Product Inquiry"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Message</label>
-                      <textarea 
+                      <textarea
                         required
+                        name="message"
                         rows={6}
+                        value={formData.message}
+                        onChange={handleChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors resize-none"
                         placeholder="How can we help you today?"
                       ></textarea>
@@ -178,14 +200,15 @@ const Contact = () => {
                   <h4 className="text-lg font-serif font-bold mb-6">Follow Our Journey</h4>
                   <div className="flex gap-4">
                     {[
-                      { icon: <Facebook />, label: 'গ্ল্যামার্স টাচ' },
-                      { icon: <Instagram />, label: 'Instagram' },
-                      { icon: <Twitter />, label: 'Twitter' },
-                      { icon: <Globe />, label: 'glamourstouch.com' },
+                      { icon: <Facebook />, label: 'গ্ল্যামার্স টাচ', href: 'https://facebook.com/glamourstouch' },
+                      { icon: <Instagram />, label: 'Instagram', href: '#' },
+                      { icon: <Globe />, label: 'glamourstouch.com', href: 'https://glamourstouch.com' },
                     ].map((social, idx) => (
-                      <a 
-                        key={idx} 
-                        href="#" 
+                      <a
+                        key={idx}
+                        href={social.href}
+                        target={social.href !== '#' ? '_blank' : undefined}
+                        rel="noopener noreferrer"
                         className="w-12 h-12 bg-cream rounded-xl flex items-center justify-center text-gold hover:bg-gold hover:text-white transition-all transform hover:-translate-y-1"
                         title={social.label}
                       >

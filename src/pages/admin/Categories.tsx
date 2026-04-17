@@ -29,7 +29,7 @@ const AdminCategories = () => {
     setUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
       const filePath = `category-images/${fileName}`;
 
       const { error: uploadError } = await supabase.storage

@@ -56,8 +56,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="hover:text-gold transition-colors"><Twitter size={20} /></a>
+              <a href="https://facebook.com/glamourstouch" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
             </div>
           </div>
 

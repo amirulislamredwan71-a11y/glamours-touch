@@ -40,10 +40,10 @@ const Dashboard = () => {
         const pendingCount = ordersData.filter(o => o.status && o.status.toLowerCase() === 'pending').length;
 
         setStats([
-          { name: 'Total Revenue', value: `৳${totalRevenue.toLocaleString()}`, icon: DollarSign, change: '+12.5%', positive: true },
-          { name: 'Total Orders', value: ordersData.length.toString(), icon: ShoppingBag, change: '+8.2%', positive: true },
-          { name: 'Total Products', value: (productCount || 0).toString(), icon: Package, change: '+15.3%', positive: true },
-          { name: 'Pending Orders', value: pendingCount.toString(), icon: Clock, change: '+5.1%', positive: true },
+          { name: 'Total Revenue', value: `৳${totalRevenue.toLocaleString()}`, icon: DollarSign, change: '', positive: true },
+          { name: 'Total Orders', value: ordersData.length.toString(), icon: ShoppingBag, change: '', positive: true },
+          { name: 'Total Products', value: (productCount || 0).toString(), icon: Package, change: '', positive: true },
+          { name: 'Pending Orders', value: pendingCount.toString(), icon: Clock, change: '', positive: pendingCount === 0 },
         ]);
       }
       

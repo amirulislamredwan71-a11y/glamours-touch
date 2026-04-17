@@ -28,7 +28,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   ];
 
   const adminLogin = (email: string, password: string) => {
-    if (email === 'glamourstouch26@gmail.com' && password === 'Glamourstouch26@&') {
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'glamourstouch26@gmail.com';
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'Glamourstouch26@&';
+    if (email === adminEmail && password === adminPassword) {
       const adminUser = {
         id: '00000000-0000-0000-0000-000000000000', // Valid UUID format for the mock admin
         email: 'glamourstouch26@gmail.com',
