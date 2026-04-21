@@ -82,13 +82,29 @@ const ShippingCard = ({
 
 /* ── Main Component ─────────────────────────────────────────── */
 const Checkout = () => {
-  const { cart, cartTotal, clearCart } = useCart();
+  const { cart, cartTotal, clearCart, addToCart } = useCart();
   const { user }  = useAuth();
   const navigate  = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess,    setIsSuccess]    = useState(false);
   const [orderId,      setOrderId]      = useState<string | null>(null);
+
+  // Direct checkout from URL (Facebook Ads support)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('product_id');
+    
+    if (productId && cart.length === 0) {
+      const fetchAndAdd = async () => {
+        const { data } = await supabase.from('products').select('*').eq('id', productId).single();
+        if (data) {
+          addToCart(data);
+        }
+      };
+      fetchAndAdd();
+    }
+  }, [cart.length, addToCart]);
 
   const [shippingMethod, setShippingMethod] = useState<'inside' | 'outside' | null>(null);
   const [form, setForm] = useState({
