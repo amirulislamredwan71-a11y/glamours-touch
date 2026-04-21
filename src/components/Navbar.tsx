@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingBag, User, Search, Menu, X, LogOut, Globe, ShieldCheck, Sun, Moon } from 'lucide-react';
-import { useDarkMode } from '../hooks/useDarkMode';
+import { ShoppingBag, User, Search, Menu, X, LogOut, Globe, ShieldCheck } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 import { useAuth } from '../hooks/useAuth';
 import { useUI } from '../hooks/useUI';
@@ -31,7 +30,6 @@ const Navbar = () => {
   const [categories,   setCategories]   = React.useState<string[]>([]);
   const [allProducts,  setAllProducts]  = React.useState<{ name: string; brand: string }[]>([]);
   const { t, i18n } = useTranslation();
-  const { isDark, toggle: toggleDark } = useDarkMode();
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -178,12 +176,7 @@ const Navbar = () => {
               <Search size={22} />
             </button>
 
-            {/* Dark Mode Toggle */}
-            <button onClick={toggleDark}
-              className="p-2 text-charcoal hover:text-gold transition-all rounded-full hover:bg-gold/10"
-              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
-              {isDark ? <Sun size={20} className="text-gold" /> : <Moon size={20} />}
-            </button>
+
 
             {/* Language */}
             <button onClick={toggleLanguage}
