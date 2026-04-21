@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    background: #1a1a2e;
+    font-family: Georgia, serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1080px;
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 70px 55px;
+    overflow: hidden;
+  }
+
+  /* Decorative circles */
+  .circle-1 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    top: -100px; right: -100px;
+  }
+  .circle-2 {
+    position: absolute;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.08);
+    bottom: -80px; left: -80px;
+  }
+  .circle-3 {
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+
+  /* Top section */
+  .top {
+    text-align: center;
+    z-index: 2;
+  }
+
+  .tagline {
+    color: #C9A84C;
+    font-size: 15px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: normal;
+  }
+
+  .brand-name {
+    color: #FDF8F0;
+    font-size: 72px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  .brand-name span {
+    color: #C9A84C;
+  }
+
+  .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #C9A84C, transparent);
+    margin: 18px auto;
+  }
+
+  .subtitle {
+    color: rgba(253,248,240,0.6);
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    font-style: italic;
+  }
+
+  /* Products grid */
+  .products {
+    z-index: 2;
+    width: 100%;
+  }
+
+  .products-title {
+    color: #C9A84C;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 20px 14px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .item-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .item-cat {
+    color: #C9A84C;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-family: Arial, sans-serif;
+  }
+
+  .item-brands {
+    color: rgba(253,248,240,0.55);
+    font-size: 11px;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Bottom CTA */
+  .bottom {
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+  }
+
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 30px;
+    padding: 8px 20px;
+    color: #C9A84C;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-family: Arial, sans-serif;
+  }
+
+  .cta-bar {
+    background: linear-gradient(135deg, #C9A84C, #a8893e);
+    border-radius: 16px;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cta-left {
+    text-align: left;
+  }
+
+  .cta-label {
+    color: rgba(26,26,46,0.7);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    margin-bottom: 3px;
+  }
+
+  .cta-url {
+    color: #1a1a2e;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+
+  .cta-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(26,26,46,0.25);
+  }
+
+  .cta-right {
+    text-align: right;
+  }
+
+  .cta-phone-label {
+    color: rgba(26,26,46,0.7);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    margin-bottom: 3px;
+  }
+
+  .cta-phone {
+    color: #1a1a2e;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+  }
+</style>
+</head>
+<body>
+<div class="ad">
+  <div class="circle-1"></div>
+  <div class="circle-2"></div>
+  <div class="circle-3"></div>
+
+  <!-- Top -->
+  <div class="top">
+    <div class="tagline">Premium Beauty & Skincare</div>
+    <div class="brand-name">Glamour's <span>Touch</span></div>
+    <div class="divider"></div>
+    <div class="subtitle">আপনার বিশ্বস্ত বিউটি শপ</div>
+  </div>
+
+  <!-- Products -->
+  <div class="products">
+    <div class="products-title">আমাদের প্রোডাক্ট সমূহ</div>
+    <div class="grid">
+      <div class="item">
+        <span class="item-icon">🧼</span>
+        <div class="item-cat">সাবান</div>
+        <div class="item-brands">Dove · Fiama</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">🧴</span>
+        <div class="item-cat">শ্যাম্পু</div>
+        <div class="item-brands">Dove · TRESemmé<br>Sunsilk · L'Oréal</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">🦷</span>
+        <div class="item-cat">টুথপেস্ট</div>
+        <div class="item-brands">Colgate</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">💆</span>
+        <div class="item-cat">তেল</div>
+        <div class="item-brands">Sesa Hair Oil</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">✨</span>
+        <div class="item-cat">বডি স্প্রে</div>
+        <div class="item-brands">Fogg · Envy<br>Wild Stone</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">🌿</span>
+        <div class="item-cat">ফেস ওয়াশ</div>
+        <div class="item-brands">Garnier · Pond's<br>Clean & Clear · Nivea</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">💧</span>
+        <div class="item-cat">ক্রিম</div>
+        <div class="item-brands">Nivea Soft</div>
+      </div>
+      <div class="item">
+        <span class="item-icon">🚚</span>
+        <div class="item-cat">ডেলিভারি</div>
+        <div class="item-brands">সারা বাংলাদেশে<br>হোম ডেলিভারি</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom -->
+  <div class="bottom">
+    <div class="badges">
+      <div class="badge">✅ ১০০% অরিজিনাল</div>
+      <div class="badge">💰 সেরা দাম</div>
+      <div class="badge">⚡ দ্রুত ডেলিভারি</div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-left">
+        <div class="cta-label">ভিজিট করুন</div>
+        <div class="cta-url">glamourstouch.com</div>
+      </div>
+      <div class="cta-divider"></div>
+      <div class="cta-right">
+        <div class="cta-phone-label">WhatsApp / Call</div>
+        <div class="cta-phone">+880 1712-426871</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

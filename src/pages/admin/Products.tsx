@@ -16,12 +16,13 @@ import { Product } from '../../types';
 import { motion, AnimatePresence } from 'motion/react';
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products,    setProducts]    = useState<Product[]>([]);
+  const [categories,  setCategories]  = useState<string[]>([]);
+  const [loading,     setLoading]     = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm,  setSearchTerm]  = useState('');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading,   setUploading]   = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -39,7 +40,15 @@ const AdminProducts = () => {
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const { data } = await supabase.from('categories').select('name').order('name');
+      if (data) setCategories(data.map(c => c.name));
+    } catch (e) { console.error('Error fetching categories:', e); }
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -150,16 +159,11 @@ const AdminProducts = () => {
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      brand: '',
-      price: '',
-      description: '',
-      image: '',
-      category: 'Skincare',
+      name: '', brand: '', price: '',
+      description: '', image: '',
+      category: categories[0] || '',
       origin: 'International',
-      rating: 5,
-      reviews: 0,
-      isFeatured: false
+      rating: 5, reviews: 0, isFeatured: false
     });
   };
 
@@ -368,17 +372,24 @@ const AdminProducts = () => {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Category</label>
-                    <select 
+                    <select
                       value={formData.category}
                       onChange={(e) => setFormData({...formData, category: e.target.value})}
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                     >
-                      <option>Skincare</option>
-                      <option>Makeup</option>
-                      <option>Haircare</option>
-                      <option>Fragrance</option>
-                      <option>Accessories</option>
+                      {categories.length === 0 ? (
+                        <option value="">Loading categories...</option>
+                      ) : (
+                        categories.map(cat => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))
+                      )}
                     </select>
+                    {categories.length === 0 && (
+                      <p className="text-xs text-amber-600 mt-1.5">
+                        ⚠️ No categories found. Please add categories first from the Categories page.
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Origin</label>

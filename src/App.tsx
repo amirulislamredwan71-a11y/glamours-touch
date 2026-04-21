@@ -9,6 +9,7 @@ import FloatingCart from './components/FloatingCart';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import ScrollToTop from './components/ScrollToTop';
+import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
@@ -78,6 +79,7 @@ const AppContent = () => {
       </main>
       <Footer />
       <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
+      <WhatsAppButton />
     </div>
   );
 };

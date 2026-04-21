@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { ShoppingBag, Search, Eye, CheckCircle, Clock, Truck, XCircle } from 'lucide-react';
+import { ShoppingBag, Search, Eye, CheckCircle, Clock, Truck, XCircle, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface Order {
@@ -92,11 +92,37 @@ const AdminOrders = () => {
     }
   };
 
+  const exportCSV = () => {
+    if (!orders.length) return;
+    const header = ['Order ID','Date','Customer','Phone','District','Address','Items','Total','Status'];
+    const rows = orders.map(o => [
+      `#${o.id.slice(0,8)}`,
+      new Date(o.created_at).toLocaleDateString(),
+      o.shipping_address?.fullName || 'Guest',
+      o.shipping_address?.phone || '',
+      `${o.shipping_address?.district || ''} ${o.shipping_address?.upazila || ''}`.trim(),
+      o.shipping_address?.address || '',
+      (o.items || []).map((i:any) => `${i.name}x${i.quantity}`).join(' | '),
+      `৳${o.total}`,
+      o.status,
+    ]);
+    const csv = [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `orders_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  };
+
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-serif font-bold text-charcoal">Orders</h1>
-        <p className="text-gray-500 mt-1">Track and manage customer orders and fulfillment.</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-serif font-bold text-charcoal">Orders</h1>
+          <p className="text-gray-500 mt-1">Track and manage customer orders and fulfillment.</p>
+        </div>
+        <button onClick={exportCSV} disabled={!orders.length}
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm disabled:opacity-40">
+          <Download size={16} /> Export CSV
+        </button>
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">

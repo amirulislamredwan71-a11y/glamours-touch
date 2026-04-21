@@ -1,10 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { User as UserIcon, Package, MapPin, Heart, LogOut, ChevronRight, Mail, Phone, ShoppingBag, ShieldCheck } from 'lucide-react';
-import { motion } from 'motion/react';
+import { User as UserIcon, Package, Heart, LogOut, ChevronRight, Mail, ShoppingBag, ShieldCheck, Clock, Truck, CheckCircle2, XCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../hooks/useAuth';
 import { useUI } from '../hooks/useUI';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+
+const STATUSES = ['Pending','Processing','Shipped','Delivered'];
+
+const statusIcon: Record<string,(s:number)=>React.ReactNode> = {
+  Pending:    s => <Clock size={s} />,
+  Processing: s => <Package size={s} />,
+  Shipped:    s => <Truck size={s} />,
+  Delivered:  s => <CheckCircle2 size={s} />,
+  Cancelled:  s => <XCircle size={s} />,
+};
+
+const OrderTimeline = ({ status }: { status: string }) => {
+  const cancelled = status === 'Cancelled';
+  const steps = cancelled ? ['Pending','Cancelled'] : STATUSES;
+  const currentIdx = steps.indexOf(status);
+  return (
+    <div className="mt-4 flex items-center gap-0">
+      {steps.map((step, i) => {
+        const done = i <= currentIdx;
+        const isLast = i === steps.length - 1;
+        const isCancelled = step === 'Cancelled';
+        return (
+          <React.Fragment key={step}>
+            <div className="flex flex-col items-center">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white transition-all
+                ${done
+                  ? isCancelled ? 'bg-red-500' : 'bg-emerald-500'
+                  : 'bg-gray-200 text-gray-400'}`}>
+                {statusIcon[step]?.(12) ?? <span className="w-2 h-2 rounded-full bg-white" />}
+              </div>
+              <span className={`text-[9px] font-bold mt-1 tracking-wide uppercase text-center
+                ${done ? isCancelled ? 'text-red-500' : 'text-emerald-600' : 'text-gray-400'}`}>
+                {step}
+              </span>
+            </div>
+            {!isLast && (
+              <div className={`flex-1 h-0.5 mx-1 mb-4 transition-all ${
+                i < currentIdx ? (cancelled ? 'bg-red-300' : 'bg-emerald-400') : 'bg-gray-200'
+              }`} />
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+};
 
 const Profile = () => {
   const { user, loading, logout } = useAuth();
@@ -161,17 +207,25 @@ const Profile = () => {
             <div className="bg-white p-10 rounded-3xl shadow-sm border border-gold/10">
               <h3 className="text-2xl font-serif font-bold mb-8">Recent Orders</h3>
               {orders.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {orders.map(order => (
-                    <div key={order.id} className="p-4 bg-cream rounded-xl flex justify-between items-center">
-                      <div>
-                        <p className="font-bold">Order #{order.id.slice(-6).toUpperCase()}</p>
-                        <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
+                    <div key={order.id} className="p-5 bg-cream rounded-2xl border border-gold/10">
+                      <div className="flex justify-between items-start mb-1">
+                        <div>
+                          <p className="font-bold text-sm">Order #{order.id.slice(-6).toUpperCase()}</p>
+                          <p className="text-xs text-gray-400">{new Date(order.created_at).toLocaleDateString()}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-gold text-sm">৳{order.total.toLocaleString()}</p>
+                          <p className={`text-[10px] uppercase font-bold
+                            ${order.status === 'Delivered' ? 'text-emerald-500'
+                              : order.status === 'Cancelled' ? 'text-red-500'
+                              : 'text-blue-500'}`}>
+                            {order.status}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="font-bold text-gold">৳{order.total.toLocaleString()}</p>
-                        <p className="text-[10px] uppercase font-bold text-gray-400">{order.status}</p>
-                      </div>
+                      <OrderTimeline status={order.status} />
                     </div>
                   ))}
                 </div>

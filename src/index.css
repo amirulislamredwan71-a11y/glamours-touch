@@ -19,17 +19,66 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  
+
+  /* ── Dark Mode ── */
+  .dark body,
+  body.dark {
+    @apply bg-[#0f0f0f] text-gray-100;
+  }
+
+  .dark .bg-cream    { background-color: #1a1a1a !important; }
+  .dark .bg-white    { background-color: #1e1e1e !important; }
+  .dark .bg-gray-50  { background-color: #161616 !important; }
+  .dark .bg-gray-100 { background-color: #242424 !important; }
+
+  .dark .text-charcoal { color: #f0f0f0 !important; }
+  .dark .text-gray-800 { color: #e0e0e0 !important; }
+  .dark .text-gray-700 { color: #d0d0d0 !important; }
+  .dark .text-gray-600 { color: #b0b0b0 !important; }
+  .dark .text-gray-500 { color: #909090 !important; }
+
+  .dark .border-gold\/10 { border-color: rgba(212,175,55,0.15) !important; }
+  .dark .border-gray-100 { border-color: #2e2e2e !important; }
+  .dark .border-gray-200 { border-color: #333333 !important; }
+
+  .dark nav {
+    background-color: rgba(10,10,10,0.9) !important;
+    border-bottom-color: rgba(212,175,55,0.1) !important;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
   }
 
-  /* Faster mobile performance */
   img {
     @apply transition-opacity duration-300;
     content-visibility: auto;
   }
+}
+
+/* ── Range slider thumb ── */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #D4AF37;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.2);
+  transition: box-shadow 0.2s;
+}
+input[type='range']::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 5px rgba(212,175,55,0.3);
+}
+input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #D4AF37;
+  cursor: pointer;
+  border: none;
 }
 
 .premium-gradient {
@@ -39,4 +88,3 @@
 .gold-gradient {
   background: linear-gradient(135deg, #D4AF37 0%, #F9E29C 50%, #D4AF37 100%);
 }
-

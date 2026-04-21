@@ -5,39 +5,39 @@ import { useCart } from '../hooks/useCart';
 import { motion, AnimatePresence } from 'motion/react';
 
 const FloatingCart = () => {
-  const { cartCount } = useCart();
+  const { cartCount, cartTotal } = useCart();
 
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ x: 100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: 100, opacity: 0 }}
-        className="fixed -right-2 top-1/2 -translate-y-1/2 z-[100] md:hidden"
-      >
-        <Link 
-          to="/cart"
-          className="relative flex items-center justify-center w-12 h-16 bg-gold text-white rounded-l-2xl shadow-[-10px_0_30px_rgba(212,175,55,0.3)] border-y border-l border-white/20 group overflow-visible"
+      {cartCount > 0 && (
+        <motion.div
+          initial={{ x: 120, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 120, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-[100]"
         >
-          {cartCount > 0 && (
-            <motion.div 
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute inset-0 bg-white/20 rounded-l-2xl -z-10"
-            />
-          )}
-          
-          <div className="flex flex-col items-center gap-1 -ml-1">
-            <ShoppingBag size={20} className="group-hover:scale-110 transition-transform" />
-            <span className="text-[10px] font-bold tracking-tighter">BAG</span>
-          </div>
-          
-          {/* Badge */}
-          <div className="absolute -top-2 -left-2 min-w-[20px] h-[20px] bg-charcoal text-white text-[9px] font-bold rounded-full flex items-center justify-center px-1 border border-white shadow-lg">
-            {cartCount}
-          </div>
-        </Link>
-      </motion.div>
+          <Link to="/cart" className="block">
+            <div className="flex flex-col overflow-hidden rounded-l-2xl shadow-2xl">
+              {/* Top dark navy section */}
+              <motion.div
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+                className="bg-[#1a1f3c] text-white px-4 py-3 flex flex-col items-center gap-0.5 min-w-[76px]"
+              >
+                <ShoppingBag size={22} strokeWidth={2} />
+                <span className="text-2xl font-extrabold leading-tight">{cartCount}</span>
+                <span className="text-[9px] font-bold tracking-[0.2em] opacity-80">ITEMS</span>
+              </motion.div>
+
+              {/* Bottom hot-pink section */}
+              <div className="bg-[#e91e8c] text-white px-3 py-2 text-center">
+                <span className="text-[13px] font-bold tracking-wide">৳ {cartTotal.toLocaleString()}</span>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 };
