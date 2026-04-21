@@ -56,8 +56,16 @@ const Profile = () => {
   const { user, loading, logout } = useAuth();
   const { openLogin } = useUI();
   const [orders, setOrders] = useState<any[]>([]);
+  const [savedAddress, setSavedAddress] = useState<any>(null);
 
   useEffect(() => {
+    // Load saved address
+    const key = `glamour_saved_address_${user?.id || 'guest'}`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try { setSavedAddress(JSON.parse(saved)); } catch (e) {}
+    }
+
     if (!user) return;
 
     const fetchOrders = async () => {
@@ -202,6 +210,37 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Address Book */}
+            <div className="bg-white p-10 rounded-3xl shadow-sm border border-gold/10">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-2xl font-serif font-bold">Address Book</h3>
+              </div>
+              
+              {savedAddress ? (
+                <div className="p-6 bg-cream rounded-2xl border border-gold/10 relative">
+                  <div className="absolute top-4 right-4 bg-gold/10 text-gold text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                    Default
+                  </div>
+                  <h4 className="font-bold text-lg mb-1">{savedAddress.name}</h4>
+                  <p className="text-gray-500 text-sm mb-4">{savedAddress.phone}</p>
+                  
+                  <div className="flex items-start gap-3 text-gray-700 text-sm">
+                    <Truck size={18} className="text-gold flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p>{savedAddress.address}</p>
+                      <p>{savedAddress.upazila}, {savedAddress.district}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-8 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                  <Truck size={32} className="mx-auto text-gray-300 mb-3" />
+                  <p className="text-gray-500 text-sm">No default delivery address saved.</p>
+                  <p className="text-xs text-gray-400 mt-1">Your address will be saved here when you check the box during checkout.</p>
+                </div>
+              )}
             </div>
 
             <div className="bg-white p-10 rounded-3xl shadow-sm border border-gold/10">

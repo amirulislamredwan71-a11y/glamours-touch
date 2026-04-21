@@ -9,6 +9,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase } from '../lib/supabase';
 import { DISTRICTS } from '../data/bangladeshLocations';
+import emailjs from '@emailjs/browser';
 
 const INSIDE_COST  = 78;
 const OUTSIDE_COST = 118;
@@ -94,7 +95,24 @@ const Checkout = () => {
     name: '', phone: '', district: '', upazila: '',
     address: '', email: '', note: '',
   });
+  const [saveAddress, setSaveAddress] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Load saved address on mount
+  useEffect(() => {
+    const key = `glamour_saved_address_${user?.id || 'guest'}`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setForm(prev => ({ ...prev, ...parsed }));
+        if (parsed.district === 'Dhaka') setShippingMethod('inside');
+        else if (parsed.district) setShippingMethod('outside');
+      } catch (e) {
+        console.error('Error parsing saved address', e);
+      }
+    }
+  }, [user]);
 
   const selectedDistrict = DISTRICTS.find(d => d.name === form.district);
   const upazilas         = selectedDistrict?.upazilas ?? [];
@@ -146,8 +164,44 @@ const Checkout = () => {
         created_at: new Date().toISOString(),
       };
       if (user) orderData.user_id = user.id;
+
+      // Save address if checked
+      if (saveAddress) {
+        const key = `glamour_saved_address_${user?.id || 'guest'}`;
+        const addressToSave = {
+          name: form.name, phone: form.phone, email: form.email,
+          district: form.district, upazila: form.upazila, address: form.address
+        };
+        localStorage.setItem(key, JSON.stringify(addressToSave));
+      }
+
       const { data, error } = await supabase.from('orders').insert(orderData).select('id').single();
       if (error) throw error;
+
+      // Send Email Notification (Background)
+      try {
+        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
+        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
+        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
+        
+        if (serviceId && templateId && publicKey) {
+          const emailParams = {
+            order_id: data.id.slice(-8).toUpperCase(),
+            customer_name: form.name,
+            customer_phone: form.phone,
+            customer_address: `${form.address}, ${form.upazila}, ${form.district}`,
+            order_total: grandTotal.toLocaleString(),
+            items_count: cart.reduce((s, i) => s + i.quantity, 0),
+          };
+          emailjs.send(serviceId, templateId, emailParams, publicKey)
+            .catch(e => console.error('Email failed:', e));
+        } else {
+          console.log('EmailJS keys not configured. Skipping email notification.');
+        }
+      } catch (err) {
+        console.error('Email preparation error:', err);
+      }
+
       setOrderId(data?.id || null);
       clearCart();
       setIsSuccess(true);
@@ -279,6 +333,22 @@ const Checkout = () => {
               onChange={e => setField('note', e.target.value)}
               className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-400 transition-all resize-none"
             />
+
+            {/* Save Address Checkbox */}
+            <label className="flex items-center gap-3 cursor-pointer group p-2">
+              <div className="relative flex items-center justify-center">
+                <input 
+                  type="checkbox" 
+                  checked={saveAddress}
+                  onChange={(e) => setSaveAddress(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-5 h-5 border-2 border-gray-300 rounded peer-checked:bg-pink-500 peer-checked:border-pink-500 transition-all flex items-center justify-center">
+                  <CheckCircle2 size={14} className="text-white opacity-0 peer-checked:opacity-100 transition-opacity" />
+                </div>
+              </div>
+              <span className="text-sm font-medium text-gray-700">Save this delivery address for next time</span>
+            </label>
 
             {/* ── Shipping Selection ─────────────────── */}
             <div>

@@ -14,6 +14,8 @@ import {
 import { supabase } from '../../lib/supabase';
 import { Product } from '../../types';
 import { motion, AnimatePresence } from 'motion/react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const AdminProducts = () => {
   const [products,    setProducts]    = useState<Product[]>([]);
@@ -459,14 +461,14 @@ const AdminProducts = () => {
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Description</label>
-                    <textarea 
-                      required
-                      rows={4}
-                      value={formData.description}
-                      onChange={(e) => setFormData({...formData, description: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
-                      placeholder="Describe the product benefits and ingredients..."
-                    />
+                    <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
+                      <ReactQuill 
+                        theme="snow" 
+                        value={formData.description} 
+                        onChange={(value) => setFormData({...formData, description: value})}
+                        className="h-48 pb-10" // Extra padding to account for toolbar
+                      />
+                    </div>
                   </div>
                   <div className="md:col-span-2">
                     <label className="flex items-center gap-3 cursor-pointer group">

@@ -102,9 +102,10 @@ const ProductDetail = () => {
               </div>
 
               <p className="text-3xl font-serif font-bold text-charcoal mb-6">৳{product.price.toLocaleString()}</p>
-              <div className="prose prose-sm text-gray-600 mb-8">
-                <p>{product.description}</p>
-              </div>
+              <div 
+                className="prose prose-sm text-gray-600 mb-8 max-w-none"
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              />
 
               {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
