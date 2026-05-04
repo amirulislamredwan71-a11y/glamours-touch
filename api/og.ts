@@ -48,7 +48,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <meta property="product:price:amount"   content="${p.price}" />
   <meta property="product:price:currency" content="BDT" />
   <meta name="twitter:card"  content="summary_large_image" />
-  <meta name="twitter:image" content="${imageUrl}" />
+  <meta property="fb:app_id" content="1322315399797461" />
+  <meta property="fb:app_id" content="1322315399797461" />
+>>   <meta name="twitter:image" content="${imageUrl}" />
   <script>window.location.href="/product/${p.id}";</script>
 </head>
 <body>
