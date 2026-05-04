@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "sitemap": "node scripts/generate-sitemap.cjs",
+    "catalog": "node scripts/generate-fb-catalog.cjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -21,13 +23,13 @@
     "express": "^4.21.2",
     "i18next": "^26.0.3",
     "i18next-browser-languagedetector": "^8.2.1",
+    "jodit-react": "^5.3.21",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^17.0.2",
     "react-is": "^19.2.5",
-    "react-quill": "^2.0.0",
     "react-router-dom": "^7.13.2",
     "recharts": "^3.8.1",
     "tailwind-merge": "^3.5.0",

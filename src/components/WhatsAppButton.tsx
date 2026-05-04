@@ -15,7 +15,7 @@ const WhatsAppButton = () => {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 2, type: 'spring', stiffness: 260, damping: 20 }}
-      className="fixed bottom-6 left-4 z-[99] flex items-center gap-2 bg-[#25d366] text-white pl-4 pr-5 py-3 rounded-full shadow-xl shadow-[#25d366]/30 hover:shadow-[#25d366]/50 hover:scale-105 transition-all duration-300 group"
+      className="fixed bottom-20 sm:bottom-6 left-4 z-[99] flex items-center gap-2 bg-[#25d366] text-white pl-4 pr-5 py-3 rounded-full shadow-xl shadow-[#25d366]/30 hover:shadow-[#25d366]/50 hover:scale-105 transition-all duration-300 group"
       title="Chat with us on WhatsApp"
     >
       {/* Pulse ring */}

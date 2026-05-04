@@ -162,9 +162,15 @@ const AdminOrders = () => {
                     </td>
                     <td className="px-6 py-4 text-sm font-bold text-charcoal">৳{order.total.toLocaleString()}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${getStatusColor(order.status)}`}>
-                        {order.status}
-                      </span>
+                      <select
+                        value={order.status}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateStatus(order.id, e.target.value)}
+                        className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/30 ${getStatusColor(order.status)}`}
+                      >
+                        {['Pending','Processing','Shipped','Delivered','Cancelled'].map(s => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 px-6">

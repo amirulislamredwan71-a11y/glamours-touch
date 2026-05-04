@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import ScrollToTop from './components/ScrollToTop';
 import WhatsAppButton from './components/WhatsAppButton';
+import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
@@ -23,6 +24,7 @@ import ReturnsExchanges from './pages/ReturnsExchanges';
 import FAQ from './pages/FAQ';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import OrderTracking from './pages/OrderTracking';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/Products';
@@ -50,7 +52,7 @@ const AppContent = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <FloatingCart />
-      <main className="flex-grow">
+      <main className="flex-grow pb-16 sm:pb-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
@@ -65,6 +67,7 @@ const AppContent = () => {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/track-order" element={<OrderTracking />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
@@ -80,6 +83,7 @@ const AppContent = () => {
       <Footer />
       <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
       <WhatsAppButton />
+      <BottomNav />
     </div>
   );
 };

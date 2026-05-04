@@ -23,16 +23,16 @@ const FloatingCart = () => {
               <motion.div
                 animate={{ scale: [1, 1.03, 1] }}
                 transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
-                className="bg-[#1a1f3c] text-white px-4 py-3 flex flex-col items-center gap-0.5 min-w-[76px]"
+                className="bg-[#1a1f3c] text-white px-3 py-2 flex flex-col items-center min-w-[58px]"
               >
-                <ShoppingBag size={22} strokeWidth={2} />
-                <span className="text-2xl font-extrabold leading-tight">{cartCount}</span>
-                <span className="text-[9px] font-bold tracking-[0.2em] opacity-80">ITEMS</span>
+                <ShoppingBag size={16} strokeWidth={2} />
+                <span className="text-base font-extrabold leading-tight">{cartCount}</span>
+                <span className="text-[8px] font-bold tracking-[0.2em] opacity-80">ITEMS</span>
               </motion.div>
 
               {/* Bottom hot-pink section */}
-              <div className="bg-[#e91e8c] text-white px-3 py-2 text-center">
-                <span className="text-[13px] font-bold tracking-wide">৳ {cartTotal.toLocaleString()}</span>
+              <div className="bg-[#e91e8c] text-white px-2 py-1.5 text-center">
+                <span className="text-[11px] font-bold tracking-wide">৳ {cartTotal.toLocaleString()}</span>
               </div>
             </div>
           </Link>

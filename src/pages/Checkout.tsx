@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ShieldCheck, ArrowLeft, CheckCircle2, ChevronDown,
-  ShoppingBag, Truck, MapPin,
+  ShoppingBag, Truck, MapPin, MessageCircle,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase } from '../lib/supabase';
@@ -86,9 +86,10 @@ const Checkout = () => {
   const { user }  = useAuth();
   const navigate  = useNavigate();
 
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isSuccess,    setIsSuccess]    = useState(false);
-  const [orderId,      setOrderId]      = useState<string | null>(null);
+  const [isProcessing,   setIsProcessing]   = useState(false);
+  const [isSuccess,      setIsSuccess]      = useState(false);
+  const [orderId,        setOrderId]        = useState<string | null>(null);
+  const [orderSnapshot,  setOrderSnapshot]  = useState<{ items: typeof cart; total: number } | null>(null);
 
   // Direct checkout from URL (Facebook Ads support)
   useEffect(() => {
@@ -219,6 +220,19 @@ const Checkout = () => {
       }
 
       setOrderId(data?.id || null);
+
+      // Facebook Pixel — Purchase
+      if (typeof (window as any).fbq === 'function') {
+        (window as any).fbq('track', 'Purchase', {
+          content_ids:  cart.map(i => i.id),
+          content_type: 'product',
+          value:        grandTotal,
+          currency:     'BDT',
+          num_items:    cart.reduce((s, i) => s + i.quantity, 0),
+        });
+      }
+
+      setOrderSnapshot({ items: cart, total: grandTotal });
       clearCart();
       setIsSuccess(true);
     } catch (err: any) {
@@ -241,6 +255,13 @@ const Checkout = () => {
 
   /* ── success ── */
   if (isSuccess) {
+    const snap = orderSnapshot;
+    const itemLines = snap?.items.map((i: { name: string; price: number; quantity: number }) => `• ${i.name} × ${i.quantity} = ৳${(i.price * i.quantity).toLocaleString()}`).join('\n') ?? '';
+    const waMessage = encodeURIComponent(
+      `আমি একটি অর্ডার করেছি!\n\nOrder ID: #${orderId?.slice(-8).toUpperCase() || ''}\nনাম: ${form.name}\nফোন: ${form.phone}\nঠিকানা: ${form.address}, ${form.upazila}, ${form.district}\n\nপণ্য:\n${itemLines}\n\nমোট: ৳${snap?.total.toLocaleString() ?? grandTotal.toLocaleString()}\n\nঅনুগ্রহ করে confirm করুন।`
+    );
+    const waUrl = `https://wa.me/8801712426871?text=${waMessage}`;
+
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
@@ -253,7 +274,12 @@ const Checkout = () => {
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Order Reference</p>
             <p className="text-xl font-bold text-pink-500 font-mono">#{orderId?.slice(-8).toUpperCase() || 'SUCCESS'}</p>
           </div>
-          <p className="text-gray-500 text-sm mb-8">Thank you! Your order has been received and is being processed.</p>
+          <p className="text-gray-500 text-sm mb-6">Thank you! Your order has been received and is being processed.</p>
+          <a href={waUrl} target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white py-4 rounded-2xl font-bold tracking-wide transition-all mb-3 shadow-lg shadow-green-200">
+            <MessageCircle size={20} />
+            WhatsApp-এ Confirm করুন
+          </a>
           <Link to={user ? '/profile' : '/shop'}
             className="block w-full bg-[#1a1f3c] text-white py-4 rounded-2xl font-bold tracking-widest hover:bg-pink-500 transition-all mb-3">
             {user ? 'VIEW MY ORDERS' : 'CONTINUE SHOPPING'}
@@ -283,11 +309,27 @@ const Checkout = () => {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-10">
+        <div className="flex items-center gap-3 mb-6">
           <Link to="/cart" className="p-2 bg-white rounded-full hover:text-pink-500 transition-colors shadow-sm border border-gray-100">
             <ArrowLeft size={20} />
           </Link>
           <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
+        </div>
+
+        {/* Step Indicator */}
+        <div className="flex items-center mb-10">
+          {[{ n: 1, label: 'Cart' }, { n: 2, label: 'Details' }, { n: 3, label: 'Done' }].map(({ n, label }, i) => (
+            <React.Fragment key={n}>
+              <div className="flex flex-col items-center">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all
+                  ${n === 2 ? 'bg-pink-500 border-pink-500 text-white' : n < 2 ? 'bg-green-500 border-green-500 text-white' : 'bg-white border-gray-200 text-gray-400'}`}>
+                  {n < 2 ? <CheckCircle2 size={16} /> : n}
+                </div>
+                <span className={`text-[10px] font-bold mt-1 uppercase tracking-wide ${n === 2 ? 'text-pink-500' : n < 2 ? 'text-green-500' : 'text-gray-400'}`}>{label}</span>
+              </div>
+              {i < 2 && <div className={`flex-1 h-0.5 mx-2 rounded ${n < 2 ? 'bg-green-400' : 'bg-gray-200'}`} />}
+            </React.Fragment>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">

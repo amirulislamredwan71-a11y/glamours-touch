@@ -31,16 +31,43 @@ const ProductDetail = () => {
         const { data } = await supabase.from('products').select('*').eq('id', id).single();
         if (data) {
           setProduct(data);
+
           // Dynamic SEO
           document.title = `${data.name} — Glamour's Touch`;
-          let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-          if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
-          meta.content = `${data.brand} ${data.name} — ৳${data.price.toLocaleString()}. ${data.description?.slice(0, 120) ?? ''}`;
+          const plainDesc = data.description?.replace(/<[^>]*>/g, '').slice(0, 120) ?? '';
+          const setMeta = (sel: string, attr: string, val: string) => {
+            let el = document.querySelector<HTMLMetaElement>(sel);
+            if (!el) { el = document.createElement('meta'); if (attr === 'name') el.name = val; else el.setAttribute('property', val); document.head.appendChild(el); return; }
+            el.content = val;
+          };
+          setMeta('meta[name="description"]', 'name', `${data.brand} ${data.name} — ৳${data.price.toLocaleString()}. ${plainDesc}`);
+
+          // Open Graph tags for Facebook sharing
+          const pageUrl = `${window.location.origin}/product/${data.id}`;
+          setMeta('meta[property="og:title"]',       'property', `${data.name} — Glamour's Touch`);
+          setMeta('meta[property="og:description"]', 'property', `${data.brand} · ৳${data.price.toLocaleString()}. ${plainDesc}`);
+          setMeta('meta[property="og:image"]',       'property', data.image);
+          setMeta('meta[property="og:url"]',         'property', pageUrl);
+          setMeta('meta[property="og:type"]',        'property', 'product');
+          setMeta('meta[property="product:price:amount"]',   'property', String(data.price));
+          setMeta('meta[property="product:price:currency"]', 'property', 'BDT');
+
+          // Facebook Pixel — ViewContent
+          if (typeof (window as any).fbq === 'function') {
+            (window as any).fbq('track', 'ViewContent', {
+              content_ids:  [data.id],
+              content_name: data.name,
+              content_type: 'product',
+              value:        data.price,
+              currency:     'BDT',
+            });
+          }
 
           // Related products
           const { data: rel } = await supabase.from('products').select('*')
             .eq('category', data.category).neq('id', data.id).limit(4);
           if (rel) setRelated(rel);
+
         }
       } catch (e) { console.error(e); }
       finally { setLoading(false); }
@@ -109,7 +136,18 @@ const ProductDetail = () => {
 
               {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button onClick={() => addToCart(product)}
+                <button onClick={() => {
+                    addToCart(product);
+                    if (typeof (window as any).fbq === 'function') {
+                      (window as any).fbq('track', 'AddToCart', {
+                        content_ids:  [product.id],
+                        content_name: product.name,
+                        content_type: 'product',
+                        value:        product.price,
+                        currency:     'BDT',
+                      });
+                    }
+                  }}
                   className="flex-grow bg-yellow-400 text-gray-900 py-5 rounded-full font-bold tracking-widest hover:bg-yellow-500 transition-all flex items-center justify-center gap-3 shadow-lg">
                   <ShoppingBag size={20} /> ADD TO BAG
                 </button>

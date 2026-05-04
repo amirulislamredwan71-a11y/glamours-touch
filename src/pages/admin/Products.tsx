@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  MoreVertical, 
-  Edit2, 
-  Trash2, 
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import {
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Edit2,
+  Trash2,
   ExternalLink,
   Image as ImageIcon,
   Upload,
@@ -14,8 +14,8 @@ import {
 import { supabase } from '../../lib/supabase';
 import { Product } from '../../types';
 import { motion, AnimatePresence } from 'motion/react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+
+const JoditEditor = lazy(() => import('jodit-react'));
 
 const AdminProducts = () => {
   const [products,    setProducts]    = useState<Product[]>([]);
@@ -461,13 +461,18 @@ const AdminProducts = () => {
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Description</label>
-                    <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
-                      <ReactQuill 
-                        theme="snow" 
-                        value={formData.description} 
-                        onChange={(value) => setFormData({...formData, description: value})}
-                        className="h-48 pb-10" // Extra padding to account for toolbar
-                      />
+                    <div className="bg-white rounded-xl overflow-hidden border border-gray-200 min-h-[300px]">
+                      <Suspense fallback={<div className="flex items-center justify-center h-[300px] text-gray-400 text-sm">Editor লোড হচ্ছে...</div>}>
+                        <JoditEditor
+                          value={formData.description}
+                          onBlur={(newContent) => setFormData({...formData, description: newContent})}
+                          config={{
+                            readonly: false,
+                            height: 300,
+                            placeholder: 'Describe the product benefits and ingredients...'
+                          }}
+                        />
+                      </Suspense>
                     </div>
                   </div>
                   <div className="md:col-span-2">

@@ -238,6 +238,28 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Facebook Post */}
+      <section className="py-20 bg-cream">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <span className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Follow Us</span>
+          <h2 className="text-3xl font-serif font-bold text-charcoal mb-10">
+            আমাদের <span className="text-gold italic">Facebook</span> পোস্ট
+          </h2>
+          <div className="flex justify-center">
+            <iframe
+              src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0KFEdesuqJ384jXoHCeCttwzg1RXmHic8tq3vgkCqieCNE1pdT4ovECs8WL4XhxMrl%26id%3D61574369240231&show_text=true&width=500"
+              width="500"
+              height="404"
+              style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
+              scrolling="no"
+              frameBorder={0}
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter */}
       <section className="py-32 bg-charcoal text-cream relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=1920')] opacity-5 object-cover pointer-events-none" />

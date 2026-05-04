@@ -13,8 +13,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
-  const handleBuyNow = () => {
+  const fireAddToCart = () => {
     addToCart(product);
+    if (typeof (window as any).fbq === 'function') {
+      (window as any).fbq('track', 'AddToCart', {
+        content_ids:  [product.id],
+        content_name: product.name,
+        content_type: 'product',
+        value:        product.price,
+        currency:     'BDT',
+      });
+    }
+  };
+
+  const handleBuyNow = () => {
+    fireAddToCart();
     navigate('/checkout');
   };
 
@@ -54,7 +67,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <div className="flex gap-1 mt-auto">
           <button
-            onClick={() => addToCart(product)}
+            onClick={fireAddToCart}
             className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
           >
             Add

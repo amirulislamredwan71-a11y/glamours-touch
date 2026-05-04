@@ -6,11 +6,18 @@ const supabaseUrl = 'https://fmcltrjnuvuooarkvufn.supabase.co';
 const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseAnonKey) {
-  console.error('Error: VITE_SUPABASE_ANON_KEY is missing in .env');
+  console.error('❌ Error: VITE_SUPABASE_ANON_KEY is missing!');
+  console.error('');
+  console.error('প্রজেক্ট root-এ একটি .env ফাইল বানান এবং এটি লিখুন:');
+  console.error('  VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here');
+  console.error('');
+  console.error('Supabase key পাবেন: https://supabase.com → আপনার project → Settings → API');
   process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const stripHtml = (html) => (html || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 
 async function generateCatalogs() {
   console.log('Fetching products from Supabase...');
@@ -32,7 +39,7 @@ async function generateCatalogs() {
     const common = [
       `"${product.id}"`,
       `"${product.name.replace(/"/g, '""')}"`,
-      `"${(product.description || '').replace(/"/g, '""').replace(/\n/g, ' ')}"`,
+      `"${stripHtml(product.description).replace(/"/g, '""')}"`,
       '"in stock"',
       '"new"',
       `"${product.price} BDT"`,
