@@ -76,6 +76,7 @@ const Navbar = () => {
   const navItems = [
     { name: t('nav.home'),    path: '/' },
     { name: t('nav.shop'),    path: '/shop' },
+    { name: 'Blog',           path: '/blog' },
     { name: t('nav.contact'), path: '/contact' },
   ];
 

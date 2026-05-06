@@ -25,6 +25,8 @@ import FAQ from './pages/FAQ';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import OrderTracking from './pages/OrderTracking';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/Products';
@@ -68,6 +70,8 @@ const AppContent = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/track-order" element={<OrderTracking />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
