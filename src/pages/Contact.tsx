@@ -216,7 +216,7 @@ const Contact = () => {
                   <h4 className="text-lg font-serif font-bold mb-6">Follow Our Journey</h4>
                   <div className="flex gap-4">
                     {[
-                      { icon: <Facebook />, label: 'গ্ল্যামার্স টাচ', href: 'https://facebook.com/glamourstouch' },
+                      { icon: <Facebook />, label: 'গ্ল্যামার্স টাচ', href: 'https://www.facebook.com/glamourstouch26' },
                       { icon: <Instagram />, label: 'Instagram', href: '#' },
                       { icon: <Globe />, label: 'glamourstouch.com', href: 'https://glamourstouch.com' },
                     ].map((social, idx) => (
