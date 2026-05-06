@@ -1,4 +1,11 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+
+type VercelRequest  = IncomingMessage & { query: Record<string, string | string[]> };
+type VercelResponse = ServerResponse & {
+  status: (code: number) => VercelResponse;
+  send:   (body: string) => VercelResponse;
+  setHeader: (name: string, value: string) => VercelResponse;
+};
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -49,8 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <meta property="product:price:currency" content="BDT" />
   <meta name="twitter:card"  content="summary_large_image" />
   <meta property="fb:app_id" content="1322315399797461" />
-  <meta property="fb:app_id" content="1322315399797461" />
->>   <meta name="twitter:image" content="${imageUrl}" />
+  <meta name="twitter:image" content="${imageUrl}" />
   <script>window.location.href="/product/${p.id}";</script>
 </head>
 <body>
