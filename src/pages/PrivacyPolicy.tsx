@@ -1,8 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import SEO from '../components/SEO';
 
 const PrivacyPolicy = () => {
   return (
+    <>
+    <SEO
+      title="Privacy Policy — গোপনীয়তা নীতি"
+      description="Glamour's Touch এর privacy policy। আপনার personal information কিভাবে সংগ্রহ ও ব্যবহার করা হয়। Korean skincare Bangladesh। glamourstouch.com"
+      url="/privacy-policy"
+    />
     <div className="pt-40 pb-20 bg-cream min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-12 rounded-[2.5rem] shadow-sm border border-gold/10">
         <motion.div
@@ -13,7 +20,7 @@ const PrivacyPolicy = () => {
           <h1 className="text-4xl font-serif font-bold text-charcoal mb-8">Privacy <span className="text-gold italic">Policy</span></h1>
           <div className="prose prose-gold max-w-none text-gray-600 space-y-6">
             <p className="text-lg">At Glamour's Touch, we are committed to protecting your privacy and ensuring your personal information is handled securely.</p>
-            
+
             <section>
               <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">Information We Collect</h2>
               <p>We collect personal information such as your name, email address, phone number, and shipping address when you place an order or sign up for our newsletter.</p>
@@ -37,6 +44,7 @@ const PrivacyPolicy = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Plus, Minus } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = React.useState<number | null>(0);
@@ -29,6 +30,12 @@ const FAQ = () => {
   ];
 
   return (
+    <>
+    <SEO
+      title="FAQ — সাধারণ জিজ্ঞাসা"
+      description="Glamour's Touch সম্পর্কে সাধারণ প্রশ্নের উত্তর। Delivery, payment, authenticity, return policy সহ সব কিছু। Korean skincare Bangladesh। Call: 01712-426871"
+      url="/faq"
+    />
     <div className="pt-40 pb-20 bg-cream min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-12 rounded-[2.5rem] shadow-sm border border-gold/10">
         <motion.div
@@ -65,6 +72,7 @@ const FAQ = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import { Filter, ChevronDown, Search, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -69,6 +70,12 @@ const Shop = () => {
   const pageProducts = filteredProducts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
+    <>
+    <SEO
+      title="Shop — Korean Skincare Products"
+      description="Glamour's Touch এর সব Korean skincare products দেখুন। DABO, Rice Ceramide, Glutathione, Mary & May — 100% authentic। Fast delivery Bangladesh। Order: 01712-426871"
+      url="/shop"
+    />
     <div className="min-h-screen bg-cream pt-32 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Decorative blobs */}
@@ -212,6 +219,7 @@ const Shop = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

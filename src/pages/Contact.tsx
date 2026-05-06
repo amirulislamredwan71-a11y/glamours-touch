@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Globe, Send, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import SEO from '../components/SEO';
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,6 +29,11 @@ const Contact = () => {
 
   return (
     <div className="bg-white">
+      <SEO
+        title="যোগাযোগ করুন — Contact Us"
+        description="Glamour's Touch এ যোগাযোগ করুন। 📞 01712-426871 | 💬 WhatsApp: +880 1712-426871 | Facebook: glamourstouch26। Korean skincare order এবং inquiry এর জন্য।"
+        url="/contact"
+      />
       {/* Hero Section */}
       <section className="relative py-32 bg-charcoal text-cream overflow-hidden">
         <div className="absolute inset-0 opacity-20">

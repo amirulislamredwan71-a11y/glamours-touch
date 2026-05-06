@@ -1,10 +1,16 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Sparkles, Heart, ShieldCheck, Globe } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const About = () => {
   return (
     <div className="bg-white">
+      <SEO
+        title="আমাদের সম্পর্কে — About Us"
+        description="Glamour's Touch হলো Bangladesh এর একটি trusted Korean skincare shop। আমরা 100% authentic Korean beauty products import করি। আমাদের লক্ষ্য — সবার কাছে real Korean skincare পৌঁছে দেওয়া।"
+        url="/about"
+      />
       {/* Hero Section */}
       <section className="relative py-32 bg-charcoal text-cream overflow-hidden">
         <div className="absolute inset-0 opacity-20">

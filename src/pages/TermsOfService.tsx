@@ -1,8 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import SEO from '../components/SEO';
 
 const TermsOfService = () => {
   return (
+    <>
+    <SEO
+      title="Terms of Service — ব্যবহারের শর্তাবলী"
+      description="Glamour's Touch এর terms of service। Website ব্যবহার, product information, pricing এবং liability সম্পর্কিত শর্তাবলী। glamourstouch.com"
+      url="/terms-of-service"
+    />
     <div className="pt-40 pb-20 bg-cream min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-12 rounded-[2.5rem] shadow-sm border border-gold/10">
         <motion.div
@@ -13,7 +20,7 @@ const TermsOfService = () => {
           <h1 className="text-4xl font-serif font-bold text-charcoal mb-8">Terms of <span className="text-gold italic">Service</span></h1>
           <div className="prose prose-gold max-w-none text-gray-600 space-y-6">
             <p className="text-lg">Welcome to Glamour's Touch. By accessing and using our website, you agree to comply with and be bound by the following terms and conditions.</p>
-            
+
             <section>
               <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">Use of the Website</h2>
               <p>You agree to use our website for lawful purposes only and in a manner that does not infringe the rights of others or restrict their use of the site.</p>
@@ -37,6 +44,7 @@ const TermsOfService = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

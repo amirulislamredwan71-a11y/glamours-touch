@@ -1,8 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import SEO from '../components/SEO';
 
 const ShippingPolicy = () => {
   return (
+    <>
+    <SEO
+      title="Shipping Policy — ডেলিভারি তথ্য"
+      description="Glamour's Touch এর shipping policy। Dhaka-তে 1-2 দিনে delivery। বাংলাদেশের সব জেলায় 3-5 দিনে। Korean skincare fast delivery। 01712-426871"
+      url="/shipping-policy"
+    />
     <div className="pt-40 pb-20 bg-cream min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-12 rounded-[2.5rem] shadow-sm border border-gold/10">
         <motion.div
@@ -35,6 +42,7 @@ const ShippingPolicy = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

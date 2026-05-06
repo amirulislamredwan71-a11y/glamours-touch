@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import { motion } from 'motion/react';
@@ -74,6 +75,11 @@ const Home = () => {
 
   return (
     <div className="flex flex-col overflow-hidden">
+      <SEO
+        title="Korean Skincare & Beauty Products Bangladesh"
+        description="Glamour's Touch — Bangladesh এর সেরা Korean skincare shop। DABO Snail Cream, Rice Ceramide, Glutathione Cream সহ 100% authentic Korean beauty products। Order: 01712-426871"
+        url="/"
+      />
       {/* Hero Section */}
       <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
