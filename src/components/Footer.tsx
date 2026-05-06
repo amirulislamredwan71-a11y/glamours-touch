@@ -56,7 +56,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
-              <a href="https://facebook.com/glamourstouch" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
+              <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
             </div>
           </div>
 
@@ -109,7 +109,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Facebook size={16} className="text-gold" />
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">গ্ল্যামার্স টাচ</a>
+                <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">গ্ল্যামার্স টাচ</a>
               </li>
               <li className="flex items-center space-x-3">
                 <MapPin size={16} className="text-gold" />

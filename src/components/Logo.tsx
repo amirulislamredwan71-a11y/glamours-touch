@@ -27,14 +27,19 @@ const Logo = ({ className = "w-12 h-12" }: { className?: string }) => {
   }
 
   return (
-    <img
-      src="/logo.png"
-      alt="Glamour's Touch — Korean Skincare Bangladesh"
-      className={`object-contain flex-shrink-0 ${className}`}
-      loading="eager"
-      decoding="async"
-      onError={() => setImgError(true)}
-    />
+    <picture className={`flex-shrink-0 ${className}`}>
+      {/* WebP — Android Chrome, Samsung Browser, all modern browsers */}
+      <source srcSet="/logo.webp" type="image/webp" />
+      {/* PNG — fallback for older browsers */}
+      <img
+        src="/logo.png"
+        alt="Glamour's Touch — Korean Skincare Bangladesh"
+        className={`object-contain w-full h-full flex-shrink-0`}
+        loading="eager"
+        decoding="async"
+        onError={() => setImgError(true)}
+      />
+    </picture>
   );
 };
 
