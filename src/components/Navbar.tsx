@@ -98,13 +98,13 @@ const Navbar = () => {
 
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center mx-1 sm:mx-2">
-            <Link to="/" className="group flex items-center gap-3">
-              <Logo className="w-12 h-12 sm:w-16 sm:h-16 shadow-xl" />
-              <div className="flex flex-col">
-                <span className="hidden xs:block text-sm sm:text-xl md:text-2xl font-serif font-bold tracking-[0.1em] text-charcoal group-hover:text-gold transition-colors duration-500 whitespace-nowrap">
+            <Link to="/" className="group flex items-center gap-2">
+              <Logo className="w-14 h-14 sm:w-20 sm:h-20 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
+              <div className="flex flex-col hidden sm:flex">
+                <span className="text-xl md:text-2xl font-serif font-bold tracking-[0.1em] text-charcoal group-hover:text-gold transition-colors duration-500 whitespace-nowrap">
                   GLAMOUR'S <span className="text-gold group-hover:text-charcoal transition-colors duration-500">TOUCH</span>
                 </span>
-                <span className="hidden sm:block text-[8px] font-bold text-gray-400 tracking-[0.3em] uppercase -mt-1">Best Cosmetics</span>
+                <span className="text-[8px] font-bold text-gray-400 tracking-[0.3em] uppercase -mt-1">BEAUTY • SKINCARE • CONFIDENCE</span>
               </div>
             </Link>
           </div>

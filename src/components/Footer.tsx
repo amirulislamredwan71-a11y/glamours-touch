@@ -42,13 +42,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="flex items-center gap-4 mb-6 group">
-              <Logo className="w-14 h-14 brightness-0 invert" />
+            <Link to="/" className="flex items-center gap-3 mb-6 group">
+              <Logo className="w-16 h-16 group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col">
-                <h3 className="text-2xl font-serif font-bold tracking-tighter">
+                <h3 className="text-xl font-serif font-bold tracking-tighter">
                   GLAMOUR'S <span className="text-gold">TOUCH</span>
                 </h3>
-                <span className="text-[8px] font-bold text-gray-500 tracking-[0.3em] uppercase">Best Cosmetics</span>
+                <span className="text-[8px] font-bold text-gray-500 tracking-[0.3em] uppercase">BEAUTY • SKINCARE • CONFIDENCE</span>
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
