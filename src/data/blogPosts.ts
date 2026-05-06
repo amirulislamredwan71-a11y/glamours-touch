@@ -309,5 +309,440 @@ Collagen production বাড়ায় — skin tight, youthful এবং plu
 
 Dhaka delivery মাত্র ৳80!
     `
+  },
+
+  // ─── PHASE 2A ARTICLES ───────────────────────────────────────────────────
+
+  {
+    slug: 'bok-forsha-korean-cream-bangladesh-2026',
+    title: 'Best Korean Cream for Skin Brightening Bangladesh 2026',
+    titleBn: 'ত্বক উজ্জ্বল করার সেরা Korean Cream — বাংলাদেশ ২০২৬',
+    excerpt: 'কোন Korean cream সত্যিই ত্বক উজ্জ্বল করে? বাংলাদেশে পাওয়া যায় এমন সেরা brightening cream-এর তালিকা ও ব্যবহারের নিয়ম।',
+    date: '2026-05-08',
+    readTime: '5 min',
+    category: 'Product Info',
+    image: '/catalog-images/carousel-8.png',
+    content: `
+## ত্বক উজ্জ্বল করতে Korean Cream কেন সেরা?
+
+বাংলাদেশে অনেক whitening cream পাওয়া যায়। কিন্তু বেশিরভাগই mercury বা harmful chemical দিয়ে তৈরি যা ত্বকের ক্ষতি করে। Korean cream সম্পূর্ণ আলাদা — এগুলো **safe ingredients** দিয়ে তৈরি যা ধীরে ধীরে ত্বককে উজ্জ্বল করে।
+
+Korean brightening cream কাজ করে:
+- **Melanin production কমিয়ে** — dark spot হালকা করে
+- **Skin barrier repair করে** — ত্বক ভেতর থেকে healthy হয়
+- **Antioxidant দিয়ে** — pollution ও sun damage থেকে রক্ষা করে
+
+## বাংলাদেশে সেরা Korean Brightening Cream
+
+### ১. Beauté Glutathione Brightening Cream — BDT 640
+**Glamour's Touch-এর সবচেয়ে popular product।**
+
+এই cream-এ আছে:
+- **Glutathione** — শরীরের natural antioxidant, melanin কমায়
+- **Niacinamide** — dark spot হালকা করে, pore কমায়
+- **Hyaluronic Acid** — ত্বক hydrated রাখে
+
+ব্যবহারের নিয়ম:
+- সকালে ও রাতে face wash-এর পর লাগান
+- মাত্র ৭-১৪ দিনে পার্থক্য দেখা যায়
+- SPF sunscreen-এর আগে লাগান (দিনে)
+
+📞 **Order: 01712-426871**
+
+---
+
+### ২. Glutathione Niacinamide Facial Cream — BDT 1000
+Advanced formula যাদের skin বেশি dull বা uneven তাদের জন্য।
+
+- Double-dose Glutathione + Niacinamide
+- All skin types এ কাজ করে
+- ৩০ দিনে visible brightening
+
+---
+
+### ৩. Rice Ceramide Moisturizing Cream — BDT 1050
+Direct brightening না করলেও এই cream ত্বককে এত healthy করে যে naturally গlow আসে।
+
+- Rice Extract = natural brightener
+- Ceramide = skin barrier strong করে
+- Oily ও dry — সব skin type-এ কাজ করে
+
+## কোনটা আপনার জন্য সঠিক?
+
+| Skin Type | Recommended Cream | Price |
+|-----------|------------------|-------|
+| Normal/Oily | Beauté Glutathione | BDT 640 |
+| Dry/Sensitive | Rice Ceramide Cream | BDT 1050 |
+| Dull + Dark Spot | Glutathione Niacinamide | BDT 1000 |
+| Budget | Beauté Glutathione | BDT 640 |
+
+## সতর্কতা — নকল Product থেকে বাঁচুন
+
+বাজারে অনেক নকল Korean cream পাওয়া যায়। **Glamour's Touch** থেকে কিনলে পাবেন:
+- ✅ 100% authentic Korean product
+- ✅ Sealed packaging
+- ✅ Batch number verify করা যাবে
+- ✅ পুরো বাংলাদেশে home delivery
+
+📞 **01712-426871** | 💬 WhatsApp: **+880 1712-426871**
+🌐 **glamourstouch.com**
+
+Dhaka delivery ৳80, outside Dhaka ৳130।
+    `
+  },
+
+  {
+    slug: 'dabo-vs-olay-vs-ponds-bangladesh',
+    title: 'DABO vs Olay vs Ponds — Which is Best for Bangladesh Skin?',
+    titleBn: 'DABO vs Olay vs Pond\'s — বাংলাদেশে কোনটা সত্যিই সেরা?',
+    excerpt: 'DABO Korean cream, Olay আর Pond\'s-এর মধ্যে পার্থক্য কী? বাংলাদেশের আবহাওয়ায় কোনটা সবচেয়ে ভালো কাজ করে — সৎ comparison।',
+    date: '2026-05-09',
+    readTime: '6 min',
+    category: 'Product Review',
+    image: '/catalog-images/carousel-7.png',
+    content: `
+## DABO vs Olay vs Pond's — সৎ তুলনা
+
+এই তিনটি brand বাংলাদেশে সবচেয়ে বেশি ব্যবহৃত। অনেকেই জানতে চান — **কোনটা সত্যিই ভালো?** আজকে honest comparison করব।
+
+## Pond's — সবচেয়ে পরিচিত কিন্তু...
+
+Pond's বাংলাদেশে দশকের পর দশক ধরে বিক্রি হচ্ছে।
+
+**ভালো দিক:**
+- সস্তা (BDT 150-400)
+- সহজলভ্য
+- হালকা moisturizing
+
+**খারাপ দিক:**
+- **Mineral oil** ভারী — pores বন্ধ করে
+- **Fragrance** বেশি — sensitive skin-এ irritation
+- Long-term use-এ skin dependent হয়ে যায়
+- Active ingredients নেই — শুধু surface moisture
+
+**বাংলাদেশের গরমে:** oily skin-এ pimple বাড়ায়
+
+---
+
+## Olay — ভালো কিন্তু দামী
+
+Olay internationally proven brand।
+
+**ভালো দিক:**
+- Niacinamide আছে (Total Effects)
+- Dermatologist tested
+- Long-lasting hydration
+
+**খারাপ দিক:**
+- **BDT 800-2000** — বেশি দামী
+- বাংলাদেশে authentic পাওয়া কঠিন
+- Heavy formula — গরমে sticky feels
+
+**বাংলাদেশের গরমে:** ঠিকঠাক কিন্তু price justify করে না
+
+---
+
+## DABO All In One Black Snail Repair Cream — BDT 980
+
+Korean brand DABO বাংলাদেশে নতুন কিন্তু result-এ সেরা।
+
+**ভালো দিক:**
+- **Snail Mucin** — natural healing ingredient
+- **Collagen** — anti-aging
+- **Lightweight** — গরমে sticky না
+- **Multi-function** — moisturize + repair + brighten একসাথে
+- BDT 980 — Olay-এর চেয়ে কম দামে বেশি কার্যকর
+
+**খারাপ দিক:**
+- কম পরিচিত (নতুন brand)
+- শুধু Glamour's Touch-এ authentic পাওয়া যায়
+
+**বাংলাদেশের গরমে:** ✅ Perfect — হালকা texture, non-greasy
+
+---
+
+## Head-to-Head Comparison
+
+| বিষয় | DABO (BDT 980) | Olay (BDT 1200+) | Pond's (BDT 300) |
+|------|----------------|------------------|------------------|
+| Active Ingredients | Snail + Collagen | Niacinamide | Minimal |
+| গরমে Comfort | ✅ হালকা | ⚠️ Heavy | ⚠️ Oily |
+| Brightening | ✅ হ্যাঁ | ✅ হ্যাঁ | ❌ না |
+| Anti-aging | ✅ হ্যাঁ | ✅ হ্যাঁ | ❌ না |
+| Authentic পাওয়া | ✅ GT-তে | ⚠️ কঠিন | ✅ সহজ |
+| Value for Money | ✅ সেরা | ⚠️ বেশি দাম | ⚠️ কম ingredient |
+
+## আমাদের Verdict
+
+> **বাংলাদেশের আবহাওয়া, budget এবং skin need বিবেচনায় DABO সেরা।**
+
+BDT 980-এ আপনি পাচ্ছেন snail mucin, collagen, brightening এবং anti-aging — একটাই cream-এ। Olay-এর চেয়ে কম দামে, Pond's-এর চেয়ে অনেক বেশি effective।
+
+📞 **DABO Order করুন: 01712-426871**
+💬 **WhatsApp: +880 1712-426871**
+🌐 **glamourstouch.com**
+
+Dhaka delivery ৳80 | Bangladesh সব জেলায় delivery।
+    `
+  },
+
+  {
+    slug: 'rate-ghomানোর-age-kono-cream-lagaben',
+    title: 'Best Night Cream for Bangladesh Skin — Korean Skincare Routine',
+    titleBn: 'রাতে ঘুমানোর আগে কোন Cream লাগাবেন? — সম্পূর্ণ Night Routine',
+    excerpt: 'রাতে ঘুমের সময় ত্বক নিজেকে repair করে। সঠিক night cream লাগালে সকালে উঠে দেখবেন ত্বক কতটা glowing। জানুন সেরা night routine।',
+    date: '2026-05-10',
+    readTime: '4 min',
+    category: 'Skincare Tips',
+    image: '/catalog-images/carousel-2.png',
+    content: `
+## রাতে ঘুমের সময় ত্বক কী করে?
+
+রাত ১০টা থেকে ভোর ২টা — এই সময়টা ত্বকের **"golden repair hours"**। এই সময়ে:
+- Cell regeneration সবচেয়ে বেশি হয়
+- Blood circulation বাড়ে
+- Collagen production হয়
+- দিনের damage repair হয়
+
+তাই রাতে সঠিক cream লাগানো দিনের চেয়ে **বেশি গুরুত্বপূর্ণ**।
+
+## বাংলাদেশের জন্য সেরা Night Routine
+
+### Step 1 — Face Wash (রাত ১০টার আগে)
+হালকা foaming cleanser দিয়ে মুখ পরিষ্কার করুন। দিনের sunscreen, dust, pollution সব তুলে ফেলুন।
+
+### Step 2 — Toner (Optional)
+Rice water বা hydrating toner লাগান। ত্বক আর্দ্র রাখে।
+
+### Step 3 — Night Cream (Main Step)
+
+**সেরা choice: DABO All In One Black Snail Repair Cream — BDT 980**
+
+রাতে কেন DABO সেরা:
+- **Snail Mucin** — রাতে ত্বক পুনর্গঠন করে
+- **Collagen Booster** — ঘুমের সময় collagen তৈরি হয়
+- **Deep Moisturizing** — সকালে ত্বক plump ও fresh দেখায়
+- Heavy না, তাই pillow-এ লেগে যায় না
+
+**পরিমাণ:** মটরদানার সমান পরিমাণ নিন, আঙুল দিয়ে upward motion-এ লাগান।
+
+**অথবা: Rice Ceramide Moisturizing Cream — BDT 1050**
+Dry skin হলে এটা রাতে দারুণ কাজ করে।
+
+### Step 4 — Eye Cream (Extra Care)
+চোখের নিচে আলাদা cream লাগান। Mary & May Tranexamic Acid Eye Cream dark circles কমায়।
+
+## রাতের Routine Chart
+
+| সময় | কাজ |
+|------|-----|
+| ১০:০০ PM | Face wash |
+| ১০:০৫ PM | Toner (optional) |
+| ১০:০৮ PM | Night cream লাগান |
+| ১০:১০ PM | Eye cream (optional) |
+| ১০:১২ PM | ঘুমান ✅ |
+
+## সকালে কী হবে?
+
+সঠিক night routine follow করলে সকালে উঠে দেখবেন:
+- ✅ ত্বক smooth ও soft
+- ✅ Dark spots হালকা
+- ✅ Natural glow
+- ✅ Puffiness কম
+
+**মনে রাখুন:** Night cream দিনে ব্যবহার করবেন না — SPF নেই, তাই sun damage হতে পারে।
+
+## Order করুন
+
+📞 **01712-426871**
+💬 **WhatsApp: +880 1712-426871**
+🌐 **glamourstouch.com/shop**
+
+DABO Snail Cream: **BDT 980** | Rice Ceramide: **BDT 1050**
+Dhaka delivery ৳80, Cash on Delivery available।
+    `
+  },
+
+  {
+    slug: 'combination-skin-korean-routine-bangladesh',
+    title: 'Korean Skincare Routine for Combination Skin — Bangladesh Guide',
+    titleBn: 'Combination Skin-এর জন্য সেরা Korean Skincare Routine — বাংলাদেশ',
+    excerpt: 'নাক-কপাল তেলতেলে কিন্তু গাল শুষ্ক? এটাই Combination Skin। বাংলাদেশের গরম আবহাওয়ায় এই skin type সামলানোর সহজ Korean routine।',
+    date: '2026-05-11',
+    readTime: '5 min',
+    category: 'Skincare Tips',
+    image: '/catalog-images/GT-001.jpg',
+    content: `
+## Combination Skin কী?
+
+বাংলাদেশে **৬০% মানুষের** Combination Skin। লক্ষণ:
+- **T-zone** (কপাল, নাক, থুতনি) — তেলতেলে
+- **গাল** — শুষ্ক বা normal
+- গরমে T-zone বেশি oily হয়
+- শীতে গাল আরো শুষ্ক হয়
+
+এই skin type-এর জন্য **একটাই product** কাজ করে না — দরকার balanced routine।
+
+## Combination Skin-এর সমস্যা বাংলাদেশে
+
+বাংলাদেশের **গরম ও আর্দ্র** আবহাওয়ায় Combination Skin-এ:
+- T-zone-এ অতিরিক্ত sebum → acne
+- গালে dehydration → flaking
+- Heavy cream লাগালে → T-zone আরো oily
+- Light gel লাগালে → গাল আরো শুষ্ক
+
+**Solution:** Korean **"multi-masking"** technique + lightweight moisturizer।
+
+## সেরা Korean Routine — Combination Skin
+
+### সকালের Routine
+
+**Step 1 — Gentle Cleanser**
+Foam cleanser যা oil control করে কিন্তু দryness করে না।
+
+**Step 2 — Lightweight Moisturizer**
+**Rice Ceramide Moisturizing Cream — BDT 1050** ✅
+
+এই cream Combination Skin-এর জন্য perfect কারণ:
+- Lightweight gel-cream texture
+- T-zone-এ non-greasy
+- গালে sufficient moisture দেয়
+- Ceramide skin barrier repair করে
+
+**Step 3 — Sunscreen (SPF 30+)**
+বাংলাদেশের রোদ থেকে বাঁচতে sunscreen must।
+
+### রাতের Routine
+
+**Step 1 — Double Cleanse**
+Oil cleanser দিয়ে প্রথমে, তারপর foam cleanser।
+
+**Step 2 — Brightening Treatment**
+**Glutathione Niacinamide Facial Cream — BDT 1000**
+- Niacinamide T-zone-এ pore minimize করে
+- Glutathione সারা মুখ brighten করে
+- Lightweight enough for combination skin
+
+**Step 3 — Eye Cream**
+চোখের চারপাশ সবসময় dry থাকে — আলাদা eye cream দরকার।
+
+## Combination Skin Product Chart
+
+| Product | কাজ | Price |
+|---------|-----|-------|
+| Rice Ceramide Cream | Morning moisturizer | BDT 1050 |
+| Glutathione Niacinamide | Night brightening | BDT 1000 |
+| DABO Snail Cream | Weekly repair mask | BDT 980 |
+
+## গরমে বিশেষ টিপস
+
+- T-zone-এ **Blotting paper** ব্যবহার করুন cream remove না করে
+- সপ্তাহে ২ বার **Clay mask** T-zone-এ (গালে না)
+- **AC-র ঘরে** বেশি থাকলে humidifier ব্যবহার করুন — skin dry হয়
+
+## Order করুন
+
+📞 **01712-426871**
+💬 **WhatsApp: +880 1712-426871**
+🌐 **glamourstouch.com**
+
+Rice Ceramide: **BDT 1050** | Glutathione Cream: **BDT 1000**
+Cash on Delivery | Dhaka ৳80 | সারা বাংলাদেশ ৳130
+    `
+  },
+
+  {
+    slug: '2000-takar-nicha-korean-skincare-gift-bangladesh',
+    title: 'Best Korean Skincare Gift Under 2000 BDT — Bangladesh 2026',
+    titleBn: '২০০০ টাকার নিচে সেরা Korean Skincare Gift — বাংলাদেশ ২০২৬',
+    excerpt: 'জন্মদিন, বিয়ে বার্ষিকী বা Eid gift-এ Korean skincare দিতে চান? ২০০০ টাকার মধ্যে সেরা gift ideas — যা পেলে সবাই খুশি হবে।',
+    date: '2026-05-12',
+    readTime: '4 min',
+    category: 'Guide',
+    image: '/catalog-images/GT-002.jpg',
+    content: `
+## Korean Skincare কেন সেরা Gift?
+
+বাংলাদেশে gift দেওয়ার culture বদলাচ্ছে। মানুষ এখন **practical ও premium** gift চায়। Korean skincare সেই চাহিদা পূরণ করে:
+- দেখতে সুন্দর packaging
+- Korean brand = premium feel
+- Actually কাজ করে
+- Long-lasting (১-৩ মাস চলে)
+- ২০০০ টাকার মধ্যেই পাওয়া যায়
+
+## ২০০০ টাকার নিচে সেরা Gift Options
+
+### 🎁 Gift Option 1 — BDT 980
+**DABO All In One Black Snail Repair Cream**
+
+কার জন্য: বয়স ২৫+ যিনি skin aging নিয়ে conscious
+- Deep moisturizing
+- Anti-wrinkle
+- Brightening
+- All-in-one formula
+
+**Perfect for:** মা, বড় আপু, বান্ধবী, অফিস colleague
+
+---
+
+### 🎁 Gift Option 2 — BDT 640
+**Beauté Glutathione Brightening Cream**
+
+কার জন্য: যে কেউ যে glowing skin চায়
+- Budget-friendly কিন্তু premium দেখতে
+- Effective brightening
+- Great packaging
+
+**Perfect for:** ছোট বোন, বান্ধবী, Eid gift
+
+---
+
+### 🎁 Gift Option 3 — BDT 1050
+**Rice Ceramide Moisturizing Cream**
+
+কার জন্য: Dry skin বা যার skin dull দেখায়
+- Rice extract natural brightening
+- Ceramide skin repair
+- Gentle enough for all ages
+
+**Perfect for:** নতুন বিবাহিত, বড় বোন, মা
+
+---
+
+### 🎁 Gift Combo — BDT 1620 (Best Value!)
+**Beauté Glutathione (৳640) + Rice Ceramide (৳980)**
+
+দুটো একসাথে দিলে:
+- দিনে Rice Ceramide
+- রাতে Glutathione
+- Complete skincare routine as a gift!
+
+---
+
+### 🎁 Premium Gift — BDT 1980
+**DABO Snail Cream (৳980) + Glutathione Cream (৳1000)**
+
+সবচেয়ে impactful gift — anti-aging + brightening combo।
+
+## Gift এর সাথে কী দেবেন?
+
+Glamour's Touch থেকে order করলে আমরা দিই:
+- ✅ Sealed original packaging
+- ✅ Product card
+- ✅ Usage instructions
+
+আপনি চাইলে আলাদা gift wrap করতে পারেন।
+
+## Gift Order করার নিয়ম
+
+📞 **01712-426871** (call/SMS)
+💬 **WhatsApp: +880 1712-426871**
+🌐 **glamourstouch.com**
+
+**বলুন:** "Gift delivery দরকার" — আমরা special packaging-এ পাঠাব।
+
+Dhaka delivery ৳80 | Cash on Delivery ✅
+**Order করুন আজই — stock limited!**
+    `
   }
 ];
