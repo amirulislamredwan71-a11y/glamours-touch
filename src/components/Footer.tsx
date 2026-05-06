@@ -109,7 +109,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Facebook size={16} className="text-gold" />
-                <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">গ্ল্যামার্স টাচ</a>
+                <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">Glamour's Touch</a>
               </li>
               <li className="flex items-center space-x-3">
                 <MapPin size={16} className="text-gold" />
