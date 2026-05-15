@@ -7,7 +7,7 @@ import FlashSaleTimer from '../components/FlashSaleTimer';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import heroBanner from '../assets/hero-banner.png';
+import heroBanner from '../assets/hero-banner.webp';
 
 interface Product {
   id: string;
@@ -83,20 +83,21 @@ const Home = () => {
         url="/"
       />
       {/* Hero Section */}
-      <section className="relative w-full bg-charcoal overflow-hidden">
-        <div className="relative w-full">
+      <section className="relative w-full bg-charcoal overflow-hidden pt-16 sm:pt-20">
+        <div className="relative w-full min-h-[40vh] sm:min-h-[60vh] flex items-center">
           <img 
             src={heroBanner}
             alt="Glamour's Touch"
-            className="w-full h-auto block"
+            className="absolute inset-0 w-full h-full object-cover"
             fetchpriority="high"
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 flex items-end justify-start p-6 sm:p-10 md:p-16 bg-gradient-to-t from-black/50 via-transparent to-transparent">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-8 sm:pb-16">
             <Link
               to="/shop"
-              className="inline-block bg-gold hover:bg-white hover:text-charcoal text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-bold tracking-[0.2em] text-xs md:text-sm transition-all duration-500 shadow-2xl shadow-gold/20 uppercase"
+              className="inline-block bg-gold hover:bg-white hover:text-charcoal text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold tracking-[0.2em] text-[10px] sm:text-xs transition-all duration-500 shadow-2xl shadow-gold/20 uppercase"
             >
               SHOP NOW
             </Link>

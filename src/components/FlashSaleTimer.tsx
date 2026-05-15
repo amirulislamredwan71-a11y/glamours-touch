@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { Zap, Tag } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 const FlashSaleTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -28,7 +28,7 @@ const FlashSaleTimer = () => {
 
   const TimeBox = ({ value, label, changed }: { value: string; label: string; changed: boolean }) => (
     <div className="flex flex-col items-center">
-      <div className="relative bg-white/20 backdrop-blur-sm rounded-xl w-12 sm:w-16 h-10 sm:h-14 flex items-center justify-center overflow-hidden border border-white/30">
+      <div className="relative bg-white/20 backdrop-blur-sm rounded-lg sm:rounded-xl w-9 sm:w-16 h-7 sm:h-14 flex items-center justify-center overflow-hidden border border-white/30">
         <AnimatePresence mode="popLayout">
           <motion.span
             key={value}
@@ -36,13 +36,13 @@ const FlashSaleTimer = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 30, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="text-white font-black text-xl sm:text-3xl font-mono leading-none absolute"
+            className="text-white font-black text-sm sm:text-3xl font-mono leading-none absolute"
           >
             {value}
           </motion.span>
         </AnimatePresence>
       </div>
-      <span className="text-white/70 text-[9px] sm:text-[10px] mt-1 font-medium">{label}</span>
+      <span className="text-white/70 text-[7px] sm:text-[10px] mt-0.5 sm:mt-1 font-medium">{label}</span>
     </div>
   );
 
@@ -58,46 +58,47 @@ const FlashSaleTimer = () => {
         style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '20px 20px' }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6">
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-6 py-2 sm:py-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-6">
 
           {/* Left — label */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <motion.div
               animate={{ rotate: [0, -15, 15, -10, 10, 0] }}
               transition={{ repeat: Infinity, repeatDelay: 3, duration: 0.6 }}
+              className="hidden sm:block"
             >
               <Zap size={22} className="text-yellow-300 fill-yellow-300" />
             </motion.div>
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="bg-yellow-300 text-red-700 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <div className="flex items-center gap-1">
+                <span className="bg-yellow-300 text-red-700 text-[8px] sm:text-[9px] font-black px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider">
                   Flash Sale
                 </span>
-                <Tag size={11} className="text-white/60" />
-                <span className="text-white/80 text-[10px]">আজ রাত পর্যন্ত</span>
+                <span className="text-white/80 text-[8px] sm:text-[10px] hidden sm:inline">আজ রাত পর্যন্ত</span>
               </div>
-              <p className="text-white font-bold text-sm sm:text-base leading-tight mt-0.5">
+              <p className="text-white font-bold text-[10px] sm:text-base leading-tight mt-0.5">
                 সীমিত সময়ের Special Offer!
               </p>
             </div>
           </div>
 
           {/* Center — countdown */}
-          <div className="flex items-end gap-1.5 sm:gap-2">
+          <div className="flex items-end gap-1 sm:gap-2">
             <TimeBox value={pad(timeLeft.hours)}   label="ঘণ্টা"   changed={timeLeft.hours !== prevTime.hours} />
-            <span className="text-white font-black text-2xl sm:text-3xl mb-3 leading-none">:</span>
+            <span className="text-white font-black text-lg sm:text-3xl mb-2 sm:mb-3 leading-none">:</span>
             <TimeBox value={pad(timeLeft.minutes)} label="মিনিট"  changed={timeLeft.minutes !== prevTime.minutes} />
-            <span className="text-white font-black text-2xl sm:text-3xl mb-3 leading-none">:</span>
+            <span className="text-white font-black text-lg sm:text-3xl mb-2 sm:mb-3 leading-none">:</span>
             <TimeBox value={pad(timeLeft.seconds)} label="সেকেন্ড" changed={timeLeft.seconds !== prevTime.seconds} />
           </div>
 
           {/* Right — CTA */}
           <Link
             to="/shop"
-            className="group flex items-center gap-1.5 bg-white text-red-600 px-5 py-2.5 rounded-full font-black text-xs sm:text-sm shadow-lg hover:bg-yellow-300 hover:text-red-700 transition-all duration-300 whitespace-nowrap"
+            className="group flex items-center gap-1 bg-white text-red-600 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full font-black text-[9px] sm:text-xs shadow-lg hover:bg-yellow-300 hover:text-red-700 transition-all duration-300 whitespace-nowrap"
           >
-            <Zap size={13} className="fill-current" />
+            <Zap size={11} className="fill-current sm:hidden" />
+            <Zap size={13} className="fill-current hidden sm:block" />
             এখনই Shop করুন
           </Link>
 
