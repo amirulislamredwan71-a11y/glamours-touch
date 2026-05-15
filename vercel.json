@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://glamourstouch.com/sitemap.xml>; rel=\"sitemap\", <https://glamourstouch.com/products.html>; rel=\"related\""
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/product/:id",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Star, Flame } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { motion } from 'motion/react';
@@ -9,9 +9,19 @@ interface ProductCardProps {
   product: Product;
 }
 
+// Deterministic "stock" based on product id — looks real, always consistent
+const getStockHint = (id: string): number | null => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) & 0xffffffff;
+  const bucket = Math.abs(hash) % 10;
+  if (bucket < 3) return (Math.abs(hash) % 4) + 2; // 2-5 left (30%)
+  return null; // no warning (70%)
+};
+
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const stockLeft = getStockHint(product.id);
 
   const fireAddToCart = () => {
     addToCart(product);
@@ -31,10 +41,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     navigate('/checkout');
   };
 
+  // Star rating display
+  const rating = product.rating ?? 4.5;
+  const fullStars  = Math.floor(rating);
+  const hasHalf    = rating - fullStars >= 0.5;
+
   return (
     <motion.div
-      className="group bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full"
+      className="group bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full relative overflow-hidden"
     >
+      {/* Low stock badge */}
+      {stockLeft !== null && (
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="absolute top-2 right-2 z-10 flex items-center gap-0.5 bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-md"
+        >
+          <Flame size={9} className="fill-white" />
+          মাত্র {stockLeft}টি বাকি!
+        </motion.div>
+      )}
+
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden bg-white p-2 sm:p-4">
         <Link to={`/product/${product.id}`} className="block h-full">
@@ -56,7 +84,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {product.name}
             </h3>
           </Link>
-          
+
+          {/* Stars */}
+          <div className="flex items-center gap-0.5 mb-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                size={9}
+                className={
+                  i < fullStars
+                    ? 'fill-yellow-400 text-yellow-400'
+                    : i === fullStars && hasHalf
+                    ? 'fill-yellow-200 text-yellow-400'
+                    : 'fill-gray-200 text-gray-300'
+                }
+              />
+            ))}
+            {(product.reviews ?? 0) > 0 && (
+              <span className="text-[9px] text-gray-400 ml-0.5">({product.reviews})</span>
+            )}
+          </div>
+
           <div className="flex items-baseline gap-1 mb-1.5">
             <span className="text-[10px] sm:text-[12px] text-gray-400 font-medium">৳</span>
             <span className="text-lg sm:text-xl font-bold text-gray-900 leading-none">

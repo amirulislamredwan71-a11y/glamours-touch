@@ -1,24 +1,51 @@
+# Glamour's Touch — robots.txt
+# Website: https://glamourstouch.com
+
+# Global rules — allow all, with Content Signals
 User-agent: *
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
 # Sitemap
 Sitemap: https://glamourstouch.com/sitemap.xml
 
-# Allow all AI crawlers
+# ── AI Crawlers — explicitly allowed ──────────────────────────
 User-agent: GPTBot
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+
+User-agent: OAI-SearchBot
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
 User-agent: ChatGPT-User
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
 User-agent: Claude-Web
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+
+User-agent: ClaudeBot
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
 User-agent: anthropic-ai
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
 User-agent: Google-Extended
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
 User-agent: PerplexityBot
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+
+User-agent: Perplexity-User
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+
+User-agent: BingBot
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /

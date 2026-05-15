@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
+import FlashSaleTimer from '../components/FlashSaleTimer';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -154,6 +155,9 @@ const Home = () => {
           <div className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent" />
         </motion.div>
       </section>
+
+      {/* Flash Sale Countdown */}
+      <FlashSaleTimer />
 
       {/* All Products Section */}
       <section className="py-12 sm:py-20 bg-gray-50 relative overflow-hidden">
