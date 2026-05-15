@@ -84,17 +84,16 @@ const Home = () => {
       />
       {/* Hero Section */}
       <section className="relative w-full bg-charcoal overflow-hidden pt-16 sm:pt-20">
-        <div className="relative w-full min-h-[40vh] sm:min-h-[60vh] flex items-center">
+        <div className="relative w-full">
           <img 
             src={heroBanner}
             alt="Glamour's Touch"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="w-full h-auto block"
             fetchpriority="high"
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-8 sm:pb-16">
+          <div className="absolute inset-0 flex items-center justify-center sm:justify-end sm:pr-10 md:pr-20">
             <Link
               to="/shop"
               className="inline-block bg-gold hover:bg-white hover:text-charcoal text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold tracking-[0.2em] text-[10px] sm:text-xs transition-all duration-500 shadow-2xl shadow-gold/20 uppercase"
