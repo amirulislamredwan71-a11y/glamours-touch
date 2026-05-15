@@ -93,11 +93,11 @@ const Home = () => {
             loading="eager"
             decoding="async"
           />
-           {/* SHOP NOW button aligned to image text */}
-           <div className="absolute inset-0">
+           {/* Mobile-only SHOP NOW button aligned to image text */}
+           <div className="sm:hidden absolute inset-0">
              <Link
                to="/shop"
-               className="absolute bottom-[21%] left-[42%] -translate-x-1/2 inline-flex items-center gap-1.5 sm:gap-3 bg-charcoal/90 hover:bg-gold text-gold hover:text-white px-3 py-1.5 sm:px-8 sm:py-4 rounded-full font-bold tracking-[0.15em] text-[8px] sm:text-xs uppercase border border-gold/20 transition-all duration-300"
+               className="absolute bottom-[08%] left-[47%] -translate-x-1/2 inline-flex items-center gap-1.5 sm:gap-3 bg-charcoal/90 hover:bg-gold text-gold hover:text-white px-3 py-1.5 sm:px-8 sm:py-4 rounded-full font-bold tracking-[0.15em] text-[8px] sm:text-xs uppercase border border-gold/20 transition-all duration-300"
              >
                SHOP NOW
                <ArrowRight size={10} className="sm:hidden" />
