@@ -27,21 +27,9 @@ const BottomNav = () => {
             end={to === '/'}
             className={({ isActive }) =>
               `flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors relative ${
-                isActive ? 'text-gold' : 'text-gray-400'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <div className="relative">
-                  <Icon size={22} strokeWidth={isActive ? 2.5 : 1.8} />
-                  {badge != null && badge > 0 && (
-                    <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 bg-[#e91e8c] text-white text-[9px] font-bold rounded-full flex items-center justify-center px-0.5 leading-none">
-                      {badge > 99 ? '99+' : badge}
-                    </span>
-                  )}
-                </div>
-                <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gold' : 'text-gray-400'}`}>
+                isActive ? 'text-gold' : 'text-gray-500'
+
+                <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gold' : 'text-gray-500'}`}>
                   {label}
                 </span>
                 {isActive && (

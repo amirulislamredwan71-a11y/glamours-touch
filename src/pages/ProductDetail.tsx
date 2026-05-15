@@ -152,7 +152,7 @@ const ProductDetail = () => {
                   <ShoppingBag size={20} /> ADD TO BAG
                 </button>
                 <button onClick={() => { clearCart(); addToCart(product); navigate('/checkout'); }}
-                  className="flex-grow bg-orange-400 text-white py-5 rounded-full font-bold tracking-widest hover:bg-orange-500 transition-all flex items-center justify-center gap-3 shadow-lg">
+                  className="flex-grow bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-full font-bold tracking-widest hover:bg-orange-600 transition-all flex items-center justify-center gap-3 shadow-lg">
                   BUY NOW
                 </button>
               </div>

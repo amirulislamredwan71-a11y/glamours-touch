@@ -126,7 +126,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           </button>
           <button
             onClick={handleBuyNow}
-            className="flex-1 bg-orange-400 hover:bg-orange-500 text-white py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
+            className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
           >
             Buy
           </button>
