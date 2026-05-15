@@ -82,56 +82,24 @@ const Home = () => {
         url="/"
       />
       {/* Hero Section */}
-      <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden">
+      <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden bg-gradient-to-br from-charcoal via-gray-900 to-black">
         <div className="absolute inset-0 z-0">
-            <img 
-              src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=60&w=800&fm=webp" 
-              alt="Hero" 
-              className="w-full h-full object-cover"
-              fetchpriority="high"
-              loading="eager"
-              decoding="async"
-              referrerPolicy="no-referrer"
-            />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gold/20 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-rose-gold/10 via-transparent to-transparent" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <motion.span 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-6 block"
-            >
+          <div>
+            <span className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-6 block animate-fade-in-up">
               {t('hero.subtitle')}
-            </motion.span>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="text-3xl xs:text-6xl md:text-9xl font-serif font-bold mb-4 md:mb-8 leading-tight tracking-tighter"
-            >
+            </span>
+            <h1 className="text-3xl xs:text-6xl md:text-9xl font-serif font-bold mb-4 md:mb-8 leading-tight tracking-tighter animate-fade-in-up-delay-1">
               {t('hero.title').split(' ')[0]} <br />
               <span className="text-gold italic">{t('hero.title').split(' ')[1]}</span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.8 }}
-              className="text-[11px] xs:text-base md:text-2xl max-w-2xl mb-6 md:mb-12 font-light tracking-wide text-gray-300 leading-relaxed"
-            >
+            </h1>
+            <p className="text-[11px] xs:text-base md:text-2xl max-w-2xl mb-6 md:mb-12 font-light tracking-wide text-gray-300 leading-relaxed animate-fade-in-up-delay-2">
               {t('hero.description')}
-            </motion.p>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.8 }}
-              className="flex flex-wrap gap-3 md:gap-6"
-            >
+            </p>
+            <div className="flex flex-wrap gap-3 md:gap-6 animate-fade-in-up-delay-3">
               <Link 
                 to="/shop"
                 className="group relative inline-block bg-gold text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-bold tracking-[0.2em] text-[10px] md:text-xs transition-all duration-500 overflow-hidden shadow-2xl shadow-gold/20 uppercase"
@@ -140,20 +108,15 @@ const Home = () => {
                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 <span className="absolute inset-0 flex items-center justify-center text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-bold tracking-[0.2em] text-xs z-20">{t('hero.shopNow')}</span>
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
         
         {/* Scroll Indicator - Hidden on mobile */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-4"
-        >
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-4 animate-fade-in-delay-4">
           <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/50 vertical-text">Scroll</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent" />
-        </motion.div>
+        </div>
       </section>
 
       {/* Flash Sale Countdown */}
