@@ -44,7 +44,7 @@ const FlashSaleTimer = () => {
       />
 
       <div className="relative max-w-7xl mx-auto px-2 sm:px-6 py-2 sm:py-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-6">
+        <div className="flex flex-row items-center justify-center sm:justify-between gap-1 sm:gap-6">
 
           {/* Left — label */}
           <div className="flex items-center gap-1.5 sm:gap-3">
@@ -58,18 +58,18 @@ const FlashSaleTimer = () => {
                 </span>
                 <span className="text-white/80 text-[8px] sm:text-[10px] hidden sm:inline">আজ রাত পর্যন্ত</span>
               </div>
-              <p className="text-white font-bold text-[10px] sm:text-base leading-tight mt-0.5">
+              <p className="text-white font-bold text-[10px] sm:text-base leading-tight mt-0.5 hidden sm:block">
                 সীমিত সময়ের Special Offer!
               </p>
             </div>
           </div>
 
           {/* Center — countdown */}
-          <div className="flex items-end gap-1 sm:gap-2">
+          <div className="flex items-center gap-0.5 sm:gap-2">
             <TimeBox value={pad(timeLeft.hours)}   label="ঘণ্টা"   changed={timeLeft.hours !== prevTime.hours} />
-            <span className="text-white font-black text-lg sm:text-3xl mb-2 sm:mb-3 leading-none">:</span>
+            <span className="text-white font-black text-base sm:text-3xl mb-0 sm:mb-3 leading-none">:</span>
             <TimeBox value={pad(timeLeft.minutes)} label="মিনিট"  changed={timeLeft.minutes !== prevTime.minutes} />
-            <span className="text-white font-black text-lg sm:text-3xl mb-2 sm:mb-3 leading-none">:</span>
+            <span className="text-white font-black text-base sm:text-3xl mb-0 sm:mb-3 leading-none">:</span>
             <TimeBox value={pad(timeLeft.seconds)} label="সেকেন্ড" changed={timeLeft.seconds !== prevTime.seconds} />
           </div>
 
