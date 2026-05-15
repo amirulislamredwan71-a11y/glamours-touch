@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { CartProvider } from './hooks/useCart';
 import { AuthProvider } from './hooks/useAuth';
 import { UIProvider } from './hooks/useUI';
@@ -12,31 +12,37 @@ import ScrollToTop from './components/ScrollToTop';
 import WhatsAppButton from './components/WhatsAppButton';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
-import Shop from './pages/Shop';
-import Cart from './pages/Cart';
-import ProductDetail from './pages/ProductDetail';
-import Profile from './pages/Profile';
-import Checkout from './pages/Checkout';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import ShippingPolicy from './pages/ShippingPolicy';
-import ReturnsExchanges from './pages/ReturnsExchanges';
-import FAQ from './pages/FAQ';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
-import OrderTracking from './pages/OrderTracking';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import AdminLayout from './components/admin/AdminLayout';
-import AdminDashboard from './pages/admin/Dashboard';
-import AdminProducts from './pages/admin/Products';
-import AdminCategories from './pages/admin/Categories';
-import AdminOrders from './pages/admin/Orders';
-import AdminCustomers from './pages/admin/Customers';
-import AdminLogin from './pages/admin/Login';
 import { useAuth } from './hooks/useAuth';
 import { useUI } from './hooks/useUI';
-import { Navigate } from 'react-router-dom';
+
+const Shop = lazy(() => import('./pages/Shop'));
+const Cart = lazy(() => import('./pages/Cart'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const ShippingPolicy = lazy(() => import('./pages/ShippingPolicy'));
+const ReturnsExchanges = lazy(() => import('./pages/ReturnsExchanges'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const OrderTracking = lazy(() => import('./pages/OrderTracking'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
+const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
+const AdminProducts = lazy(() => import('./pages/admin/Products'));
+const AdminCategories = lazy(() => import('./pages/admin/Categories'));
+const AdminOrders = lazy(() => import('./pages/admin/Orders'));
+const AdminCustomers = lazy(() => import('./pages/admin/Customers'));
+const AdminLogin = lazy(() => import('./pages/admin/Login'));
+
+const LoadingFallback = () => (
+  <div className="min-h-[60vh] flex items-center justify-center bg-cream">
+    <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAdmin, loading } = useAuth();
@@ -57,25 +63,25 @@ const AppContent = () => {
       <main className="flex-grow pb-16 sm:pb-0">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/shipping" element={<ShippingPolicy />} />
-          <Route path="/returns" element={<ReturnsExchanges />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/track-order" element={<OrderTracking />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/shop" element={<Suspense fallback={<LoadingFallback />}><Shop /></Suspense>} />
+          <Route path="/product/:id" element={<Suspense fallback={<LoadingFallback />}><ProductDetail /></Suspense>} />
+          <Route path="/cart" element={<Suspense fallback={<LoadingFallback />}><Cart /></Suspense>} />
+          <Route path="/profile" element={<Suspense fallback={<LoadingFallback />}><Profile /></Suspense>} />
+          <Route path="/checkout" element={<Suspense fallback={<LoadingFallback />}><Checkout /></Suspense>} />
+          <Route path="/about" element={<Suspense fallback={<LoadingFallback />}><About /></Suspense>} />
+          <Route path="/contact" element={<Suspense fallback={<LoadingFallback />}><Contact /></Suspense>} />
+          <Route path="/shipping" element={<Suspense fallback={<LoadingFallback />}><ShippingPolicy /></Suspense>} />
+          <Route path="/returns" element={<Suspense fallback={<LoadingFallback />}><ReturnsExchanges /></Suspense>} />
+          <Route path="/faq" element={<Suspense fallback={<LoadingFallback />}><FAQ /></Suspense>} />
+          <Route path="/privacy" element={<Suspense fallback={<LoadingFallback />}><PrivacyPolicy /></Suspense>} />
+          <Route path="/terms" element={<Suspense fallback={<LoadingFallback />}><TermsOfService /></Suspense>} />
+          <Route path="/track-order" element={<Suspense fallback={<LoadingFallback />}><OrderTracking /></Suspense>} />
+          <Route path="/blog" element={<Suspense fallback={<LoadingFallback />}><Blog /></Suspense>} />
+          <Route path="/blog/:slug" element={<Suspense fallback={<LoadingFallback />}><BlogPost /></Suspense>} />
 
           {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+          <Route path="/admin/login" element={<Suspense fallback={<LoadingFallback />}><AdminLogin /></Suspense>} />
+          <Route path="/admin" element={<AdminRoute><Suspense fallback={<LoadingFallback />}><AdminLayout /></Suspense></AdminRoute>}>
             <Route index element={<AdminDashboard />} />
             <Route path="products" element={<AdminProducts />} />
             <Route path="categories" element={<AdminCategories />} />

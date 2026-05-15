@@ -84,13 +84,13 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-            <motion.img 
-              initial={{ scale: 1.05 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 5, ease: "linear" }}
-              src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=1200" 
+            <img 
+              src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=60&w=800&fm=webp" 
               alt="Hero" 
               className="w-full h-full object-cover"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
               referrerPolicy="no-referrer"
             />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
