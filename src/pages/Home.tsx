@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
@@ -92,14 +93,16 @@ const Home = () => {
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 flex items-end justify-center pb-3 sm:items-center sm:justify-end sm:pr-10 sm:pb-0 md:pr-20">
-            <Link
-              to="/shop"
-              className="inline-block bg-gold hover:bg-white hover:text-charcoal text-white px-4 py-2 sm:px-8 sm:py-3 rounded-full font-bold tracking-[0.2em] text-[9px] sm:text-xs transition-all duration-500 shadow-2xl shadow-gold/20 uppercase"
-            >
-              SHOP NOW
-            </Link>
-          </div>
+           <div className="absolute inset-0 flex items-center justify-center pb-12 sm:pb-20">
+             <Link
+               to="/shop"
+               className="group inline-flex items-center gap-3 bg-charcoal hover:bg-gold text-gold hover:text-white px-8 py-4 rounded-full font-bold tracking-[0.2em] text-xs transition-all duration-500 shadow-2xl shadow-black/50 uppercase border border-gold/20"
+             >
+               SHOP NOW
+               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+             </Link>
+           </div>
+
         </div>
       </section>
       
