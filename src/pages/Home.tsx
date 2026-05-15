@@ -93,6 +93,14 @@ const Home = () => {
             loading="eager"
             decoding="async"
           />
+          <div className="absolute inset-0 flex items-end justify-start p-6 sm:p-10 md:p-16 bg-gradient-to-t from-black/50 via-transparent to-transparent">
+            <Link
+              to="/shop"
+              className="inline-block bg-gold hover:bg-white hover:text-charcoal text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-bold tracking-[0.2em] text-xs md:text-sm transition-all duration-500 shadow-2xl shadow-gold/20 uppercase"
+            >
+              SHOP NOW
+            </Link>
+          </div>
         </div>
       </section>
 
