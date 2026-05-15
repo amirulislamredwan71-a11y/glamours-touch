@@ -81,8 +81,29 @@ const Home = () => {
         description="Glamour's Touch — Bangladesh এর সেরা Korean skincare shop। DABO Snail Cream, Rice Ceramide, Glutathione Cream সহ 100% authentic Korean beauty products। Order: 01712-426871"
         url="/"
       />
-      {/* Hero Section — rendered from index.html for instant LCP */}
-      <div className="h-0" />
+      {/* Hero Section */}
+      <section className="relative w-full bg-charcoal overflow-hidden pt-16 sm:pt-20">
+        <div className="relative w-full">
+          <img 
+            src="/hero-banner.webp"
+            alt="Glamour's Touch"
+            width="1280"
+            height="533"
+            className="w-full h-auto block"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+          />
+          <div className="absolute inset-0 flex items-end justify-center pb-3 sm:items-center sm:justify-end sm:pr-10 sm:pb-0 md:pr-20">
+            <Link
+              to="/shop"
+              className="inline-block bg-gold hover:bg-white hover:text-charcoal text-white px-4 py-2 sm:px-8 sm:py-3 rounded-full font-bold tracking-[0.2em] text-[9px] sm:text-xs transition-all duration-500 shadow-2xl shadow-gold/20 uppercase"
+            >
+              SHOP NOW
+            </Link>
+          </div>
+        </div>
+      </section>
       
       {/* Flash Sale Countdown */}
       <FlashSaleTimer />
