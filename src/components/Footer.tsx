@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, ShieldCheck, Truck, Sparkles, Globe, User } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, ShieldCheck, Truck, Sparkles, Globe, User, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useUI } from '../hooks/useUI';
 import { useAuth } from '../hooks/useAuth';
@@ -14,7 +14,17 @@ const Footer = () => {
   return (
     <footer className="bg-charcoal text-cream pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Features Section moved to Footer */}
+        {/* SHOP NOW CTA */}
+        <div className="text-center mb-16 pb-12 border-b border-white/10">
+          <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-6">Ready to Transform Your Skin?</h3>
+          <Link to="/shop"
+            className="inline-flex items-center gap-3 bg-gold hover:bg-white hover:text-charcoal text-white px-10 py-4 sm:px-14 sm:py-5 rounded-full font-bold tracking-[0.2em] text-xs transition-all duration-500 shadow-xl shadow-gold/20 uppercase"
+          >
+            SHOP NOW <ArrowRight size={18} />
+          </Link>
+        </div>
+
+        {/* Features Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 border-b border-white/10 pb-20">
           <div className="flex flex-col items-center text-center">
             <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-gold mb-6">

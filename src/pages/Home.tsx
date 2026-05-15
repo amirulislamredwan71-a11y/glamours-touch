@@ -93,13 +93,13 @@ const Home = () => {
             loading="eager"
             decoding="async"
           />
-           <div className="absolute inset-0 flex items-center justify-center pb-12 sm:pb-20">
+           <div className="absolute inset-0 flex items-end justify-center pb-16 sm:items-end sm:justify-end sm:pb-10 sm:pr-8 md:pr-16 lg:pb-14">
              <Link
                to="/shop"
-               className="group inline-flex items-center gap-3 bg-charcoal hover:bg-gold text-gold hover:text-white px-8 py-4 rounded-full font-bold tracking-[0.2em] text-xs transition-all duration-500 shadow-2xl shadow-black/50 uppercase border border-gold/20"
+               className="group inline-flex items-center gap-3 bg-charcoal hover:bg-gold text-gold hover:text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold tracking-[0.2em] text-[10px] sm:text-xs transition-all duration-500 shadow-2xl shadow-black/50 uppercase border border-gold/20"
              >
                SHOP NOW
-               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
              </Link>
            </div>
 
