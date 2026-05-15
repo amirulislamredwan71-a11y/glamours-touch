@@ -82,7 +82,7 @@ const Home = () => {
         url="/"
       />
       {/* Hero Section */}
-      <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden bg-charcoal">
+      <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden bg-gradient-to-br from-charcoal via-gray-900 to-black">
         <div className="absolute inset-0 z-0">
           <img 
             src="/hero-banner.png"
@@ -91,12 +91,19 @@ const Home = () => {
             fetchpriority="high"
             loading="eager"
             decoding="async"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
           <div className="max-w-lg">
-            <div className="flex flex-wrap gap-3 md:gap-6 animate-fade-in-up-delay-3">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold mb-2 leading-tight">
+              <span className="text-gold">Glamour's</span> Touch
+            </h1>
+            <p className="text-sm sm:text-lg md:text-2xl text-gray-200 font-light mb-6 md:mb-10">
+              {t('hero.description')}
+            </p>
+            <div className="flex flex-wrap gap-3 md:gap-6">
               <Link 
                 to="/shop"
                 className="group relative inline-block bg-gold text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-bold tracking-[0.2em] text-[10px] md:text-xs transition-all duration-500 overflow-hidden shadow-2xl shadow-gold/20 uppercase"
@@ -110,7 +117,7 @@ const Home = () => {
         </div>
         
         {/* Scroll Indicator - Hidden on mobile */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-4 animate-fade-in-delay-4">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-4">
           <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/50 vertical-text">Scroll</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent" />
         </div>
