@@ -145,16 +145,31 @@
     </script>
 
     <!-- Preload critical resources -->
-    <link rel="preload" as="image" href="/hero-banner.png" fetchpriority="high" />
-    <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" />
-    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preload" as="image" href="/hero-banner.webp" fetchpriority="high" />
     <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" />
     <link rel="preconnect" href="https://images.unsplash.com" />
 
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
+    <style>
+      .hero-banner-img { width: 100%; height: auto; display: block; }
+      @media (max-width: 640px) { .hero-banner-img { min-height: 200px; object-fit: cover; } }
+    </style>
   </head>
   <body>
+    <div class="hero-banner-wrapper" style="position:relative;width:100%;background:#1A1A1A;padding-top:64px">
+      <img 
+        src="/hero-banner.webp" 
+        alt="Glamour's Touch" 
+        class="hero-banner-img"
+        width="1280" 
+        height="533"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+      <a href="/shop" class="hero-shop-btn" style="position:absolute;bottom:24px;left:16px;right:16px;text-align:center;background:#D4AF37;color:white;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;box-shadow:0 10px 30px rgba(212,175,55,0.2)">SHOP NOW</a>
+    </div>
     <noscript>
       <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=900500432991738&ev=PageView&noscript=1"/>
     </noscript>
