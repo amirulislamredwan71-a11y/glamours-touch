@@ -18,93 +18,51 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isCustomAdmin, setIsCustomAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const ADMIN_EMAILS = [
-    'glamourstouch26@gmail.com',
-    'khondokartowsif171@gmail.com',
-    'amirulislamredwan71@gmail.com'
-  ];
+  const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
 
   const adminLogin = (email: string, password: string) => {
-    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'glamourstouch26@gmail.com';
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'Glamourstouch26@&';
+    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+    if (!adminEmail || !adminPassword) return false;
     if (email === adminEmail && password === adminPassword) {
-      const adminUser = {
-        id: '00000000-0000-0000-0000-000000000000', // Valid UUID format for the mock admin
+      setUser({
+        id: '00000000-0000-0000-0000-000000000000',
         email: 'glamourstouch26@gmail.com',
         user_metadata: { full_name: 'Glamour Admin' },
-        aud: 'authenticated',
-      } as any;
-      setUser(adminUser);
+      } as User);
       setIsAdmin(true);
-      setIsCustomAdmin(true);
-      localStorage.setItem('glamour_admin', 'true');
       return true;
     }
     return false;
   };
 
   const checkAdminStatus = (currentUser: User | null) => {
-    if (isCustomAdmin) return true;
-    const isStoredAdmin = localStorage.getItem('glamour_admin') === 'true';
-    if (isStoredAdmin) {
-      if (!user) {
-        setUser({
-          id: '00000000-0000-0000-0000-000000000000',
-          email: 'glamourstouch26@gmail.com',
-          user_metadata: { full_name: 'Glamour Admin' },
-        } as any);
-      }
-      return true;
-    }
     if (!currentUser || !currentUser.email) return false;
-    const email = currentUser.email.toLowerCase().trim();
-    return ADMIN_EMAILS.some(adminEmail => adminEmail.toLowerCase().trim() === email);
+    return ADMIN_EMAILS.includes(currentUser.email.toLowerCase().trim());
   };
 
   useEffect(() => {
-    // Safety timeout to prevent stuck loading state
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 3000);
 
-    // Check for custom admin first
-    const isStoredAdmin = localStorage.getItem('glamour_admin') === 'true';
-    if (isStoredAdmin) {
-      setUser({
-        id: '00000000-0000-0000-0000-000000000000',
-        email: 'glamourstouch26@gmail.com',
-        user_metadata: { full_name: 'Glamour Admin' },
-      } as any);
-      setIsAdmin(true);
-      setIsCustomAdmin(true);
-      setLoading(false);
-      clearTimeout(timeout);
-      return;
-    }
-
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      const currentUser = session?.user ?? null;
-      if (!isCustomAdmin) {
-        setUser(currentUser);
-        setIsAdmin(checkAdminStatus(currentUser));
-      }
-      setLoading(false);
-      clearTimeout(timeout);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (isCustomAdmin) return;
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       setIsAdmin(checkAdminStatus(currentUser));
       setLoading(false);
       clearTimeout(timeout);
-      
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      setIsAdmin(checkAdminStatus(currentUser));
+      setLoading(false);
+      clearTimeout(timeout);
+
       if (currentUser) {
         syncProfile(currentUser);
       }
@@ -114,7 +72,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       subscription.unsubscribe();
       clearTimeout(timeout);
     };
-  }, [isCustomAdmin]);
+  }, []);
 
   const syncProfile = async (user: User) => {
     if (user.id === '00000000-0000-0000-0000-000000000000') return;
@@ -180,8 +138,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      localStorage.removeItem('glamour_admin');
-      setIsCustomAdmin(false);
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     } catch (error) {
