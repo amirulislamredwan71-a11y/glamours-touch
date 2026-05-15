@@ -82,40 +82,16 @@ const Home = () => {
         url="/"
       />
       {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-charcoal via-gray-900 to-black">
+      <section className="relative w-full bg-charcoal overflow-hidden">
         <div className="relative w-full">
           <img 
             src="/hero-banner.png"
-            alt="Glamour's Touch — Bangladesh's Trending Beauty Essentials"
-            className="w-full h-auto max-h-[90vh] object-contain mx-auto"
+            alt="Glamour's Touch"
+            className="w-full h-auto block"
             fetchpriority="high"
             loading="eager"
             decoding="async"
-            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent pointer-events-none" />
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 z-10 pb-8 md:pb-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-lg">
-              <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold mb-2 leading-tight text-white">
-                <span className="text-gold">Glamour's</span> Touch
-              </h1>
-              <p className="text-sm sm:text-lg md:text-2xl text-gray-200 font-light mb-4 md:mb-6">
-                {t('hero.description')}
-              </p>
-              <div className="flex flex-wrap gap-3 md:gap-6">
-                <Link 
-                  to="/shop"
-                  className="group relative inline-block bg-gold text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-bold tracking-[0.2em] text-[10px] md:text-xs transition-all duration-500 overflow-hidden shadow-2xl shadow-gold/20 uppercase"
-                >
-                  <span className="relative z-10">{t('hero.shopNow')}</span>
-                  <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                  <span className="absolute inset-0 flex items-center justify-center text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-bold tracking-[0.2em] text-xs z-20">{t('hero.shopNow')}</span>
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
