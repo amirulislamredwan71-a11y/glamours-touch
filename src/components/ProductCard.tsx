@@ -65,11 +65,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
       )}
 
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-white p-2 sm:p-4">
+      <div className="relative aspect-square overflow-hidden bg-gray-100 p-2 sm:p-4">
         <Link to={`/product/${product.id}`} className="block h-full">
           <img
             src={product.image.includes('unsplash.com') ? `${product.image}&w=300` : product.image}
             alt={product.name}
+            width="400"
+            height="400"
             loading={priority ? 'eager' : 'lazy'}
             fetchpriority={priority ? 'high' : undefined}
             className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"

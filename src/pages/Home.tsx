@@ -88,6 +88,8 @@ const Home = () => {
           <img 
             src={heroBanner}
             alt="Glamour's Touch"
+            width="1280"
+            height="533"
             className="w-full h-auto block"
             fetchpriority="high"
             loading="eager"
