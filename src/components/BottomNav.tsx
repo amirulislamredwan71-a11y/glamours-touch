@@ -28,7 +28,12 @@ const BottomNav = () => {
             className={({ isActive }) =>
               `flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors relative ${
                 isActive ? 'text-gold' : 'text-gray-500'
-
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <Icon size={18} className={isActive ? 'text-gold' : 'text-gray-400'} />
                 <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gold' : 'text-gray-500'}`}>
                   {label}
                 </span>
