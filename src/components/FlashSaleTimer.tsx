@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Zap } from 'lucide-react';
 
@@ -26,33 +25,19 @@ const FlashSaleTimer = () => {
 
   const pad = (n: number) => String(n).padStart(2, '0');
 
-  const TimeBox = ({ value, label, changed }: { value: string; label: string; changed: boolean }) => (
+  const TimeBox = ({ value, label }: { value: string; label: string }) => (
     <div className="flex flex-col items-center">
       <div className="relative bg-white/20 backdrop-blur-sm rounded-lg sm:rounded-xl w-9 sm:w-16 h-7 sm:h-14 flex items-center justify-center overflow-hidden border border-white/30">
-        <AnimatePresence mode="popLayout">
-          <motion.span
-            key={value}
-            initial={{ y: changed ? -30 : 0, opacity: changed ? 0 : 1 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 30, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="text-white font-black text-sm sm:text-3xl font-mono leading-none absolute"
-          >
-            {value}
-          </motion.span>
-        </AnimatePresence>
+        <span className="text-white font-black text-sm sm:text-3xl font-mono leading-none">
+          {value}
+        </span>
       </div>
       <span className="text-white/70 text-[7px] sm:text-[10px] mt-0.5 sm:mt-1 font-medium">{label}</span>
     </div>
   );
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="bg-gradient-to-r from-red-600 via-rose-600 to-orange-500 relative overflow-hidden"
-    >
+    <section className="bg-gradient-to-r from-red-600 via-rose-600 to-orange-500 relative overflow-hidden animate-flash-sale">
       {/* background sparkle pattern */}
       <div className="absolute inset-0 opacity-10"
         style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '20px 20px' }}
@@ -63,13 +48,9 @@ const FlashSaleTimer = () => {
 
           {/* Left — label */}
           <div className="flex items-center gap-1.5 sm:gap-3">
-            <motion.div
-              animate={{ rotate: [0, -15, 15, -10, 10, 0] }}
-              transition={{ repeat: Infinity, repeatDelay: 3, duration: 0.6 }}
-              className="hidden sm:block"
-            >
+          <div className="hidden sm:block rotate-zap">
               <Zap size={22} className="text-yellow-300 fill-yellow-300" />
-            </motion.div>
+            </div>
             <div>
               <div className="flex items-center gap-1">
                 <span className="bg-yellow-300 text-red-700 text-[8px] sm:text-[9px] font-black px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider">
@@ -104,7 +85,7 @@ const FlashSaleTimer = () => {
 
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

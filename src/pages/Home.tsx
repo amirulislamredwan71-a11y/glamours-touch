@@ -4,8 +4,6 @@ import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import FlashSaleTimer from '../components/FlashSaleTimer';
-import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -112,28 +110,17 @@ const Home = () => {
       <section className="py-12 sm:py-20 bg-gray-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-8 md:mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
+            <div className="animate-fade-in-up">
               <h2 className="text-[10px] md:text-xs font-bold text-gold tracking-[0.3em] uppercase">Recommended for You</h2>
-            </motion.div>
+            </div>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
             {featuredProducts.length > 0 ? (
               featuredProducts.map((product, idx) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: (idx % 5) * 0.05, duration: 0.4 }}
-                >
+                <div key={product.id}>
                   <ProductCard product={product} priority={idx < 2} />
-                </motion.div>
+                </div>
               ))
             ) : (
               <div className="col-span-full py-10 text-center text-gray-400">Loading treasures...</div>
@@ -149,27 +136,16 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
+            <div className="animate-fade-in-up">
               <span className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-4 block">{t('categories.subtitle')}</span>
               <h2 className="text-5xl md:text-6xl font-serif font-bold text-charcoal">{t('categories.title').split(' ')[0]} <span className="text-gold italic">{t('categories.title').split(' ').slice(1).join(' ')}</span></h2>
-            </motion.div>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
             {categories.length > 0 ? (
               categories.map((cat, idx) => (
-                <motion.div
-                  key={cat.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.8 }}
-                >
+                <div key={cat.id} className="animate-fade-in-up">
                   <Link 
                     to={`/shop?category=${cat.name}`}
                     className="group relative h-[550px] overflow-hidden rounded-[2.5rem] shadow-xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-700 block"
@@ -188,7 +164,7 @@ const Home = () => {
                       <span className="text-gold text-[10px] font-bold tracking-[0.4em] uppercase opacity-0 group-hover:opacity-100 transform translate-y-8 group-hover:translate-y-0 transition-all duration-700">{t('categories.discover')}</span>
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               ))
             ) : (
               <div className="col-span-full py-10 text-center text-gray-400 font-serif text-xl italic">Curating collections...</div>
@@ -223,24 +199,15 @@ const Home = () => {
       <section className="py-32 bg-charcoal text-cream relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=1920')] opacity-5 object-cover pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-          >
+          <div className="animate-fade-in-up">
             <span className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-6 block">{t('newsletter.subtitle')}</span>
             <h2 className="text-5xl md:text-7xl font-serif font-bold mb-8 leading-tight">{t('newsletter.title').split(' ')[0]} <span className="text-gold italic">{t('newsletter.title').split(' ').slice(1).join(' ')}</span></h2>
             <p className="text-gray-400 mb-12 text-xl font-light leading-relaxed max-w-2xl mx-auto">{t('newsletter.description')}</p>
             
             {newsletterStatus === 'success' ? (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white/5 backdrop-blur-md border border-gold/20 p-8 rounded-[2rem] text-gold font-bold tracking-widest uppercase"
-              >
+              <div className="bg-white/5 backdrop-blur-md border border-gold/20 p-8 rounded-[2rem] text-gold font-bold tracking-widest uppercase">
                 {t('newsletter.success')}
-              </motion.div>
+              </div>
             ) : (
               <form 
                 onSubmit={handleNewsletterSubmit}
@@ -260,7 +227,7 @@ const Home = () => {
                 </button>
               </form>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
