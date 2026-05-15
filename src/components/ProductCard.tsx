@@ -7,6 +7,7 @@ import { motion } from 'motion/react';
 
 interface ProductCardProps {
   product: Product;
+  priority?: boolean;
 }
 
 // Deterministic "stock" based on product id — looks real, always consistent
@@ -18,7 +19,7 @@ const getStockHint = (id: string): number | null => {
   return null; // no warning (70%)
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const stockLeft = getStockHint(product.id);
@@ -69,7 +70,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img
             src={product.image.includes('unsplash.com') ? `${product.image}&w=300` : product.image}
             alt={product.name}
-            loading="lazy"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchpriority={priority ? 'high' : undefined}
             className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
             referrerPolicy="no-referrer"
           />

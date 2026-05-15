@@ -82,23 +82,20 @@ const Home = () => {
         url="/"
       />
       {/* Hero Section */}
-      <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden bg-gradient-to-br from-charcoal via-gray-900 to-black">
+      <section className="relative h-[45vh] sm:h-screen flex items-center overflow-hidden bg-charcoal">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gold/20 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-rose-gold/10 via-transparent to-transparent" />
+          <img 
+            src="/hero-banner.png"
+            alt="Glamour's Touch — Bangladesh's Trending Beauty Essentials"
+            className="w-full h-full object-cover"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-          <div>
-            <span className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-6 block animate-fade-in-up">
-              {t('hero.subtitle')}
-            </span>
-            <h1 className="text-3xl xs:text-6xl md:text-9xl font-serif font-bold mb-4 md:mb-8 leading-tight tracking-tighter animate-fade-in-up-delay-1">
-              {t('hero.title').split(' ')[0]} <br />
-              <span className="text-gold italic">{t('hero.title').split(' ')[1]}</span>
-            </h1>
-            <p className="text-[11px] xs:text-base md:text-2xl max-w-2xl mb-6 md:mb-12 font-light tracking-wide text-gray-300 leading-relaxed animate-fade-in-up-delay-2">
-              {t('hero.description')}
-            </p>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
+          <div className="max-w-lg">
             <div className="flex flex-wrap gap-3 md:gap-6 animate-fade-in-up-delay-3">
               <Link 
                 to="/shop"
@@ -146,7 +143,7 @@ const Home = () => {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: (idx % 5) * 0.05, duration: 0.4 }}
                 >
-                  <ProductCard product={product} />
+                  <ProductCard product={product} priority={idx < 2} />
                 </motion.div>
               ))
             ) : (
