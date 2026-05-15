@@ -9,7 +9,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  Home
+  Home,
+  FileText
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -25,6 +26,7 @@ const AdminLayout = () => {
     { name: 'Categories', path: '/admin/categories', icon: Tags },
     { name: 'Orders', path: '/admin/orders', icon: ShoppingBag },
     { name: 'Customers', path: '/admin/customers', icon: Users },
+    { name: 'Blog Posts', path: '/admin/blogs', icon: FileText },
   ];
 
   const handleLogout = async () => {

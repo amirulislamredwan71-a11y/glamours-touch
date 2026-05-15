@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Clock, ArrowLeft, ArrowRight, Phone, MessageCircle } from 'lucide-react';
 import SEO from '../components/SEO';
-import { blogPosts } from '../data/blogPosts';
+import { supabase } from '../lib/supabase';
+
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  title_bn: string;
+  excerpt: string;
+  date: string;
+  read_time: string;
+  category: string;
+  image: string;
+  content: string;
+  created_at: string;
+}
 
 // Very lightweight markdown renderer
 const renderContent = (content: string) => {
@@ -107,13 +121,58 @@ const formatInline = (text: string) =>
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find(p => p.slug === slug);
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [prevPost, setPrevPost] = useState<BlogPost | null>(null);
+  const [nextPost, setNextPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  if (!post) return <Navigate to="/blog" replace />;
+  useEffect(() => {
+    if (!slug) return;
+    fetchPost(slug);
+  }, [slug]);
 
-  const currentIdx = blogPosts.findIndex(p => p.slug === slug);
-  const prevPost = currentIdx > 0 ? blogPosts[currentIdx - 1] : null;
-  const nextPost = currentIdx < blogPosts.length - 1 ? blogPosts[currentIdx + 1] : null;
+  const fetchPost = async (currentSlug: string) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const posts = data || [];
+      const currentPost = posts.find((p: BlogPost) => p.slug === currentSlug);
+
+      if (!currentPost) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
+
+      const currentIdx = posts.findIndex((p: BlogPost) => p.id === currentPost.id);
+      setPost(currentPost);
+      setPrevPost(currentIdx > 0 ? posts[currentIdx - 1] : null);
+      setNextPost(currentIdx < posts.length - 1 ? posts[currentIdx + 1] : null);
+    } catch (error) {
+      console.error('Error fetching blog post:', error);
+      setNotFound(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cream pt-32 pb-20 flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (notFound || !post) return <Navigate to="/blog" replace />;
 
   return (
     <>
@@ -141,19 +200,19 @@ const BlogPost = () => {
               {post.category}
             </span>
             <h1 className="text-3xl md:text-5xl font-serif font-bold text-charcoal mb-4 leading-tight">
-              {post.titleBn}
+              {post.title_bn}
             </h1>
             <p className="text-gray-500 text-lg mb-6">{post.excerpt}</p>
             <div className="flex items-center gap-4 text-xs text-gray-400 mb-8 pb-8 border-b border-gold/10">
-              <span className="flex items-center gap-1"><Clock size={12} /> {post.readTime} read</span>
-              <span>{new Date(post.date).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span className="flex items-center gap-1"><Clock size={12} /> {post.read_time} read</span>
+              <span>{new Date(post.created_at).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
           </motion.div>
 
           {/* Hero Image */}
           <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.1 }}
             className="aspect-[16/9] rounded-2xl overflow-hidden mb-10 shadow-lg">
-            <img src={post.image} alt={post.titleBn} className="w-full h-full object-cover" />
+            <img src={post.image} alt={post.title_bn} className="w-full h-full object-cover" />
           </motion.div>
 
           {/* Content */}
@@ -191,14 +250,14 @@ const BlogPost = () => {
               <Link to={`/blog/${prevPost.slug}`}
                 className="group col-start-1 bg-white rounded-2xl p-5 hover:shadow-md transition-shadow border border-gold/10">
                 <span className="text-[10px] text-gray-400 flex items-center gap-1 mb-2"><ArrowLeft size={10} /> আগের post</span>
-                <p className="text-sm font-serif font-bold text-charcoal group-hover:text-gold transition-colors line-clamp-2">{prevPost.titleBn}</p>
+                <p className="text-sm font-serif font-bold text-charcoal group-hover:text-gold transition-colors line-clamp-2">{prevPost.title_bn}</p>
               </Link>
             ) : <div />}
             {nextPost ? (
               <Link to={`/blog/${nextPost.slug}`}
                 className="group col-start-2 bg-white rounded-2xl p-5 hover:shadow-md transition-shadow border border-gold/10 text-right">
                 <span className="text-[10px] text-gray-400 flex items-center gap-1 justify-end mb-2">পরের post <ArrowRight size={10} /></span>
-                <p className="text-sm font-serif font-bold text-charcoal group-hover:text-gold transition-colors line-clamp-2">{nextPost.titleBn}</p>
+                <p className="text-sm font-serif font-bold text-charcoal group-hover:text-gold transition-colors line-clamp-2">{nextPost.title_bn}</p>
               </Link>
             ) : <div />}
           </div>
