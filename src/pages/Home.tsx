@@ -7,6 +7,7 @@ import FlashSaleTimer from '../components/FlashSaleTimer';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import heroBanner from '../assets/hero-banner.png';
 
 interface Product {
   id: string;
@@ -85,7 +86,7 @@ const Home = () => {
       <section className="relative w-full bg-charcoal overflow-hidden">
         <div className="relative w-full">
           <img 
-            src="/hero-banner.png"
+            src={heroBanner}
             alt="Glamour's Touch"
             className="w-full h-auto block"
             fetchpriority="high"
