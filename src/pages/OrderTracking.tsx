@@ -39,17 +39,26 @@ const OrderTracking = () => {
     setOrder(null);
 
     try {
-      const query = supabase
-        .from('orders')
-        .select('*')
-        .ilike('id', `%${orderId.trim()}%`);
-
-      const { data } = await query.limit(10);
-
-      const match = data?.find(o =>
-        o.id.slice(-8).toUpperCase() === orderId.trim().toUpperCase().replace('#', '') &&
-        (!phone.trim() || o.shipping_address?.phone?.includes(phone.trim()))
-      ) ?? data?.[0];
+      // Secure lookup: returns ONLY the matching order (no table enumeration).
+      // Falls back to the legacy query if the migration isn't applied yet.
+      let match: Order | null = null;
+      const rpc = await supabase.rpc('track_order', {
+        p_ref: orderId.trim(),
+        p_phone: phone.trim() || null,
+      });
+      if (rpc.error && /track_order|function|does not exist|pgrst202|schema cache|not found/i.test(rpc.error.message || '')) {
+        const { data } = await supabase
+          .from('orders')
+          .select('*')
+          .ilike('id', `%${orderId.trim()}%`)
+          .limit(10);
+        match = (data?.find(o =>
+          o.id.slice(-8).toUpperCase() === orderId.trim().toUpperCase().replace('#', '') &&
+          (!phone.trim() || o.shipping_address?.phone?.includes(phone.trim()))
+        ) ?? data?.[0]) ?? null;
+      } else if (!rpc.error) {
+        match = (rpc.data && (rpc.data as Order[])[0]) || null;
+      }
 
       if (match) {
         setOrder(match);

@@ -12,21 +12,23 @@ const AdminLogin = () => {
   const { adminLogin } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Simulate small delay
-    setTimeout(() => {
-      const success = adminLogin(email, password);
+    try {
+      const success = await adminLogin(email, password);
       if (success) {
         navigate('/admin');
       } else {
         setError('Invalid admin credentials. Please try again.');
         setLoading(false);
       }
-    }, 800);
+    } catch {
+      setError('Login failed. Please check your connection and try again.');
+      setLoading(false);
+    }
   };
 
   return (

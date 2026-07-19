@@ -192,8 +192,20 @@ const Checkout = () => {
         localStorage.setItem(key, JSON.stringify(addressToSave));
       }
 
-      const { data, error } = await supabase.from('orders').insert(orderData).select('id').single();
-      if (error) throw error;
+      // Place the order via the secure RPC (server-side insert). Falls back to a
+      // direct insert if the security migration hasn't been applied yet, so the
+      // deploy is safe both before and after the DB lockdown (zero downtime).
+      let data: { id: string } | null = null;
+      const rpc = await supabase.rpc('place_order', { p_payload: orderData });
+      if (rpc.error && /place_order|function|does not exist|pgrst202|schema cache|not found/i.test(rpc.error.message || '')) {
+        const ins = await supabase.from('orders').insert(orderData).select('id').single();
+        if (ins.error) throw ins.error;
+        data = ins.data;
+      } else if (rpc.error) {
+        throw rpc.error;
+      } else {
+        data = rpc.data as { id: string };
+      }
 
       // Send Email Notification (Background)
       try {

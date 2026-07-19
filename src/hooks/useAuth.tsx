@@ -10,7 +10,7 @@ interface AuthContextType {
   signInWithEmail: (email: string) => Promise<{ error: any }>;
   signUpWithEmail: (email: string) => Promise<{ error: any }>;
   logout: () => Promise<void>;
-  adminLogin: (email: string, password: string) => boolean;
+  adminLogin: (email: string, password: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,20 +22,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
 
-  const adminLogin = (email: string, password: string) => {
-    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-    if (!adminEmail || !adminPassword) return false;
-    if (email === adminEmail && password === adminPassword) {
-      setUser({
-        id: '00000000-0000-0000-0000-000000000000',
-        email: 'glamourstouch26@gmail.com',
-        user_metadata: { full_name: 'Glamour Admin' },
-      } as User);
-      setIsAdmin(true);
-      return true;
+  // Real Supabase Auth login. The password lives ONLY in Supabase Auth (never
+  // in the client bundle). RLS then trusts this session for admin writes.
+  const adminLogin = async (email: string, password: string): Promise<boolean> => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+    if (error || !data?.user) return false;
+    if (!checkAdminStatus(data.user)) {
+      // A valid login, but not an admin email — don't grant admin.
+      await supabase.auth.signOut();
+      return false;
     }
-    return false;
+    setUser(data.user);
+    setIsAdmin(true);
+    return true;
   };
 
   const checkAdminStatus = (currentUser: User | null) => {
