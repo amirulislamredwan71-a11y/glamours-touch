@@ -75,6 +75,8 @@ const AppContent = () => {
           <Route path="/returns" element={<Suspense fallback={<LoadingFallback />}><ReturnsExchanges /></Suspense>} />
           <Route path="/faq" element={<Suspense fallback={<LoadingFallback />}><FAQ /></Suspense>} />
           <Route path="/privacy" element={<Suspense fallback={<LoadingFallback />}><PrivacyPolicy /></Suspense>} />
+          <Route path="/privacy-policy" element={<Suspense fallback={<LoadingFallback />}><PrivacyPolicy /></Suspense>} />
+          <Route path="/data-deletion" element={<Suspense fallback={<LoadingFallback />}><PrivacyPolicy /></Suspense>} />
           <Route path="/terms" element={<Suspense fallback={<LoadingFallback />}><TermsOfService /></Suspense>} />
           <Route path="/track-order" element={<Suspense fallback={<LoadingFallback />}><OrderTracking /></Suspense>} />
           <Route path="/blog" element={<Suspense fallback={<LoadingFallback />}><Blog /></Suspense>} />

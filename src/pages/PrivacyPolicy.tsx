@@ -40,6 +40,12 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">Third-Party Disclosure</h2>
               <p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties, except for trusted third parties who assist us in operating our website and conducting our business.</p>
             </section>
+
+            <section id="data-deletion">
+              <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">Data Deletion &amp; Your Rights</h2>
+              <p>You have the right to access, correct, or permanently delete the personal data we hold about you at any time — including any information we receive when you contact us or interact with us through Facebook or Messenger.</p>
+              <p className="mt-3">To request deletion of your data, email us at <a href="mailto:glamourstouch26@gmail.com" className="text-gold font-semibold underline">glamourstouch26@gmail.com</a> or message us on Facebook or WhatsApp with the subject <strong>&ldquo;Delete My Data&rdquo;</strong>, along with the name, email address, or phone number you used with us. After we verify your identity, we will permanently delete your personal data within 30 days, except where we are required to retain certain records to comply with the law.</p>
+            </section>
           </div>
         </motion.div>
       </div>
