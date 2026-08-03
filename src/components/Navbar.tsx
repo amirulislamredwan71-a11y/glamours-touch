@@ -16,6 +16,16 @@ const NAV_COLORS = [
   { bg: 'bg-emerald-500',ring: 'ring-emerald-400', text: 'text-emerald-500',light: 'bg-emerald-50'},
 ];
 
+/* Rotating soft colours for category chips */
+const CAT_COLORS = [
+  'bg-pink-50 text-pink-600 border-pink-100',
+  'bg-violet-50 text-violet-600 border-violet-100',
+  'bg-emerald-50 text-emerald-600 border-emerald-100',
+  'bg-amber-50 text-amber-600 border-amber-100',
+  'bg-sky-50 text-sky-600 border-sky-100',
+  'bg-rose-50 text-rose-600 border-rose-100',
+];
+
 const Navbar = () => {
   const { cartCount } = useCart();
   const { user, isAdmin, logout } = useAuth();
@@ -212,9 +222,9 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
             className="md:hidden bg-white/97 backdrop-blur-2xl border-b border-gold/10 overflow-hidden"
           >
-            <div className="px-6 py-8 space-y-4">
-              {/* Coloured pill nav items */}
-              <div className="flex flex-col gap-3">
+            <div className="px-5 py-5 space-y-5">
+              {/* Compact nav grid */}
+              <div className="grid grid-cols-2 gap-2.5">
                 {navItems.map((item, idx) => {
                   const col = NAV_COLORS[idx % NAV_COLORS.length];
                   const active = isActive(item.path);
@@ -223,29 +233,24 @@ const Navbar = () => {
                       key={item.name}
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300
-                        ${active ? `${col.light} ring-2 ${col.ring}` : 'bg-gray-50 hover:' + col.light}`}
+                      className={`flex items-center gap-2.5 px-3.5 py-3 rounded-xl border transition-all active:scale-[0.97]
+                        ${active ? `${col.light} ${col.text} border-transparent ring-1 ${col.ring}` : 'bg-gray-50 text-charcoal border-gray-100'}`}
                     >
-                      <span className={`w-9 h-9 rounded-full flex items-center justify-center ring-2 ${col.ring}
-                        ${active ? col.bg + ' text-white' : 'bg-white ' + col.text}`}>
-                        <span className="text-[10px] font-extrabold uppercase">{item.name.slice(0, 1)}</span>
-                      </span>
-                      <span className={`text-lg font-bold tracking-wide ${active ? col.text : 'text-charcoal'}`}>
-                        {item.name}
-                      </span>
+                      <span className={`w-2.5 h-2.5 rounded-full ${col.bg} flex-shrink-0`} />
+                      <span className="text-sm font-bold tracking-wide">{item.name}</span>
                     </Link>
                   );
                 })}
               </div>
 
-              {/* Categories */}
+              {/* Categories — compact colourful chips */}
               {categories.length > 0 && (
-                <div className="pt-6 border-t border-gold/10">
-                  <p className="text-[10px] font-bold text-gray-400 tracking-[0.3em] uppercase mb-4">Browse Categories</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {categories.map(cat => (
+                <div className="pt-5 border-t border-gold/10">
+                  <p className="text-[10px] font-bold text-gray-400 tracking-[0.25em] uppercase mb-3">Browse Categories</p>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((cat, i) => (
                       <Link key={cat} to={`/shop?category=${encodeURIComponent(cat)}`}
-                        className="bg-gray-50 py-3 px-4 rounded-xl text-sm font-bold text-charcoal hover:bg-pink-50 hover:text-pink-500 transition-all text-center border border-gray-100"
+                        className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all active:scale-95 ${CAT_COLORS[i % CAT_COLORS.length]}`}
                         onClick={() => setIsMenuOpen(false)}>
                         {cat}
                       </Link>
