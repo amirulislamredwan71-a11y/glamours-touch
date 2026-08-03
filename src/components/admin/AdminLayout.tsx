@@ -27,6 +27,7 @@ const AdminLayout = () => {
     { name: 'Orders', path: '/admin/orders', icon: ShoppingBag },
     { name: 'Customers', path: '/admin/customers', icon: Users },
     { name: 'Blog Posts', path: '/admin/blogs', icon: FileText },
+    { name: 'Flash Banners', path: '/admin/banners', icon: Tags },
   ];
 
   const handleLogout = async () => {
