@@ -4,7 +4,6 @@ import { ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
-import FlashSaleTimer from '../components/FlashSaleTimer';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -109,7 +108,6 @@ const Home = () => {
       </section>
       
       {/* Flash Sale Countdown */}
-      <FlashSaleTimer />
 
       {/* All Products Section */}
       <section className="py-12 sm:py-20 bg-gray-50 relative overflow-hidden">

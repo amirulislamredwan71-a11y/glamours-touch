@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   brand: string;
   price: number;
+  market_price?: number | null;
   description: string;
   image: string;
   category: 'Skincare' | 'Makeup' | 'Haircare' | 'Fragrance' | 'Accessories';

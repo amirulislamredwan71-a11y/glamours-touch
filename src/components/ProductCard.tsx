@@ -23,6 +23,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const stockLeft = getStockHint(product.id);
+  const marketPrice = product.market_price ?? null;
+  const hasDiscount = marketPrice != null && marketPrice > product.price;
+  const discountPct = hasDiscount ? Math.round((1 - product.price / marketPrice) * 100) : 0;
 
   const fireAddToCart = () => {
     addToCart(product);
@@ -62,6 +65,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           <Flame size={9} className="fill-white" />
           মাত্র {stockLeft}টি বাকি!
         </motion.div>
+      )}
+
+      {/* Discount badge */}
+      {hasDiscount && (
+        <div className="absolute top-2 left-2 z-10 bg-red-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md">
+          -{discountPct}%
+        </div>
       )}
 
       {/* Image Container */}
@@ -109,11 +119,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             )}
           </div>
 
-          <div className="flex items-baseline gap-1 mb-1.5">
-            <span className="text-[10px] sm:text-[12px] text-gray-400 font-medium">৳</span>
+          <div className="flex items-baseline flex-wrap gap-x-1.5 gap-y-0 mb-1.5">
             <span className="text-lg sm:text-xl font-bold text-gray-900 leading-none">
-              {product.price.toLocaleString()}
+              ৳{product.price.toLocaleString()}
             </span>
+            {hasDiscount && (
+              <span className="text-[11px] sm:text-xs text-gray-400 line-through leading-none">
+                ৳{marketPrice.toLocaleString()}
+              </span>
+            )}
           </div>
         </div>
 

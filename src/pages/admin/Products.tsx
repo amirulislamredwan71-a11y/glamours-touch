@@ -31,6 +31,7 @@ const AdminProducts = () => {
     name: '',
     brand: '',
     price: '',
+    market_price: '',
     description: '',
     image: '',
     category: 'Skincare',
@@ -115,6 +116,7 @@ const AdminProducts = () => {
       const productData = {
         ...formData,
         price: parseFloat(formData.price),
+        market_price: formData.market_price ? parseFloat(formData.market_price) : null,
         rating: parseFloat(formData.rating.toString()),
         reviews: parseInt(formData.reviews.toString())
       };
@@ -161,7 +163,7 @@ const AdminProducts = () => {
 
   const resetForm = () => {
     setFormData({
-      name: '', brand: '', price: '',
+      name: '', brand: '', price: '', market_price: '',
       description: '', image: '',
       category: categories[0] || '',
       origin: 'International',
@@ -281,6 +283,7 @@ const AdminProducts = () => {
                               name: product.name,
                               brand: product.brand,
                               price: product.price.toString(),
+                              market_price: product.market_price != null ? product.market_price.toString() : '',
                               description: product.description,
                               image: product.image,
                               category: product.category,
@@ -370,6 +373,16 @@ const AdminProducts = () => {
                       onChange={(e) => setFormData({...formData, price: e.target.value})}
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="0.00"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">বাজার দাম / Market Price (৳)</label>
+                    <input
+                      type="number"
+                      value={formData.market_price}
+                      onChange={(e) => setFormData({...formData, market_price: e.target.value})}
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      placeholder="বাজার দাম (বেশি হলে কাটা-দাম + %OFF দেখাবে)"
                     />
                   </div>
                   <div>
