@@ -38,7 +38,9 @@ const AdminProducts = () => {
     origin: 'International',
     rating: 5,
     reviews: 0,
-    isFeatured: false
+    isFeatured: false,
+    images: [] as string[],
+    in_stock: true
   });
 
   useEffect(() => {
@@ -78,12 +80,35 @@ const AdminProducts = () => {
 
       setFormData({ ...formData, image: publicUrl });
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Error uploading main image:', error);
       const isNetworkError = error instanceof Error && error.message === 'Failed to fetch';
       alert(isNetworkError 
         ? 'Network Error: Failed to upload. Please check if your project is active and disable any Adblockers.'
         : 'Error uploading image. Please make sure you have a "products" bucket in your Supabase Storage.'
       );
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploading(true);
+    try {
+      const urls: string[] = [];
+      for (const file of files) {
+        const fileExt = file.name.split('.').pop();
+        const filePath = `product-images/${crypto.randomUUID()}.${fileExt}`;
+        const { error } = await supabase.storage.from('products').upload(filePath, file);
+        if (error) throw error;
+        const { data: { publicUrl } } = supabase.storage.from('products').getPublicUrl(filePath);
+        urls.push(publicUrl);
+      }
+      setFormData(f => ({ ...f, images: [...(f.images || []), ...urls] }));
+    } catch (error) {
+      console.error('Gallery upload error:', error);
+      alert('Error uploading gallery image(s).');
     } finally {
       setUploading(false);
     }
@@ -167,7 +192,8 @@ const AdminProducts = () => {
       description: '', image: '',
       category: categories[0] || '',
       origin: 'International',
-      rating: 5, reviews: 0, isFeatured: false
+      rating: 5, reviews: 0, isFeatured: false,
+      images: [], in_stock: true
     });
   };
 
@@ -290,7 +316,9 @@ const AdminProducts = () => {
                               origin: product.origin,
                               rating: product.rating,
                               reviews: product.reviews,
-                              isFeatured: product.isFeatured || false
+                              isFeatured: product.isFeatured || false,
+                              images: product.images ?? [],
+                              in_stock: product.in_stock ?? true
                             });
                             setIsModalOpen(true);
                           }}
@@ -472,6 +500,41 @@ const AdminProducts = () => {
                       </div>
                     </div>
                   </div>
+                  {/* Gallery — multiple view images */}
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">গ্যালারি / More View Images</label>
+                    <div className="flex flex-wrap gap-3 items-center">
+                      {(formData.images || []).map((img, i) => (
+                        <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden border border-gray-200 group">
+                          <img src={img} alt="" className="w-full h-full object-cover" />
+                          <button type="button"
+                            onClick={() => setFormData(f => ({ ...f, images: f.images.filter((_, j) => j !== i) }))}
+                            className="absolute top-0.5 right-0.5 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                            <X size={12} />
+                          </button>
+                        </div>
+                      ))}
+                      <label className="flex flex-col items-center justify-center gap-1 w-20 h-20 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all text-gray-400 hover:text-gold">
+                        <Upload size={18} />
+                        <span className="text-[9px] font-bold">Add</span>
+                        <input type="file" className="hidden" accept="image/*" multiple onChange={handleGalleryUpload} disabled={uploading} />
+                      </label>
+                    </div>
+                    <p className="text-[11px] text-gray-400 mt-1.5">প্রোডাক্টে ক্লিক করার পর এই ছবিগুলো detail পেজে gallery হিসেবে দেখাবে।</p>
+                  </div>
+
+                  {/* In stock / Sold out toggle */}
+                  <div className="md:col-span-2">
+                    <button type="button"
+                      onClick={() => setFormData(f => ({ ...f, in_stock: !f.in_stock }))}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl border transition-all w-full ${formData.in_stock ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-red-50 border-red-200 text-red-600'}`}>
+                      <span className={`w-11 h-6 rounded-full flex items-center px-0.5 transition-all ${formData.in_stock ? 'bg-emerald-500 justify-end' : 'bg-red-400 justify-start'}`}>
+                        <span className="w-5 h-5 bg-white rounded-full shadow" />
+                      </span>
+                      <span className="font-bold text-sm">{formData.in_stock ? 'In Stock ✓ (Available)' : 'Sold Out ✕ (Unavailable)'}</span>
+                    </button>
+                  </div>
+
                   <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Description</label>
                     <div className="bg-white rounded-xl overflow-hidden border border-gray-200 min-h-[300px]">

@@ -11,6 +11,7 @@ import ProductCard from '../components/ProductCard';
 
 interface Product {
   id: string; name: string; brand: string; price: number;
+  market_price?: number | null; images?: string[]; in_stock?: boolean;
   image: string; category: string; rating: number;
   reviews: number; isFeatured: boolean; description: string;
 }
@@ -23,6 +24,7 @@ const ProductDetail = () => {
   const [related,  setRelated]  = useState<Product[]>([]);
   const [loading,  setLoading]  = useState(true);
   const [shared,   setShared]   = useState(false);
+  const [activeImg, setActiveImg] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -98,6 +100,12 @@ const ProductDetail = () => {
     </div>
   );
 
+  const gallery = [product.image, ...(product.images || [])].filter(Boolean);
+  const soldOut = product.in_stock === false;
+  const mp = product.market_price ?? null;
+  const hasDiscount = mp != null && mp > product.price;
+  const discountPct = hasDiscount ? Math.round((1 - product.price / mp) * 100) : 0;
+
   return (
     <div className="min-h-screen bg-cream pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,10 +115,27 @@ const ProductDetail = () => {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Image */}
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gold/10 aspect-square">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          {/* Image gallery */}
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+            <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gold/10 aspect-square">
+              <img src={gallery[activeImg] || product.image} alt={product.name}
+                className={`w-full h-full object-cover ${soldOut ? 'opacity-60 grayscale' : ''}`} referrerPolicy="no-referrer" />
+              {soldOut ? (
+                <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-lg tracking-widest">SOLD OUT</div>
+              ) : hasDiscount && (
+                <div className="absolute top-4 left-4 bg-red-600 text-white text-sm font-black px-3 py-1.5 rounded-lg shadow-lg">-{discountPct}%</div>
+              )}
+            </div>
+            {gallery.length > 1 && (
+              <div className="flex gap-3 mt-4 overflow-x-auto pb-1">
+                {gallery.map((img, i) => (
+                  <button key={i} onClick={() => setActiveImg(i)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? 'border-gold' : 'border-transparent opacity-70 hover:opacity-100'}`}>
+                    <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Info */}
@@ -128,7 +153,15 @@ const ProductDetail = () => {
                 <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
               </div>
 
-              <p className="text-3xl font-serif font-bold text-charcoal mb-6">৳{product.price.toLocaleString()}</p>
+              <div className="flex items-baseline flex-wrap gap-3 mb-6">
+                <p className="text-3xl font-serif font-bold text-charcoal">৳{product.price.toLocaleString()}</p>
+                {hasDiscount && (
+                  <>
+                    <span className="text-lg text-gray-400 line-through">৳{mp!.toLocaleString()}</span>
+                    <span className="text-sm font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded">-{discountPct}% OFF</span>
+                  </>
+                )}
+              </div>
               <div 
                 className="prose prose-sm text-gray-600 mb-8 max-w-none"
                 dangerouslySetInnerHTML={{ __html: product.description }}
@@ -136,25 +169,34 @@ const ProductDetail = () => {
 
               {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button onClick={() => {
-                    addToCart(product);
-                    if (typeof (window as any).fbq === 'function') {
-                      (window as any).fbq('track', 'AddToCart', {
-                        content_ids:  [product.id],
-                        content_name: product.name,
-                        content_type: 'product',
-                        value:        product.price,
-                        currency:     'BDT',
-                      });
-                    }
-                  }}
-                  className="flex-grow bg-yellow-400 text-gray-900 py-5 rounded-full font-bold tracking-widest hover:bg-yellow-500 transition-all flex items-center justify-center gap-3 shadow-lg">
-                  <ShoppingBag size={20} /> ADD TO BAG
-                </button>
-                <button onClick={() => { clearCart(); addToCart(product); navigate('/checkout'); }}
-                  className="flex-grow bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-full font-bold tracking-widest hover:bg-orange-600 transition-all flex items-center justify-center gap-3 shadow-lg">
-                  BUY NOW
-                </button>
+                {soldOut ? (
+                  <button disabled
+                    className="flex-grow bg-gray-200 text-gray-500 py-5 rounded-full font-bold tracking-widest cursor-not-allowed flex items-center justify-center gap-3">
+                    SOLD OUT — বর্তমানে নেই
+                  </button>
+                ) : (
+                  <>
+                    <button onClick={() => {
+                        addToCart(product);
+                        if (typeof (window as any).fbq === 'function') {
+                          (window as any).fbq('track', 'AddToCart', {
+                            content_ids:  [product.id],
+                            content_name: product.name,
+                            content_type: 'product',
+                            value:        product.price,
+                            currency:     'BDT',
+                          });
+                        }
+                      }}
+                      className="flex-grow bg-yellow-400 text-gray-900 py-5 rounded-full font-bold tracking-widest hover:bg-yellow-500 transition-all flex items-center justify-center gap-3 shadow-lg">
+                      <ShoppingBag size={20} /> ADD TO BAG
+                    </button>
+                    <button onClick={() => { clearCart(); addToCart(product); navigate('/checkout'); }}
+                      className="flex-grow bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-full font-bold tracking-widest hover:bg-orange-600 transition-all flex items-center justify-center gap-3 shadow-lg">
+                      BUY NOW
+                    </button>
+                  </>
+                )}
               </div>
 
               {/* ── Social Share ── */}

@@ -26,6 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   const marketPrice = product.market_price ?? null;
   const hasDiscount = marketPrice != null && marketPrice > product.price;
   const discountPct = hasDiscount ? Math.round((1 - product.price / marketPrice) * 100) : 0;
+  const soldOut = product.in_stock === false;
 
   const fireAddToCart = () => {
     addToCart(product);
@@ -67,8 +68,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         </motion.div>
       )}
 
-      {/* Discount badge */}
-      {hasDiscount && (
+      {/* Discount / Sold-out badge */}
+      {soldOut ? (
+        <div className="absolute top-2 left-2 z-10 bg-gray-800 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md tracking-wide">
+          SOLD OUT
+        </div>
+      ) : hasDiscount && (
         <div className="absolute top-2 left-2 z-10 bg-red-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md">
           -{discountPct}%
         </div>
@@ -84,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             height="400"
             loading={priority ? 'eager' : 'lazy'}
             fetchpriority={priority ? 'high' : undefined}
-            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+            className={`w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 ${soldOut ? 'opacity-50 grayscale' : ''}`}
             referrerPolicy="no-referrer"
           />
         </Link>
@@ -132,18 +137,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         </div>
 
         <div className="flex gap-1 mt-auto">
-          <button
-            onClick={fireAddToCart}
-            className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
-          >
-            Add
-          </button>
-          <button
-            onClick={handleBuyNow}
-            className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
-          >
-            Buy
-          </button>
+          {soldOut ? (
+            <button disabled
+              className="flex-1 bg-gray-200 text-gray-500 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
+              Sold Out
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={fireAddToCart}
+                className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
+              >
+                Add
+              </button>
+              <button
+                onClick={handleBuyNow}
+                className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
+              >
+                Buy
+              </button>
+            </>
+          )}
         </div>
       </div>
     </motion.div>

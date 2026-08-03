@@ -4,6 +4,8 @@ export interface Product {
   brand: string;
   price: number;
   market_price?: number | null;
+  images?: string[];
+  in_stock?: boolean;
   description: string;
   image: string;
   category: 'Skincare' | 'Makeup' | 'Haircare' | 'Fragrance' | 'Accessories';
