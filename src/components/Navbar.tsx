@@ -109,7 +109,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center mx-1 sm:mx-2">
             <Link to="/" className="group flex items-center gap-2">
-              <Logo className="w-14 h-14 sm:w-20 sm:h-20 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
+              <Logo className="w-[68px] h-[68px] sm:w-24 sm:h-24 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col hidden sm:flex">
                 <span className="text-xl md:text-2xl font-serif font-bold tracking-[0.1em] text-charcoal group-hover:text-gold transition-colors duration-500 whitespace-nowrap">
                   GLAMOUR'S <span className="text-gold group-hover:text-charcoal transition-colors duration-500">TOUCH</span>
@@ -181,9 +181,9 @@ const Navbar = () => {
               </button>
             )}
 
-            {/* Search */}
+            {/* Search — desktop only (mobile uses the homepage search bar) */}
             <button onClick={() => setIsSearchOpen(true)}
-              className="text-charcoal hover:text-gold transition-all p-2">
+              className="hidden sm:block text-charcoal hover:text-gold transition-all p-2">
               <Search size={22} />
             </button>
 
@@ -196,8 +196,8 @@ const Navbar = () => {
               <span className="text-[10px] font-bold tracking-widest">{i18n.language === 'en' ? 'বা' : 'EN'}</span>
             </button>
 
-            {/* Cart */}
-            <Link to="/cart" className="relative text-charcoal hover:text-gold transition-all group p-2">
+            {/* Cart — desktop only (mobile uses the bottom nav) */}
+            <Link to="/cart" className="relative hidden sm:block text-charcoal hover:text-gold transition-all group p-2">
               <ShoppingBag size={22} />
               <AnimatePresence>
                 {cartCount > 0 && (

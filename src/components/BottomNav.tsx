@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, ShoppingCart, User } from 'lucide-react';
+import { Home, ShoppingBag, LayoutGrid, Truck, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 
 const BottomNav = () => {
@@ -13,6 +13,8 @@ const BottomNav = () => {
   const tabs = [
     { to: '/', icon: Home, label: 'Home' },
     { to: '/shop', icon: ShoppingBag, label: 'Shop' },
+    { to: '/shop', icon: LayoutGrid, label: 'Category' },
+    { to: '/track-order', icon: Truck, label: 'Track' },
     { to: '/cart', icon: ShoppingCart, label: 'Cart', badge: cartCount },
     { to: '/profile', icon: User, label: 'Profile' },
   ];
@@ -22,7 +24,7 @@ const BottomNav = () => {
       <div className="flex items-stretch">
         {tabs.map(({ to, icon: Icon, label, badge }) => (
           <NavLink
-            key={to}
+            key={label}
             to={to}
             end={to === '/'}
             className={({ isActive }) =>

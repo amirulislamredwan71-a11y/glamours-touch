@@ -108,49 +108,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
-        {/* Decorative element */}
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-10 md:mb-14">
-            <div className="animate-fade-in-up">
-              <span className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-3 block">{t('categories.subtitle')}</span>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold text-charcoal">{t('categories.title').split(' ')[0]} <span className="text-gold italic">{t('categories.title').split(' ').slice(1).join(' ')}</span></h2>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
-            {categories.length > 0 ? (
-              categories.map((cat) => (
-                <Link
-                  key={cat.id}
-                  to={`/shop?category=${cat.name}`}
-                  className="group relative aspect-[4/5] overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 block animate-fade-in-up"
-                >
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
-                    <h3 className="text-white text-sm md:text-lg font-serif font-bold tracking-wide leading-tight">{cat.name}</h3>
-                    <span className="text-gold text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase inline-flex items-center gap-1 mt-0.5">
-                      {t('categories.discover')} <span className="transition-transform group-hover:translate-x-1">→</span>
-                    </span>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div className="col-span-full py-10 text-center text-gray-400 font-serif text-lg italic">Curating collections...</div>
-            )}
-          </div>
-        </div>
-      </section>
+      {/* Categories now live as swipeable chips in the search hero above */}
 
       {/* Facebook Post */}
       <section className="py-20 bg-cream">
