@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import FlashBanner from '../components/FlashBanner';
+import HomeSearch from '../components/HomeSearch';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -80,35 +80,8 @@ const Home = () => {
         description="Glamour's Touch — Bangladesh এর সেরা Korean skincare shop। DABO Snail Cream, Rice Ceramide, Glutathione Cream সহ 100% authentic Korean beauty products। Order: 01712-426871"
         url="/"
       />
-      {/* Hero Section */}
-      <section className="relative w-full bg-charcoal overflow-hidden pt-16 sm:pt-20">
-        <div className="relative w-full">
-          <img 
-            src="/hero-banner.webp"
-            alt="Glamour's Touch"
-            width="1280"
-            height="533"
-            className="w-full h-auto block"
-            fetchpriority="high"
-            loading="eager"
-            decoding="async"
-          />
-           {/* SHOP NOW button aligned to image text */}
-           <div className="absolute inset-0">
-             <Link
-               to="/shop"
-               className="absolute bottom-[15%] left-[43%] sm:bottom-[21%] sm:left-[42%] -translate-x-1/2 inline-flex items-center gap-1.5 sm:gap-3 bg-charcoal/90 hover:bg-gold text-gold hover:text-white px-3 py-1.5 sm:px-8 sm:py-4 rounded-full font-bold tracking-[0.15em] text-[8px] sm:text-xs uppercase border border-gold/20 transition-all duration-300"
-             >
-               SHOP NOW
-               <ArrowRight size={10} className="sm:hidden" />
-               <ArrowRight size={18} className="hidden sm:block" />
-             </Link>
-           </div>
-
-        </div>
-      </section>
-      
-      {/* Flash Sale Countdown */}
+      {/* Search-first hero (replaces static banner) */}
+      <HomeSearch />
 
       {/* All Products Section */}
       <FlashBanner />
