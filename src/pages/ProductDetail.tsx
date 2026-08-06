@@ -162,7 +162,16 @@ const ProductDetail = () => {
                   </>
                 )}
               </div>
-              <div 
+
+              {/* Launch offer — softens price-shock right at the buy moment */}
+              <div className="flex items-center gap-2.5 mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100 rounded-xl px-4 py-3">
+                <span className="text-xl">🎁</span>
+                <p className="text-sm font-bold text-orange-700 leading-snug">
+                  এই সপ্তাহে <span className="text-orange-600">ফ্রি হোম ডেলিভারি</span> — ক্যাশ অন ডেলিভারি, হাতে পেয়ে টাকা দিন!
+                </p>
+              </div>
+
+              <div
                 className="prose prose-sm text-gray-600 mb-8 max-w-none"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
@@ -197,6 +206,22 @@ const ProductDetail = () => {
                     </button>
                   </>
                 )}
+              </div>
+
+              {/* Trust badges — kill hesitation right beside the buy button */}
+              <div className="grid grid-cols-3 gap-2 mb-8">
+                <div className="flex flex-col items-center text-center gap-1.5 bg-gray-50 rounded-xl py-3 px-1">
+                  <ShieldCheck size={20} className="text-gold" />
+                  <span className="text-[10px] font-bold text-charcoal leading-tight">১০০% আসল<br />অথেন্টিক</span>
+                </div>
+                <div className="flex flex-col items-center text-center gap-1.5 bg-gray-50 rounded-xl py-3 px-1">
+                  <Truck size={20} className="text-gold" />
+                  <span className="text-[10px] font-bold text-charcoal leading-tight">ক্যাশ অন<br />ডেলিভারি</span>
+                </div>
+                <div className="flex flex-col items-center text-center gap-1.5 bg-gray-50 rounded-xl py-3 px-1">
+                  <RefreshCw size={20} className="text-gold" />
+                  <span className="text-[10px] font-bold text-charcoal leading-tight">সহজ<br />রিটার্ন</span>
+                </div>
               </div>
 
               {/* ── Social Share ── */}
