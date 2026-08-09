@@ -172,6 +172,13 @@ const ProductDetail = () => {
                 )}
               </div>
 
+              {/* ✨ AI Glow Predictor — GT's signature flagship feature */}
+              <button type="button" onClick={() => setShowTryOn(true)}
+                className="w-full mb-5 relative overflow-hidden bg-gradient-to-r from-gold via-amber-500 to-gold text-white py-4 rounded-2xl font-bold tracking-wide flex items-center justify-center gap-2 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all">
+                <Sparkles size={19} /> AI Glow Predictor — ২৮ দিন পর নিজের ত্বক দেখুন
+                <span className="absolute top-1.5 right-2 text-[9px] bg-white/25 px-1.5 py-0.5 rounded-full">NEW</span>
+              </button>
+
               {/* Launch offer — admin-controlled via site_settings.free_delivery */}
               {freeDelivery && (
               <div className="flex items-center gap-2.5 mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100 rounded-xl px-4 py-3">
@@ -219,11 +226,6 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              {/* AI Try-On (cosmetics) */}
-              <button type="button" onClick={() => setShowTryOn(true)}
-                className="w-full mb-8 border-2 border-gold text-gold hover:bg-gold hover:text-white py-3.5 rounded-full font-bold tracking-widest flex items-center justify-center gap-2 transition-all">
-                <Sparkles size={18} /> AI Try-On — ২৮ দিনের ফল দেখুন
-              </button>
               {showTryOn && product && <TryOnModal product={product} onClose={() => setShowTryOn(false)} />}
 
               {/* Trust badges — kill hesitation right beside the buy button */}

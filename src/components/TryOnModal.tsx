@@ -46,7 +46,7 @@ const TryOnModal: React.FC<Props> = ({ product, onClose }) => {
       <div className="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-5 sm:p-6" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-1">
           <h3 className="text-lg font-serif font-bold text-charcoal flex items-center gap-2">
-            <Sparkles size={18} className="text-gold" /> AI Try-On
+            <Sparkles size={18} className="text-gold" /> AI Glow Predictor
           </h3>
           <button onClick={onClose} className="text-gray-400 hover:text-charcoal"><X size={22} /></button>
         </div>
