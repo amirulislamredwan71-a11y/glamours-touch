@@ -56,7 +56,7 @@ const GlowPredictor: React.FC = () => {
       .in('category', FACE_CATS)
       .order('isFeatured', { ascending: false })
       .order('created_at', { ascending: false })
-      .limit(500)
+      .limit(800)
       .then(({ data }) => { if (data) setProducts(data as P[]); });
   }, []);
 
