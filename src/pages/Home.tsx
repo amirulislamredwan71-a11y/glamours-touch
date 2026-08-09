@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import FlashBanner from '../components/FlashBanner';
 import HomeSearch from '../components/HomeSearch';
+import WhyTrust from '../components/WhyTrust';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -86,6 +87,9 @@ const Home = () => {
 
       {/* All Products Section */}
       <FlashBanner />
+
+      {/* Honest trust / social-proof band */}
+      <WhyTrust />
 
       <section className="py-12 sm:py-20 bg-gray-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
