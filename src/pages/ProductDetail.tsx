@@ -25,6 +25,13 @@ const ProductDetail = () => {
   const [loading,  setLoading]  = useState(true);
   const [shared,   setShared]   = useState(false);
   const [activeImg, setActiveImg] = useState(0);
+  const [freeDelivery, setFreeDelivery] = useState(false);
+
+  // Admin-controlled free-delivery offer (site_settings.free_delivery = 'on'/'off'); default off
+  useEffect(() => {
+    supabase.from('site_settings').select('value').eq('key', 'free_delivery').maybeSingle()
+      .then(({ data }) => setFreeDelivery(data?.value === 'on'));
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -163,13 +170,15 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              {/* Launch offer — softens price-shock right at the buy moment */}
+              {/* Launch offer — admin-controlled via site_settings.free_delivery */}
+              {freeDelivery && (
               <div className="flex items-center gap-2.5 mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100 rounded-xl px-4 py-3">
                 <span className="text-xl">🎁</span>
                 <p className="text-sm font-bold text-orange-700 leading-snug">
                   এই সপ্তাহে <span className="text-orange-600">ফ্রি হোম ডেলিভারি</span> — ক্যাশ অন ডেলিভারি, হাতে পেয়ে টাকা দিন!
                 </p>
               </div>
+              )}
 
               <div
                 className="prose prose-sm text-gray-600 mb-8 max-w-none"

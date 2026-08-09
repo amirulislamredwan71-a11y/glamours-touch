@@ -10,6 +10,7 @@ const Banners = () => {
   const [uploading, setUploading] = useState(false);
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
+  const [freeDelivery, setFreeDelivery] = useState<boolean | null>(null);
 
   const fetchBanners = async () => {
     setLoading(true);
@@ -17,7 +18,17 @@ const Banners = () => {
     setBanners((data as Banner[]) || []);
     setLoading(false);
   };
-  useEffect(() => { fetchBanners(); }, []);
+  const fetchFreeDelivery = async () => {
+    const { data } = await supabase.from('site_settings').select('value').eq('key', 'free_delivery').maybeSingle();
+    setFreeDelivery(data?.value === 'on');
+  };
+  const toggleFreeDelivery = async () => {
+    const next = freeDelivery ? 'off' : 'on';
+    const { error } = await supabase.from('site_settings').upsert({ key: 'free_delivery', value: next }, { onConflict: 'key' });
+    if (error) { alert('site_settings টেবিল নেই — একবার SQL চালান (owner-কে দেওয়া আছে)।'); return; }
+    setFreeDelivery(next === 'on');
+  };
+  useEffect(() => { fetchBanners(); fetchFreeDelivery(); }, []);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -54,6 +65,18 @@ const Banners = () => {
     <div className="p-4 sm:p-8">
       <h1 className="text-2xl font-serif font-bold text-charcoal mb-1">Flash Sale Banners</h1>
       <p className="text-sm text-gray-400 mb-6">যেকোনো সময় post-card image আপলোড করুন — Home page-এ carousel হিসেবে দেখাবে।</p>
+
+      {/* Free-delivery offer toggle — controls the strip on all product pages */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-8 flex items-center justify-between gap-4">
+        <div>
+          <p className="font-bold text-charcoal">🎁 ফ্রি ডেলিভারি অফার</p>
+          <p className="text-xs text-gray-400 mt-0.5">চালু করলে সব product পেজে "ফ্রি হোম ডেলিভারি" দেখাবে। বন্ধ = দেখাবে না (loss এড়াতে)।</p>
+        </div>
+        <button type="button" onClick={toggleFreeDelivery}
+          className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all flex-shrink-0 ${freeDelivery ? 'bg-emerald-500 text-white' : 'bg-gray-200 text-gray-500'}`}>
+          {freeDelivery === null ? '...' : freeDelivery ? 'চালু ✓' : 'বন্ধ'}
+        </button>
+      </div>
 
       {/* Upload card */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-8">
