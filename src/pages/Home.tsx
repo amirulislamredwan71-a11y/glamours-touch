@@ -38,6 +38,7 @@ const Home = () => {
       const { data: productsData } = await supabase
         .from('products')
         .select('*')
+        .order('isFeatured', { ascending: false })
         .order('created_at', { ascending: false });
       
       if (productsData) setFeaturedProducts(productsData);
