@@ -6,6 +6,7 @@ export interface Product {
   market_price?: number | null;
   images?: string[];
   in_stock?: boolean;
+  stock?: number | null;
   description: string;
   image: string;
   category: 'Skincare' | 'Makeup' | 'Haircare' | 'Fragrance' | 'Accessories';

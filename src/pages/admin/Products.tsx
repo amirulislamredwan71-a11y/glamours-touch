@@ -40,7 +40,8 @@ const AdminProducts = () => {
     reviews: 0,
     isFeatured: false,
     images: [] as string[],
-    in_stock: true
+    in_stock: true,
+    stock: ''
   });
 
   useEffect(() => {
@@ -143,7 +144,8 @@ const AdminProducts = () => {
         price: parseFloat(formData.price),
         market_price: formData.market_price ? parseFloat(formData.market_price) : null,
         rating: parseFloat(formData.rating.toString()),
-        reviews: parseInt(formData.reviews.toString())
+        reviews: parseInt(formData.reviews.toString()),
+        stock: formData.stock !== '' && formData.stock != null ? parseInt(formData.stock.toString()) : null
       };
 
       if (editingProduct) {
@@ -193,7 +195,7 @@ const AdminProducts = () => {
       category: categories[0] || '',
       origin: 'International',
       rating: 5, reviews: 0, isFeatured: false,
-      images: [], in_stock: true
+      images: [], in_stock: true, stock: ''
     });
   };
 
@@ -318,7 +320,8 @@ const AdminProducts = () => {
                               reviews: product.reviews,
                               isFeatured: product.isFeatured || false,
                               images: product.images ?? [],
-                              in_stock: product.in_stock ?? true
+                              in_stock: product.in_stock ?? true,
+                              stock: product.stock != null ? product.stock.toString() : ''
                             });
                             setIsModalOpen(true);
                           }}
@@ -533,6 +536,19 @@ const AdminProducts = () => {
                       </span>
                       <span className="font-bold text-sm">{formData.in_stock ? 'In Stock ✓ (Available)' : 'Sold Out ✕ (Unavailable)'}</span>
                     </button>
+                  </div>
+
+                  {/* Real stock count — shows "মাত্র X টি বাকি" on the site when 1–10 pcs */}
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">স্টক / কত পিস বাকি (খালি রাখলে "বাকি" badge দেখাবে না)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      value={formData.stock}
+                      onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                      placeholder="যেমন 5 — সাইটে দেখাবে: মাত্র 5টি বাকি!"
+                      className="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:border-gold focus:outline-none"
+                    />
                   </div>
 
                   <div className="md:col-span-2">

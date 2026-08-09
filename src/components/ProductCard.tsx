@@ -10,19 +10,11 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
-// Deterministic "stock" based on product id — looks real, always consistent
-const getStockHint = (id: string): number | null => {
-  let hash = 0;
-  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) & 0xffffffff;
-  const bucket = Math.abs(hash) % 10;
-  if (bucket < 3) return (Math.abs(hash) % 4) + 2; // 2-5 left (30%)
-  return null; // no warning (70%)
-};
-
 const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const stockLeft = getStockHint(product.id);
+  // Real, admin-set stock — show low-stock urgency only when genuinely low (1–10 pcs)
+  const stockLeft = (typeof product.stock === 'number' && product.stock > 0 && product.stock <= 10) ? product.stock : null;
   const marketPrice = product.market_price ?? null;
   const hasDiscount = marketPrice != null && marketPrice > product.price;
   const discountPct = hasDiscount ? Math.round((1 - product.price / marketPrice) * 100) : 0;
