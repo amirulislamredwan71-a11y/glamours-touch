@@ -4,10 +4,11 @@ import { supabase } from '../lib/supabase';
 import { useCart } from '../hooks/useCart';
 import {
   Star, ShoppingBag, ArrowLeft, ShieldCheck, Truck, RefreshCw,
-  Share2, Facebook, MessageCircle,
+  Share2, Facebook, MessageCircle, Sparkles,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import ProductCard from '../components/ProductCard';
+import TryOnModal from '../components/TryOnModal';
 
 interface Product {
   id: string; name: string; brand: string; price: number;
@@ -26,6 +27,7 @@ const ProductDetail = () => {
   const [shared,   setShared]   = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [freeDelivery, setFreeDelivery] = useState(false);
+  const [showTryOn, setShowTryOn] = useState(false);
 
   // Admin-controlled free-delivery offer (site_settings.free_delivery = 'on'/'off'); default off
   useEffect(() => {
@@ -216,6 +218,13 @@ const ProductDetail = () => {
                   </>
                 )}
               </div>
+
+              {/* AI Try-On (cosmetics) */}
+              <button type="button" onClick={() => setShowTryOn(true)}
+                className="w-full mb-8 border-2 border-gold text-gold hover:bg-gold hover:text-white py-3.5 rounded-full font-bold tracking-widest flex items-center justify-center gap-2 transition-all">
+                <Sparkles size={18} /> AI Try-On — ২৮ দিনের ফল দেখুন
+              </button>
+              {showTryOn && product && <TryOnModal product={product} onClose={() => setShowTryOn(false)} />}
 
               {/* Trust badges — kill hesitation right beside the buy button */}
               <div className="grid grid-cols-3 gap-2 mb-8">
