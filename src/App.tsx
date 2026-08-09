@@ -28,6 +28,7 @@ const FAQ = lazy(() => import('./pages/FAQ'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const OrderTracking = lazy(() => import('./pages/OrderTracking'));
+const GlowPredictor = lazy(() => import('./pages/GlowPredictor'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
@@ -66,6 +67,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Suspense fallback={<LoadingFallback />}><Shop /></Suspense>} />
+          <Route path="/glow-predictor" element={<Suspense fallback={<LoadingFallback />}><GlowPredictor /></Suspense>} />
           <Route path="/product/:id" element={<Suspense fallback={<LoadingFallback />}><ProductDetail /></Suspense>} />
           <Route path="/cart" element={<Suspense fallback={<LoadingFallback />}><Cart /></Suspense>} />
           <Route path="/profile" element={<Suspense fallback={<LoadingFallback />}><Profile /></Suspense>} />

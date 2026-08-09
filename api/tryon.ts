@@ -42,10 +42,10 @@ export default async function handler(req: IncomingMessage & { method?: string }
 
   const prompt =
     `You are a professional dermatology-grade skincare visualization AI. The attached photo is a real person's face/skin. ` +
-    `Show a realistic, believable preview of the expected skin result after using "${productName}" consistently for about ${days} days` +
-    (effect ? ` (the product helps with: ${effect}).` : '.') +
-    ` Apply a natural improvement — ${effect || 'clearer, brighter, smoother, more even-toned and healthy skin'}. ` +
-    `STRICT: keep the SAME person, same identity, same face shape, same angle and lighting. Do NOT beautify unrealistically, do NOT add makeup, do NOT change age or features — only the natural skin improvement. Output ONE photorealistic image.`;
+    `Using your knowledge of the specific product "${productName}"` + (effect ? ` (product details: ${effect})` : '') + `, its known active ingredients and the exact benefit it is designed for, ` +
+    `show a realistic, believable preview of this same person's skin after using ONLY this product consistently for about ${days} days. ` +
+    `Apply ONLY the improvement this specific product actually targets — e.g. a niacinamide/TXA/vitamin-C brightening serum → more even tone and faded dark spots; a snail/hyaluronic/collagen/PDRN cream → plumper, smoother, more hydrated skin; a sunscreen → healthy protected even-toned skin; an acne/pore product → fewer blemishes and refined pores; retinal → firmer smoother texture. ` +
+    `STRICT: keep the SAME person, same identity, same face shape, same age, same angle and lighting. Keep natural skin texture (pores, moles). Do NOT add makeup, do NOT airbrush to plastic/filtered perfection, do NOT change features — only the realistic improvement this product gives. Output ONE photorealistic image.`;
 
   const gBody = {
     contents: [{ parts: [

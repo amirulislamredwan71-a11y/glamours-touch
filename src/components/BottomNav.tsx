@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Truck, ShoppingCart, User } from 'lucide-react';
+import { Home, ShoppingBag, Truck, ShoppingCart, User, Sparkles } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 
 /** Official Messenger logo with brand gradient (lucide has no Messenger glyph). */
@@ -36,6 +36,7 @@ const BottomNav = () => {
   }[] = [
     { to: '/', icon: Home, label: 'Home' },
     { to: '/shop', icon: ShoppingBag, label: 'Shop' },
+    { to: '/glow-predictor', icon: Sparkles, label: 'Glow AI' },
     { href: 'https://m.me/1002146686323797', icon: MessengerIcon, label: 'Messenger', external: true },
     { to: '/track-order', icon: Truck, label: 'Track' },
     { to: '/cart', icon: ShoppingCart, label: 'Cart', badge: cartCount },
