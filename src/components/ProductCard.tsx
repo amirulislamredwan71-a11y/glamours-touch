@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Star, Flame } from 'lucide-react';
+import { Star, Flame, Sparkles } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { motion } from 'motion/react';
@@ -151,6 +151,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             </>
           )}
         </div>
+
+        {/* Flagship: AI Glow Predictor — try this product on YOUR face before buying */}
+        <Link
+          to={`/glow-predictor?product=${product.id}`}
+          className="mt-1 flex items-center justify-center gap-1 bg-gradient-to-r from-gold to-amber-500 text-white py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter shadow-sm hover:brightness-110 transition-all"
+        >
+          <Sparkles size={10} /> Glow দেখুন
+        </Link>
       </div>
     </motion.div>
   );

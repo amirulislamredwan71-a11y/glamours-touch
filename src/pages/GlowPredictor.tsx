@@ -1,9 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Sparkles, Camera, Upload, RotateCcw, Loader2, Share2, Check, X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 
-interface P { id: string; name: string; brand: string | null; price: number; image: string; category?: string; description?: string; }
+interface P { id: string; name: string; brand: string | null; price: number; image: string; category?: string; description?: string; isFeatured?: boolean; }
+
+/** Only face-applicable skincare categories — a shampoo/body-spray can't be "tried on" a face. */
+const FACE_CATS = [
+  'Moisturizer & Cream', 'Serum & Essence', 'Cleanser', 'Skincare', 'Sunscreen',
+  'Toner', 'Masks & Exfoliators', 'Face Care', 'Eye Care', 'Serum & Treatment',
+  'D A B O All In One Care', 'D A B O One In All Care', 'Medicube Skin Care', 'Makeup & Lip',
+];
 
 /** Resize a dataURL to a max dimension → { b64 (no prefix), mime } to keep the API payload light. */
 function resizeImage(dataUrl: string, max = 820): Promise<{ b64: string; mime: string }> {
@@ -34,16 +42,41 @@ const GlowPredictor: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [shared, setShared] = useState(false);
+  const [cat, setCat] = useState<string>('⭐');
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
+  const location = useLocation();
+  const pid = useMemo(() => new URLSearchParams(location.search).get('product'), [location.search]);
+
+  // Load only face-applicable skincare products, featured first
   useEffect(() => {
     supabase.from('products')
-      .select('id,name,brand,price,image,category,description')
+      .select('id,name,brand,price,image,category,description,isFeatured')
+      .in('category', FACE_CATS)
       .order('isFeatured', { ascending: false })
-      .limit(36)
+      .order('created_at', { ascending: false })
+      .limit(500)
       .then(({ data }) => { if (data) setProducts(data as P[]); });
   }, []);
+
+  // Deep-link: a product card sent us here → preselect that product + its category
+  useEffect(() => {
+    if (!pid) return;
+    supabase.from('products')
+      .select('id,name,brand,price,image,category,description')
+      .eq('id', pid).maybeSingle()
+      .then(({ data }) => { if (data) { setSelected(data as P); setCat((data as P).category || '⭐'); } });
+  }, [pid]);
+
+  const cats = useMemo(
+    () => Array.from(new Set(products.map((p) => p.category).filter(Boolean))) as string[],
+    [products],
+  );
+  const shown = useMemo(() => {
+    if (cat === '⭐') { const f = products.filter((p) => p.isFeatured); return (f.length ? f : products).slice(0, 30); }
+    return products.filter((p) => p.category === cat);
+  }, [products, cat]);
 
   const stopCamera = () => {
     streamRef.current?.getTracks().forEach((t) => t.stop());
@@ -128,7 +161,7 @@ const GlowPredictor: React.FC = () => {
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-8">
           <p className="text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-2">✨ Glamour's Touch AI</p>
-          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-white leading-tight">AI Glow Predictor</h1>
+          <h1 className="text-xl sm:text-3xl font-serif font-bold text-white leading-tight">AI Glow Predictor</h1>
           <p className="text-white/60 text-sm mt-2">কেনার আগে দেখুন — এই পণ্য ~২৮ দিন ব্যবহারে <span className="text-gold">আপনার নিজের ত্বকে</span> কেমন ফল দেবে।</p>
         </div>
 
@@ -195,18 +228,35 @@ const GlowPredictor: React.FC = () => {
               )}
             </div>
 
-            {/* ── Step 2: pick a product ── */}
+            {/* ── Step 2: pick a product (category-swipe over the live catalog) ── */}
             <div className="bg-white/5 border border-white/10 rounded-3xl p-4 sm:p-5 mb-4">
               <p className="text-gold text-xs font-bold tracking-widest uppercase mb-3">ধাপ ২ — পণ্য বেছে নিন</p>
+
+              {/* Category chips — swipe left/right */}
+              <div className="flex gap-2 overflow-x-auto pb-2 mb-3 -mx-1 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <button onClick={() => setCat('⭐')}
+                  className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${cat === '⭐' ? 'bg-gold text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+                  ⭐ জনপ্রিয়
+                </button>
+                {cats.map((c) => (
+                  <button key={c} onClick={() => setCat(c)}
+                    className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${cat === c ? 'bg-gold text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+                    {c}
+                  </button>
+                ))}
+              </div>
+
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-72 overflow-y-auto">
-                {products.map((p) => (
+                {shown.map((p) => (
                   <button key={p.id} onClick={() => setSelected(p)}
                     className={`text-left rounded-xl overflow-hidden border-2 transition-all ${selected?.id === p.id ? 'border-gold ring-2 ring-gold/40' : 'border-white/10'}`}>
                     <img src={p.image} alt={p.name} loading="lazy" className="w-full aspect-square object-cover bg-white/5" />
                     <p className="text-[9px] text-white/80 px-1.5 py-1 truncate">{p.name}</p>
                   </button>
                 ))}
+                {shown.length === 0 && <p className="col-span-full text-white/40 text-xs text-center py-6">এই ক্যাটাগরিতে পণ্য নেই</p>}
               </div>
+              {selected && <p className="text-white/70 text-xs mt-2.5">নির্বাচিত: <span className="text-gold font-bold">{selected.name}</span></p>}
             </div>
 
             {/* ── Predict ── */}
