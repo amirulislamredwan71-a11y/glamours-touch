@@ -49,7 +49,7 @@ const About = () => {
               <h2 className="text-4xl font-serif font-bold text-charcoal mb-8">Bridging Traditions with <span className="text-gold">Innovation</span></h2>
               <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
                 <p>
-                  At Glamour's Touch, we believe that beauty is a bridge between the wisdom of the past and the possibilities of the future. Our journey began in the heart of Dhaka, inspired by the rich heritage of Bangladeshi and Indian beauty rituals that have been passed down through generations.
+                  At Glamour's Touch, we believe that beauty is a bridge between the wisdom of the past and the possibilities of the future. Our journey began in the heart of Dhaka, inspired by the glow-first philosophy of Korean skincare that has captivated the world — bringing authentic K-beauty to every doorstep in Bangladesh.
                 </p>
                 <p>
                   We've spent years researching the most potent natural ingredients from our region—from the soothing properties of turmeric to the rejuvenating essence of sandalwood—and combining them with cutting-edge dermatological science.

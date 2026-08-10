@@ -9,7 +9,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "Are your products 100% authentic?",
-      answer: "Yes, absolutely. We source all our products directly from premium brands and authorized distributors in Bangladesh and India. We guarantee 100% authenticity for every item in our store."
+      answer: "Yes, absolutely. We source all our products directly from premium Korean brands and their authorized distributors. We guarantee 100% authenticity for every item in our store."
     },
     {
       question: "Do you offer international shipping?",

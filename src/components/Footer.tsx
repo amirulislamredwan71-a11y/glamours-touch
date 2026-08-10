@@ -62,7 +62,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Bringing the finest Bangladeshi and Indian beauty traditions to your doorstep. Premium cosmetics for the modern individual.
+              Bangladesh's home for 100% authentic Korean skincare & beauty — glass-skin routines, delivered to your doorstep.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
