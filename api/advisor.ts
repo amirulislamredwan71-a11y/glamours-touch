@@ -55,7 +55,7 @@ async function viaGemini(KEY: string, history: any[]): Promise<string> {
   const gBody = {
     system_instruction: { parts: [{ text: SYSTEM }] },
     contents,
-    generationConfig: { maxOutputTokens: 700, temperature: 0.6, thinkingConfig: { thinkingBudget: 0 } },
+    generationConfig: { maxOutputTokens: 700, temperature: 0.6 },
   };
   const r = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${KEY}`,
