@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, X, BadgeCheck, Truck, ShieldCheck } from 'lucide-react';
+import { Search, X, BadgeCheck, Truck, ShieldCheck, Camera } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import SkinScanModal from './SkinScanModal';
 
 interface P {
   id: string;
@@ -28,6 +29,7 @@ const HomeSearch = () => {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState<P[]>([]);
   const [cats, setCats] = useState<Cat[]>([]);
+  const [scanOpen, setScanOpen] = useState(false);
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,6 +67,7 @@ const HomeSearch = () => {
   };
 
   return (
+    <>
     <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark">
       <div className="max-w-3xl mx-auto px-4">
         <p className="text-center text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
@@ -81,14 +84,19 @@ const HomeSearch = () => {
               onFocus={() => setOpen(true)}
               placeholder="Medicube, Anua, sunscreen... খুঁজুন"
               aria-label="Search products"
-              className="w-full bg-white rounded-full pl-12 pr-11 py-3.5 sm:py-4 text-sm sm:text-base text-charcoal placeholder:text-gray-400 shadow-xl focus:outline-none focus:ring-2 focus:ring-gold"
+              className="w-full bg-white rounded-full pl-12 pr-24 py-3.5 sm:py-4 text-sm sm:text-base text-charcoal placeholder:text-gray-400 shadow-xl focus:outline-none focus:ring-2 focus:ring-gold"
             />
             {q && (
               <button type="button" onClick={() => { setQ(''); setOpen(false); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-charcoal">
+                className="absolute right-[52px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-charcoal">
                 <X size={18} />
               </button>
             )}
+            {/* AI Skin Scan camera */}
+            <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full gt-shiny flex items-center justify-center shadow-md active:scale-90 transition-transform">
+              <Camera size={17} />
+            </button>
           </form>
 
           {open && matches.length > 0 && (
@@ -149,6 +157,8 @@ const HomeSearch = () => {
         </div>
       )}
     </section>
+    <SkinScanModal open={scanOpen} onClose={() => setScanOpen(false)} />
+    </>
   );
 };
 
