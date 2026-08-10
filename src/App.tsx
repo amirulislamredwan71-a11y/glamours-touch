@@ -9,7 +9,7 @@ import FloatingCart from './components/FloatingCart';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import ScrollToTop from './components/ScrollToTop';
-import WhatsAppButton from './components/WhatsAppButton';
+import GlowAdvisor from './components/GlowAdvisor';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import { useAuth } from './hooks/useAuth';
@@ -100,7 +100,7 @@ const AppContent = () => {
       </main>
       <Footer />
       <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
-      <WhatsAppButton />
+      <GlowAdvisor />
       <BottomNav />
     </div>
   );

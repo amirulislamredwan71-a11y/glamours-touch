@@ -160,9 +160,10 @@ const GlowPredictor: React.FC = () => {
       <SEO title="AI Glow Predictor — ২৮ দিন পর আপনার ত্বক" description="Glamour's Touch AI Glow Predictor — কেনার আগে দেখুন কোরিয়ান স্কিনকেয়ার ২৮ দিন ব্যবহারে আপনার ত্বকে কেমন ফল দেবে।" url="/glow-predictor" />
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-8">
-          <p className="text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-2">✨ Glamour's Touch AI</p>
+          <p className="text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-2">✨ এআই গ্লো প্রেডিকশন</p>
           <h1 className="text-xl sm:text-3xl font-serif font-bold text-white leading-tight">AI Glow Predictor</h1>
           <p className="text-white/60 text-sm mt-2">কেনার আগে দেখুন — এই পণ্য ~২৮ দিন ব্যবহারে <span className="text-gold">আপনার নিজের ত্বকে</span> কেমন ফল দেবে।</p>
+          <p className="text-white/45 text-xs mt-2.5 max-w-lg mx-auto leading-relaxed">এটি সাধারণ ফিল্টার নয় — প্রতিটি পণ্যের <span className="text-gold/90 font-semibold">আসল উপাদান ও ব্যবহারবিধির (use-case)</span> ভিত্তিতে AI বাস্তব সম্ভাব্য ফল তৈরি করে।</p>
         </div>
 
         {result ? (
@@ -270,7 +271,7 @@ const GlowPredictor: React.FC = () => {
 
         {error && <p className="text-red-400 text-sm font-bold text-center mt-4">{error}</p>}
         <p className="text-white/35 text-[10px] text-center mt-6 leading-relaxed max-w-md mx-auto">
-          ⚠️ এটি AI-এর তৈরি একটি সম্ভাব্য visualization — প্রকৃত ফল ত্বকের ধরন ও সঠিক ব্যবহারের ওপর নির্ভর করে, ব্যক্তিভেদে ভিন্ন হতে পারে। এটি কোনো চিকিৎসা বা নিশ্চয়তা নয়।
+          ⚠️ AI-generated visualization based on the product's real ingredients &amp; use-case. Actual results vary by skin type &amp; usage — not a medical guarantee.
         </p>
       </div>
     </div>

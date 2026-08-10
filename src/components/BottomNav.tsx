@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Truck, ShoppingCart, User, Sparkles } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
+import { Home, ShoppingBag, Truck, Sparkles } from 'lucide-react';
 
 /** Official Messenger logo with brand gradient (lucide has no Messenger glyph). */
 const MessengerIcon = ({ size = 18 }: { size?: number; className?: string }) => (
@@ -19,74 +18,60 @@ const MessengerIcon = ({ size = 18 }: { size?: number; className?: string }) => 
   </svg>
 );
 
-const BottomNav = () => {
-  const { cartCount } = useCart();
-  const location = useLocation();
+const WhatsAppIcon = ({ size = 18 }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.2c-.24.68-1.42 1.32-1.95 1.36-.5.05-.96.23-3.23-.67-2.72-1.07-4.44-3.85-4.57-4.03-.13-.18-1.1-1.46-1.1-2.79 0-1.33.7-1.98.95-2.25.24-.27.53-.34.7-.34.18 0 .35 0 .5.01.16.01.38-.06.59.45.24.58.8 2 .87 2.14.07.14.12.31.02.49-.09.18-.14.29-.27.45-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.25 1.39.27.14.43.12.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.55.73 1.81.87.27.14.45.2.51.31.07.12.07.66-.17 1.34z" />
+  </svg>
+);
 
-  // Hide on admin pages
+const BottomNav = () => {
+  const location = useLocation();
   if (location.pathname.startsWith('/admin')) return null;
 
-  const tabs: {
-    to?: string;
-    href?: string;
-    external?: boolean;
-    icon: React.ComponentType<{ size?: number; className?: string }>;
-    label: string;
-    badge?: number;
-  }[] = [
-    { to: '/', icon: Home, label: 'Home' },
-    { to: '/shop', icon: ShoppingBag, label: 'Shop' },
-    { to: '/glow-predictor', icon: Sparkles, label: 'Glow AI' },
-    { href: 'https://m.me/1002146686323797', icon: MessengerIcon, label: 'Messenger', external: true },
-    { to: '/track-order', icon: Truck, label: 'Track' },
-    { to: '/cart', icon: ShoppingCart, label: 'Cart', badge: cartCount },
-    { to: '/profile', icon: User, label: 'Profile' },
-  ];
+  const link = (to: string, Icon: React.ComponentType<{ size?: number; className?: string }>, label: string, end = false) => (
+    <NavLink
+      to={to}
+      end={end}
+      className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 relative"
+    >
+      {({ isActive }) => (
+        <>
+          <Icon size={18} className={isActive ? 'text-gold' : 'text-gray-400'} />
+          <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gold' : 'text-gray-500'}`}>{label}</span>
+          {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gold rounded-full" />}
+        </>
+      )}
+    </NavLink>
+  );
+
+  const ext = (href: string, Icon: React.ComponentType<{ size?: number; className?: string }>, label: string) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-gray-500 active:text-gold transition-colors">
+      <Icon size={18} />
+      <span className="text-[9px] font-bold tracking-wide uppercase text-gray-500">{label}</span>
+    </a>
+  );
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
       <div className="flex items-stretch">
-        {tabs.map((tab) => {
-          const { icon: Icon, label } = tab;
-          if (tab.external) {
-            return (
-              <a
-                key={label}
-                href={tab.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-gray-500 active:text-gold transition-colors"
-              >
-                <Icon size={18} className="text-gray-400" />
-                <span className="text-[9px] font-bold tracking-wide uppercase text-gray-500">{label}</span>
-              </a>
-            );
-          }
-          return (
-            <NavLink
-              key={label}
-              to={tab.to!}
-              end={tab.to === '/'}
-              className={({ isActive }) =>
-                `flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors relative ${
-                  isActive ? 'text-gold' : 'text-gray-500'
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <Icon size={18} className={isActive ? 'text-gold' : 'text-gray-400'} />
-                  <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gold' : 'text-gray-500'}`}>
-                    {label}
-                  </span>
-                  {isActive && (
-                    <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gold rounded-full" />
-                  )}
-                </>
-              )}
-            </NavLink>
-          );
-        })}
+        {link('/', Home, 'Home', true)}
+        {link('/shop', ShoppingBag, 'Shop')}
+
+        {/* Center — flagship Glow Predictor, raised */}
+        <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-end pb-1.5 relative">
+          {({ isActive }) => (
+            <>
+              <span className={`-mt-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-gold/40 border-4 border-white bg-gradient-to-br ${isActive ? 'from-amber-500 to-gold' : 'from-gold to-amber-500'}`}>
+                <Sparkles size={24} className="text-white" />
+              </span>
+              <span className={`text-[9px] font-black tracking-wide mt-0.5 ${isActive ? 'text-gold' : 'text-gray-600'}`}>গ্লো AI</span>
+            </>
+          )}
+        </NavLink>
+
+        {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
+        {ext('https://wa.me/8801712426871', WhatsAppIcon, 'WhatsApp')}
+        {link('/track-order', Truck, 'Track')}
       </div>
     </nav>
   );
