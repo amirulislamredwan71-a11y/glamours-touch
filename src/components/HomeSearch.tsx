@@ -34,7 +34,7 @@ const HomeSearch = () => {
     (async () => {
       const [{ data: pd }, { data: cd }] = await Promise.all([
         supabase.from('products').select('id,name,brand,price,market_price,image'),
-        supabase.from('categories').select('id,name,image'),
+        supabase.from('categories').select('id,name,image').order('created_at', { ascending: true }),
       ]);
       if (pd) setProducts(pd as P[]);
       if (cd) setCats(cd as Cat[]);

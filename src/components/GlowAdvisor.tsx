@@ -65,7 +65,9 @@ const GlowAdvisor: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><Sparkles size={18} /></div>
                 <div>
                   <p className="font-bold text-sm leading-none">Glow Advisor</p>
-                  <p className="text-[10px] opacity-90 mt-0.5">AI Korean স্কিনকেয়ার বিশেষজ্ঞ</p>
+                  <p className="text-[10px] opacity-90 mt-0.5 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" /> live · AI Korean বিশেষজ্ঞ
+                  </p>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} aria-label="close"><X size={20} /></button>
