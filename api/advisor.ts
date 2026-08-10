@@ -58,7 +58,7 @@ async function viaGemini(KEY: string, history: any[]): Promise<string> {
     generationConfig: { maxOutputTokens: 700, temperature: 0.6 },
   };
   const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${KEY}`,
     { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(gBody) },
   );
   const d: any = await r.json();
