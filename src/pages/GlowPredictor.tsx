@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Sparkles, Camera, Upload, RotateCcw, Loader2, Share2, Check, X } from 'lucide-react';
+import { Sparkles, Camera, Upload, RotateCcw, Loader2, Share2, Check, X, Download } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 
@@ -43,6 +43,7 @@ const GlowPredictor: React.FC = () => {
   const [error, setError] = useState('');
   const [shared, setShared] = useState(false);
   const [cat, setCat] = useState<string>('⭐');
+  const [analysis, setAnalysis] = useState<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -119,15 +120,22 @@ const GlowPredictor: React.FC = () => {
 
   const predict = async () => {
     if (!photo || !selected) return;
-    setLoading(true); setError(''); setResult(null);
+    setLoading(true); setError(''); setResult(null); setAnalysis(null);
+    const productName = `${selected.name}${selected.brand ? ` (${selected.brand})` : ''}`;
+    const effect = (selected.description || '').replace(/<[^>]*>/g, '').slice(0, 240);
+    // AI ingredient/metric analysis in parallel (doesn't block the image)
+    fetch('/api/glow-analyze', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productName, effect, days: 30 }),
+    }).then((r) => r.json()).then((a) => { if (a && a.metrics) setAnalysis(a); }).catch(() => {});
     try {
       const { b64, mime } = await resizeImage(photo, 820);
       const r = await fetch('/api/tryon', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           imageBase64: b64, mimeType: mime,
-          productName: `${selected.name}${selected.brand ? ` (${selected.brand})` : ''}`,
-          effect: (selected.description || '').replace(/<[^>]*>/g, '').slice(0, 240),
+          productName,
+          effect,
           days: 28,
         }),
       });
@@ -153,15 +161,20 @@ const GlowPredictor: React.FC = () => {
     } catch { /* ignore */ }
   };
 
-  const reset = () => { setPhoto(null); setResult(null); setSelected(null); setError(''); };
+  const reset = () => { setPhoto(null); setResult(null); setSelected(null); setError(''); setAnalysis(null); };
+
+  const saveImage = () => {
+    if (!result) return;
+    const a = document.createElement('a'); a.href = result; a.download = 'my-glow-glamourstouch.png'; a.click();
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-charcoal to-[#141414] pt-24 sm:pt-28 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-gthead to-gtdark pt-24 sm:pt-28 pb-16">
       <SEO title="AI Glow Predictor — ২৮ দিন পর আপনার ত্বক" description="Glamour's Touch AI Glow Predictor — কেনার আগে দেখুন কোরিয়ান স্কিনকেয়ার ২৮ দিন ব্যবহারে আপনার ত্বকে কেমন ফল দেবে।" url="/glow-predictor" />
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-8">
-          <p className="text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-2">✨ এআই গ্লো প্রেডিকশন</p>
-          <h1 className="text-xl sm:text-3xl font-serif font-bold text-white leading-tight">AI Glow Predictor</h1>
+          <span className="inline-flex items-center gap-1.5 text-gold text-[10px] font-bold tracking-[0.25em] uppercase mb-3 px-3 py-1 rounded-full border border-gold/30 bg-gold/10">✨ K-Beauty AI Studio</span>
+          <h1 className="text-xl sm:text-3xl font-display font-extrabold text-white leading-tight">GLOW AI PREDICTOR <span className="gt-gold-shiny">STUDIO</span></h1>
           <p className="text-white/60 text-sm mt-2">কেনার আগে দেখুন — এই পণ্য ~২৮ দিন ব্যবহারে <span className="text-gold">আপনার নিজের ত্বকে</span> কেমন ফল দেবে।</p>
           <p className="text-white/45 text-xs mt-2.5 max-w-lg mx-auto leading-relaxed">এটি সাধারণ ফিল্টার নয় — প্রতিটি পণ্যের <span className="text-gold/90 font-semibold">আসল উপাদান ও ব্যবহারবিধির (use-case)</span> ভিত্তিতে AI বাস্তব সম্ভাব্য ফল তৈরি করে।</p>
         </div>
@@ -184,12 +197,74 @@ const GlowPredictor: React.FC = () => {
                 <span className="text-gold font-bold">{selected.name}</span> — {selected.brand} · ৳{selected.price}
               </p>
             )}
-            <div className="flex gap-3 mt-5">
-              <button onClick={share} className="flex-1 bg-gold text-white py-3.5 rounded-full font-bold flex items-center justify-center gap-2">
-                {shared ? <><Check size={18} /> শেয়ার হয়েছে</> : <><Share2 size={18} /> শেয়ার করুন</>}
+
+            {/* ── 🧪 Gemini AI analysis: glow score + metric bars + summary + combo ── */}
+            {analysis ? (
+              <div className="mt-5 rounded-2xl border border-gold/20 bg-black/30 p-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="relative w-16 h-16 shrink-0">
+                    <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                      <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                      <circle cx="18" cy="18" r="15.5" fill="none" stroke="#e5b83a" strokeWidth="3" strokeLinecap="round" strokeDasharray={`${(analysis.glowScore / 100) * 97.4} 97.4`} />
+                    </svg>
+                    <span className="absolute inset-0 flex items-center justify-center text-gold font-black text-base">{analysis.glowScore}%</span>
+                  </div>
+                  <div>
+                    <p className="text-gold text-[11px] font-bold tracking-wide uppercase">🧪 Gemini AI বিশ্লেষণ</p>
+                    <p className="text-white/60 text-[11px] leading-relaxed mt-0.5">এই পণ্য আপনার ত্বকের জন্য <b className="text-white">{analysis.glowScore}%</b> উপযোগী — নিয়মিত <b className="text-white">{analysis.days} দিন</b> ব্যবহারে সম্ভাব্য ফল:</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2 mb-3">
+                  {analysis.metrics.map((m: any, i: number) => {
+                    const neg = String(m.value).trim().startsWith('-');
+                    const pct = Math.min(100, Math.abs(parseInt(String(m.value).replace(/[^\d]/g, '')) || 0));
+                    return (
+                      <div key={i}>
+                        <div className="flex justify-between text-[11px] mb-0.5">
+                          <span className="text-white/70">{m.label}</span>
+                          <span className={neg ? 'text-emerald-400 font-bold' : 'text-gold font-bold'}>{m.value}</span>
+                        </div>
+                        <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                          <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: neg ? '#34d399' : 'linear-gradient(90deg,#bf953f,#fcf6ba)' }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {analysis.summary && <p className="text-white/70 text-xs leading-relaxed mb-3">{analysis.summary}</p>}
+
+                {analysis.combo?.length > 0 && (
+                  <div className="rounded-xl bg-gold/10 border border-gold/25 p-3">
+                    <p className="text-gold text-[11px] font-bold mb-1.5">🧴 এই ত্বকের জন্য সম্পূর্ণ রুটিনে সাথে নিন:</p>
+                    <div className="flex flex-wrap gap-1.5 mb-2.5">
+                      {analysis.combo.map((c: string, i: number) => (
+                        <span key={i} className="text-[11px] bg-white/10 text-white/85 px-2.5 py-1 rounded-full border border-white/10">{c}</span>
+                      ))}
+                    </div>
+                    <a href={`https://wa.me/8801712426871?text=${encodeURIComponent(`আমি "${selected?.name}" সহ ১ মাসের গ্লো রুটিন (কম্বো) অর্ডার করতে চাই।`)}`} target="_blank" rel="noopener noreferrer"
+                      className="block text-center gt-shiny py-2.5 rounded-full font-bold text-sm">
+                      🛍️ Buy 1-Month Glow Routine
+                    </a>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="mt-5 flex items-center justify-center gap-2 text-white/40 text-xs py-3">
+                <Loader2 size={14} className="animate-spin text-gold" /> Gemini AI বিশ্লেষণ তৈরি হচ্ছে...
+              </div>
+            )}
+
+            <div className="flex gap-2.5 mt-5">
+              <button onClick={share} className="flex-1 gt-shiny py-3 rounded-full font-bold flex items-center justify-center gap-2 text-sm">
+                {shared ? <><Check size={17} /> শেয়ার হয়েছে</> : <><Share2 size={17} /> Share</>}
               </button>
-              <a href={`/product/${selected?.id}`} className="flex-1 bg-emerald-500 text-white py-3.5 rounded-full font-bold flex items-center justify-center gap-2">
-                অর্ডার করুন
+              <button onClick={saveImage} className="flex-1 bg-white/10 border border-white/15 text-white py-3 rounded-full font-bold flex items-center justify-center gap-2 text-sm">
+                <Download size={17} /> Save
+              </button>
+              <a href={`/product/${selected?.id}`} className="flex-1 bg-emerald-500 text-white py-3 rounded-full font-bold flex items-center justify-center gap-2 text-sm">
+                অর্ডার
               </a>
             </div>
             <button onClick={reset} className="w-full mt-3 text-white/60 py-2 text-sm font-bold flex items-center justify-center gap-2">
