@@ -47,8 +47,9 @@ const GlowAdvisor: React.FC = () => {
           title="AI Glow Advisor"
         >
           <span className="absolute inset-0 rounded-full bg-gold animate-ping opacity-20 group-hover:opacity-0" />
-          <Sparkles size={20} className="flex-shrink-0" />
-          <span className="text-sm font-bold tracking-wide hidden sm:inline">Glow Advisor</span>
+          <Sparkles size={18} className="flex-shrink-0" />
+          <span className="text-[13px] sm:text-sm font-bold tracking-wide">Glow Advisor</span>
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse ring-2 ring-white/50" title="live" />
         </motion.button>
       )}
 

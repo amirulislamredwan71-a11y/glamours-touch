@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Truck, Sparkles } from 'lucide-react';
+import { Home, Truck, Sparkles } from 'lucide-react';
 
 /** Official Messenger logo with brand gradient (lucide has no Messenger glyph). */
 const MessengerIcon = ({ size = 18 }: { size?: number; className?: string }) => (
@@ -55,7 +55,7 @@ const BottomNav = () => {
     <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
       <div className="flex items-stretch">
         {link('/', Home, 'Home', true)}
-        {link('/shop', ShoppingBag, 'Shop')}
+        {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
 
         {/* Center — flagship Glow Predictor, raised */}
         <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-end pb-1.5 relative">
@@ -64,12 +64,11 @@ const BottomNav = () => {
               <span className={`-mt-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-gold/40 border-4 border-white bg-gradient-to-br ${isActive ? 'from-amber-500 to-gold' : 'from-gold to-amber-500'}`}>
                 <Sparkles size={24} className="text-white" />
               </span>
-              <span className={`text-[9px] font-black tracking-wide mt-0.5 ${isActive ? 'text-gold' : 'text-gray-600'}`}>গ্লো AI</span>
+              <span className={`text-[8.5px] font-black tracking-tight mt-0.5 whitespace-nowrap ${isActive ? 'text-gold' : 'text-gray-600'}`}>গ্লো প্রেডিকশন</span>
             </>
           )}
         </NavLink>
 
-        {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
         {ext('https://wa.me/8801712426871', WhatsAppIcon, 'WhatsApp')}
         {link('/track-order', Truck, 'Track')}
       </div>
