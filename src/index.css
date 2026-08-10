@@ -114,6 +114,8 @@ input[type='range']::-moz-range-thumb {
 
 /* ══ Prototype "premium dark" utilities (glamour-touch-store chador) ══ */
 .gt-gold-gradient { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
+/* The RICH metallic gold — used on premium buttons, logo, avatar (prototype --gold-shiny) */
+.gt-shiny { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); color: #2a1d00; }
 .gt-gold-shiny {
   background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
   -webkit-background-clip: text; background-clip: text;

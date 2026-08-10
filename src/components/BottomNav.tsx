@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Truck, Sparkles } from 'lucide-react';
+import { Home, Truck } from 'lucide-react';
 
 /** Official Messenger logo with brand gradient (lucide has no Messenger glyph). */
 const MessengerIcon = ({ size = 18 }: { size?: number; className?: string }) => (
@@ -36,23 +36,23 @@ const BottomNav = () => {
     >
       {({ isActive }) => (
         <>
-          <Icon size={18} className={isActive ? 'text-gold' : 'text-gray-400'} />
-          <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gold' : 'text-gray-500'}`}>{label}</span>
-          {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gold rounded-full" />}
+          <Icon size={18} className={isActive ? 'text-gtgold' : 'text-white/50'} />
+          <span className={`text-[9px] font-bold tracking-wide uppercase ${isActive ? 'text-gtgold' : 'text-white/50'}`}>{label}</span>
+          {isActive && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gtgold rounded-full" />}
         </>
       )}
     </NavLink>
   );
 
   const ext = (href: string, Icon: React.ComponentType<{ size?: number; className?: string }>, label: string) => (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-gray-500 active:text-gold transition-colors">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-white/50 active:text-gtgold transition-colors">
       <Icon size={18} />
-      <span className="text-[9px] font-bold tracking-wide uppercase text-gray-500">{label}</span>
+      <span className="text-[9px] font-bold tracking-wide uppercase text-white/50">{label}</span>
     </a>
   );
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-[#050507] border-t border-white/8 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
       <div className="flex items-stretch">
         {link('/', Home, 'Home', true)}
         {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
@@ -61,10 +61,10 @@ const BottomNav = () => {
         <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-end pb-1.5 relative">
           {({ isActive }) => (
             <>
-              <span className={`-mt-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-gold/40 border-4 border-white bg-gradient-to-br ${isActive ? 'from-amber-500 to-gold' : 'from-gold to-amber-500'}`}>
-                <Sparkles size={24} className="text-white" />
+              <span className="-mt-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff2a6d,#9a0036)' }}>
+                <span className="text-white font-black text-base leading-none tracking-tight">AI</span>
               </span>
-              <span className={`text-[8.5px] font-black tracking-tight mt-0.5 whitespace-nowrap ${isActive ? 'text-gold' : 'text-gray-600'}`}>গ্লো প্রেডিকশন</span>
+              <span className={`text-[8.5px] font-black tracking-tight mt-0.5 whitespace-nowrap ${isActive ? 'text-gtgold' : 'text-white/60'}`}>গ্লো প্রেডিকশন</span>
             </>
           )}
         </NavLink>

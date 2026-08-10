@@ -94,14 +94,14 @@ const Navbar = () => {
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-xl border-b border-gold/10 transition-all duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#070709]/92 backdrop-blur-xl border-b border-gtgold/15 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 md:h-24">
 
           {/* Mobile hamburger */}
           <div className="flex md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-charcoal hover:text-gold transition-all duration-300">
+              className="p-2 text-white/80 hover:text-gtgold transition-all duration-300">
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
@@ -111,8 +111,8 @@ const Navbar = () => {
             <Link to="/" className="group flex items-center gap-2">
               <Logo className="w-14 h-14 sm:w-24 sm:h-24 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col">
-                <span className="text-base sm:text-xl md:text-2xl font-serif font-bold tracking-[0.06em] sm:tracking-[0.1em] text-charcoal group-hover:text-gold transition-colors duration-500 whitespace-nowrap">
-                  GLAMOUR'S <span className="text-gold group-hover:text-charcoal transition-colors duration-500">TOUCH</span>
+                <span className="text-base sm:text-xl md:text-2xl font-display font-bold tracking-[0.06em] sm:tracking-[0.1em] text-white transition-colors duration-500 whitespace-nowrap">
+                  GLAMOUR'S <span className="gt-gold-shiny">TOUCH</span>
                 </span>
                 <span className="text-[6px] sm:text-[8px] font-bold text-gray-400 tracking-[0.18em] sm:tracking-[0.3em] uppercase -mt-0.5 sm:-mt-1 whitespace-nowrap">BEAUTY • SKINCARE • CONFIDENCE</span>
               </div>
@@ -161,7 +161,7 @@ const Navbar = () => {
                     <span className="text-[10px] font-bold tracking-widest hidden lg:inline">ADMIN</span>
                   </Link>
                 )}
-                <Link to="/profile" className="hidden xs:flex items-center text-charcoal hover:text-gold transition-all group">
+                <Link to="/profile" className="hidden xs:flex items-center text-white/80 hover:text-gtgold transition-all group">
                   {user.user_metadata?.avatar_url ? (
                     <img src={user.user_metadata.avatar_url} alt="Profile" className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-gold/20 group-hover:border-gold transition-all" />
                   ) : (
@@ -183,7 +183,7 @@ const Navbar = () => {
 
             {/* Search — desktop only (mobile uses the homepage search bar) */}
             <button onClick={() => setIsSearchOpen(true)}
-              className="hidden sm:block text-charcoal hover:text-gold transition-all p-2">
+              className="hidden sm:block text-white/80 hover:text-gtgold transition-all p-2">
               <Search size={22} />
             </button>
 
@@ -191,13 +191,13 @@ const Navbar = () => {
 
             {/* Language */}
             <button onClick={toggleLanguage}
-              className="flex items-center gap-1 text-charcoal hover:text-gold transition-all group px-1 py-2">
+              className="flex items-center gap-1 text-white/80 hover:text-gtgold transition-all group px-1 py-2">
               <Globe size={18} className="group-hover:rotate-12 transition-transform" />
               <span className="text-[10px] font-bold tracking-widest">{i18n.language === 'en' ? 'বা' : 'EN'}</span>
             </button>
 
             {/* Cart — desktop only (mobile uses the bottom nav) */}
-            <Link to="/cart" className="relative hidden sm:block text-charcoal hover:text-gold transition-all group p-2">
+            <Link to="/cart" className="relative hidden sm:block text-white/80 hover:text-gtgold transition-all group p-2">
               <ShoppingBag size={22} />
               <AnimatePresence>
                 {cartCount > 0 && (

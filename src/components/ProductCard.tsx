@@ -86,7 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           <button
             onClick={fireAddToCart}
             aria-label="add to cart"
-            className="absolute bottom-2 right-2 w-8 h-8 rounded-full gt-gold-gradient text-[#3a2a00] flex items-center justify-center shadow-lg active:scale-90 transition-transform"
+            className="absolute bottom-2 right-2 w-8 h-8 rounded-full gt-shiny flex items-center justify-center shadow-lg active:scale-90 transition-transform"
           >
             <ShoppingBag size={15} />
           </button>
@@ -112,24 +112,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         </div>
 
         {soldOut ? (
-          <button disabled className="w-full bg-white/10 text-white/40 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
+          <button disabled className="w-full bg-white/10 text-white/40 py-2 rounded-lg text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
             Sold Out
           </button>
         ) : (
-          <div className="flex flex-col gap-1 mt-auto">
-            <div className="flex gap-1">
-              <button onClick={fireAddToCart}
-                className="flex-1 bg-white/8 hover:bg-white/15 text-white/85 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter transition-colors border border-white/10">
-                Add
-              </button>
-              <button onClick={handleBuyNow}
-                className="flex-1 gt-gold-gradient text-[#3a2a00] py-1.5 rounded-lg text-[9px] font-black uppercase tracking-tighter transition-all hover:brightness-105 flex items-center justify-center gap-1">
-                <ShoppingBag size={11} /> Buy
-              </button>
-            </div>
+          <div className="flex gap-1.5 mt-auto">
+            <button onClick={handleBuyNow}
+              className="flex-1 bg-transparent border border-gtgold/70 text-gtgold py-2 rounded-lg text-[10px] font-bold uppercase tracking-tight flex items-center justify-center gap-1 hover:bg-gtgold/10 transition-all">
+              <ShoppingBag size={11} /> Buy
+            </button>
             <Link to={`/glow-predictor?product=${product.id}`}
-              className="flex items-center justify-center gap-1 bg-gradient-to-r from-gtgold/20 to-amber-500/20 border border-gtgold/40 text-gtgoldsoft py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter hover:from-gtgold/30 hover:to-amber-500/30 transition-all">
-              <Sparkles size={10} /> Glow দেখুন
+              className="flex-1 gt-shiny py-2 rounded-lg text-[10px] font-bold tracking-tight flex items-center justify-center gap-1 hover:brightness-105 transition-all">
+              <Sparkles size={11} /> Glow দেখুন
             </Link>
           </div>
         )}
