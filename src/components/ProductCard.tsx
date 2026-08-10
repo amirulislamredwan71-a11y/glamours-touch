@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Star, Flame, Sparkles } from 'lucide-react';
+import { Flame, Sparkles, ShoppingBag, Heart } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { motion } from 'motion/react';
@@ -13,6 +13,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const [wished, setWished] = useState(false);
   // Real, admin-set stock — show low-stock urgency only when genuinely low (1–10 pcs)
   const stockLeft = (typeof product.stock === 'number' && product.stock > 0 && product.stock <= 10) ? product.stock : null;
   const marketPrice = product.market_price ?? null;
@@ -38,42 +39,38 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
     navigate('/checkout');
   };
 
-  // Star rating display
-  const rating = product.rating ?? 4.5;
-  const fullStars  = Math.floor(rating);
-  const hasHalf    = rating - fullStars >= 0.5;
-
   return (
-    <motion.div
-      className="group bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full relative overflow-hidden"
-    >
-      {/* Low stock badge */}
-      {stockLeft !== null && (
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="absolute top-2 right-2 z-10 flex items-center gap-0.5 bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-md"
-        >
-          <Flame size={9} className="fill-white" />
-          মাত্র {stockLeft}টি বাকি!
-        </motion.div>
-      )}
-
+    <motion.div className="group gt-card rounded-2xl flex flex-col h-full relative overflow-hidden">
       {/* Discount / Sold-out badge */}
       {soldOut ? (
         <div className="absolute top-2 left-2 z-10 bg-gray-800 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md tracking-wide">
           SOLD OUT
         </div>
       ) : hasDiscount && (
-        <div className="absolute top-2 left-2 z-10 bg-red-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md">
+        <div className="absolute top-2 left-2 z-10 bg-gtred text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-md">
           -{discountPct}%
         </div>
       )}
 
-      {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-gray-100 p-2 sm:p-4">
-        <Link to={`/product/${product.id}`} className="block h-full">
+      {/* Wishlist */}
+      <button
+        onClick={(e) => { e.preventDefault(); setWished((w) => !w); }}
+        aria-label="wishlist"
+        className="absolute top-2 right-2 z-10 w-7 h-7 rounded-full bg-black/40 backdrop-blur flex items-center justify-center border border-white/10"
+      >
+        <Heart size={13} className={wished ? 'fill-gtred text-gtred' : 'text-white/70'} />
+      </button>
+
+      {/* Low stock badge */}
+      {stockLeft !== null && !soldOut && (
+        <div className="absolute top-10 left-2 z-10 flex items-center gap-0.5 bg-gtred/90 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-md">
+          <Flame size={9} className="fill-white" /> মাত্র {stockLeft}টি
+        </div>
+      )}
+
+      {/* Image (kept on light panel so K-beauty photos read clean on the dark card) */}
+      <div className="relative m-2 rounded-xl overflow-hidden bg-white aspect-square">
+        <Link to={`/product/${product.id}`} className="block h-full p-2 sm:p-3">
           <img
             src={product.image.includes('unsplash.com') ? `${product.image}&w=300` : product.image}
             alt={product.name}
@@ -85,80 +82,57 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             referrerPolicy="no-referrer"
           />
         </Link>
+        {!soldOut && (
+          <button
+            onClick={fireAddToCart}
+            aria-label="add to cart"
+            className="absolute bottom-2 right-2 w-8 h-8 rounded-full gt-gold-gradient text-[#3a2a00] flex items-center justify-center shadow-lg active:scale-90 transition-transform"
+          >
+            <ShoppingBag size={15} />
+          </button>
+        )}
       </div>
 
       {/* Content */}
-      <div className="p-2 sm:p-3 flex flex-col flex-grow">
+      <div className="px-2.5 pb-2.5 flex flex-col flex-grow">
         <div className="flex-grow">
-          <Link to={`/product/${product.id}`} className="block group-hover:text-gold transition-colors">
-            <h3 className="text-[11px] sm:text-[13px] font-medium text-gray-900 line-clamp-1 mb-0.5 leading-tight">
+          <span className="text-[9px] font-bold tracking-widest uppercase text-gtgoldsoft">{product.brand || 'Korea'}</span>
+          <Link to={`/product/${product.id}`} className="block">
+            <h3 className="text-[11px] sm:text-[13px] font-semibold text-white/90 line-clamp-1 leading-tight mb-1 hover:text-gtgold transition-colors">
               {product.name}
             </h3>
           </Link>
 
-          {/* Stars */}
-          <div className="flex items-center gap-0.5 mb-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                size={9}
-                className={
-                  i < fullStars
-                    ? 'fill-yellow-400 text-yellow-400'
-                    : i === fullStars && hasHalf
-                    ? 'fill-yellow-200 text-yellow-400'
-                    : 'fill-gray-200 text-gray-300'
-                }
-              />
-            ))}
-            {(product.reviews ?? 0) > 0 && (
-              <span className="text-[9px] text-gray-400 ml-0.5">({product.reviews})</span>
-            )}
-          </div>
-
-          <div className="flex items-baseline flex-wrap gap-x-1.5 gap-y-0 mb-1.5">
-            <span className="text-lg sm:text-xl font-bold text-gray-900 leading-none">
-              ৳{product.price.toLocaleString()}
-            </span>
+          <div className="flex items-baseline flex-wrap gap-x-1.5 mb-2">
+            <span className="text-base sm:text-lg font-extrabold text-gtgold leading-none">৳{product.price.toLocaleString()}</span>
             {hasDiscount && (
-              <span className="text-[11px] sm:text-xs text-gray-400 line-through leading-none">
-                ৳{marketPrice.toLocaleString()}
-              </span>
+              <span className="text-[11px] text-white/35 line-through leading-none">৳{marketPrice.toLocaleString()}</span>
             )}
           </div>
         </div>
 
-        <div className="flex gap-1 mt-auto">
-          {soldOut ? (
-            <button disabled
-              className="flex-1 bg-gray-200 text-gray-500 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
-              Sold Out
-            </button>
-          ) : (
-            <>
-              <button
-                onClick={fireAddToCart}
-                className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
-              >
+        {soldOut ? (
+          <button disabled className="w-full bg-white/10 text-white/40 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
+            Sold Out
+          </button>
+        ) : (
+          <div className="flex flex-col gap-1 mt-auto">
+            <div className="flex gap-1">
+              <button onClick={fireAddToCart}
+                className="flex-1 bg-white/8 hover:bg-white/15 text-white/85 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter transition-colors border border-white/10">
                 Add
               </button>
-              <button
-                onClick={handleBuyNow}
-                className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-1.5 rounded-lg text-[9px] font-bold transition-colors shadow-sm uppercase tracking-tighter"
-              >
-                Buy
+              <button onClick={handleBuyNow}
+                className="flex-1 gt-gold-gradient text-[#3a2a00] py-1.5 rounded-lg text-[9px] font-black uppercase tracking-tighter transition-all hover:brightness-105 flex items-center justify-center gap-1">
+                <ShoppingBag size={11} /> Buy
               </button>
-            </>
-          )}
-        </div>
-
-        {/* Flagship: AI Glow Predictor — try this product on YOUR face before buying */}
-        <Link
-          to={`/glow-predictor?product=${product.id}`}
-          className="mt-1 flex items-center justify-center gap-1 bg-gradient-to-r from-gold to-amber-500 text-white py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter shadow-sm hover:brightness-110 transition-all"
-        >
-          <Sparkles size={10} /> Glow দেখুন
-        </Link>
+            </div>
+            <Link to={`/glow-predictor?product=${product.id}`}
+              className="flex items-center justify-center gap-1 bg-gradient-to-r from-gtgold/20 to-amber-500/20 border border-gtgold/40 text-gtgoldsoft py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-tighter hover:from-gtgold/30 hover:to-amber-500/30 transition-all">
+              <Sparkles size={10} /> Glow দেখুন
+            </Link>
+          </div>
+        )}
       </div>
     </motion.div>
   );

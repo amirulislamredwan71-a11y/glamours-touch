@@ -75,7 +75,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div className="flex flex-col overflow-hidden bg-gtdark">
       <SEO
         title="Korean Skincare & Beauty Products Bangladesh"
         description="Glamour's Touch — Bangladesh এর সেরা Korean skincare shop। DABO Snail Cream, Rice Ceramide, Glutathione Cream সহ 100% authentic Korean beauty products। Order: 01712-426871"
@@ -87,15 +87,15 @@ const Home = () => {
       {/* All Products Section */}
       <FlashBanner />
 
-      <section className="py-12 sm:py-20 bg-gray-50 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="mb-8 md:mb-12">
-            <div className="animate-fade-in-up">
-              <h2 className="text-[10px] md:text-xs font-bold text-gold tracking-[0.3em] uppercase">Recommended for You</h2>
-            </div>
+      <section className="py-10 sm:py-16 bg-gtdark relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex items-center justify-center gap-3 mb-6 sm:mb-10">
+            <span className="h-px w-8 bg-gradient-to-r from-transparent to-gtgold/60" />
+            <h2 className="text-xs md:text-sm font-bold text-gtgoldsoft tracking-[0.3em] uppercase font-display">Recommended for You</h2>
+            <span className="h-px w-8 bg-gradient-to-l from-transparent to-gtgold/60" />
           </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 md:gap-4">
             {featuredProducts.length > 0 ? (
               featuredProducts.map((product, idx) => (
                 <div key={product.id}>
@@ -103,7 +103,7 @@ const Home = () => {
                 </div>
               ))
             ) : (
-              <div className="col-span-full py-10 text-center text-gray-400">Loading treasures...</div>
+              <div className="col-span-full py-10 text-center text-white/40">Loading treasures...</div>
             )}
           </div>
         </div>
@@ -112,10 +112,10 @@ const Home = () => {
       {/* Categories now live as swipeable chips in the search hero above */}
 
       {/* Facebook Post */}
-      <section className="py-20 bg-cream">
+      <section className="py-16 bg-gthead">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <span className="text-gold font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Follow Us</span>
-          <h2 className="text-3xl font-serif font-bold text-charcoal mb-10">
+          <span className="text-gtgoldsoft font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Follow Us</span>
+          <h2 className="text-3xl font-serif font-bold text-white mb-10">
             আমাদের <span className="text-gold italic">Facebook</span> পোস্ট
           </h2>
           <div className="flex justify-center">

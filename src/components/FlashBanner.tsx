@@ -31,7 +31,7 @@ const FlashBanner: React.FC = () => {
   );
 
   return (
-    <section className="bg-white">
+    <section className="bg-gtdark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         <div className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl shadow-lg aspect-[16/6] sm:aspect-[16/5]">
           {b.link ? <a href={b.link} className="block w-full h-full">{img}</a> : img}

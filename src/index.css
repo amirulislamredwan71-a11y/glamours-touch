@@ -4,11 +4,23 @@
   /* Latin uses Inter, Bangla chars auto-fallback to Hind Siliguri */
   --font-sans: "Inter", "Hind Siliguri", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", "Hind Siliguri", "Noto Sans Bengali", ui-serif, Georgia, serif;
-  
+  --font-display: "Outfit", "Hind Siliguri", "Noto Sans Bengali", ui-sans-serif, sans-serif;
+
   --color-gold: #C59B17;
   --color-rose-gold: #B76E79;
   --color-cream: #FDFBF7;
   --color-charcoal: #1A1A1A;
+
+  /* ── Prototype "premium dark" design system (glamour-touch-store) ── */
+  --color-gtdark: #0a0a0c;
+  --color-gtcard: #141418;
+  --color-gtinput: #1a1a22;
+  --color-gthead: #070709;
+  --color-gtgold: #e5b83a;
+  --color-gtgoldsoft: #f3c63f;
+  --color-gtmuted: #a0a0ab;
+  --color-gtred: #ff3b5c;
+  --color-gtpink: #e91e63;
 
   --breakpoint-xs: 400px;
 }
@@ -99,6 +111,27 @@ input[type='range']::-moz-range-thumb {
 .gold-gradient {
   background: linear-gradient(135deg, #D4AF37 0%, #F9E29C 50%, #D4AF37 100%);
 }
+
+/* ══ Prototype "premium dark" utilities (glamour-touch-store chador) ══ */
+.gt-gold-gradient { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
+.gt-gold-shiny {
+  background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.gt-card {
+  background: var(--color-gtcard);
+  border: 1px solid rgba(229, 184, 58, 0.14);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+.gt-scroll-x { scrollbar-width: none; -ms-overflow-style: none; }
+.gt-scroll-x::-webkit-scrollbar { display: none; }
+/* category ring */
+.gt-cat-ring {
+  border-radius: 9999px; padding: 2px;
+  background: linear-gradient(135deg, #f6d365, #b38728);
+}
+@keyframes gtShimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
 
 /* ── Bangla Font Utility ── */
 .font-bn,

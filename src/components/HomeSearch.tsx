@@ -65,7 +65,7 @@ const HomeSearch = () => {
   };
 
   return (
-    <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-charcoal to-[#141414]">
+    <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark">
       <div className="max-w-3xl mx-auto px-4">
         <p className="text-center text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
           🇰🇷 বাংলাদেশের Trending Korean Beauty
@@ -134,13 +134,15 @@ const HomeSearch = () => {
           >
             {cats.map(c => (
               <Link key={c.id} to={`/shop?category=${encodeURIComponent(c.name)}`}
-                className="flex-shrink-0 snap-start flex flex-col items-center gap-1 w-16 group">
-                <span className="w-16 h-16 rounded-2xl bg-white shadow-md overflow-hidden flex items-center justify-center border border-gold/10 group-hover:border-gold group-active:scale-95 transition-all">
-                  {c.image
-                    ? <img src={c.image} alt={c.name} loading="lazy" className="w-full h-full object-cover" />
-                    : <span className="text-gold text-lg font-bold">{c.name.slice(0, 1)}</span>}
+                className="flex-shrink-0 snap-start flex flex-col items-center gap-1.5 w-16 group">
+                <span className="gt-cat-ring w-16 h-16 block group-active:scale-95 transition-transform">
+                  <span className="w-full h-full rounded-full overflow-hidden bg-gtcard flex items-center justify-center">
+                    {c.image
+                      ? <img src={c.image} alt={c.name} loading="lazy" className="w-full h-full object-cover rounded-full" />
+                      : <span className="text-gtgold text-lg font-bold">{c.name.slice(0, 1)}</span>}
+                  </span>
                 </span>
-                <span className="text-[9px] text-white/80 font-medium text-center leading-tight">{c.name}</span>
+                <span className="text-[9px] text-white/75 font-medium text-center leading-tight">{c.name}</span>
               </Link>
             ))}
           </div>
