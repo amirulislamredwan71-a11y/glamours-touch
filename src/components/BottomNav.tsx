@@ -61,8 +61,8 @@ const BottomNav = () => {
         <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-end pb-1.5 relative">
           {({ isActive }) => (
             <>
-              <span className="-mt-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff2a6d,#9a0036)' }}>
-                <span className="text-white font-black text-base leading-none tracking-tight">AI</span>
+              <span className="-mt-4 w-11 h-11 rounded-full flex items-center justify-center shadow-md border-2 border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff2a6d,#9a0036)' }}>
+                <span className="text-white font-black text-sm leading-none tracking-tight">AI</span>
               </span>
               <span className={`text-[8.5px] font-black tracking-tight mt-0.5 whitespace-nowrap ${isActive ? 'text-gtgold' : 'text-white/60'}`}>গ্লো প্রেডিকশন</span>
             </>
