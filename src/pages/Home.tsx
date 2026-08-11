@@ -5,7 +5,6 @@ import { supabase } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import FlashBanner from '../components/FlashBanner';
 import HomeSearch from '../components/HomeSearch';
-import TrustBand from '../components/TrustBand';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
@@ -88,8 +87,8 @@ const Home = () => {
       {/* All Products Section */}
       <FlashBanner />
 
-      {/* Honest risk-reversal trust band — #1 lever for a new store's first orders (Roadmap Step 3) */}
-      <TrustBand />
+      {/* NOTE: no trust/"why us" band here — it duplicates the compact trust strip under the
+          search bar (HomeSearch). This was built & removed twice; do NOT re-add. */}
 
       <section className="py-10 sm:py-16 bg-gtdark relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
