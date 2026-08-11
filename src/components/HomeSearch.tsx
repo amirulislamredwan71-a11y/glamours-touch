@@ -73,11 +73,6 @@ const HomeSearch = () => {
     <>
     <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark">
       <div className="max-w-3xl mx-auto px-4">
-        {offer && (
-          <div className="mb-3 rounded-full gt-shiny px-4 py-1.5 text-center text-[11px] sm:text-xs font-bold">
-            {offer}
-          </div>
-        )}
         <p className="text-center text-gtgoldsoft text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
           🇰🇷 বাংলাদেশের Trending Korean Beauty
         </p>
