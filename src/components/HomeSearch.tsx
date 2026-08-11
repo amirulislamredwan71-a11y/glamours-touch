@@ -30,16 +30,19 @@ const HomeSearch = () => {
   const [products, setProducts] = useState<P[]>([]);
   const [cats, setCats] = useState<Cat[]>([]);
   const [scanOpen, setScanOpen] = useState(false);
+  const [offer, setOffer] = useState<string>('🎉 লঞ্চ অফার — সব পণ্যে ছাড় চলছে! অর্ডার করুন 📞 01712-426871');
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     (async () => {
-      const [{ data: pd }, { data: cd }] = await Promise.all([
+      const [{ data: pd }, { data: cd }, { data: od }] = await Promise.all([
         supabase.from('products').select('id,name,brand,price,market_price,image'),
         supabase.from('categories').select('id,name,image').order('created_at', { ascending: true }),
+        supabase.from('site_settings').select('value').eq('key', 'offer').maybeSingle(),
       ]);
       if (pd) setProducts(pd as P[]);
       if (cd) setCats(cd as Cat[]);
+      if (od && typeof od.value === 'string') setOffer(od.value); // admin-controllable via site_settings key 'offer' (empty = hide)
     })();
   }, []);
 
@@ -70,7 +73,12 @@ const HomeSearch = () => {
     <>
     <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark">
       <div className="max-w-3xl mx-auto px-4">
-        <p className="text-center text-gold text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
+        {offer && (
+          <div className="mb-3 rounded-full gt-shiny px-4 py-1.5 text-center text-[11px] sm:text-xs font-bold">
+            {offer}
+          </div>
+        )}
+        <p className="text-center text-gtgoldsoft text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
           🇰🇷 বাংলাদেশের Trending Korean Beauty
         </p>
 
