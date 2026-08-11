@@ -55,7 +55,7 @@ const Shop = () => {
 
   const filteredProducts = useMemo(() => {
     let products = [...allProducts];
-    if (categoryFilter) products = products.filter(p => p.category === categoryFilter);
+    if (categoryFilter) products = products.filter(p => (p.category || '').trim() === categoryFilter.trim());
     if (searchQuery)    products = products.filter(p =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.brand.toLowerCase().includes(searchQuery.toLowerCase()));
