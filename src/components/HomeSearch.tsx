@@ -14,17 +14,26 @@ interface P {
   market_price: number | null;
   image: string;
 }
-interface Cat {
-  id: string;
-  name: string;
-  image: string | null;
-}
+const CATEGORY_WEBP_IMAGES: Record<string, string> = {
+  'Serum & Essence': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=200&q=80&fm=webp',
+  'Moisturizer & Cream': 'https://images.unsplash.com/photo-1608248597263-00079e96047a?w=200&q=80&fm=webp',
+  'Cleanser': 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&q=80&fm=webp',
+  'Sunscreen': 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=200&q=80&fm=webp',
+  'Hair Care': 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80&fm=webp',
+  'Skincare': 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80&fm=webp',
+  'Body Care': 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=200&q=80&fm=webp',
+  'Toner': 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?w=200&q=80&fm=webp',
+  'Masks & Exfoliators': 'https://images.unsplash.com/photo-1567928257065-f14977977503?w=200&q=80&fm=webp',
+  'D A B O All In One Care': 'https://images.unsplash.com/photo-1617897903246-719242758050?w=200&q=80&fm=webp',
+  'Face Care': 'https://images.unsplash.com/photo-1512290900673-455b5f25bf63?w=200&q=80&fm=webp',
+  'Eye Care': 'https://images.unsplash.com/photo-1576426863848-c21f53c60b19?w=200&q=80&fm=webp',
+  'Makeup & Lip': 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=200&q=80&fm=webp',
+  'Serum & Treatment': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=200&q=80&fm=webp',
+  'Fragrance': 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=200&q=80&fm=webp',
+  'Medicube Skin Care': 'https://images.unsplash.com/photo-1617897903246-719242758050?w=200&q=80&fm=webp',
+  'Baby & Mom Care': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=200&q=80&fm=webp',
+};
 
-/**
- * Search-first hero for the homepage.
- * Full-width dynamic search with live product dropdown + swipeable category chips.
- * Replaces the old static banner. Deep-links straight to /product/:id.
- */
 const HomeSearch = () => {
   const navigate = useNavigate();
   const [q, setQ] = useState('');
@@ -145,19 +154,31 @@ const HomeSearch = () => {
             className="flex gap-3 overflow-x-auto px-4 pb-1 snap-x [&::-webkit-scrollbar]:hidden"
             style={{ scrollbarWidth: 'none' }}
           >
-            {cats.map(c => (
-              <Link key={c.id} to={`/shop?category=${encodeURIComponent(c.name)}`}
-                className="flex-shrink-0 snap-start flex flex-col items-center gap-1.5 w-16 group">
-                <span className="gt-cat-ring w-16 h-16 block group-active:scale-95 transition-transform">
-                  <span className="w-full h-full rounded-full overflow-hidden bg-gtcard flex items-center justify-center">
-                    {c.image
-                      ? <img src={optimizeImageUrl(c.image, 120, 80)} alt={`${c.name} - Glamour's Touch`} width="64" height="64" loading="lazy" decoding="async" className="w-full h-full object-cover rounded-full" />
-                      : <span className="text-gtgold text-lg font-bold">{c.name.slice(0, 1)}</span>}
+            {cats.map(c => {
+              const srcUrl = c.image || CATEGORY_WEBP_IMAGES[c.name] || 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80&fm=webp';
+              return (
+                <Link key={c.id} to={`/shop?category=${encodeURIComponent(c.name)}`}
+                  className="flex-shrink-0 snap-start flex flex-col items-center gap-1.5 w-16 group">
+                  <span className="gt-cat-ring w-16 h-16 block group-active:scale-95 transition-transform">
+                    <span className="w-full h-full rounded-full overflow-hidden bg-gtcard flex items-center justify-center">
+                      <img
+                        src={optimizeImageUrl(srcUrl, 120, 80)}
+                        alt={`${c.name} - Glamour's Touch`}
+                        width="64"
+                        height="64"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover rounded-full"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = CATEGORY_WEBP_IMAGES[c.name] || 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80&fm=webp';
+                        }}
+                      />
+                    </span>
                   </span>
-                </span>
-                <span className="text-[9px] text-white/75 font-medium text-center leading-tight">{c.name}</span>
-              </Link>
-            ))}
+                  <span className="text-[9px] text-white/75 font-medium text-center leading-tight">{c.name}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
