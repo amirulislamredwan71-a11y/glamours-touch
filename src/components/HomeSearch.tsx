@@ -28,7 +28,7 @@ const CATEGORY_WEBP_IMAGES: Record<string, string> = {
   'Face Care': '/categories/face_care.webp',
   'Eye Care': '/categories/eye_care.webp',
   'Makeup & Lip': '/categories/makeup_lip.webp',
-  'Serum & Treatment': '/categories/serum_essence.webp',
+  'Serum & Treatment': '/categories/serum_treatment.webp',
   'Fragrance': '/categories/fragrance.webp',
   'Medicube Skin Care': '/categories/medicube_care.webp',
   'Baby & Mom Care': '/categories/baby_mom.webp',
