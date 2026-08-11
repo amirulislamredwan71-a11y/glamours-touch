@@ -4,6 +4,8 @@ import { Search, X, BadgeCheck, Truck, ShieldCheck, Camera } from 'lucide-react'
 import { supabase } from '../lib/supabase';
 import SkinScanModal from './SkinScanModal';
 
+import { optimizeImageUrl } from '../lib/imageUtils';
+
 interface P {
   id: string;
   name: string;
@@ -110,7 +112,7 @@ const HomeSearch = () => {
                   <button key={p.id} type="button"
                     onClick={() => { navigate(`/product/${p.id}`); setOpen(false); setQ(''); }}
                     className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-50 text-left border-b border-gray-50 last:border-0">
-                    <img src={p.image} alt="" loading="lazy"
+                    <img src={optimizeImageUrl(p.image, 100, 80)} alt={`${p.name} - Glamour's Touch`} width="44" height="44" loading="lazy" decoding="async"
                       className="w-11 h-11 rounded-lg object-cover flex-shrink-0 bg-gray-100" />
                     <span className="flex-1 min-w-0">
                       <span className="block text-xs sm:text-sm text-charcoal font-medium truncate">{p.name}</span>
@@ -149,7 +151,7 @@ const HomeSearch = () => {
                 <span className="gt-cat-ring w-16 h-16 block group-active:scale-95 transition-transform">
                   <span className="w-full h-full rounded-full overflow-hidden bg-gtcard flex items-center justify-center">
                     {c.image
-                      ? <img src={c.image} alt={c.name} loading="lazy" className="w-full h-full object-cover rounded-full" />
+                      ? <img src={optimizeImageUrl(c.image, 120, 80)} alt={`${c.name} - Glamour's Touch`} width="64" height="64" loading="lazy" decoding="async" className="w-full h-full object-cover rounded-full" />
                       : <span className="text-gtgold text-lg font-bold">{c.name.slice(0, 1)}</span>}
                   </span>
                 </span>

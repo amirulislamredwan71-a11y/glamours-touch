@@ -5,6 +5,8 @@ import { Clock, ArrowLeft, ArrowRight, Phone, MessageCircle } from 'lucide-react
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 
+import { optimizeImageUrl } from '../lib/imageUtils';
+
 interface BlogPost {
   id: string;
   slug: string;
@@ -212,7 +214,7 @@ const BlogPost = () => {
           {/* Hero Image */}
           <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.1 }}
             className="aspect-[16/9] rounded-2xl overflow-hidden mb-10 shadow-lg">
-            <img src={post.image} alt={post.title_bn} className="w-full h-full object-cover" />
+            <img src={optimizeImageUrl(post.image, 800, 85)} alt={`${post.title_bn} - Glamour's Touch`} width="800" height="450" loading="eager" decoding="async" fetchpriority="high" className="w-full h-full object-cover" />
           </motion.div>
 
           {/* Content */}

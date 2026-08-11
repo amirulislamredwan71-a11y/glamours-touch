@@ -10,6 +10,8 @@ import { motion } from 'motion/react';
 import ProductCard from '../components/ProductCard';
 import TryOnModal from '../components/TryOnModal';
 
+import { optimizeImageUrl } from '../lib/imageUtils';
+
 interface Product {
   id: string; name: string; brand: string; price: number;
   market_price?: number | null; images?: string[]; in_stock?: boolean;
@@ -225,7 +227,8 @@ const ProductDetail = () => {
           {/* Image gallery */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
             <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gold/10 aspect-square">
-              <img src={gallery[activeImg] || product.image} alt={seoCustomInfo.alt}
+              <img src={optimizeImageUrl(gallery[activeImg] || product.image, 800, 85)} alt={`${product.brand ? `${product.brand} ` : ''}${product.name} - Glamour's Touch`}
+                width="800" height="800" loading="eager" decoding="async" fetchpriority="high"
                 className={`w-full h-full object-cover ${soldOut ? 'opacity-60 grayscale' : ''}`} referrerPolicy="no-referrer" />
               {soldOut ? (
                 <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-lg tracking-widest">SOLD OUT</div>
@@ -238,7 +241,7 @@ const ProductDetail = () => {
                 {gallery.map((img, i) => (
                   <button key={i} onClick={() => setActiveImg(i)}
                     className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? 'border-gold' : 'border-transparent opacity-70 hover:opacity-100'}`}>
-                    <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <img src={optimizeImageUrl(img, 160, 80)} alt={`${product.name} thumbnail ${i + 1} - Glamour's Touch`} width="80" height="80" loading="lazy" decoding="async" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </button>
                 ))}
               </div>

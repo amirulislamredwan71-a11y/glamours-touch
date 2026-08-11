@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Sparkles, Camera, Upload, RotateCcw, Loader2, Share2, Check, X, Download } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
+import { optimizeImageUrl } from '../lib/imageUtils';
 
 interface P { id: string; name: string; brand: string | null; price: number; image: string; category?: string; description?: string; isFeatured?: boolean; }
 
@@ -326,7 +327,7 @@ const GlowPredictor: React.FC = () => {
                 {shown.map((p) => (
                   <button key={p.id} onClick={() => setSelected(p)}
                     className={`text-left rounded-xl overflow-hidden border-2 transition-all ${selected?.id === p.id ? 'border-gold ring-2 ring-gold/40' : 'border-white/10'}`}>
-                    <img src={p.image} alt={p.name} loading="lazy" className="w-full aspect-square object-cover bg-white/5" />
+                    <img src={optimizeImageUrl(p.image, 160, 80)} alt={`${p.name} - Glamour's Touch`} width="160" height="160" loading="lazy" decoding="async" className="w-full aspect-square object-cover bg-white/5" />
                     <p className="text-[9px] text-white/80 px-1.5 py-1 truncate">{p.name}</p>
                   </button>
                 ))}

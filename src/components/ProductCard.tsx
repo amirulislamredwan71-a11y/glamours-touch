@@ -5,6 +5,8 @@ import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { motion } from 'motion/react';
 
+import { optimizeImageUrl } from '../lib/imageUtils';
+
 interface ProductCardProps {
   product: Product;
   priority?: boolean;
@@ -68,15 +70,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         </div>
       )}
 
-      {/* Image (kept on light panel so K-beauty photos read clean on the dark card) */}
+      {/* Image */}
       <div className="relative m-2 rounded-xl overflow-hidden bg-white aspect-square">
         <Link to={`/product/${product.id}`} className="block h-full p-2 sm:p-3">
           <img
-            src={product.image.includes('unsplash.com') ? `${product.image}&w=300` : product.image}
-            alt={`${(product.brand || 'korean').toLowerCase()}-${product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-price-bd`}
+            src={optimizeImageUrl(product.image, 400, 80)}
+            alt={`${product.brand ? `${product.brand} ` : ''}${product.name} - Glamour's Touch`}
             width="400"
             height="400"
             loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
             fetchpriority={priority ? 'high' : undefined}
             className={`w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 ${soldOut ? 'opacity-50 grayscale' : ''}`}
             referrerPolicy="no-referrer"

@@ -5,6 +5,8 @@ import { Clock, ArrowRight, BookOpen } from 'lucide-react';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 
+import { optimizeImageUrl } from '../lib/imageUtils';
+
 interface BlogPost {
   id: string;
   slug: string;
@@ -104,8 +106,12 @@ const Blog = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-500">
                 <div className="aspect-[4/3] lg:aspect-auto overflow-hidden">
                   <img
-                    src={featuredPost.image}
-                    alt={featuredPost.title_bn}
+                    src={optimizeImageUrl(featuredPost.image, 600, 80)}
+                    alt={`${featuredPost.title_bn} - Glamour's Touch`}
+                    width="600"
+                    height="450"
+                    loading="eager"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
@@ -141,8 +147,12 @@ const Blog = () => {
                 <Link to={`/blog/${post.slug}`} className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full">
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
-                      src={post.image}
-                      alt={post.title_bn}
+                      src={optimizeImageUrl(post.image, 400, 80)}
+                      alt={`${post.title_bn} - Glamour's Touch`}
+                      width="400"
+                      height="300"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
