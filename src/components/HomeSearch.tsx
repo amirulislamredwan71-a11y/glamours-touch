@@ -15,23 +15,23 @@ interface P {
   image: string;
 }
 const CATEGORY_WEBP_IMAGES: Record<string, string> = {
-  'Serum & Essence': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=200&q=80&fm=webp',
-  'Moisturizer & Cream': 'https://images.unsplash.com/photo-1608248597263-00079e96047a?w=200&q=80&fm=webp',
-  'Cleanser': 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&q=80&fm=webp',
-  'Sunscreen': 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=200&q=80&fm=webp',
-  'Hair Care': 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80&fm=webp',
-  'Skincare': 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80&fm=webp',
-  'Body Care': 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=200&q=80&fm=webp',
-  'Toner': 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?w=200&q=80&fm=webp',
-  'Masks & Exfoliators': 'https://images.unsplash.com/photo-1567928257065-f14977977503?w=200&q=80&fm=webp',
-  'D A B O All In One Care': 'https://images.unsplash.com/photo-1617897903246-719242758050?w=200&q=80&fm=webp',
-  'Face Care': 'https://images.unsplash.com/photo-1512290900673-455b5f25bf63?w=200&q=80&fm=webp',
-  'Eye Care': 'https://images.unsplash.com/photo-1576426863848-c21f53c60b19?w=200&q=80&fm=webp',
-  'Makeup & Lip': 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=200&q=80&fm=webp',
-  'Serum & Treatment': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=200&q=80&fm=webp',
-  'Fragrance': 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=200&q=80&fm=webp',
-  'Medicube Skin Care': 'https://images.unsplash.com/photo-1617897903246-719242758050?w=200&q=80&fm=webp',
-  'Baby & Mom Care': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=200&q=80&fm=webp',
+  'Serum & Essence': '/categories/serum_essence.webp',
+  'Moisturizer & Cream': '/categories/moisturizer_cream.webp',
+  'Cleanser': '/categories/cleanser.webp',
+  'Sunscreen': '/categories/sunscreen.webp',
+  'Hair Care': '/categories/hair_care.webp',
+  'Skincare': '/categories/skincare.webp',
+  'Body Care': '/categories/body_care.webp',
+  'Toner': '/categories/toner.webp',
+  'Masks & Exfoliators': '/categories/masks_exfoliators.webp',
+  'D A B O All In One Care': '/categories/dabo_care.webp',
+  'Face Care': '/categories/face_care.webp',
+  'Eye Care': '/categories/eye_care.webp',
+  'Makeup & Lip': '/categories/makeup_lip.webp',
+  'Serum & Treatment': '/categories/serum_essence.webp',
+  'Fragrance': '/categories/fragrance.webp',
+  'Medicube Skin Care': '/categories/medicube_care.webp',
+  'Baby & Mom Care': '/categories/baby_mom.webp',
 };
 
 const HomeSearch = () => {
@@ -155,14 +155,14 @@ const HomeSearch = () => {
             style={{ scrollbarWidth: 'none' }}
           >
             {cats.map(c => {
-              const srcUrl = c.image || CATEGORY_WEBP_IMAGES[c.name] || 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80&fm=webp';
+              const srcUrl = CATEGORY_WEBP_IMAGES[c.name] || c.image || '/categories/skincare.webp';
               return (
                 <Link key={c.id} to={`/shop?category=${encodeURIComponent(c.name)}`}
                   className="flex-shrink-0 snap-start flex flex-col items-center gap-1.5 w-16 group">
                   <span className="gt-cat-ring w-16 h-16 block group-active:scale-95 transition-transform">
                     <span className="w-full h-full rounded-full overflow-hidden bg-gtcard flex items-center justify-center">
                       <img
-                        src={optimizeImageUrl(srcUrl, 120, 80)}
+                        src={srcUrl}
                         alt={`${c.name} - Glamour's Touch`}
                         width="64"
                         height="64"
@@ -170,7 +170,7 @@ const HomeSearch = () => {
                         decoding="async"
                         className="w-full h-full object-cover rounded-full"
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = CATEGORY_WEBP_IMAGES[c.name] || 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80&fm=webp';
+                          (e.currentTarget as HTMLImageElement).src = '/categories/skincare.webp';
                         }}
                       />
                     </span>
