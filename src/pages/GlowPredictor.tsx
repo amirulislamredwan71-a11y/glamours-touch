@@ -170,7 +170,7 @@ const GlowPredictor: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gthead to-gtdark pt-24 sm:pt-28 pb-16">
-      <SEO title="AI Glow Predictor — ২৮ দিন পর আপনার ত্বক" description="Glamour's Touch AI Glow Predictor — কেনার আগে দেখুন কোরিয়ান স্কিনকেয়ার ২৮ দিন ব্যবহারে আপনার ত্বকে কেমন ফল দেবে।" url="/glow-predictor" />
+      <SEO title="Glow AI Predictor Studio | 28 Day Glow Test & AI Skin Analysis BD" description="Try Bangladesh's first K-Beauty AI skin analyzer. Upload your photo, select your Korean skincare product, and see your 28-day skin glow prediction at Glamour's Touch." url="/glow-predictor" />
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-8">
           <span className="inline-flex items-center gap-1.5 text-gold text-[10px] font-bold tracking-[0.25em] uppercase mb-3 px-3 py-1 rounded-full border border-gold/30 bg-gold/10">✨ K-Beauty AI Studio</span>
