@@ -77,8 +77,8 @@ const Home = () => {
   return (
     <div className="flex flex-col overflow-hidden bg-gtdark">
       <SEO
-        title="Korean Skincare & Beauty Products Bangladesh"
-        description="Glamour's Touch — Bangladesh এর সেরা Korean skincare shop। DABO Snail Cream, Rice Ceramide, Glutathione Cream সহ 100% authentic Korean beauty products। Order: 01712-426871"
+        title="Authentic Korean Skincare & Cosmetics Bangladesh"
+        description="Shop 100% authentic Korean skincare, K-Beauty serums, cleansers, sunscreens & creams in Bangladesh. Try our AI Glow Predictor Studio at Glamour's Touch."
         url="/"
       />
       {/* Search-first hero (replaces static banner) */}

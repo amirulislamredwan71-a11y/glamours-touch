@@ -129,6 +129,34 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Popular Searches */}
+        <div className="border-t border-white/10 pt-8 pb-6 mb-8">
+          <h4 className="text-xs font-serif font-bold text-gold uppercase tracking-[0.2em] mb-4">Popular Searches</h4>
+          <div className="flex flex-wrap gap-2 text-xs text-gray-400">
+            <Link to="/shop?search=Cosrx+Snail+Mucin" className="bg-white/5 hover:bg-gold/20 hover:text-gold px-3 py-1.5 rounded-full transition-colors">
+              Buy Cosrx Snail Mucin BD
+            </Link>
+            <Link to="/shop?search=Anua+Cleansing+Oil" className="bg-white/5 hover:bg-gold/20 hover:text-gold px-3 py-1.5 rounded-full transition-colors">
+              Anua Cleansing Oil Price in BD
+            </Link>
+            <Link to="/shop?category=Sunscreen" className="bg-white/5 hover:bg-gold/20 hover:text-gold px-3 py-1.5 rounded-full transition-colors">
+              Korean Sunscreen Bangladesh
+            </Link>
+            <Link to="/shop?search=Medicube+Collagen" className="bg-white/5 hover:bg-gold/20 hover:text-gold px-3 py-1.5 rounded-full transition-colors">
+              Medicube Collagen Mask BD
+            </Link>
+            <Link to="/shop?search=Anua+Dark+Spot+Serum" className="bg-white/5 hover:bg-gold/20 hover:text-gold px-3 py-1.5 rounded-full transition-colors">
+              Anua Dark Spot Serum BD
+            </Link>
+            <Link to="/shop?search=Christian+Dean+Sun+Cream" className="bg-white/5 hover:bg-gold/20 hover:text-gold px-3 py-1.5 rounded-full transition-colors">
+              Christian Dean Sun Cream BD
+            </Link>
+            <Link to="/glow-predictor" className="bg-gold/10 text-gold hover:bg-gold/20 px-3 py-1.5 rounded-full font-semibold transition-colors">
+              Glow AI Predictor Studio
+            </Link>
+          </div>
+        </div>
+
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
           <p>© 2026 Glamour's Touch. {t('footer.allRightsReserved')}</p>
           <div className="flex space-x-6 mt-4 md:mt-0">

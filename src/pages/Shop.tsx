@@ -68,13 +68,58 @@ const Shop = () => {
 
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
   const pageProducts = filteredProducts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const getCategorySEO = (cat: string | null) => {
+    if (!cat) {
+      return {
+        title: "Shop — Korean Skincare Products",
+        description: "Shop 100% authentic Korean skincare, K-Beauty serums, cleansers, sunscreens & creams in Bangladesh. Fast delivery at Glamour's Touch."
+      };
+    }
+    const c = cat.toLowerCase();
+    if (c.includes('cleanser')) {
+      return {
+        title: "Korean Cleansers & Cleansing Oils Price in BD | Glamour's Touch",
+        description: "Buy authentic Korean gel cleansers, low pH face washes, and pore control cleansing oils at best prices in Bangladesh."
+      };
+    }
+    if (c.includes('serum') || c.includes('essence') || c.includes('treatment')) {
+      return {
+        title: "Korean Serums, Essences & Ampoules Price in BD | Glamour's Touch",
+        description: "Shop Cosrx Snail Mucin, Niacinamide, and Glutathione glow serums in Bangladesh for dark spots and hydration."
+      };
+    }
+    if (c.includes('sunscreen') || c.includes('sun')) {
+      return {
+        title: "Korean Sunscreens & Sun Blocks Price in BD | Glamour's Touch",
+        description: "Buy lightweight, non-greasy Korean tone-up sun creams and rice probiotic sunscreens in Bangladesh."
+      };
+    }
+    if (c.includes('moisturizer') || c.includes('cream')) {
+      return {
+        title: "Korean Moisturizers & Collagen Creams BD | Glamour's Touch",
+        description: "Shop authentic Korean collagen jelly creams, vitamin C capsule creams, and snail repair creams in Bangladesh."
+      };
+    }
+    if (c.includes('toner')) {
+      return {
+        title: "Korean Toners & Exfoliating Acids in BD | Glamour's Touch",
+        description: "Buy soothing Heartleaf 77 toners, AHA/BHA exfoliating toners, and hydrating toners in Bangladesh."
+      };
+    }
+    return {
+      title: `${cat} Price in BD | Glamour's Touch`,
+      description: `Buy authentic Korean ${cat} in Bangladesh at best prices from Glamour's Touch.`
+    };
+  };
+
+  const seoData = getCategorySEO(categoryFilter);
 
   return (
     <>
     <SEO
-      title="Shop — Korean Skincare Products"
-      description="Glamour's Touch এর সব Korean skincare products দেখুন। DABO, Rice Ceramide, Glutathione, Mary & May — 100% authentic। Fast delivery Bangladesh। Order: 01712-426871"
-      url="/shop"
+      title={seoData.title}
+      description={seoData.description}
+      url={categoryFilter ? `/shop?category=${encodeURIComponent(categoryFilter)}` : "/shop"}
     />
     <div className="min-h-screen bg-gtdark pt-32 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

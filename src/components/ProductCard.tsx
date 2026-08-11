@@ -73,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         <Link to={`/product/${product.id}`} className="block h-full p-2 sm:p-3">
           <img
             src={product.image.includes('unsplash.com') ? `${product.image}&w=300` : product.image}
-            alt={product.name}
+            alt={`${(product.brand || 'korean').toLowerCase()}-${product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-price-bd`}
             width="400"
             height="400"
             loading={priority ? 'eager' : 'lazy'}

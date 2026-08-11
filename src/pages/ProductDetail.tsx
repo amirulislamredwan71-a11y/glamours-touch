@@ -17,6 +17,67 @@ interface Product {
   reviews: number; isFeatured: boolean; description: string;
 }
 
+const getProductCustomSEO = (productName: string, brand: string) => {
+  const nameLower = productName.toLowerCase();
+  const brandLower = (brand || '').toLowerCase();
+
+  // A. Anua Heartleaf Pore Control Cleansing Oil
+  if (nameLower.includes('anua') && nameLower.includes('cleansing oil')) {
+    return {
+      title: "Anua Heartleaf Pore Control Cleansing Oil Price in BD | Glamour's Touch",
+      alt: "anua-cleansing-oil-price-in-bd-original",
+      keywords: "anua cleansing oil price in bd, best korean cleansing oil for clogged pores bd, anua heartleaf cleansing oil original bangladesh"
+    };
+  }
+  // B. Cosrx Advanced Snail 96 Mucin Power Essence
+  if ((nameLower.includes('cosrx') || brandLower.includes('cosrx')) && nameLower.includes('snail') && nameLower.includes('mucin')) {
+    return {
+      title: "Cosrx Advanced Snail 96 Mucin Power Essence Price in BD | Glamour's Touch",
+      alt: "cosrx-snail-mucin-essence-price-in-bd",
+      keywords: "cosrx snail mucin essence price in bd, korean glass skin snail essence bangladesh, buy original cosrx snail mucin dhaka"
+    };
+  }
+  // C. Medicube Collagen Night Wrapping Mask & Jelly Cream
+  if ((nameLower.includes('medicube') || brandLower.includes('medicube')) && nameLower.includes('collagen')) {
+    return {
+      title: "Medicube Collagen Night Wrapping Mask Price in BD | Glamour's Touch",
+      alt: "medicube-collagen-night-wrapping-mask-price-bd",
+      keywords: "medicube collagen night wrapping mask price bd, medicube collagen jelly cream original bd, viral korean collagen mask bangladesh"
+    };
+  }
+  // D. Beauty of Joseon Relief Sun (Rice + Probiotics)
+  if ((nameLower.includes('joseon') || brandLower.includes('joseon') || nameLower.includes('relief sun')) && nameLower.includes('sun')) {
+    return {
+      title: "Beauty of Joseon Relief Sun Rice Probiotics Price in BD | Glamour's Touch",
+      alt: "beauty-of-joseon-sunscreen-price-in-bd",
+      keywords: "beauty of joseon sunscreen price in bd, korean rice sunscreen original bangladesh, best non greasy korean sunscreen bd"
+    };
+  }
+  // E. Anua Niacinamide 10% + TXA 4% Dark Spot Serum
+  if (nameLower.includes('anua') && (nameLower.includes('niacinamide') || nameLower.includes('dark spot'))) {
+    return {
+      title: "Anua Niacinamide 10% + TXA 4% Dark Spot Serum Price in BD | Glamour's Touch",
+      alt: "anua-dark-spot-serum-price-in-bd",
+      keywords: "anua dark spot serum price in bd, niacinamide txa serum for hyperpigmentation bd, anua niacinamide serum bangladesh"
+    };
+  }
+  // F. Christian Dean Secret Tone-Up Sun Cream
+  if ((nameLower.includes('christian dean') || brandLower.includes('christian dean')) && (nameLower.includes('tone') || nameLower.includes('sun'))) {
+    return {
+      title: "Christian Dean Secret Tone Up Sun Cream Price in BD | Glamour's Touch",
+      alt: "christian-dean-tone-up-sun-cream-price-in-bd",
+      keywords: "christian dean tone up sun cream price in bd, christian dean sunscreen original bd"
+    };
+  }
+
+  const slug = productName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return {
+    title: `${productName} Price in BD | Glamour's Touch`,
+    alt: `${slug}-price-in-bd`,
+    keywords: `${productName.toLowerCase()} price in bd, buy ${productName.toLowerCase()} bangladesh, authentic korean skincare`
+  };
+};
+
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -43,27 +104,58 @@ const ProductDetail = () => {
         if (data) {
           setProduct(data);
 
+          const seoInfo = getProductCustomSEO(data.name, data.brand);
+
           // Dynamic SEO
-          document.title = `${data.name} — Glamour's Touch`;
-          const plainDesc = data.description?.replace(/<[^>]*>/g, '').slice(0, 120) ?? '';
+          document.title = seoInfo.title;
+          const plainDesc = data.description?.replace(/<[^>]*>/g, '').slice(0, 150) ?? '';
           const setMeta = (sel: string, attr: string, val: string) => {
             let el = document.querySelector<HTMLMetaElement>(sel);
             if (!el) { el = document.createElement('meta'); if (attr === 'name') el.name = val; else el.setAttribute('property', val); document.head.appendChild(el); return; }
             el.content = val;
           };
-          setMeta('meta[name="description"]', 'name', `${data.brand} ${data.name} — ৳${data.price.toLocaleString()}. ${plainDesc}`);
+          setMeta('meta[name="description"]', 'name', `${data.brand || 'Korean'} ${data.name} Price in BD: ৳${data.price.toLocaleString()}. ${plainDesc}`);
+          setMeta('meta[name="keywords"]', 'name', seoInfo.keywords);
 
           // Open Graph tags for Facebook sharing
           const pageUrl = `${window.location.origin}/product/${data.id}`;
-          setMeta('meta[property="og:title"]',       'property', `${data.name} — Glamour's Touch`);
-          setMeta('meta[property="og:description"]', 'property', `${data.brand} · ৳${data.price.toLocaleString()}. ${plainDesc}`);
+          setMeta('meta[property="og:title"]',       'property', seoInfo.title);
+          setMeta('meta[property="og:description"]', 'property', `${data.brand || 'Korean'} · ৳${data.price.toLocaleString()}. ${plainDesc}`);
           setMeta('meta[property="og:image"]',       'property', data.image);
           setMeta('meta[property="og:url"]',         'property', pageUrl);
           setMeta('meta[property="og:type"]',        'property', 'product');
           setMeta('meta[property="product:price:amount"]',   'property', String(data.price));
           setMeta('meta[property="product:price:currency"]', 'property', 'BDT');
 
-          // Facebook Pixel — ViewContent
+          // Product Schema JSON-LD
+          let schemaEl = document.querySelector<HTMLScriptElement>('#product-json-ld');
+          if (!schemaEl) {
+            schemaEl = document.createElement('script');
+            schemaEl.id = 'product-json-ld';
+            schemaEl.type = 'application/ld+json';
+            document.head.appendChild(schemaEl);
+          }
+          schemaEl.textContent = JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": data.name,
+            "image": [data.image, ...(data.images || [])],
+            "description": plainDesc,
+            "sku": data.id,
+            "brand": {
+              "@type": "Brand",
+              "name": data.brand || "K-Beauty"
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": pageUrl,
+              "priceCurrency": "BDT",
+              "price": String(data.price),
+              "availability": data.in_stock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"
+            }
+          });
+
+          // Facebook Pixel — ViewContent (INTACT)
           if (typeof (window as any).fbq === 'function') {
             (window as any).fbq('track', 'ViewContent', {
               content_ids:  [data.id],
@@ -84,7 +176,11 @@ const ProductDetail = () => {
       finally { setLoading(false); }
     };
     if (id) fetchProduct();
-    return () => { document.title = "Glamour's Touch | Premium Cosmetics & Skincare"; };
+    return () => {
+      document.title = "Glamour's Touch | Authentic Korean Skincare & Cosmetics Bangladesh";
+      const schemaEl = document.querySelector('#product-json-ld');
+      if (schemaEl) schemaEl.remove();
+    };
   }, [id]);
 
   const shareUrl  = window.location.href;
@@ -115,6 +211,8 @@ const ProductDetail = () => {
   const hasDiscount = mp != null && mp > product.price;
   const discountPct = hasDiscount ? Math.round((1 - product.price / mp) * 100) : 0;
 
+  const seoCustomInfo = getProductCustomSEO(product.name, product.brand);
+
   return (
     <div className="min-h-screen bg-cream pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -127,7 +225,7 @@ const ProductDetail = () => {
           {/* Image gallery */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
             <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gold/10 aspect-square">
-              <img src={gallery[activeImg] || product.image} alt={product.name}
+              <img src={gallery[activeImg] || product.image} alt={seoCustomInfo.alt}
                 className={`w-full h-full object-cover ${soldOut ? 'opacity-60 grayscale' : ''}`} referrerPolicy="no-referrer" />
               {soldOut ? (
                 <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-lg tracking-widest">SOLD OUT</div>
@@ -287,7 +385,7 @@ const ProductDetail = () => {
               ].map(acc => (
                 <details key={acc.title} className="group border-b border-gold/10 pb-4">
                   <summary className="flex justify-between items-center cursor-pointer list-none font-serif font-bold text-lg">
-                    {acc.title}
+                    <h3 className="inline font-serif font-bold text-lg">{acc.title}</h3>
                     <span className="group-open:rotate-180 transition-transform">↓</span>
                   </summary>
                   <p className="mt-4 text-sm text-gray-500 leading-relaxed">{acc.body}</p>
