@@ -14,7 +14,7 @@ async function generateSitemap() {
   ]);
 
   const today = new Date().toISOString().split('T')[0];
-  const baseUrl = 'https://glamourstouch.com';
+  const baseUrl = 'https://www.glamourstouch.com';
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
