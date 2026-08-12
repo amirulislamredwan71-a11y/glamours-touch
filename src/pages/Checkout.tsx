@@ -233,9 +233,9 @@ const Checkout = () => {
 
       setOrderId(data?.id || null);
 
-      // Facebook Pixel — Purchase
+      // Facebook Pixel — InitiateCheckout (order form submitted, not yet confirmed)
       if (typeof (window as any).fbq === 'function') {
-        (window as any).fbq('track', 'Purchase', {
+        (window as any).fbq('track', 'InitiateCheckout', {
           content_ids:  cart.map(i => i.id),
           content_type: 'product',
           value:        grandTotal,
@@ -288,6 +288,17 @@ const Checkout = () => {
           </div>
           <p className="text-gray-500 text-sm mb-6">Thank you! Your order has been received and is being processed.</p>
           <a href={waUrl} target="_blank" rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof (window as any).fbq === 'function' && snap) {
+                (window as any).fbq('track', 'Purchase', {
+                  content_ids:  snap.items.map((i: { id: string }) => i.id),
+                  content_type: 'product',
+                  value:        snap.total,
+                  currency:     'BDT',
+                  num_items:    snap.items.reduce((s: number, i: { quantity: number }) => s + i.quantity, 0),
+                });
+              }
+            }}
             className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white py-4 rounded-2xl font-bold tracking-wide transition-all mb-3 shadow-lg shadow-green-200">
             <MessageCircle size={20} />
             WhatsApp-এ Confirm করুন
