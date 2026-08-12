@@ -14,6 +14,53 @@ const FACE_CATS = [
   'D A B O All In One Care', 'D A B O One In All Care', 'Medicube Skin Care', 'Makeup & Lip',
 ];
 
+/** Stamp the GT logo + site URL onto a result image so it carries branding wherever it's shared. */
+function watermarkImage(dataUrl: string): Promise<string> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      const ctx = c.getContext('2d')!;
+      ctx.drawImage(img, 0, 0);
+
+      const barH = Math.max(48, Math.round(img.height * 0.09));
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.fillRect(0, img.height - barH, img.width, barH);
+
+      const drawText = () => {
+        const fontSize = Math.round(barH * 0.34);
+        ctx.fillStyle = '#e5b83a';
+        ctx.font = `bold ${fontSize}px Georgia, serif`;
+        ctx.textBaseline = 'middle';
+        const label = "Glamour's Touch";
+        const labelX = img.width * 0.5 - (ctx.measureText(label).width) / 2 + (img.width * 0.09);
+        ctx.fillText(label, labelX, img.height - barH / 2 - fontSize * 0.35);
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        ctx.font = `${Math.round(fontSize * 0.62)}px sans-serif`;
+        const sub = 'glamourstouch.com  ·  AI Glow Predictor';
+        const subX = img.width * 0.5 - (ctx.measureText(sub).width) / 2 + (img.width * 0.09);
+        ctx.fillText(sub, subX, img.height - barH / 2 + fontSize * 0.45);
+        resolve(c.toDataURL('image/png'));
+      };
+
+      const logo = new Image();
+      logo.crossOrigin = 'anonymous';
+      logo.onload = () => {
+        const logoSize = barH * 0.78;
+        const pad = barH * 0.11;
+        ctx.drawImage(logo, pad, img.height - barH + (barH - logoSize) / 2, logoSize, logoSize);
+        drawText();
+      };
+      logo.onerror = () => drawText();
+      logo.src = `${window.location.origin}/logo.webp`;
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
+}
+
 /** Resize a dataURL to a max dimension → { b64 (no prefix), mime } to keep the API payload light. */
 function resizeImage(dataUrl: string, max = 820): Promise<{ b64: string; mime: string }> {
   return new Promise((resolve) => {
@@ -151,13 +198,16 @@ const GlowPredictor: React.FC = () => {
   const share = async () => {
     if (!result) return;
     try {
-      const blob = await (await fetch(result)).blob();
-      const file = new File([blob], 'my-glow.png', { type: 'image/png' });
+      // Branding is only stamped on the copy that goes out into the world — the
+      // customer's own saved copy (saveImage) stays untouched, by their choice.
+      const watermarked = await watermarkImage(result);
+      const blob = await (await fetch(watermarked)).blob();
+      const file = new File([blob], 'my-glow-glamourstouch.png', { type: 'image/png' });
       if ((navigator as any).canShare?.({ files: [file] })) {
         await (navigator as any).share({ files: [file], title: 'My Glow — Glamour\'s Touch', text: '২৮ দিনে আমার ত্বক! 🇰🇷 glamourstouch.com' });
         setShared(true);
       } else {
-        const a = document.createElement('a'); a.href = result; a.download = 'my-glow.png'; a.click();
+        const a = document.createElement('a'); a.href = watermarked; a.download = 'my-glow-glamourstouch.png'; a.click();
       }
     } catch { /* ignore */ }
   };
