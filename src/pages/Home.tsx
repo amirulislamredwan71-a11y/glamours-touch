@@ -34,14 +34,39 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch Featured Products - Showing all products in the recommended section
+      // Fetch Featured Products - Prioritizing flagship K-Beauty brands at the very top
       const { data: productsData } = await supabase
         .from('products')
         .select('*')
         .order('isFeatured', { ascending: false })
         .order('created_at', { ascending: false });
       
-      if (productsData) setFeaturedProducts(productsData);
+      if (productsData) {
+        const PRIORITY_BRANDS = [
+          'anua', 'beauty of joseon', 'cosrx', 'skin1004', 'medicube', 'dr.althea',
+          'laneige', 'torriden', 'numbuzin', 'round lab', 'tirtir', 'unove', 'ryo',
+          'lador', 'dabo'
+        ];
+
+        const sorted = [...productsData].sort((a, b) => {
+          const aBrand = (a.brand || '').toLowerCase();
+          const bBrand = (b.brand || '').toLowerCase();
+          const aName = (a.name || '').toLowerCase();
+          const bName = (b.name || '').toLowerCase();
+
+          const aPriority = PRIORITY_BRANDS.findIndex(brand => aBrand.includes(brand) || aName.includes(brand));
+          const bPriority = PRIORITY_BRANDS.findIndex(brand => bBrand.includes(brand) || bName.includes(brand));
+
+          const aRank = aPriority !== -1 ? aPriority : 999;
+          const bRank = bPriority !== -1 ? bPriority : 999;
+
+          if (aRank !== bRank) return aRank - bRank;
+          if (a.isFeatured !== b.isFeatured) return a.isFeatured ? -1 : 1;
+          return 0;
+        });
+
+        setFeaturedProducts(sorted);
+      }
 
       // Fetch Categories
       const { data: catsData } = await supabase
