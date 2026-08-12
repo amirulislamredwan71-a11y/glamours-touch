@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useCart } from '../hooks/useCart';
+import { trackEvent } from '../lib/fbCapi';
 import {
   Star, ShoppingBag, ArrowLeft, ShieldCheck, Truck, RefreshCw,
   Share2, Facebook, MessageCircle, Sparkles,
@@ -157,16 +158,14 @@ const ProductDetail = () => {
             }
           });
 
-          // Facebook Pixel — ViewContent (INTACT)
-          if (typeof (window as any).fbq === 'function') {
-            (window as any).fbq('track', 'ViewContent', {
-              content_ids:  [data.id],
-              content_name: data.name,
-              content_type: 'product',
-              value:        data.price,
-              currency:     'BDT',
-            });
-          }
+          // Facebook Pixel + Conversions API — ViewContent
+          trackEvent('ViewContent', {
+            content_ids:  [data.id],
+            content_name: data.name,
+            content_type: 'product',
+            value:        data.price,
+            currency:     'BDT',
+          });
 
           // Related products
           const { data: rel } = await supabase.from('products').select('*')
@@ -306,15 +305,13 @@ const ProductDetail = () => {
                   <>
                     <button onClick={() => {
                         addToCart(product);
-                        if (typeof (window as any).fbq === 'function') {
-                          (window as any).fbq('track', 'AddToCart', {
-                            content_ids:  [product.id],
-                            content_name: product.name,
-                            content_type: 'product',
-                            value:        product.price,
-                            currency:     'BDT',
-                          });
-                        }
+                        trackEvent('AddToCart', {
+                          content_ids:  [product.id],
+                          content_name: product.name,
+                          content_type: 'product',
+                          value:        product.price,
+                          currency:     'BDT',
+                        });
                       }}
                       className="flex-grow bg-yellow-400 text-gray-900 py-5 rounded-full font-bold tracking-widest hover:bg-yellow-500 transition-all flex items-center justify-center gap-3 shadow-lg">
                       <ShoppingBag size={20} /> ADD TO BAG

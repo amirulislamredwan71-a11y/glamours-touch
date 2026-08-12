@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../hooks/useCart';
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag } from 'lucide-react';
 import { motion } from 'motion/react';
+import { trackEvent } from '../lib/fbCapi';
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal } = useCart();
@@ -116,14 +117,12 @@ const Cart = () => {
               <Link
                 to="/checkout"
                 onClick={() => {
-                  if (typeof (window as any).fbq === 'function') {
-                    (window as any).fbq('track', 'InitiateCheckout', {
-                      content_ids: cart.map(i => i.id),
-                      num_items:   cart.reduce((s, i) => s + i.quantity, 0),
-                      value:       cartTotal,
-                      currency:    'BDT',
-                    });
-                  }
+                  trackEvent('InitiateCheckout', {
+                    content_ids: cart.map(i => i.id),
+                    num_items:   cart.reduce((s, i) => s + i.quantity, 0),
+                    value:       cartTotal,
+                    currency:    'BDT',
+                  });
                 }}
                 className="w-full bg-gold hover:bg-white hover:text-charcoal text-white py-4 rounded-full font-bold tracking-widest transition-all mb-4 flex items-center justify-center"
               >

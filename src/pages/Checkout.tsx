@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { supabase } from '../lib/supabase';
 import { DISTRICTS } from '../data/bangladeshLocations';
 import emailjs from '@emailjs/browser';
+import { trackEvent } from '../lib/fbCapi';
 
 const INSIDE_COST  = 78;
 const OUTSIDE_COST = 118;
@@ -233,16 +234,14 @@ const Checkout = () => {
 
       setOrderId(data?.id || null);
 
-      // Facebook Pixel — InitiateCheckout (order form submitted, not yet confirmed)
-      if (typeof (window as any).fbq === 'function') {
-        (window as any).fbq('track', 'InitiateCheckout', {
-          content_ids:  cart.map(i => i.id),
-          content_type: 'product',
-          value:        grandTotal,
-          currency:     'BDT',
-          num_items:    cart.reduce((s, i) => s + i.quantity, 0),
-        });
-      }
+      // Facebook Pixel + Conversions API — InitiateCheckout (order form submitted, not yet confirmed)
+      trackEvent('InitiateCheckout', {
+        content_ids:  cart.map(i => i.id),
+        content_type: 'product',
+        value:        grandTotal,
+        currency:     'BDT',
+        num_items:    cart.reduce((s, i) => s + i.quantity, 0),
+      });
 
       setOrderSnapshot({ items: cart, total: grandTotal });
       clearCart();
@@ -289,8 +288,8 @@ const Checkout = () => {
           <p className="text-gray-500 text-sm mb-6">Thank you! Your order has been received and is being processed.</p>
           <a href={waUrl} target="_blank" rel="noopener noreferrer"
             onClick={() => {
-              if (typeof (window as any).fbq === 'function' && snap) {
-                (window as any).fbq('track', 'Purchase', {
+              if (snap) {
+                trackEvent('Purchase', {
                   content_ids:  snap.items.map((i: { id: string }) => i.id),
                   content_type: 'product',
                   value:        snap.total,

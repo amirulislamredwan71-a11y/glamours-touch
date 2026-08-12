@@ -4,6 +4,7 @@ import { Flame, Sparkles, ShoppingBag, Heart } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { motion } from 'motion/react';
+import { trackEvent } from '../lib/fbCapi';
 
 import { optimizeImageUrl } from '../lib/imageUtils';
 
@@ -25,15 +26,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
 
   const fireAddToCart = () => {
     addToCart(product);
-    if (typeof (window as any).fbq === 'function') {
-      (window as any).fbq('track', 'AddToCart', {
-        content_ids:  [product.id],
-        content_name: product.name,
-        content_type: 'product',
-        value:        product.price,
-        currency:     'BDT',
-      });
-    }
+    trackEvent('AddToCart', {
+      content_ids:  [product.id],
+      content_name: product.name,
+      content_type: 'product',
+      value:        product.price,
+      currency:     'BDT',
+    });
   };
 
   const handleBuyNow = () => {
