@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, X, BadgeCheck, Truck, ShieldCheck, Camera } from 'lucide-react';
+import { Search, X, BadgeCheck, Truck, ShieldCheck, Camera, Mic } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SkinScanModal from './SkinScanModal';
 
@@ -64,6 +64,7 @@ const HomeSearch = () => {
   const [products, setProducts] = useState<P[]>([]);
   const [cats, setCats] = useState<Cat[]>(INITIAL_CATS);
   const [scanOpen, setScanOpen] = useState(false);
+  const [listening, setListening] = useState(false);
   const [offer, setOffer] = useState<string>('🎉 লঞ্চ অফার — সব পণ্যে ছাড় চলছে! অর্ডার করুন 📞 01712-426871');
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -76,7 +77,7 @@ const HomeSearch = () => {
       ]);
       if (pd) setProducts(pd as P[]);
       if (cd) setCats(cd as Cat[]);
-      if (od && typeof od.value === 'string') setOffer(od.value); // admin-controllable via site_settings key 'offer' (empty = hide)
+      if (od && typeof od.value === 'string') setOffer(od.value);
     })();
   }, []);
 
@@ -87,6 +88,26 @@ const HomeSearch = () => {
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
+
+  const startVoiceSearch = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('আপনার ব্রাউজারে ভয়েস সার্চ সাপোর্ট করে না।');
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'bn-BD';
+    recognition.onstart = () => setListening(true);
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setQ(transcript);
+      setOpen(true);
+      setListening(false);
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+    recognition.start();
+  };
 
   const term = q.trim().toLowerCase();
   const matches = term
@@ -108,10 +129,10 @@ const HomeSearch = () => {
     <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark min-h-[220px]">
       <div className="max-w-3xl mx-auto px-4">
         <p className="text-center text-gtgoldsoft text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
-          🇰🇷 বাংলাদেশের Trending Korean Beauty
+          🇰🇷 Aura Neural Grid • সব প্রসাধনী এক জায়গায়
         </p>
 
-        {/* Full-width dynamic search */}
+        {/* Full-width dynamic search matching screenshot spec */}
         <div ref={boxRef} className="relative">
           <form onSubmit={submit} className="relative flex items-center">
             <Search size={18} className="absolute left-4 text-gtgold pointer-events-none z-10" />
@@ -119,27 +140,30 @@ const HomeSearch = () => {
               value={q}
               onChange={e => { setQ(e.target.value); setOpen(true); }}
               onFocus={() => setOpen(true)}
-              placeholder="Medicube, Anua, sunscreen..."
+              placeholder="Aura Neural Grid • সব দোকান এক জায়গায়..."
               aria-label="Search products"
-              className="w-full bg-[#111116] border border-gtgold/40 rounded-full pl-11 pr-28 py-3 sm:py-3.5 text-xs sm:text-sm text-white placeholder:text-white/40 shadow-xl focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold"
+              className="w-full bg-[#111619] border border-emerald-500/40 rounded-full pl-11 pr-32 py-3 sm:py-3.5 text-xs sm:text-sm text-white placeholder:text-white/40 shadow-xl focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 transition-all"
             />
             {q && (
               <button type="button" onClick={() => { setQ(''); setOpen(false); }}
-                className="absolute right-24 text-white/50 hover:text-white">
+                className="absolute right-28 text-white/50 hover:text-white">
                 <X size={16} />
               </button>
             )}
-            <div className="absolute right-1.5 flex items-center gap-1.5">
-              <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
-                className="w-8 h-8 rounded-full bg-[#18181e] border border-gtgold/30 text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-transform">
-                <Camera size={15} />
+            <div className="absolute right-2 flex items-center gap-1.5 z-10">
+              {/* Mic Icon Voice Search (Screenshot spec) */}
+              <button type="button" onClick={startVoiceSearch} title="ভয়েস সার্চ করুন"
+                className={`w-8 h-8 rounded-full bg-[#181f24] border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-md active:scale-90 transition-transform ${listening ? 'animate-pulse bg-emerald-500/20' : ''}`}>
+                <Mic size={15} />
               </button>
-              <button type="submit"
-                className="gt-shiny text-charcoal font-bold text-xs px-3.5 sm:px-4 py-1.5 rounded-full shadow-md active:scale-95 transition-transform">
-                খুঁজুন
+              {/* Camera Icon AI Scan (Screenshot spec) */}
+              <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
+                className="w-8 h-8 rounded-full bg-[#181f24] border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-md active:scale-90 transition-transform">
+                <Camera size={15} />
               </button>
             </div>
           </form>
+
 
           {open && matches.length > 0 && (
             <div className="absolute z-40 mt-2 w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">

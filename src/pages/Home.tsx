@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ProductCard from '../components/ProductCard';
+import HomeSearch from '../components/HomeSearch';
+import FlashBanner from '../components/FlashBanner';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
-import ProductCard from '../components/ProductCard';
-import FlashBanner from '../components/FlashBanner';
-import HomeSearch from '../components/HomeSearch';
 import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: string;
   name: string;
-  brand: string;
+  brand: string | null;
   price: number;
+  market_price: number | null;
   image: string;
   category: string;
   rating: number;
   reviews: number;
   isFeatured: boolean;
-  description: string;
+  stock?: number;
+  in_stock?: boolean;
 }
 
 interface Category {
@@ -198,55 +200,23 @@ const INITIAL_PRODUCTS = [
 ];
 
 const Home = () => {
-  const [featuredProducts, setFeaturedProducts] = useState<any[]>(INITIAL_PRODUCTS);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [newsletterStatus, setNewsletterStatus] = React.useState<'idle' | 'loading' | 'success'>('idle');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch Featured Products - Targeted payload of top 20 featured products for ultra-fast mobile paint
       const { data: productsData } = await supabase
         .from('products')
         .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, stock, in_stock')
         .order('isFeatured', { ascending: false })
         .order('created_at', { ascending: false })
         .limit(30);
-      
-      if (productsData) {
-        const PRIORITY_BRANDS = [
-          'anua', 'beauty of joseon', 'cosrx', 'skin1004', 'medicube', 'dr.althea',
-          'laneige', 'torriden', 'numbuzin', 'round lab', 'tirtir', 'unove', 'ryo',
-          'lador', 'dabo'
-        ];
 
-        const sorted = [...productsData].sort((a, b) => {
-          const aBrand = (a.brand || '').toLowerCase();
-          const bBrand = (b.brand || '').toLowerCase();
-          const aName = (a.name || '').toLowerCase();
-          const bName = (b.name || '').toLowerCase();
-
-          const aPriority = PRIORITY_BRANDS.findIndex(brand => aBrand.includes(brand) || aName.includes(brand));
-          const bPriority = PRIORITY_BRANDS.findIndex(brand => bBrand.includes(brand) || bName.includes(brand));
-
-          const aRank = aPriority !== -1 ? aPriority : 999;
-          const bRank = bPriority !== -1 ? bPriority : 999;
-
-          if (aRank !== bRank) return aRank - bRank;
-          if (a.isFeatured !== b.isFeatured) return a.isFeatured ? -1 : 1;
-          return 0;
-        });
-
-        setFeaturedProducts(sorted);
+      if (productsData && productsData.length > 0) {
+        setFeaturedProducts(productsData as Product[]);
       }
-
-      // Fetch Categories
-      const { data: catsData } = await supabase
-        .from('categories')
-        .select('id, name, image')
-        .limit(4);
-      
-      if (catsData) setCategories(catsData);
     };
 
     fetchData();
@@ -272,22 +242,20 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden bg-gtdark">
+    <div className="flex flex-col overflow-hidden bg-gtdark gt-neural-grid">
       <SEO
         title="Authentic Korean Skincare & Cosmetics Bangladesh"
         description="Shop 100% authentic Korean skincare, K-Beauty serums, cleansers, sunscreens & creams in Bangladesh. Try our AI Glow Predictor Studio at Glamour's Touch."
         url="/"
       />
-      {/* Search-first hero (replaces static banner) */}
+      {/* Search-first hero */}
       <HomeSearch />
 
-      {/* All Products Section */}
+      {/* Flash Banner */}
       <FlashBanner />
 
-      {/* NOTE: no trust/"why us" band here — it duplicates the compact trust strip under the
-          search bar (HomeSearch). This was built & removed twice; do NOT re-add. */}
-
-      <section className="py-10 sm:py-16 bg-gtdark relative overflow-hidden min-h-[480px]">
+      {/* Recommended Products Grid */}
+      <section className="py-10 sm:py-16 relative overflow-hidden min-h-[480px]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-center gap-3 mb-6 sm:mb-10">
             <span className="h-px w-8 bg-gradient-to-r from-transparent to-gtgold/60" />
@@ -345,6 +313,7 @@ const Home = () => {
                 <input 
                   required
                   type="email" 
+                  name="email"
                   placeholder={t('newsletter.placeholder')} 
                   className="flex-grow bg-transparent border-none rounded-full px-8 py-5 focus:outline-none text-white placeholder:text-gray-500 font-light"
                 />
