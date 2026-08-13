@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="text-center mb-16 pb-12 border-b border-white/10">
           <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-6">Ready to Transform Your Skin?</h3>
           <Link to="/shop"
-            className="inline-flex items-center gap-3 bg-gold hover:bg-white hover:text-charcoal text-white px-10 py-4 sm:px-14 sm:py-5 rounded-full font-bold tracking-[0.2em] text-xs transition-all duration-500 shadow-xl shadow-gold/20 uppercase"
+            className="inline-flex items-center gap-3 bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-charcoal px-10 py-4 sm:px-14 sm:py-5 rounded-full font-black tracking-[0.2em] text-xs transition-all duration-300 shadow-xl uppercase"
           >
             SHOP NOW <ArrowRight size={18} />
           </Link>
@@ -27,25 +27,25 @@ const Footer = () => {
         {/* Features Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 border-b border-white/10 pb-20">
           <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-gold mb-6">
-              <ShieldCheck size={32} />
+            <div className="w-16 h-16 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center mb-6">
+              <ShieldCheck size={30} className="text-white" />
             </div>
-            <h3 className="text-xl font-serif font-bold mb-3">{t('footer.authentic')}</h3>
-            <p className="text-gray-400 text-sm">{t('footer.authenticDesc')}</p>
+            <h3 className="text-xl font-serif font-bold mb-3 text-white">{t('footer.authentic')}</h3>
+            <p className="text-gray-300 text-sm">{t('footer.authenticDesc')}</p>
           </div>
           <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-gold mb-6">
-              <Truck size={32} />
+            <div className="w-16 h-16 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center mb-6">
+              <Truck size={30} className="text-white" />
             </div>
-            <h3 className="text-xl font-serif font-bold mb-3">{t('footer.shipping')}</h3>
-            <p className="text-gray-400 text-sm">{t('footer.shippingDesc')}</p>
+            <h3 className="text-xl font-serif font-bold mb-3 text-white">{t('footer.shipping')}</h3>
+            <p className="text-gray-300 text-sm">{t('footer.shippingDesc')}</p>
           </div>
           <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center text-gold mb-6">
-              <Sparkles size={32} />
+            <div className="w-16 h-16 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center mb-6">
+              <Sparkles size={30} className="text-white" />
             </div>
-            <h3 className="text-xl font-serif font-bold mb-3">{t('footer.quality')}</h3>
-            <p className="text-gray-400 text-sm">{t('footer.qualityDesc')}</p>
+            <h3 className="text-xl font-serif font-bold mb-3 text-white">{t('footer.quality')}</h3>
+            <p className="text-gray-300 text-sm">{t('footer.qualityDesc')}</p>
           </div>
         </div>
 
@@ -55,10 +55,10 @@ const Footer = () => {
             <Link to="/" className="flex items-center gap-3 mb-6 group">
               <Logo className="w-16 h-16 group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col">
-                <h3 className="text-xl font-serif font-bold tracking-tighter">
-                  GLAMOUR'S <span className="text-gold">TOUCH</span>
+                <h3 className="text-xl font-serif font-black tracking-tighter text-white">
+                  GLAMOUR'S <span className="gt-gold-shiny">TOUCH</span>
                 </h3>
-                <span className="text-[8px] font-bold text-gray-500 tracking-[0.3em] uppercase">BEAUTY • SKINCARE • CONFIDENCE</span>
+                <span className="text-[8px] font-bold text-gray-400 tracking-[0.3em] uppercase">BEAUTY • SKINCARE • CONFIDENCE</span>
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
