@@ -297,32 +297,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Categories now live as swipeable chips in the search hero above */}
-
-      {/* Facebook Post - Deferred until user scrolls into view */}
-      <section className="py-16 bg-gthead relative min-h-[300px]">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <span className="text-gtgoldsoft font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Follow Us</span>
-          <h2 className="text-3xl font-serif font-bold text-white mb-10">
-            আমাদের <span className="text-gold italic">Facebook</span> পোস্ট
-          </h2>
-          <div className="flex justify-center min-h-[320px]">
-            <iframe
-              src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0KFEdesuqJ384jXoHCeCttwzg1RXmHic8tq3vgkCqieCNE1pdT4ovECs8WL4XhxMrl%26id%3D61574369240231&show_text=true&width=500"
-              width="500"
-              height="404"
-              loading="lazy"
-              title="Glamour's Touch Facebook Post"
-              style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
-              scrolling="no"
-              frameBorder={0}
-              allowFullScreen
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Newsletter */}
       <section className="py-24 sm:py-32 bg-gradient-to-b from-charcoal to-gtdark text-cream relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
