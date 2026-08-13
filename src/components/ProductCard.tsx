@@ -67,7 +67,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
       )}
 
       {/* Image */}
-      <div className="relative m-2 rounded-xl overflow-hidden bg-[#1a1a24] border border-gtgold/15 aspect-square flex items-center justify-center">
+      <div className="relative m-2 rounded-xl overflow-hidden bg-white aspect-square flex items-center justify-center">
         <Link to={`/product/${product.id}`} className="block w-full h-full p-2 flex items-center justify-center">
           <img
             src={optimizeImageUrl(product.image, 400, 80)}
@@ -77,7 +77,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
             fetchPriority={priority ? 'high' : undefined}
-            style={{ mixBlendMode: 'darken' }}
             className={`w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 ${soldOut ? 'opacity-50 grayscale' : ''}`}
             referrerPolicy="no-referrer"
           />
