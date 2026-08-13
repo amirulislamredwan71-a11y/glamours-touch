@@ -7,7 +7,7 @@ const USER_TOKEN = process.env.META_SYSTEM_USER_TOKEN;
 const PAGE_ID = '1002146686323797'; // Glamour's Touch FB Page ID
 const GRAPH_BASE = 'https://graph.facebook.com/v19.0';
 
-// Trending Market Products with High-Res HD Product Images
+// Trending Market Products with EXACT 100% Authentic High-Res Product Photos
 const VIRAL_SALES_POSTS = [
   {
     title: "🔥 কোরিয়ার ১নং ভাইরাল স্কিনকেয়ার সিক্রেট — Christian Dean Secret Tone-up Sun Cream!",
@@ -18,25 +18,25 @@ const VIRAL_SALES_POSTS = [
     hashtags: "#GlamoursTouch #ChristianDean #KoreanSkincareBD #ToneUpCream #Sunscreen #AuthenticBeauty"
   },
   {
-    title: "✨ ব্রণের গর্ত ও কালো দাগ দূর করতে কোরিয়ার টপ-রেটেড এসেন্স — Cosrx Snail 96 Essence!",
-    offer: "আজকের সেরা সেলস প্রাইস: ৳১,৩৫০",
+    title: "✨ ব্রণের গর্ত ও কালো দাগ দূর করতে কোরিয়ার টপ-রেটেড এসেন্স — Cosrx Snail Radiance Dual Essence!",
+    offer: "আজকের সেরা সেলস প্রাইস: ৳২,৬৯০",
     content: "ত্বকের ড্যামেজ রিকভারি করে ত্বককে কাচের মতো মসৃণ ও গ্লাস-স্কিন টেক্সচার দিতে স্নেইল মিউসিনের জুড়ি নেই। নিয়মিত ব্যবহারে স্কিন ব্যারিয়ার শক্ত হয় ও বয়সের ছাপ দূর হয়।\n\n🛍️ ১০০% অরিজিনাল কোরিয়ান কসমেটিকস।\n📦 অর্ডার করতে ইনবক্সে মেসেজ দিন বা আমাদের ওয়েবসাইট থেকে অর্ডার করুন।",
-    link: "https://www.glamourstouch.com/shop?search=Cosrx+Snail+96&ref=ceo_daily_photo_post",
-    imageUrl: "https://www.glamourstouch.com/categories/skincare.webp",
+    link: "https://www.glamourstouch.com/shop?search=Cosrx+Snail&ref=ceo_daily_photo_post",
+    imageUrl: "https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-ed0849b7-d064-4013-97bb-cb8f78bceb61.jpg",
     hashtags: "#CosrxSnailEssence #GlassSkin #KoreanSkincareBangladesh #GlamoursTouch"
   },
   {
-    title: "🌸 ত্বকের মেছতা ও জেদি মেলাজমা দাগ দূর করুন — Medicube TXA Capsule Cream!",
-    offer: "অফিসিয়াল ডিসকাউন্ট প্রাইস: ৳১,৬৫০",
-    content: "কোরিয়ার ক্লিনিক্যালি পরীক্ষিত ট্যানেক্সামিক এসিড ফর্মুলা। ত্বকের মেলানিন কমিয়ে মেছতা ও ব্রণের কালো ছোপ দাগ স্থায়ীভাবে হালকা করে ত্বক করে দাগহীন ফর্সা।\n\n⚡ সারাদেশে ক্যাশ অন ডেলিভারি দেওয়া হয়।",
-    link: "https://www.glamourstouch.com/shop?search=Medicube+TXA&ref=ceo_daily_photo_post",
-    imageUrl: "https://www.glamourstouch.com/categories/serum_essence.webp",
+    title: "🌸 ত্বকের মেছতা ও জেদি মেলাজমা দাগ দূর করুন — Medicube Kojic Acid Turmeric Vita Capsule Cream!",
+    offer: "অফিসিয়াল ডিসকাউন্ট প্রাইস: ৳২,০০০",
+    content: "কোরিয়ার ক্লিনিক্যালি পরীক্ষিত ট্যানেক্সামিক ও কোজিক এসিড ফর্মুলা। ত্বকের মেলানিন কমিয়ে মেছতা ও ব্রণের কালো ছোপ দাগ স্থায়ীভাবে হালকা করে ত্বক করে দাগহীন ফর্সা।\n\n⚡ সারাদেশে ক্যাশ অন ডেলিভারি দেওয়া হয়।",
+    link: "https://www.glamourstouch.com/shop?search=Medicube+Capsule&ref=ceo_daily_photo_post",
+    imageUrl: "https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-ba33b4ab-3932-452c-af0c-7e1375c3db8b.jpg",
     hashtags: "#MedicubeTXA #MelasmaRemoval #DarkSpotTreatment #GlamoursTouchBD"
   }
 ];
 
 async function runDailyCEOMarketAnalysis() {
-  console.log('👑 [CEO AI Agent] Executing Live Market Analysis & Photo Sales Auto-Posting...');
+  console.log('👑 [CEO AI Agent] Executing Live Market Analysis & High-Res Product Photo Auto-Posting...');
 
   // Pick today's post based on day of year
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
@@ -45,7 +45,7 @@ async function runDailyCEOMarketAnalysis() {
   const fullCaption = `${post.title}\n\n💰 ${post.offer}\n\n${post.content}\n\n🛒 অরিজিনাল প্রোডাক্ট সরাসরি অর্ডার করুন:\n👉 ${post.link}\n\n${post.hashtags}`;
 
   console.log('\n📝 Today\'s Automated Photo Sales Post:\n', fullCaption);
-  console.log('🖼️ HD Image URL:', post.imageUrl);
+  console.log('🖼️ Exact Product High-Res Image URL:', post.imageUrl);
 
   if (!USER_TOKEN) {
     console.error('❌ Missing Meta System User Token');
@@ -71,8 +71,8 @@ async function runDailyCEOMarketAnalysis() {
       console.log('✅ Page Access Token retrieved successfully!');
     }
 
-    // 2. Post PHOTO with caption to Facebook Page (/{page_id}/photos)
-    console.log('🚀 Publishing HD Product Photo Post to Glamour\'s Touch Facebook Page...');
+    // 2. Post EXACT High-Res Product PHOTO with caption to Facebook Page (/{page_id}/photos)
+    console.log('🚀 Publishing Exact High-Res Product Photo Post to Glamour\'s Touch Facebook Page...');
     const photoRes = await fetch(`${GRAPH_BASE}/${PAGE_ID}/photos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -87,7 +87,7 @@ async function runDailyCEOMarketAnalysis() {
     console.log('📦 Meta API Photo Response:', JSON.stringify(photoData, null, 2));
 
     if (photoData.id) {
-      console.log(`\n🎉 SUCCESS! CEO Daily HD Photo Sales Post Published Live on Facebook Page! Photo ID: ${photoData.id}`);
+      console.log(`\n🎉 SUCCESS! CEO Daily Exact Product Photo Sales Post Published Live on Facebook Page! Photo ID: ${photoData.id}`);
     } else {
       console.error('❌ Facebook Photo Post Failed:', photoData);
     }
