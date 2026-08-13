@@ -108,16 +108,16 @@ const Navbar = () => {
               <Logo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
             </Link>
 
-            {/* Desktop Navigation Links (Visible on Laptop/PC screens) */}
-            <div className="hidden lg:flex items-center gap-4 xl:gap-5 text-sm font-extrabold tracking-wide">
+            {/* Desktop Navigation Links (Visible on Laptop/PC screens from md: breakpoint) */}
+            <div className="hidden md:flex items-center gap-3 lg:gap-5 text-xs lg:text-sm font-extrabold tracking-wide">
               <Link to="/" className={`hover:text-gtgold transition-colors ${isActive('/') ? 'gt-gold-shiny' : 'text-white/90'}`}>
                 {t('nav.home')}
               </Link>
               <Link to="/shop" className={`hover:text-gtgold transition-colors ${isActive('/shop') ? 'gt-gold-shiny' : 'text-white/90'}`}>
                 {t('nav.shop')}
               </Link>
-              <Link to="/glow-predictor" className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold hover:bg-gtgold/25 transition-all text-xs font-black shadow-sm">
-                <Sparkles size={13} className="text-gtgold animate-pulse" />
+              <Link to="/glow-predictor" className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold hover:bg-gtgold/25 transition-all text-xs font-black shadow-sm flex-shrink-0">
+                <Sparkles size={12} className="text-gtgold animate-pulse" />
                 <span>AI Glow Predictor</span>
               </Link>
               <Link to="/blog" className={`hover:text-gtgold transition-colors ${isActive('/blog') ? 'gt-gold-shiny' : 'text-white/90'}`}>
@@ -127,46 +127,46 @@ const Navbar = () => {
           </div>
 
           {/* Center Group: Top Integrated Gold Search Bar */}
-          <div className="flex-1 max-w-sm md:max-w-md xl:max-w-xl mx-1.5 sm:mx-3">
+          <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md xl:max-w-xl mx-1 sm:mx-3">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-              <Search size={16} className="absolute left-3.5 text-gtgold pointer-events-none z-10" />
+              <Search size={15} className="absolute left-3 text-gtgold pointer-events-none z-10" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
                 aria-label="Search top products"
-                className="w-full bg-[#12161a] border-2 border-gtgold focus:border-gtgold rounded-full pl-10 pr-20 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-gtgold/90 shadow-xl focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all font-medium"
+                className="w-full bg-[#12161a] border-2 border-gtgold focus:border-gtgold rounded-full pl-9 pr-16 sm:pr-20 py-1.5 sm:py-2 text-xs sm:text-sm text-white placeholder:text-gtgold/90 shadow-xl focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all font-medium"
               />
               {searchQuery && (
                 <button type="button" onClick={() => setSearchQuery('')}
-                  className="absolute right-16 text-white/50 hover:text-white">
-                  <X size={15} />
+                  className="absolute right-14 sm:right-16 text-white/50 hover:text-white">
+                  <X size={14} />
                 </button>
               )}
-              <div className="absolute right-1.5 flex items-center gap-1 z-10">
+              <div className="absolute right-1 flex items-center gap-1 z-10">
                 {/* Voice Mic Button */}
                 <button type="button" onClick={startVoiceSearch} title="ভয়েস সার্চ করুন"
-                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30' : ''}`}>
-                  <Mic size={14} />
+                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30' : ''}`}>
+                  <Mic size={13} />
                 </button>
                 {/* Camera AI Scan Button */}
                 <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
-                  <Camera size={14} />
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
+                  <Camera size={13} />
                 </button>
               </div>
             </form>
           </div>
 
           {/* Right Group: Language EN/বা Switcher + Login/Profile Button */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
             {/* EN/বা Language Switcher */}
             <button
               onClick={toggleLanguage}
               title="Change Language / ভাষা পরিবর্তন করুন"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#161d22] border border-gtgold/60 text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
+              className="flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#161d22] border border-gtgold/60 text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
             >
-              <Globe size={14} className="text-gtgold" />
+              <Globe size={13} className="text-gtgold" />
               <span>{i18n.language === 'en' ? 'EN' : 'বা'}</span>
             </button>
 
