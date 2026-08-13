@@ -92,26 +92,42 @@ const Navbar = () => {
     <>
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-xl border-b border-gtgold/20 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24 gap-2">
+        <div className="flex justify-between items-center h-20 md:h-24 gap-2 lg:gap-4">
 
-          {/* Hamburger Menu Button (Three line icon) */}
-          <div className="flex flex-shrink-0">
+          {/* Left Group: Hamburger + Logo + Desktop Nav Links */}
+          <div className="flex items-center gap-2 lg:gap-5 flex-shrink-0">
+            {/* Hamburger Menu Button (Three line icon) */}
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle Menu"
               className="p-1.5 text-white/80 hover:text-gtgold transition-all duration-300">
               {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
-          </div>
 
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
+            {/* Logo */}
             <Link to="/" className="group flex items-center">
               <Logo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
             </Link>
+
+            {/* Desktop Navigation Links (Visible on Laptop/PC screens) */}
+            <div className="hidden lg:flex items-center gap-4 xl:gap-5 text-sm font-extrabold tracking-wide">
+              <Link to="/" className={`hover:text-gtgold transition-colors ${isActive('/') ? 'gt-gold-shiny' : 'text-white/90'}`}>
+                {t('nav.home')}
+              </Link>
+              <Link to="/shop" className={`hover:text-gtgold transition-colors ${isActive('/shop') ? 'gt-gold-shiny' : 'text-white/90'}`}>
+                {t('nav.shop')}
+              </Link>
+              <Link to="/glow-predictor" className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold hover:bg-gtgold/25 transition-all text-xs font-black shadow-sm">
+                <Sparkles size={13} className="text-gtgold animate-pulse" />
+                <span>AI Glow Predictor</span>
+              </Link>
+              <Link to="/blog" className={`hover:text-gtgold transition-colors ${isActive('/blog') ? 'gt-gold-shiny' : 'text-white/90'}`}>
+                Blog
+              </Link>
+            </div>
           </div>
 
-          {/* Top Integrated Gold Search Bar (Takes Maximum Space - Premium Gold Frame) */}
-          <div className="flex-1 max-w-3xl mx-1.5 sm:mx-4">
+          {/* Center Group: Top Integrated Gold Search Bar */}
+          <div className="flex-1 max-w-sm md:max-w-md xl:max-w-xl mx-1.5 sm:mx-3">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
               <Search size={16} className="absolute left-3.5 text-gtgold pointer-events-none z-10" />
               <input
@@ -140,6 +156,38 @@ const Navbar = () => {
                 </button>
               </div>
             </form>
+          </div>
+
+          {/* Right Group: Language EN/বা Switcher + Login/Profile Button */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            {/* EN/বা Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              title="Change Language / ভাষা পরিবর্তন করুন"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#161d22] border border-gtgold/60 text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
+            >
+              <Globe size={14} className="text-gtgold" />
+              <span>{i18n.language === 'en' ? 'EN' : 'বা'}</span>
+            </button>
+
+            {/* Login / Profile Button */}
+            {!user ? (
+              <button
+                onClick={openLogin}
+                className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider uppercase transition-all shadow-md flex items-center gap-1.5"
+              >
+                <User size={14} />
+                <span>LOGIN</span>
+              </button>
+            ) : (
+              <Link
+                to="/profile"
+                className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider flex items-center gap-1.5 transition-all shadow-md"
+              >
+                <User size={14} />
+                <span className="max-w-[80px] sm:max-w-[120px] truncate">{user.email?.split('@')[0] || 'Profile'}</span>
+              </Link>
+            )}
           </div>
 
         </div>
