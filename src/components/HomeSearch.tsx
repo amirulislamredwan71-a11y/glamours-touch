@@ -34,12 +34,35 @@ const CATEGORY_WEBP_IMAGES: Record<string, string> = {
   'Baby & Mom Care': '/categories/baby_mom.webp',
 };
 
+interface Cat {
+  id: string;
+  name: string;
+  image: string;
+}
+
+const INITIAL_CATS: Cat[] = [
+  { id: '1', name: 'Serum & Essence', image: '/categories/serum_essence.webp' },
+  { id: '2', name: 'Moisturizer & Cream', image: '/categories/moisturizer_cream.webp' },
+  { id: '3', name: 'Cleanser', image: '/categories/cleanser.webp' },
+  { id: '4', name: 'Sunscreen', image: '/categories/sunscreen.webp' },
+  { id: '5', name: 'Hair Care', image: '/categories/hair_care.webp' },
+  { id: '6', name: 'Skincare', image: '/categories/skincare.webp' },
+  { id: '7', name: 'Body Care', image: '/categories/body_care.webp' },
+  { id: '8', name: 'Toner', image: '/categories/toner.webp' },
+  { id: '9', name: 'Masks & Exfoliators', image: '/categories/masks_exfoliators.webp' },
+  { id: '10', name: 'D A B O All In One Care', image: '/categories/dabo_care.webp' },
+  { id: '11', name: 'Face Care', image: '/categories/face_care.webp' },
+  { id: '12', name: 'Eye Care', image: '/categories/eye_care.webp' },
+  { id: '13', name: 'Makeup & Lip', image: '/categories/makeup_lip.webp' },
+  { id: '14', name: 'Serum & Treatment', image: '/categories/serum_treatment.webp' },
+];
+
 const HomeSearch = () => {
   const navigate = useNavigate();
   const [q, setQ] = useState('');
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState<P[]>([]);
-  const [cats, setCats] = useState<Cat[]>([]);
+  const [cats, setCats] = useState<Cat[]>(INITIAL_CATS);
   const [scanOpen, setScanOpen] = useState(false);
   const [offer, setOffer] = useState<string>('🎉 লঞ্চ অফার — সব পণ্যে ছাড় চলছে! অর্ডার করুন 📞 01712-426871');
   const boxRef = useRef<HTMLDivElement>(null);
