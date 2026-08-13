@@ -113,27 +113,32 @@ const HomeSearch = () => {
 
         {/* Full-width dynamic search */}
         <div ref={boxRef} className="relative">
-          <form onSubmit={submit}>
-            <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <form onSubmit={submit} className="relative flex items-center">
+            <Search size={18} className="absolute left-4 text-gtgold pointer-events-none z-10" />
             <input
               value={q}
               onChange={e => { setQ(e.target.value); setOpen(true); }}
               onFocus={() => setOpen(true)}
-              placeholder="Medicube, Anua, sunscreen... খুঁজুন"
+              placeholder="Medicube, Anua, sunscreen..."
               aria-label="Search products"
-              className="w-full bg-white rounded-full pl-12 pr-24 py-3.5 sm:py-4 text-sm sm:text-base text-charcoal placeholder:text-gray-400 shadow-xl focus:outline-none focus:ring-2 focus:ring-gold"
+              className="w-full bg-[#111116] border border-gtgold/40 rounded-full pl-11 pr-28 py-3 sm:py-3.5 text-xs sm:text-sm text-white placeholder:text-white/40 shadow-xl focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold"
             />
             {q && (
               <button type="button" onClick={() => { setQ(''); setOpen(false); }}
-                className="absolute right-[52px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-charcoal">
-                <X size={18} />
+                className="absolute right-24 text-white/50 hover:text-white">
+                <X size={16} />
               </button>
             )}
-            {/* AI Skin Scan camera */}
-            <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full gt-shiny flex items-center justify-center shadow-md active:scale-90 transition-transform">
-              <Camera size={17} />
-            </button>
+            <div className="absolute right-1.5 flex items-center gap-1.5">
+              <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
+                className="w-8 h-8 rounded-full bg-[#18181e] border border-gtgold/30 text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-transform">
+                <Camera size={15} />
+              </button>
+              <button type="submit"
+                className="gt-shiny text-charcoal font-bold text-xs px-3.5 sm:px-4 py-1.5 rounded-full shadow-md active:scale-95 transition-transform">
+                খুঁজুন
+              </button>
+            </div>
           </form>
 
           {open && matches.length > 0 && (
