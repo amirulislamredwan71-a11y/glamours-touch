@@ -7,7 +7,7 @@
   --font-display: "Outfit", "Hind Siliguri", "Noto Sans Bengali", ui-sans-serif, sans-serif;
 
   --color-gold: #e5b83a;
-  --color-rose-gold: #f3c63f;
+  --color-rose-gold: #e5b83a;
   --color-cream: #080c16;
   --color-charcoal: #080c16;
 
@@ -17,7 +17,7 @@
   --color-gtinput: #121824;
   --color-gthead: #080c16;
   --color-gtgold: #e5b83a;
-  --color-gtgoldsoft: #f3c63f;
+  --color-gtgoldsoft: #e5b83a;
   --color-gtmuted: #a0a0ab;
   --color-gtred: #ff3b5c;
   --color-gtpink: #ff007f;
@@ -220,20 +220,9 @@ footer [lang="bn"] {
 }
 .rotate-zap { animation: rotateZap 3s ease-in-out infinite; animation-delay: 3s; }
 
-/* Dynamic GT Neural Grid Background Animation */
+/* Dynamic GT Neural Grid Background Animation (Disabled for 100% Unified Midnight Navy Background) */
 .gt-neural-grid {
-  background-color: #070a0d;
-  background-image: 
-    radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.07) 0%, transparent 70%),
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 100% 100%, 36px 36px, 36px 36px;
-  animation: bgGridPulse 15s linear infinite;
-}
-
-@keyframes bgGridPulse {
-  0% { background-position: 0% 0%, 0px 0px, 0px 0px; }
-  50% { background-position: 50% 50%, 18px 18px, 18px 18px; }
-  100% { background-position: 100% 100%, 36px 36px, 36px 36px; }
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
