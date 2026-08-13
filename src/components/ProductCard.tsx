@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Flame, Sparkles, ShoppingBag, Heart, Share2, Eye, Zap, CheckCircle2 } from 'lucide-react';
+import { Flame, Sparkles, ShoppingBag, Heart, Share2, Zap } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { trackEvent } from '../lib/fbCapi';
@@ -39,27 +39,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
     navigate('/checkout');
   };
 
-  const handleShare = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (navigator.share) {
-      navigator.share({
-        title: product.name,
-        url: window.location.origin + `/product/${product.id}`,
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.origin + `/product/${product.id}`);
-      alert('প্রোডাক্ট লিংক কপি করা হয়েছে!');
-    }
-  };
-
   return (
     <div className="flex flex-col h-full group relative">
-      {/* 1. SEPARATE Floating Image Card with Gold Frame Accent (Screenshot & GT Spec) */}
+      {/* 1. SEPARATE Floating Crisp White Image Card with GT Gold Frame */}
       <div className="relative rounded-[32px] overflow-hidden bg-white aspect-square flex items-center justify-center p-4 shadow-xl border-2 border-gtgold/40 group-hover:border-gtgold transition-all duration-300 group-hover:scale-[1.02]">
-        {/* Verified Gold Badge */}
-        <div className="absolute top-3 left-3 z-10 bg-amber-500/20 backdrop-blur-md border border-amber-400/40 text-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm uppercase tracking-wider">
-          <CheckCircle2 size={11} className="text-amber-400 fill-amber-400/30" /> VERIFIED
-        </div>
+        {/* Discount / Sold-out badge */}
+        {soldOut ? (
+          <div className="absolute top-3 left-3 z-10 bg-gray-900/90 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase">
+            SOLD OUT
+          </div>
+        ) : hasDiscount && (
+          <div className="absolute top-3 left-3 z-10 bg-[#ff1a6c] text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md">
+            -{discountPct}%
+          </div>
+        )}
 
         {/* Wishlist */}
         <button
@@ -86,45 +79,37 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         </Link>
       </div>
 
-      {/* 2. SEPARATE Product Info & Buttons (Outside image card, floating directly on background) */}
+      {/* 2. SEPARATE Product Info & Buttons (Outside image card, floating directly on page background) */}
       <div className="mt-3 px-1 flex flex-col flex-grow">
         <div className="flex-grow">
-          {/* Title */}
+          {/* Brand Name Tag */}
+          <span className="text-[10px] font-bold tracking-widest uppercase text-gtgold block mb-0.5">
+            {product.brand || 'K-Beauty'}
+          </span>
+
+          {/* Product Title */}
           <Link to={`/product/${product.id}`} className="block">
-            <h3 className="text-sm sm:text-base font-bold text-white line-clamp-1 leading-snug mb-0.5 hover:text-gtgold transition-colors">
+            <h3 className="text-sm sm:text-base font-bold text-white line-clamp-1 leading-snug mb-1.5 hover:text-gtgold transition-colors">
               {product.name}
             </h3>
           </Link>
 
-          {/* Subtitle / GT Store Tag (Original GT Gold Accent) */}
-          <div className="text-[10px] font-bold text-gtgold tracking-wider uppercase mb-2 flex items-center gap-1">
-            <span>GLAMOUR'S TOUCH</span>
-            <span className="text-gray-400 font-normal">(গ্ল্যামারস টাচ)</span>
-          </div>
-
-          {/* Price & Status Badge */}
-          <div className="flex items-center flex-wrap gap-2 mb-3">
-            <span className="text-lg sm:text-xl font-extrabold text-gtgold">৳{product.price.toLocaleString()}</span>
-            
-            {hasDiscount ? (
-              <span className="bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-md">
-                ✓ ন্যায্য দাম
-              </span>
-            ) : (
-              <span className="bg-amber-950/80 border border-amber-500/30 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-md">
-                🔥 সেরা দাম
-              </span>
+          {/* Price Display */}
+          <div className="flex items-baseline flex-wrap gap-x-2 mb-3">
+            <span className="text-lg sm:text-xl font-black text-gtgold leading-none">৳{product.price.toLocaleString()}</span>
+            {hasDiscount && (
+              <span className="text-xs text-white/40 line-through leading-none">৳{marketPrice.toLocaleString()}</span>
             )}
           </div>
         </div>
 
-        {/* Dual Action Buttons (Screenshot spec: Separated Gold Outline ADD + Solid Emerald BUY) */}
+        {/* Dual Action Buttons (Separated Outline ADD + Solid Emerald BUY) */}
         {soldOut ? (
-          <button disabled className="w-full bg-white/10 text-white/40 py-2.5 rounded-2xl text-xs font-bold uppercase tracking-tighter cursor-not-allowed mb-2.5">
+          <button disabled className="w-full bg-white/10 text-white/40 py-2.5 rounded-2xl text-xs font-bold uppercase tracking-tighter cursor-not-allowed mb-2">
             Sold Out
           </button>
         ) : (
-          <div className="grid grid-cols-2 gap-2 mb-2.5">
+          <div className="grid grid-cols-2 gap-2 mb-2">
             <button
               onClick={fireAddToCart}
               className="w-full bg-[#161d22]/90 border border-gtgold/50 hover:border-gtgold text-gtgold py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
@@ -142,21 +127,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           </div>
         )}
 
-        {/* Utility Row (Screenshot spec: Share & Eye Icon only — Try-On Removed as requested) */}
-        <div className="flex items-center justify-start gap-4 pt-1 text-gray-400">
-          <button onClick={handleShare} title="শেয়ার করুন" className="hover:text-gtgold transition-colors flex items-center gap-1 text-xs">
-            <Share2 size={16} />
-          </button>
-          <Link to={`/product/${product.id}`} title="Glow দেখুন" className="hover:text-gtgold transition-colors flex items-center gap-1 text-xs">
-            <Eye size={17} />
+        {/* Gold Glow দেখুন Button (Below ADD and BUY buttons for all products) */}
+        {!soldOut && (
+          <Link
+            to={`/product/${product.id}`}
+            className="w-full gt-shiny text-charcoal py-2.5 rounded-2xl text-xs font-extrabold tracking-tight flex items-center justify-center gap-1.5 hover:brightness-105 transition-all shadow-md"
+          >
+            <Sparkles size={14} className="text-charcoal" />
+            <span>Glow দেখুন</span>
           </Link>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default ProductCard;
+
 
 
 
