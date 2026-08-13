@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { optimizeImageUrl } from '../lib/imageUtils';
 
 interface Banner { id: string; image: string; link: string | null; title: string | null; }
 
@@ -26,8 +27,16 @@ const FlashBanner: React.FC = () => {
   if (!banners.length) return null;
   const b = banners[Math.min(idx, banners.length - 1)];
   const img = (
-    <img src={b.image} alt={b.title || 'Flash Sale'} referrerPolicy="no-referrer"
-      className="w-full h-full object-cover" />
+    <img
+      src={optimizeImageUrl(b.image, 1200, 85)}
+      alt={b.title || 'Flash Sale'}
+      width="1200"
+      height="450"
+      fetchPriority="high"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      className="w-full h-full object-cover"
+    />
   );
 
   return (

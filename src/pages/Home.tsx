@@ -34,12 +34,13 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch Featured Products - Prioritizing flagship K-Beauty brands at the very top
+      // Fetch Featured Products - Targeted payload of top 36 featured products
       const { data: productsData } = await supabase
         .from('products')
-        .select('*')
+        .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, stock, in_stock')
         .order('isFeatured', { ascending: false })
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(36);
       
       if (productsData) {
         const PRIORITY_BRANDS = [
@@ -71,7 +72,7 @@ const Home = () => {
       // Fetch Categories
       const { data: catsData } = await supabase
         .from('categories')
-        .select('*')
+        .select('id, name, image')
         .limit(4);
       
       if (catsData) setCategories(catsData);
@@ -115,7 +116,7 @@ const Home = () => {
       {/* NOTE: no trust/"why us" band here — it duplicates the compact trust strip under the
           search bar (HomeSearch). This was built & removed twice; do NOT re-add. */}
 
-      <section className="py-10 sm:py-16 bg-gtdark relative overflow-hidden">
+      <section className="py-10 sm:py-16 bg-gtdark relative overflow-hidden min-h-[480px]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-center gap-3 mb-6 sm:mb-10">
             <span className="h-px w-8 bg-gradient-to-r from-transparent to-gtgold/60" />
@@ -123,15 +124,21 @@ const Home = () => {
             <span className="h-px w-8 bg-gradient-to-l from-transparent to-gtgold/60" />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 md:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 md:gap-4 min-h-[320px]">
             {featuredProducts.length > 0 ? (
               featuredProducts.map((product, idx) => (
                 <div key={product.id}>
-                  <ProductCard product={product} priority={idx < 2} />
+                  <ProductCard product={product} priority={idx < 4} />
                 </div>
               ))
             ) : (
-              <div className="col-span-full py-10 text-center text-white/40">Loading treasures...</div>
+              Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className="gt-card rounded-2xl h-[320px] animate-pulse bg-white/5 p-3 flex flex-col justify-between">
+                  <div className="w-full aspect-square bg-white/10 rounded-xl mb-3" />
+                  <div className="h-3 bg-white/10 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-white/10 rounded w-1/2" />
+                </div>
+              ))
             )}
           </div>
         </div>
@@ -151,6 +158,8 @@ const Home = () => {
               src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0KFEdesuqJ384jXoHCeCttwzg1RXmHic8tq3vgkCqieCNE1pdT4ovECs8WL4XhxMrl%26id%3D61574369240231&show_text=true&width=500"
               width="500"
               height="404"
+              loading="lazy"
+              title="Glamour's Touch Facebook Post"
               style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
               scrolling="no"
               frameBorder={0}

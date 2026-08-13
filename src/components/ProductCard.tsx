@@ -79,7 +79,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             height="400"
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
-            fetchpriority={priority ? 'high' : undefined}
+            fetchPriority={priority ? 'high' : undefined}
             className={`w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 ${soldOut ? 'opacity-50 grayscale' : ''}`}
             referrerPolicy="no-referrer"
           />

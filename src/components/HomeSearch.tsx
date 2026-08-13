@@ -47,7 +47,7 @@ const HomeSearch = () => {
   useEffect(() => {
     (async () => {
       const [{ data: pd }, { data: cd }, { data: od }] = await Promise.all([
-        supabase.from('products').select('id,name,brand,price,market_price,image'),
+        supabase.from('products').select('id,name,brand,price,market_price,image').limit(60),
         supabase.from('categories').select('id,name,image').order('created_at', { ascending: true }),
         supabase.from('site_settings').select('value').eq('key', 'offer').maybeSingle(),
       ]);
@@ -82,7 +82,7 @@ const HomeSearch = () => {
 
   return (
     <>
-    <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark">
+    <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-gthead to-gtdark min-h-[220px]">
       <div className="max-w-3xl mx-auto px-4">
         <p className="text-center text-gtgoldsoft text-[10px] sm:text-xs font-bold tracking-[0.3em] uppercase mb-3">
           🇰🇷 বাংলাদেশের Trending Korean Beauty
@@ -147,9 +147,9 @@ const HomeSearch = () => {
         </div>
       </div>
 
-      {/* Swipeable square category chips */}
-      {cats.length > 0 && (
-        <div className="mt-4 max-w-5xl mx-auto">
+      {/* Swipeable square category chips with fixed height for zero CLS */}
+      <div className="mt-4 max-w-5xl mx-auto min-h-[96px]">
+        {cats.length > 0 && (
           <div
             className="flex gap-3 overflow-x-auto px-4 pb-1 snap-x [&::-webkit-scrollbar]:hidden"
             style={{ scrollbarWidth: 'none' }}
@@ -180,8 +180,8 @@ const HomeSearch = () => {
               );
             })}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </section>
     <SkinScanModal open={scanOpen} onClose={() => setScanOpen(false)} />
     </>
