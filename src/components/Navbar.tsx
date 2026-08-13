@@ -225,22 +225,6 @@ const Navbar = () => {
                 })}
               </div>
 
-              {/* Categories — compact colourful chips */}
-              {categories.length > 0 && (
-                <div className="pt-5 border-t border-gold/10">
-                  <p className="text-[10px] font-bold text-gray-400 tracking-[0.25em] uppercase mb-3">Browse Categories</p>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((cat, i) => (
-                      <Link key={cat} to={`/shop?category=${encodeURIComponent(cat)}`}
-                        className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all active:scale-95 ${CAT_COLORS[i % CAT_COLORS.length]}`}
-                        onClick={() => setIsMenuOpen(false)}>
-                        {cat}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               <div className="pt-6 border-t border-gold/10 space-y-3">
                 <button onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
                   className="flex items-center justify-center gap-3 w-full text-charcoal font-bold tracking-widest py-3 bg-gray-50 rounded-2xl">
@@ -272,62 +256,6 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── Search Modal with Autocomplete ── */}
-      <AnimatePresence>
-        {isSearchOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-charcoal/96 backdrop-blur-2xl flex items-start justify-center pt-28 px-4">
-            <button onClick={() => { setIsSearchOpen(false); setSearchQuery(''); setSuggestions([]); }}
-              className="absolute top-8 right-8 text-white/50 hover:text-gold transition-colors">
-              <X size={36} />
-            </button>
-
-            <div className="max-w-3xl w-full">
-              <form onSubmit={handleSearch} className="relative">
-                <input autoFocus type="text"
-                  placeholder="Search for products..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent border-b-2 border-white/20 py-6 text-3xl md:text-5xl font-serif font-bold text-white placeholder:text-white/15 focus:outline-none focus:border-gold transition-all"
-                />
-                <button type="submit" className="absolute right-0 bottom-6 text-gold hover:scale-110 transition-transform">
-                  <Search size={40} />
-                </button>
-              </form>
-
-              {/* Autocomplete suggestions */}
-              <AnimatePresence>
-                {suggestions.length > 0 && (
-                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                    className="mt-4 bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10">
-                    {suggestions.map((s, i) => (
-                      <button key={i} onClick={() => pickSuggestion(s)}
-                        className="w-full text-left px-6 py-4 text-white hover:bg-gold/20 transition-colors flex items-center gap-3 border-b border-white/5 last:border-0">
-                        <Search size={14} className="text-gold flex-shrink-0" />
-                        <span className="font-medium">{s}</span>
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Popular tags */}
-              {suggestions.length === 0 && (
-                <div className="mt-10 flex flex-wrap gap-3">
-                  <span className="text-white/30 text-xs font-bold tracking-widest uppercase self-center">Popular:</span>
-                  {['Skincare', 'Makeup', 'Fragrance', 'Serum', 'Lipstick'].map(tag => (
-                    <button key={tag} onClick={() => pickSuggestion(tag)}
-                      className="px-4 py-2 bg-white/10 hover:bg-gold/30 text-white/70 hover:text-white text-sm font-medium rounded-full transition-all">
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
           </motion.div>
         )}

@@ -25,7 +25,7 @@ const FlashSaleTimer = () => {
 
   const pad = (n: number) => String(n).padStart(2, '0');
 
-  const TimeBox = ({ value, label }: { value: string; label: string }) => (
+  const TimeBox = ({ value, label, changed }: { value: string; label: string; changed?: boolean }) => (
     <div className="flex flex-col items-center">
       <div className="relative bg-white/20 backdrop-blur-sm rounded-lg sm:rounded-xl w-9 sm:w-16 h-7 sm:h-14 flex items-center justify-center overflow-hidden border border-white/30">
         <span className="text-white font-black text-sm sm:text-3xl font-mono leading-none">
