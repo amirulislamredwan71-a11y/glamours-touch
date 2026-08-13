@@ -21,16 +21,17 @@ const GoldStarlightParticles: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Generate 70 golden starlight dust particles
-    const particleCount = 70;
+    // Generate 70 golden starlight dust particles (super gentle float speed on mobile)
+    const isMobile = width < 768;
+    const particleCount = isMobile ? 50 : 70;
     const particles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 2.2 + 0.8,
-      speedY: -(Math.random() * 0.4 + 0.1),
-      speedX: (Math.random() - 0.5) * 0.2,
+      size: isMobile ? Math.random() * 1.8 + 0.6 : Math.random() * 2.2 + 0.8,
+      speedY: isMobile ? -(Math.random() * 0.1 + 0.03) : -(Math.random() * 0.2 + 0.05),
+      speedX: (Math.random() - 0.5) * 0.15,
       opacity: Math.random() * 0.7 + 0.3,
-      pulseSpeed: Math.random() * 0.02 + 0.005,
+      pulseSpeed: Math.random() * 0.015 + 0.004,
       color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
     }));
 

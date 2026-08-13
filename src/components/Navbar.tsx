@@ -196,13 +196,13 @@ const Navbar = () => {
               <div className="absolute right-1 flex items-center gap-1 z-10">
                 {/* Voice Mic Button */}
                 <button type="button" onClick={startVoiceSearch} title="ভয়েস সার্চ করুন"
-                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30' : ''}`}>
-                  <Mic size={13} />
+                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-white flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30' : ''}`}>
+                  <Mic size={13} className="text-white" />
                 </button>
                 {/* Camera AI Scan Button */}
                 <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
-                  <Camera size={13} />
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-white flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
+                  <Camera size={13} className="text-white" />
                 </button>
               </div>
             </form>
