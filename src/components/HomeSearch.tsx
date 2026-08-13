@@ -111,45 +111,45 @@ const HomeSearch = () => {
         )}
       </div>
 
-      {/* 3. Circular Floating Icons Row (No Box Container + 1-by-1 Alternating Gold & White Text) */}
+      {/* 3. Circular Floating Icons Row (Gold Rings + Pure White Inner Icons + 1-by-1 Alternating Text) */}
       <div className="max-w-4xl mx-auto px-4 mt-5">
         <div className="flex items-center justify-center gap-4 sm:gap-9 py-2 overflow-x-auto [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
-          {/* 1. 100% Authentic (Gold Text) */}
+          {/* 1. 100% Authentic (Gold Text, White Icon) */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <BadgeCheck size={20} className="text-gtgold" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+              <BadgeCheck size={20} className="text-white" />
             </div>
             <span className="text-[10px] sm:text-xs font-black gt-gold-shiny tracking-wider">100% Authentic</span>
           </div>
 
-          {/* 2. সারা দেশে COD (White Text) */}
+          {/* 2. সারা দেশে COD (White Text, White Icon) */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <Truck size={20} className="text-gtgold" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+              <Truck size={20} className="text-white" />
             </div>
             <span className="text-[10px] sm:text-xs font-bold text-white tracking-wider">সারা দেশে COD</span>
           </div>
 
-          {/* 3. AI Glow প্রেডিকশন (Gold Text - IN THE MIDDLE) */}
+          {/* 3. AI Glow প্রেডিকশন (Gold Text, White Icon - IN THE MIDDLE) */}
           <Link to="/glow-predictor" className="flex flex-col items-center gap-1.5 group flex-shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold bg-gtgold/20 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <Sparkles size={20} className="text-gtgold animate-pulse" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold bg-gtgold/20 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Sparkles size={20} className="text-white animate-pulse" />
             </div>
             <span className="text-[10px] sm:text-xs font-black gt-gold-shiny tracking-wider">AI Glow প্রেডিকশন</span>
           </Link>
 
-          {/* 4. নিরাপদ পেমেন্ট (White Text) */}
+          {/* 4. নিরাপদ পেমেন্ট (White Text, White Icon) */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <ShieldCheck size={20} className="text-gtgold" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+              <ShieldCheck size={20} className="text-white" />
             </div>
             <span className="text-[10px] sm:text-xs font-bold text-white tracking-wider">নিরাপদ পেমেন্ট</span>
           </div>
 
-          {/* 5. Shop (Gold Text) */}
+          {/* 5. Shop (Gold Text, White Icon) */}
           <Link to="/shop" className="flex flex-col items-center gap-1.5 group flex-shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <ShoppingBag size={20} className="text-gtgold" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <ShoppingBag size={20} className="text-white" />
             </div>
             <span className="text-[10px] sm:text-xs font-black gt-gold-shiny tracking-wider">Shop</span>
           </Link>
