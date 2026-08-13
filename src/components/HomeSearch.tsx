@@ -61,7 +61,7 @@ const HomeSearch = () => {
   }, []);
 
   return (
-    <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-[#070709] via-[#0b0e11] to-[#0d1216]">
+    <section className="pt-24 sm:pt-28 pb-4 bg-midnight-gold-dust">
       {/* GLAMOUR'S TOUCH Headline Banner (Premium Gold + White Mix, No ১নং) */}
       <div className="max-w-5xl mx-auto px-3 mb-3.5 text-center">
         <div className="py-2 px-4 rounded-full bg-[#12161a] border border-gtgold/40 backdrop-blur-md shadow-lg inline-flex items-center justify-center gap-1.5 flex-wrap">

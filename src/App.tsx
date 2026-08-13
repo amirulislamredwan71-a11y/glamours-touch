@@ -61,7 +61,7 @@ const AppContent = () => {
   const { isLoginOpen, closeLogin } = useUI();
   
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white">
       <Navbar />
       <FloatingCart />
       <main className="flex-grow pb-32 sm:pb-8">
