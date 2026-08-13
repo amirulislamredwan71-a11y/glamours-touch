@@ -77,7 +77,6 @@
 
   img {
     @apply transition-opacity duration-300;
-    content-visibility: auto;
   }
 }
 

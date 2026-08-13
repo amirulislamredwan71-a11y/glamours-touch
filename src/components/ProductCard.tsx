@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Flame, Sparkles, ShoppingBag, Heart } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
-import { motion } from 'motion/react';
 import { trackEvent } from '../lib/fbCapi';
 
 import { optimizeImageUrl } from '../lib/imageUtils';
@@ -41,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   };
 
   return (
-    <motion.div className="group gt-card rounded-2xl flex flex-col h-full relative overflow-hidden">
+    <div className="group gt-card rounded-2xl flex flex-col h-full relative overflow-hidden">
       {/* Discount / Sold-out badge */}
       {soldOut ? (
         <div className="absolute top-2 left-2 z-10 bg-gray-800 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md tracking-wide">
@@ -130,7 +129,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
