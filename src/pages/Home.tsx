@@ -291,7 +291,7 @@ const Home = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="py-24 sm:py-32 bg-gradient-to-b from-charcoal to-gtdark text-cream relative overflow-hidden">
+      <section className="py-24 sm:py-32 bg-transparent text-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="animate-fade-in-up">
             <span className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-6 block">{t('newsletter.subtitle')}</span>

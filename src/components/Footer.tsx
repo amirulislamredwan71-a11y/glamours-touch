@@ -12,7 +12,7 @@ const Footer = () => {
   const { user } = useAuth();
 
   return (
-    <footer className="bg-charcoal text-cream pt-16 pb-8">
+    <footer className="bg-[#080c16] text-white pt-16 pb-8 border-t border-gtgold/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* SHOP NOW CTA */}
         <div className="text-center mb-16 pb-12 border-b border-white/10">

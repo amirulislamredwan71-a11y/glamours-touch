@@ -6,21 +6,21 @@
   --font-serif: "Playfair Display", "Hind Siliguri", "Noto Sans Bengali", ui-serif, Georgia, serif;
   --font-display: "Outfit", "Hind Siliguri", "Noto Sans Bengali", ui-sans-serif, sans-serif;
 
-  --color-gold: #C59B17;
-  --color-rose-gold: #B76E79;
-  --color-cream: #FDFBF7;
-  --color-charcoal: #1A1A1A;
+  --color-gold: #e5b83a;
+  --color-rose-gold: #f3c63f;
+  --color-cream: #080c16;
+  --color-charcoal: #080c16;
 
-  /* ── Prototype "premium dark" design system (glamour-touch-store) ── */
-  --color-gtdark: #0a0a0c;
-  --color-gtcard: #141418;
-  --color-gtinput: #1a1a22;
-  --color-gthead: #070709;
+  /* ── Unified Deep Midnight Navy design system ── */
+  --color-gtdark: #080c16;
+  --color-gtcard: #121824;
+  --color-gtinput: #121824;
+  --color-gthead: #080c16;
   --color-gtgold: #e5b83a;
   --color-gtgoldsoft: #f3c63f;
   --color-gtmuted: #a0a0ab;
   --color-gtred: #ff3b5c;
-  --color-gtpink: #e91e63;
+  --color-gtpink: #ff007f;
 
   --breakpoint-xs: 400px;
 }
