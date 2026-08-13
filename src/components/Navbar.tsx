@@ -141,15 +141,8 @@ const Navbar = () => {
             </form>
           </div>
 
-          {/* ── Right Action Items (Clean 1-line EN/BN toggle & User Icon) ── */}
-          <div className="flex items-center space-x-1 sm:space-x-3 flex-shrink-0">
-            {/* Language Toggle in single line */}
-            <button onClick={toggleLanguage}
-              className="flex items-center gap-1 text-gtgold hover:text-white transition-all group px-2 py-1 bg-[#141b20] border border-gtgold/30 rounded-full text-[10px] font-extrabold tracking-wider whitespace-nowrap">
-              <Globe size={14} className="group-hover:rotate-12 transition-transform" />
-              <span>{i18n.language === 'en' ? 'বা' : 'EN'}</span>
-            </button>
-
+          {/* ── Right Action Items (User Profile / Admin / Login) ── */}
+          <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
             {user ? (
               <div className="flex items-center space-x-2">
                 {isAdmin && (

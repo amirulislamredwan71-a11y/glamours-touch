@@ -103,7 +103,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           </div>
         </div>
 
-        {/* Dual Action Buttons (Separated Outline ADD + Solid Emerald BUY) */}
+        {/* Dual Action Buttons (Separated Outline ADD + Premium Metallic Gold BUY) */}
         {soldOut ? (
           <button disabled className="w-full bg-white/10 text-white/40 py-2.5 rounded-2xl text-xs font-bold uppercase tracking-tighter cursor-not-allowed mb-2">
             Sold Out
@@ -112,16 +112,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           <div className="grid grid-cols-2 gap-2 mb-2">
             <button
               onClick={fireAddToCart}
-              className="w-full bg-[#161d22]/90 border border-gtgold/50 hover:border-gtgold text-gtgold py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
+              className="w-full bg-[#161d22]/90 border border-gtgold/60 hover:border-gtgold text-gtgold py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
             >
               <ShoppingBag size={14} className="text-gtgold" />
               <span>ADD</span>
             </button>
             <button
               onClick={handleBuyNow}
-              className="w-full bg-[#10b981] hover:bg-[#059669] text-white py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg shadow-emerald-900/50"
+              className="w-full gt-shiny text-charcoal font-black py-2.5 rounded-2xl text-xs tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg shadow-amber-950/40 hover:brightness-105"
             >
-              <Zap size={14} className="fill-white text-white" />
+              <Zap size={14} className="fill-charcoal text-charcoal" />
               <span>BUY</span>
             </button>
           </div>

@@ -62,12 +62,14 @@ const HomeSearch = () => {
 
   return (
     <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-[#070709] via-[#0b0e11] to-[#0d1216]">
-      {/* GLAMOUR'S TOUCH 1-Line Headline Banner above Hero Banner */}
+      {/* GLAMOUR'S TOUCH Headline Banner (Premium Gold + White Mix, No ১নং) */}
       <div className="max-w-5xl mx-auto px-3 mb-3.5 text-center">
-        <div className="py-2 px-3.5 rounded-full bg-[#12161a] border border-gtgold/40 backdrop-blur-md shadow-lg inline-flex items-center justify-center gap-1.5 flex-wrap">
-          <span className="text-xs sm:text-sm font-extrabold text-gtgold tracking-wider uppercase">GLAMOUR'S TOUCH</span>
-          <span className="text-gray-500 font-bold text-xs">•</span>
-          <span className="text-xs sm:text-sm font-bold text-white tracking-tight">বাংলাদেশের ১নং ১০০% অরিজিনাল কোরিয়ান কসমেটিকস শপ 🇰🇷</span>
+        <div className="py-2 px-4 rounded-full bg-[#12161a] border border-gtgold/40 backdrop-blur-md shadow-lg inline-flex items-center justify-center gap-1.5 flex-wrap">
+          <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
+            <span className="gt-gold-shiny">GLAMOUR'S</span> <span className="text-white">TOUCH</span>
+          </span>
+          <span className="text-gtgold font-bold text-xs">•</span>
+          <span className="text-xs sm:text-sm font-bold text-white tracking-tight">বাংলাদেশের ১০০% অরিজিনাল কোরিয়ান কসমেটিকস শপ 🇰🇷</span>
         </div>
       </div>
 
