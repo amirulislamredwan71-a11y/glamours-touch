@@ -34,13 +34,13 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch Featured Products - Targeted payload of top 36 featured products
+      // Fetch Featured Products - Targeted payload of top 20 featured products for ultra-fast mobile paint
       const { data: productsData } = await supabase
         .from('products')
         .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, stock, in_stock')
         .order('isFeatured', { ascending: false })
         .order('created_at', { ascending: false })
-        .limit(36);
+        .limit(20);
       
       if (productsData) {
         const PRIORITY_BRANDS = [
@@ -140,6 +140,16 @@ const Home = () => {
                 </div>
               ))
             )}
+          </div>
+
+          {/* View All Products CTA */}
+          <div className="mt-10 text-center">
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-2 gt-shiny text-charcoal font-bold px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-transform"
+            >
+              সবকটি ৫০০+ প্রসাধনী দেখুন →
+            </Link>
           </div>
         </div>
       </section>

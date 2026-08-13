@@ -9,11 +9,12 @@ import FloatingCart from './components/FloatingCart';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import ScrollToTop from './components/ScrollToTop';
-import GlowAdvisor from './components/GlowAdvisor';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import { useAuth } from './hooks/useAuth';
 import { useUI } from './hooks/useUI';
+
+const GlowAdvisor = lazy(() => import('./components/GlowAdvisor'));
 
 const Shop = lazy(() => import('./pages/Shop'));
 const Cart = lazy(() => import('./pages/Cart'));
@@ -100,7 +101,9 @@ const AppContent = () => {
       </main>
       <Footer />
       <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
-      <GlowAdvisor />
+      <Suspense fallback={null}>
+        <GlowAdvisor />
+      </Suspense>
       <BottomNav />
     </div>
   );
