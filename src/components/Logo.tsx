@@ -27,7 +27,7 @@ const Logo = ({ className = "w-12 h-12" }: { className?: string }) => {
   }
 
   return (
-    <picture className={`flex-shrink-0 ${className}`}>
+    <picture className={`flex-shrink-0 rounded-full overflow-hidden ${className}`}>
       {/* WebP — Android Chrome, Samsung Browser, all modern browsers */}
       <source srcSet="/logo.webp" type="image/webp" />
       {/* PNG — fallback for older browsers */}
@@ -36,7 +36,7 @@ const Logo = ({ className = "w-12 h-12" }: { className?: string }) => {
         alt="Glamour's Touch - Authentic Korean Skincare Bangladesh"
         width="48"
         height="48"
-        className="object-contain w-full h-full flex-shrink-0"
+        className="object-cover w-full h-full flex-shrink-0 rounded-full mix-blend-screen"
         loading="eager"
         decoding="async"
         onError={() => setImgError(true)}

@@ -102,21 +102,15 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Logo (Transparent GT Gold emblem & text, NO black square background) */}
+          {/* Logo (Clean GT emblem only, NO text to save full width for Search Bar) */}
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="group flex items-center gap-1.5">
-              <Logo className="w-10 h-10 sm:w-16 sm:h-16 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
-              <div className="flex flex-col">
-                <span className="text-xs sm:text-lg md:text-xl font-display font-bold tracking-[0.06em] text-white whitespace-nowrap">
-                  GLAMOUR'S <span className="gt-gold-shiny">TOUCH</span>
-                </span>
-                <span className="text-[5px] sm:text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase -mt-0.5 whitespace-nowrap hidden xs:inline">BEAUTY • SKINCARE</span>
-              </div>
+            <Link to="/" className="group flex items-center">
+              <Logo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
             </Link>
           </div>
 
-          {/* Top Integrated Gold Search Bar (Screenshot Spec) */}
-          <div className="flex-1 max-w-xl mx-1 sm:mx-4">
+          {/* Top Integrated Gold Search Bar (Takes Maximum Space) */}
+          <div className="flex-1 max-w-2xl mx-1.5 sm:mx-4">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
               <Search size={16} className="absolute left-3.5 text-gtgold pointer-events-none z-10" />
               <input
@@ -124,7 +118,7 @@ const Navbar = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
                 aria-label="Search top products"
-                className="w-full bg-[#12161a] border border-gtgold/60 focus:border-gtgold rounded-full pl-10 pr-20 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-gtgold/60 shadow-lg focus:outline-none focus:ring-1 focus:ring-gtgold transition-all"
+                className="w-full bg-[#12161a] border border-gtgold/60 focus:border-gtgold rounded-full pl-10 pr-20 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-gtgold/70 shadow-lg focus:outline-none focus:ring-1 focus:ring-gtgold transition-all"
               />
               {searchQuery && (
                 <button type="button" onClick={() => setSearchQuery('')}
@@ -147,8 +141,15 @@ const Navbar = () => {
             </form>
           </div>
 
-          {/* ── Icons ── */}
+          {/* ── Right Action Items (Clean 1-line EN/BN toggle & User Icon) ── */}
           <div className="flex items-center space-x-1 sm:space-x-3 flex-shrink-0">
+            {/* Language Toggle in single line */}
+            <button onClick={toggleLanguage}
+              className="flex items-center gap-1 text-gtgold hover:text-white transition-all group px-2 py-1 bg-[#141b20] border border-gtgold/30 rounded-full text-[10px] font-extrabold tracking-wider whitespace-nowrap">
+              <Globe size={14} className="group-hover:rotate-12 transition-transform" />
+              <span>{i18n.language === 'en' ? 'বা' : 'EN'}</span>
+            </button>
+
             {user ? (
               <div className="flex items-center space-x-2">
                 {isAdmin && (
@@ -156,39 +157,16 @@ const Navbar = () => {
                     <ShieldCheck size={20} />
                   </Link>
                 )}
-                <Link to="/profile" className="hidden xs:flex items-center text-white/80 hover:text-gtgold transition-all">
-                  <User size={20} />
+                <Link to="/profile" className="flex items-center text-white/80 hover:text-gtgold transition-all">
+                  <User size={19} />
                 </Link>
-                <button onClick={logout} className="text-gray-400 hover:text-red-400 transition-all hidden lg:block">
-                  <LogOut size={18} />
-                </button>
               </div>
             ) : (
               <button onClick={openLogin}
-                className="hidden lg:block text-[10px] font-bold tracking-[0.2em] bg-charcoal text-white hover:bg-gold transition-all px-4 py-2 rounded-full shadow-lg uppercase whitespace-nowrap">
+                className="hidden md:block text-[10px] font-bold tracking-[0.2em] bg-charcoal text-white hover:bg-gold transition-all px-3 py-1.5 rounded-full shadow-lg uppercase whitespace-nowrap">
                 {t('nav.signIn')}
               </button>
             )}
-
-            {/* Language */}
-            <button onClick={toggleLanguage}
-              className="flex items-center gap-1 text-white/80 hover:text-gtgold transition-all group px-1 py-1">
-              <Globe size={16} />
-              <span className="text-[10px] font-bold tracking-widest">{i18n.language === 'en' ? 'বা' : 'EN'}</span>
-            </button>
-
-            {/* Cart */}
-            <Link to="/cart" className="relative text-white/80 hover:text-gtgold transition-all group p-1.5">
-              <ShoppingBag size={20} />
-              <AnimatePresence>
-                {cartCount > 0 && (
-                  <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 bg-gtgold text-charcoal text-[9px] font-extrabold w-4 h-4 flex items-center justify-center rounded-full shadow-md">
-                    {cartCount}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Link>
           </div>
         </div>
       </div>

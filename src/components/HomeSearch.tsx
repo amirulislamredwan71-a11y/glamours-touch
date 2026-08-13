@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BadgeCheck, Truck, ShieldCheck } from 'lucide-react';
+import { BadgeCheck, Truck, ShieldCheck, Sparkles } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import FlashBanner from './FlashBanner';
 
@@ -62,7 +62,16 @@ const HomeSearch = () => {
 
   return (
     <section className="pt-24 sm:pt-28 pb-4 bg-gradient-to-b from-[#070709] via-[#0b0e11] to-[#0d1216]">
-      {/* 1. Dynamic Dashboard Hero Banner (Moved to Top as specified by User & Screenshot) */}
+      {/* GLAMOUR'S TOUCH 1-Line Headline Banner above Hero Banner */}
+      <div className="max-w-5xl mx-auto px-3 mb-3.5 text-center">
+        <div className="py-2 px-3.5 rounded-full bg-[#12161a] border border-gtgold/40 backdrop-blur-md shadow-lg inline-flex items-center justify-center gap-1.5 flex-wrap">
+          <span className="text-xs sm:text-sm font-extrabold text-gtgold tracking-wider uppercase">GLAMOUR'S TOUCH</span>
+          <span className="text-gray-500 font-bold text-xs">•</span>
+          <span className="text-xs sm:text-sm font-bold text-white tracking-tight">বাংলাদেশের ১নং ১০০% অরিজিনাল কোরিয়ান কসমেটিকস শপ 🇰🇷</span>
+        </div>
+      </div>
+
+      {/* 1. Dynamic Dashboard Hero Banner */}
       <FlashBanner />
 
       {/* 2. Swipeable Category Chips with Gold Rings */}
@@ -100,11 +109,11 @@ const HomeSearch = () => {
         )}
       </div>
 
-      {/* 3. Circular Trust Badge Row (Text BELOW circle icon — Screenshot spec) */}
+      {/* 3. Circular Trust Badges Row + AI Glow Scan Icon (User spec) */}
       <div className="max-w-4xl mx-auto px-4 mt-5">
-        <div className="flex items-center justify-center gap-8 sm:gap-14 py-3.5 bg-[#0e1317]/80 rounded-2xl border border-gtgold/20 backdrop-blur-md shadow-xl">
+        <div className="flex items-center justify-center gap-5 sm:gap-12 py-3.5 bg-[#0e1317]/90 rounded-2xl border border-gtgold/20 backdrop-blur-md shadow-xl overflow-x-auto">
           {/* 100% Authentic */}
-          <div className="flex flex-col items-center gap-1.5 group">
+          <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/50 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <BadgeCheck size={20} className="text-gtgold" />
             </div>
@@ -112,7 +121,7 @@ const HomeSearch = () => {
           </div>
 
           {/* সারা দেশে COD */}
-          <div className="flex flex-col items-center gap-1.5 group">
+          <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/50 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Truck size={20} className="text-gtgold" />
             </div>
@@ -120,12 +129,20 @@ const HomeSearch = () => {
           </div>
 
           {/* নিরাপদ পেমেন্ট */}
-          <div className="flex flex-col items-center gap-1.5 group">
+          <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/50 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <ShieldCheck size={20} className="text-gtgold" />
             </div>
             <span className="text-[10px] sm:text-xs font-bold text-gray-200 tracking-wider">নিরাপদ পেমেন্ট</span>
           </div>
+
+          {/* AI Glow Scan Link (User Spec) */}
+          <Link to="/glow-predictor" className="flex flex-col items-center gap-1.5 group flex-shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/20 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Sparkles size={20} className="text-gtgold animate-pulse" />
+            </div>
+            <span className="text-[10px] sm:text-xs font-bold text-gtgold tracking-wider">AI Glow Scan</span>
+          </Link>
         </div>
       </div>
     </section>
@@ -133,3 +150,4 @@ const HomeSearch = () => {
 };
 
 export default HomeSearch;
+
