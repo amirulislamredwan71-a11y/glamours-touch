@@ -28,7 +28,14 @@ function resizeImage(dataUrl: string, max = 720): Promise<{ b64: string; mime: s
 
 const levelColor = (l: string) => (/বেশি/.test(l) ? 'text-gtred' : /মাঝারি/.test(l) ? 'text-amber-400' : 'text-emerald-400');
 
-const SkinScanModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
+interface SkinScanModalProps {
+  open?: boolean;
+  isOpen?: boolean;
+  onClose: () => void;
+}
+
+const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) => {
+  const isModalOpen = Boolean(open ?? isOpen);
   const [mode, setMode] = useState<'idle' | 'camera'>('idle');
   const [photo, setPhoto] = useState<string | null>(null);
   const [scan, setScan] = useState<Scan | null>(null);
@@ -39,7 +46,7 @@ const SkinScanModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open,
 
   const stopCamera = () => { streamRef.current?.getTracks().forEach((t) => t.stop()); streamRef.current = null; setMode('idle'); };
   useEffect(() => () => stopCamera(), []);
-  useEffect(() => { if (!open) { stopCamera(); setPhoto(null); setScan(null); setError(''); } }, [open]);
+  useEffect(() => { if (!isModalOpen) { stopCamera(); setPhoto(null); setScan(null); setError(''); } }, [isModalOpen]);
 
   const startCamera = async () => {
     setError('');
@@ -77,7 +84,7 @@ const SkinScanModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open,
 
   return (
     <AnimatePresence>
-      {open && (
+      {isModalOpen && (
         <motion.div className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center p-2 sm:p-4"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
