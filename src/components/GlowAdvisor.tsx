@@ -58,8 +58,8 @@ const GlowAdvisor: React.FC = () => {
               <p className="text-[10px] text-white/55 leading-none mt-0.5 truncate">আপনার স্কিন ও প্রোডাক্ট নিয়ে প্রশ্ন করুন</p>
             </div>
           </div>
-          <button onClick={() => setOpen(true)} className="gt-shiny font-bold text-[12px] px-3.5 py-2 rounded-full flex items-center gap-1.5 shadow-lg shrink-0">
-            <MessageCircle size={14} /> Live Chat
+          <button onClick={() => setOpen(true)} className="bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-charcoal font-black text-[12px] px-4 py-2 rounded-full flex items-center gap-1.5 shadow-lg shrink-0 transition-all">
+            <MessageCircle size={14} className="text-gtgold" /> Live Chat
           </button>
         </motion.div>
       )}

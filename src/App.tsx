@@ -48,6 +48,8 @@ const LoadingFallback = () => (
   </div>
 );
 
+import GoldStarlightParticles from './components/GoldStarlightParticles';
+
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAdmin, loading } = useAuth();
   
@@ -61,7 +63,8 @@ const AppContent = () => {
   const { isLoginOpen, closeLogin } = useUI();
   
   return (
-    <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white">
+    <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white relative">
+      <GoldStarlightParticles />
       <Navbar />
       <FloatingCart />
       <main className="flex-grow pb-32 sm:pb-8">

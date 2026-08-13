@@ -282,7 +282,7 @@ const Home = () => {
           <div className="mt-10 text-center">
             <Link
               to="/shop"
-              className="inline-flex items-center gap-2 gt-shiny text-charcoal font-bold px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-transform"
+              className="inline-flex items-center gap-2 bg-[#161d22]/90 border-2 border-gtgold text-white font-black px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:bg-gtgold hover:text-charcoal hover:scale-105 transition-all"
             >
               সকল প্রোডাক্ট দেখুন →
             </Link>
@@ -291,32 +291,34 @@ const Home = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="py-24 sm:py-32 bg-transparent text-white relative overflow-hidden">
+      <section className="py-20 sm:py-28 bg-transparent text-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="animate-fade-in-up">
-            <span className="text-gold font-bold tracking-[0.4em] uppercase text-xs mb-6 block">{t('newsletter.subtitle')}</span>
-            <h2 className="text-5xl md:text-7xl font-serif font-bold mb-8 leading-tight">{t('newsletter.title').split(' ')[0]} <span className="text-gold italic">{t('newsletter.title').split(' ').slice(1).join(' ')}</span></h2>
-            <p className="text-gray-400 mb-12 text-xl font-light leading-relaxed max-w-2xl mx-auto">{t('newsletter.description')}</p>
+            <span className="gt-gold-shiny font-extrabold tracking-[0.4em] uppercase text-xs mb-3 block">{t('newsletter.subtitle')}</span>
+            <h2 className="text-4xl md:text-6xl font-serif font-black mb-6 leading-tight text-white">
+              এলিটদের <span className="gt-gold-shiny font-serif">সাথে যোগ দিন</span>
+            </h2>
+            <p className="text-gray-300 mb-10 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">{t('newsletter.description')}</p>
             
             {newsletterStatus === 'success' ? (
-              <div className="bg-white/5 backdrop-blur-md border border-gold/20 p-8 rounded-[2rem] text-gold font-bold tracking-widest uppercase">
+              <div className="bg-[#161d22]/90 border-2 border-gtgold p-6 rounded-3xl text-white font-bold tracking-widest uppercase">
                 {t('newsletter.success')}
               </div>
             ) : (
               <form 
                 onSubmit={handleNewsletterSubmit}
-                className="flex flex-col sm:flex-row gap-4 bg-white/5 p-2 rounded-[3rem] border border-white/10 backdrop-blur-md"
+                className="flex flex-col sm:flex-row gap-3 bg-[#161d22]/80 p-2 rounded-[3rem] border border-gtgold/50 backdrop-blur-md max-w-2xl mx-auto shadow-2xl"
               >
                 <input 
                   required
                   type="email" 
                   name="email"
                   placeholder={t('newsletter.placeholder')} 
-                  className="flex-grow bg-transparent border-none rounded-full px-8 py-5 focus:outline-none text-white placeholder:text-gray-500 font-light"
+                  className="flex-grow bg-transparent border-none rounded-full px-6 py-4 focus:outline-none text-white placeholder:text-gray-400 font-medium text-sm"
                 />
                 <button 
                   disabled={newsletterStatus === 'loading'}
-                  className="bg-gold hover:bg-white hover:text-charcoal text-white px-12 py-5 rounded-full font-bold tracking-[0.2em] text-xs transition-all duration-500 shadow-xl shadow-gold/20 disabled:opacity-50 uppercase"
+                  className="bg-[#161d22] border-2 border-gtgold hover:bg-gtgold hover:text-charcoal text-white px-8 py-4 rounded-full font-black tracking-[0.2em] text-xs transition-all duration-300 shadow-xl disabled:opacity-50 uppercase flex-shrink-0"
                 >
                   {newsletterStatus === 'loading' ? '...' : t('newsletter.button')}
                 </button>
