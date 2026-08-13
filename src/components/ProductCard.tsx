@@ -83,7 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
       <div className="mt-3 px-1 flex flex-col flex-grow">
         <div className="flex-grow">
           {/* Brand Name Tag */}
-          <span className="text-[10px] font-bold tracking-widest uppercase text-gtgold block mb-0.5">
+          <span className="text-[10px] font-black tracking-widest uppercase gt-gold-shiny block mb-0.5">
             {product.brand || 'K-Beauty'}
           </span>
 
@@ -94,16 +94,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             </h3>
           </Link>
 
-          {/* Price Display */}
+          {/* Price Display (Premium Gold) */}
           <div className="flex items-baseline flex-wrap gap-x-2 mb-3">
-            <span className="text-lg sm:text-xl font-black text-gtgold leading-none">৳{product.price.toLocaleString()}</span>
+            <span className="text-lg sm:text-xl font-black gt-gold-shiny leading-none">৳{product.price.toLocaleString()}</span>
             {hasDiscount && (
               <span className="text-xs text-white/40 line-through leading-none">৳{marketPrice.toLocaleString()}</span>
             )}
           </div>
         </div>
 
-        {/* Dual Action Buttons (Separated Outline ADD + Premium Metallic Gold BUY) */}
+        {/* Dual Action Buttons (Separated Outline ADD + Gold Frame BUY) */}
         {soldOut ? (
           <button disabled className="w-full bg-white/10 text-white/40 py-2.5 rounded-2xl text-xs font-bold uppercase tracking-tighter cursor-not-allowed mb-2">
             Sold Out
@@ -127,14 +127,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           </div>
         )}
 
-        {/* Gold Glow দেখুন Button (Below ADD and BUY buttons for all products) */}
+        {/* Dark Ash Glow দেখুন Button with Premium Gold Icon & Text (Screenshot Spec) */}
         {!soldOut && (
           <Link
             to={`/product/${product.id}`}
-            className="w-full gt-shiny text-charcoal py-2.5 rounded-2xl text-xs font-extrabold tracking-tight flex items-center justify-center gap-1.5 hover:brightness-105 transition-all shadow-md"
+            className="w-full bg-[#161d22] border border-gtgold/60 hover:border-gtgold py-2.5 rounded-2xl text-xs font-extrabold tracking-tight flex items-center justify-center gap-1.5 transition-all shadow-md group/glow hover:bg-gtgold/10"
           >
-            <Sparkles size={14} className="text-charcoal" />
-            <span>Glow দেখুন</span>
+            <Sparkles size={14} className="text-gtgold group-hover/glow:scale-110 transition-transform" />
+            <span className="gt-gold-shiny">Glow দেখুন</span>
           </Link>
         )}
       </div>

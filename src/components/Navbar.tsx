@@ -94,23 +94,24 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 md:h-24 gap-2">
 
-          {/* Mobile hamburger */}
-          <div className="flex md:hidden flex-shrink-0">
+          {/* Hamburger Menu Button (Three line icon) */}
+          <div className="flex flex-shrink-0">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle Menu"
               className="p-1.5 text-white/80 hover:text-gtgold transition-all duration-300">
               {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
 
-          {/* Logo (Clean GT emblem only, NO text to save full width for Search Bar) */}
+          {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="group flex items-center">
               <Logo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
             </Link>
           </div>
 
-          {/* Top Integrated Gold Search Bar (Takes Maximum Space) */}
-          <div className="flex-1 max-w-2xl mx-1.5 sm:mx-4">
+          {/* Top Integrated Gold Search Bar (Takes Maximum Space - Premium Gold Frame) */}
+          <div className="flex-1 max-w-3xl mx-1.5 sm:mx-4">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
               <Search size={16} className="absolute left-3.5 text-gtgold pointer-events-none z-10" />
               <input
@@ -118,7 +119,7 @@ const Navbar = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
                 aria-label="Search top products"
-                className="w-full bg-[#12161a] border border-gtgold/60 focus:border-gtgold rounded-full pl-10 pr-20 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-gtgold/70 shadow-lg focus:outline-none focus:ring-1 focus:ring-gtgold transition-all"
+                className="w-full bg-[#12161a] border-2 border-gtgold focus:border-gtgold rounded-full pl-10 pr-20 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-gtgold/90 shadow-xl focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all font-medium"
               />
               {searchQuery && (
                 <button type="button" onClick={() => setSearchQuery('')}
@@ -129,43 +130,22 @@ const Navbar = () => {
               <div className="absolute right-1.5 flex items-center gap-1 z-10">
                 {/* Voice Mic Button */}
                 <button type="button" onClick={startVoiceSearch} title="ভয়েস সার্চ করুন"
-                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1a2128] border border-gtgold/40 text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all ${listening ? 'animate-pulse bg-gtgold/20' : ''}`}>
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30' : ''}`}>
                   <Mic size={14} />
                 </button>
                 {/* Camera AI Scan Button */}
                 <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1a2128] border border-gtgold/40 text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all">
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#161d22] border border-gtgold text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
                   <Camera size={14} />
                 </button>
               </div>
             </form>
           </div>
 
-          {/* ── Right Action Items (User Profile / Admin / Login) ── */}
-          <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
-            {user ? (
-              <div className="flex items-center space-x-2">
-                {isAdmin && (
-                  <Link to="/admin" className="flex items-center gap-1 text-gold hover:text-white transition-all group" title="Admin">
-                    <ShieldCheck size={20} />
-                  </Link>
-                )}
-                <Link to="/profile" className="flex items-center text-white/80 hover:text-gtgold transition-all">
-                  <User size={19} />
-                </Link>
-              </div>
-            ) : (
-              <button onClick={openLogin}
-                className="hidden md:block text-[10px] font-bold tracking-[0.2em] bg-charcoal text-white hover:bg-gold transition-all px-3 py-1.5 rounded-full shadow-lg uppercase whitespace-nowrap">
-                {t('nav.signIn')}
-              </button>
-            )}
-          </div>
         </div>
       </div>
 
-
-      {/* ── Mobile Menu ── */}
+      {/* ── 3-Line Menu (Hamburger Dropdown Drawer) ── */}
       <AnimatePresence mode="wait">
         {isMenuOpen && (
           <motion.div
@@ -173,9 +153,71 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/97 backdrop-blur-2xl border-b border-gold/10 overflow-hidden"
+            className="bg-[#0d1216]/98 backdrop-blur-2xl border-b border-gtgold/20 overflow-hidden text-white shadow-2xl"
           >
-            <div className="px-5 py-5 space-y-5">
+            <div className="max-w-3xl mx-auto px-5 py-5 space-y-5">
+              
+              {/* Profile Card inside 3-Line Menu */}
+              <div className="bg-[#141a20] border border-gtgold/30 rounded-2xl p-4 shadow-xl">
+                {!user ? (
+                  <button
+                    onClick={() => { openLogin(); setIsMenuOpen(false); }}
+                    className="w-full flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/40 hover:border-gtgold text-white px-4 py-3.5 rounded-xl font-bold transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <User size={22} />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-extrabold text-white">আমার প্রোফাইল (Sign In)</p>
+                        <p className="text-[11px] text-gtgold/80">অর্ডার ট্র্যাকিং ও প্রোফাইল দেখতে লগইন করুন</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-bold text-gtgold bg-gtgold/10 px-3 py-1.5 rounded-full border border-gtgold/30">
+                      লগইন
+                    </span>
+                  </button>
+                ) : (
+                  <div className="space-y-3">
+                    <Link
+                      to="/profile"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/40 hover:border-gtgold text-white px-4 py-3.5 rounded-xl font-bold transition-all group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
+                          <User size={22} />
+                        </div>
+                        <div className="text-left">
+                          <p className="text-sm font-extrabold text-white">{user.email || 'আমার প্রোফাইল'}</p>
+                          <p className="text-[11px] text-gtgold">প্রোফাইল বিবরণ ও অর্ডার হিস্ট্রি</p>
+                        </div>
+                      </div>
+                      <span className="text-xs font-bold text-gtgold bg-gtgold/10 px-3 py-1.5 rounded-full border border-gtgold/30">
+                        View Profile
+                      </span>
+                    </Link>
+
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center gap-3 w-full bg-gtgold/15 border border-gtgold/40 text-gtgold px-4 py-3 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-gtgold/25 transition-all"
+                      >
+                        <ShieldCheck size={18} /> Admin Dashboard
+                      </Link>
+                    )}
+
+                    <button
+                      onClick={() => { logout(); setIsMenuOpen(false); }}
+                      className="flex items-center justify-center gap-2 w-full bg-red-500/10 border border-red-500/30 text-red-400 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-red-500/20 transition-all"
+                    >
+                      <LogOut size={16} /> {t('nav.signOut')}
+                    </button>
+                  </div>
+                )}
+              </div>
+
               {/* Compact nav grid */}
               <div className="grid grid-cols-2 gap-2.5">
                 {navItems.map((item, idx) => {
@@ -187,7 +229,7 @@ const Navbar = () => {
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
                       className={`flex items-center gap-2.5 px-3.5 py-3 rounded-xl border transition-all active:scale-[0.97]
-                        ${active ? `${col.light} ${col.text} border-transparent ring-1 ${col.ring}` : 'bg-gray-50 text-charcoal border-gray-100'}`}
+                        ${active ? `bg-gtgold/20 text-gtgold border-gtgold/50 font-bold` : 'bg-[#12161a] text-gray-200 border-white/10 hover:border-gtgold/40'}`}
                     >
                       <span className={`w-2.5 h-2.5 rounded-full ${col.bg} flex-shrink-0`} />
                       <span className="text-sm font-bold tracking-wide">{item.name}</span>
@@ -196,37 +238,15 @@ const Navbar = () => {
                 })}
               </div>
 
-              <div className="pt-6 border-t border-gold/10 space-y-3">
+              {/* Language Switcher */}
+              <div className="pt-3 border-t border-gtgold/20">
                 <button onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
-                  className="flex items-center justify-center gap-3 w-full text-charcoal font-bold tracking-widest py-3 bg-gray-50 rounded-2xl">
-                  <Globe size={18} />
+                  className="flex items-center justify-center gap-3 w-full text-white font-bold text-xs tracking-widest py-3 bg-[#12161a] border border-gtgold/30 rounded-xl hover:bg-gtgold/10 transition-colors">
+                  <Globe size={18} className="text-gtgold" />
                   {i18n.language === 'en' ? 'বাংলায় দেখুন' : 'View in English'}
                 </button>
-
-                {!user ? (
-                  <button onClick={() => { openLogin(); setIsMenuOpen(false); }}
-                    className="w-full bg-charcoal text-white py-4 rounded-2xl font-bold tracking-widest uppercase shadow-xl flex items-center justify-center gap-3">
-                    <User size={20} /> {t('nav.signIn')}
-                  </button>
-                ) : (
-                  <div className="space-y-3">
-                    <Link to="/profile" onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center justify-center gap-3 w-full bg-charcoal text-white py-4 rounded-2xl font-bold tracking-widest uppercase">
-                      <User size={20} /> Profile
-                    </Link>
-                    {isAdmin && (
-                      <Link to="/admin" onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center justify-center gap-3 w-full bg-gold/10 text-gold py-4 rounded-2xl font-bold tracking-widest uppercase">
-                        <ShieldCheck size={20} /> Admin Dashboard
-                      </Link>
-                    )}
-                    <button onClick={() => { logout(); setIsMenuOpen(false); }}
-                      className="w-full bg-red-50 text-red-500 py-4 rounded-2xl font-bold tracking-widest uppercase">
-                      {t('nav.signOut')}
-                    </button>
-                  </div>
-                )}
               </div>
+
             </div>
           </motion.div>
         )}
