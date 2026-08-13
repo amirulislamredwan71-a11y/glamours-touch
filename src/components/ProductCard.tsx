@@ -43,13 +43,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
     <div className="flex flex-col h-full group relative">
       {/* 1. SEPARATE Floating Crisp White Image Card with GT Gold Frame */}
       <div className="relative rounded-[32px] overflow-hidden bg-white aspect-square flex items-center justify-center p-4 shadow-xl border-2 border-gtgold/40 group-hover:border-gtgold transition-all duration-300 group-hover:scale-[1.02]">
-        {/* Discount / Sold-out badge */}
+        {/* Discount / Sold-out badge (Cyberpunk Neon Pink) */}
         {soldOut ? (
           <div className="absolute top-3 left-3 z-10 bg-gray-900/90 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase">
             SOLD OUT
           </div>
         ) : hasDiscount && (
-          <div className="absolute top-3 left-3 z-10 bg-[#ff1a6c] text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md">
+          <div className="absolute top-3 left-3 z-10 bg-gradient-to-r from-[#ff007f] to-[#ff2a85] text-white text-[11px] font-black px-2.5 py-1 rounded-full shadow-md shadow-pink-500/40 tracking-tight">
             -{discountPct}%
           </div>
         )}
@@ -60,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           aria-label="wishlist"
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-gtgold/40 hover:border-gtgold transition-all"
         >
-          <Heart size={14} className={wished ? 'fill-[#ff1a6c] text-[#ff1a6c]' : 'text-white'} />
+          <Heart size={14} className={wished ? 'fill-[#ff007f] text-[#ff007f]' : 'text-white'} />
         </button>
 
         {/* Product Image */}

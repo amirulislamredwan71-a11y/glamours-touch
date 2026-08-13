@@ -232,7 +232,7 @@ const ProductDetail = () => {
               {soldOut ? (
                 <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-lg tracking-widest">SOLD OUT</div>
               ) : hasDiscount && (
-                <div className="absolute top-4 left-4 bg-red-600 text-white text-sm font-black px-3 py-1.5 rounded-lg shadow-lg">-{discountPct}%</div>
+                <div className="absolute top-4 left-4 bg-gradient-to-r from-[#ff007f] to-[#ff2a85] text-white text-sm font-black px-3 py-1.5 rounded-full shadow-lg shadow-pink-500/40">-{discountPct}%</div>
               )}
             </div>
             {gallery.length > 1 && (
