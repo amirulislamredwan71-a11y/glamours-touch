@@ -41,6 +41,11 @@ const Navbar = () => {
   const [listening,    setListening]    = React.useState(false);
   const { t, i18n } = useTranslation();
 
+  const [searchResults, setSearchResults] = React.useState<any[]>([]);
+  const [isSearching, setIsSearching] = React.useState(false);
+  const [showDropdown, setShowDropdown] = React.useState(false);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
   /* Rotate top product placeholders every 3.5 seconds */
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -49,11 +54,56 @@ const Navbar = () => {
     return () => clearInterval(timer);
   }, []);
 
+  /* Instant Live Search Query against Supabase */
+  React.useEffect(() => {
+    const q = searchQuery.trim();
+    if (q.length === 0) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    setIsSearching(true);
+    setShowDropdown(true);
+
+    const timer = setTimeout(async () => {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('id, name, brand, image, price')
+          .or(`name.ilike.%${q}%,brand.ilike.%${q}%`)
+          .limit(6);
+
+        if (!error && data) {
+          setSearchResults(data);
+        }
+      } catch (err) {
+        console.error('Search error:', err);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 180);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  /* Close dropdown when clicking outside */
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const toggleLanguage = () => i18n.changeLanguage(i18n.language === 'en' ? 'bn' : 'en');
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      setShowDropdown(false);
       navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
@@ -126,8 +176,8 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Center Group: Top Integrated Gold Search Bar */}
-          <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md xl:max-w-xl mx-1 sm:mx-3">
+          {/* Center Group: Top Integrated Gold Search Bar (Takes Maximum Space on Mobile) */}
+          <div className="flex-1 max-w-full md:max-w-md xl:max-w-xl mx-1 sm:mx-3 relative">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center">
               <Search size={15} className="absolute left-3 text-gtgold pointer-events-none z-10" />
               <input
@@ -135,11 +185,11 @@ const Navbar = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
                 aria-label="Search top products"
-                className="w-full bg-[#12161a] border-2 border-gtgold focus:border-gtgold rounded-full pl-9 pr-16 sm:pr-20 py-1.5 sm:py-2 text-xs sm:text-sm text-white placeholder:text-gtgold/90 shadow-xl focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all font-medium"
+                className="w-full bg-[#12161a] border-2 border-gtgold focus:border-gtgold rounded-full pl-9 pr-16 sm:pr-20 py-1.5 sm:py-2 text-xs sm:text-sm text-white placeholder:text-white/90 shadow-xl focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all font-medium"
               />
               {searchQuery && (
-                <button type="button" onClick={() => setSearchQuery('')}
-                  className="absolute right-14 sm:right-16 text-white/50 hover:text-white">
+                <button type="button" onClick={() => { setSearchQuery(''); setShowDropdown(false); }}
+                  className="absolute right-14 sm:right-16 text-white/50 hover:text-white z-10">
                   <X size={14} />
                 </button>
               )}
@@ -156,9 +206,85 @@ const Navbar = () => {
                 </button>
               </div>
             </form>
+
+            {/* Instant Live Dynamic Search Suggestions Dropdown */}
+            <AnimatePresence>
+              {showDropdown && searchQuery.trim().length > 0 && (
+                <motion.div
+                  ref={dropdownRef}
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-[#12161a]/98 backdrop-blur-2xl border-2 border-gtgold/50 rounded-2xl shadow-2xl overflow-hidden z-50 p-2 space-y-1"
+                >
+                  {isSearching ? (
+                    <div className="py-4 text-center text-xs text-gtgold font-bold animate-pulse">
+                      অরিজিনাল কোরিয়ান প্রোডাক্ট খোঁজা হচ্ছে...
+                    </div>
+                  ) : searchResults.length > 0 ? (
+                    <>
+                      <div className="px-3 py-1 text-[10px] font-black uppercase tracking-wider gt-gold-shiny border-b border-gtgold/20 flex justify-between items-center">
+                        <span>ক্যাটালগ প্রোডাক্ট রেজাল্ট ({searchResults.length})</span>
+                        <span className="text-white/40">সরাসরি ক্লিক করুন</span>
+                      </div>
+                      {searchResults.map((p) => (
+                        <button
+                          key={p.id}
+                          onClick={() => {
+                            navigate(`/product/${p.id}`);
+                            setShowDropdown(false);
+                            setSearchQuery('');
+                          }}
+                          className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-gtgold/15 transition-all text-left group border border-transparent hover:border-gtgold/30"
+                        >
+                          <img
+                            src={p.image || '/categories/skincare.webp'}
+                            alt={p.name}
+                            className="w-10 h-10 rounded-lg object-cover border border-gtgold/30 flex-shrink-0 group-hover:scale-105 transition-transform"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-extrabold text-white truncate group-hover:text-gtgold transition-colors">
+                              {p.name}
+                            </p>
+                            <p className="text-[10px] text-gtgold/80 font-bold">
+                              {p.brand || 'K-Beauty'}
+                            </p>
+                          </div>
+                          <div className="text-xs font-black gt-gold-shiny flex-shrink-0">
+                            ৳{p.price?.toLocaleString()}
+                          </div>
+                        </button>
+                      ))}
+                      <button
+                        onClick={() => {
+                          navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+                          setShowDropdown(false);
+                        }}
+                        className="w-full text-center py-2 text-xs font-black text-gtgold bg-gtgold/10 hover:bg-gtgold/20 rounded-xl transition-all border border-gtgold/30 mt-1"
+                      >
+                        সবগুলো প্রোডাক্ট দেখুন ({searchQuery.trim()}) ➔
+                      </button>
+                    </>
+                  ) : (
+                    <div className="py-4 text-center text-xs text-white/70">
+                      "{searchQuery}" দিয়ে কোনো প্রোডাক্ট পাওয়া যায়নি। <br />
+                      <button
+                        onClick={() => {
+                          navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+                          setShowDropdown(false);
+                        }}
+                        className="mt-2 text-xs font-bold text-gtgold underline"
+                      >
+                        শপ পেজে ক্যাটাগরি ব্রাউজ করুন ➔
+                      </button>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Right Group: Language EN/বা Switcher + Login/Profile Button */}
+          {/* Right Group: Language EN/বা Switcher + Login/Profile Button (Hidden on Mobile Header, Inside 3-line menu) */}
           <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
             {/* EN/বা Language Switcher */}
             <button
@@ -170,11 +296,11 @@ const Navbar = () => {
               <span>{i18n.language === 'en' ? 'EN' : 'বা'}</span>
             </button>
 
-            {/* Login / Profile Button */}
+            {/* Login / Profile Button (Hidden on Mobile Header, visible on md: screens and inside 3-line menu) */}
             {!user ? (
               <button
                 onClick={openLogin}
-                className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider uppercase transition-all shadow-md flex items-center gap-1.5"
+                className="hidden md:flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider uppercase transition-all shadow-md items-center gap-1.5"
               >
                 <User size={14} />
                 <span>LOGIN</span>
@@ -182,7 +308,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/profile"
-                className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider flex items-center gap-1.5 transition-all shadow-md"
+                className="hidden md:flex px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider items-center gap-1.5 transition-all shadow-md"
               >
                 <User size={14} />
                 <span className="max-w-[80px] sm:max-w-[120px] truncate">{user.email?.split('@')[0] || 'Profile'}</span>
