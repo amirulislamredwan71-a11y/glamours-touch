@@ -4,7 +4,6 @@ import { Flame, Sparkles, ShoppingBag, Heart } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../hooks/useCart';
 import { trackEvent } from '../lib/fbCapi';
-
 import { optimizeImageUrl } from '../lib/imageUtils';
 
 interface ProductCardProps {
@@ -16,7 +15,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const [wished, setWished] = useState(false);
-  // Real, admin-set stock — show low-stock urgency only when genuinely low (1–10 pcs)
   const stockLeft = (typeof product.stock === 'number' && product.stock > 0 && product.stock <= 10) ? product.stock : null;
   const marketPrice = product.market_price ?? null;
   const hasDiscount = marketPrice != null && marketPrice > product.price;
@@ -40,14 +38,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   };
 
   return (
-    <div className="group gt-card rounded-2xl flex flex-col h-full relative overflow-hidden">
+    <div className="group bg-[#121216] border border-gtgold/20 hover:border-gtgold/45 rounded-2xl flex flex-col h-full relative overflow-hidden transition-all duration-300 shadow-xl">
       {/* Discount / Sold-out badge */}
       {soldOut ? (
-        <div className="absolute top-2 left-2 z-10 bg-gray-800 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-md tracking-wide">
+        <div className="absolute top-2.5 left-2.5 z-10 bg-gray-800/90 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-md tracking-wider uppercase">
           SOLD OUT
         </div>
       ) : hasDiscount && (
-        <div className="absolute top-2 left-2 z-10 bg-gtred text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-md">
+        <div className="absolute top-2.5 left-2.5 z-10 bg-[#ff1a6c] text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-md">
           -{discountPct}%
         </div>
       )}
@@ -56,21 +54,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
       <button
         onClick={(e) => { e.preventDefault(); setWished((w) => !w); }}
         aria-label="wishlist"
-        className="absolute top-2 right-2 z-10 w-7 h-7 rounded-full bg-black/40 backdrop-blur flex items-center justify-center border border-white/10"
+        className="absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-black/60 backdrop-blur flex items-center justify-center border border-white/10 hover:border-gtgold/50 transition-colors"
       >
-        <Heart size={13} className={wished ? 'fill-gtred text-gtred' : 'text-white/70'} />
+        <Heart size={13} className={wished ? 'fill-[#ff1a6c] text-[#ff1a6c]' : 'text-white/70'} />
       </button>
 
       {/* Low stock badge */}
       {stockLeft !== null && !soldOut && (
-        <div className="absolute top-10 left-2 z-10 flex items-center gap-0.5 bg-gtred/90 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-md">
+        <div className="absolute top-10 left-2.5 z-10 flex items-center gap-0.5 bg-[#ff1a6c]/90 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-md">
           <Flame size={9} className="fill-white" /> মাত্র {stockLeft}টি
         </div>
       )}
 
       {/* Image */}
-      <div className="relative m-2 rounded-xl overflow-hidden bg-white aspect-square">
-        <Link to={`/product/${product.id}`} className="block h-full p-2 sm:p-3">
+      <div className="relative m-2 rounded-xl overflow-hidden bg-[#0d0d10] aspect-square flex items-center justify-center">
+        <Link to={`/product/${product.id}`} className="block w-full h-full p-2.5">
           <img
             src={optimizeImageUrl(product.image, 400, 80)}
             alt={`${product.brand ? `${product.brand} ` : ''}${product.name} - Glamour's Touch`}
@@ -87,43 +85,45 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           <button
             onClick={fireAddToCart}
             aria-label="add to cart"
-            className="absolute bottom-2 right-2 w-8 h-8 rounded-full gt-shiny flex items-center justify-center shadow-lg active:scale-90 transition-transform"
+            className="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform z-10"
           >
-            <ShoppingBag size={15} />
+            <ShoppingBag size={15} className="text-black stroke-[2.5]" />
           </button>
         )}
       </div>
 
       {/* Content */}
-      <div className="px-2.5 pb-2.5 flex flex-col flex-grow">
+      <div className="px-3 pb-3 flex flex-col flex-grow">
         <div className="flex-grow">
-          <span className="text-[9px] font-bold tracking-widest uppercase text-gtgoldsoft">{product.brand || 'Korea'}</span>
+          <span className="text-[10px] font-bold tracking-widest uppercase text-gtgold block mb-0.5">
+            {product.brand || 'K-Beauty'}
+          </span>
           <Link to={`/product/${product.id}`} className="block">
-            <h3 className="text-[11px] sm:text-[13px] font-semibold text-white/90 line-clamp-1 leading-tight mb-1 hover:text-gtgold transition-colors">
+            <h3 className="text-xs sm:text-sm font-bold text-white line-clamp-2 leading-tight mb-2 hover:text-gtgold transition-colors">
               {product.name}
             </h3>
           </Link>
 
-          <div className="flex items-baseline flex-wrap gap-x-1.5 mb-2">
-            <span className="text-base sm:text-lg font-extrabold text-gtgold leading-none">৳{product.price.toLocaleString()}</span>
+          <div className="flex items-baseline flex-wrap gap-x-1.5 mb-3">
+            <span className="text-base sm:text-lg font-black text-gtgold leading-none">৳{product.price.toLocaleString()}</span>
             {hasDiscount && (
-              <span className="text-[11px] text-white/35 line-through leading-none">৳{marketPrice.toLocaleString()}</span>
+              <span className="text-xs text-white/40 line-through leading-none">৳{marketPrice.toLocaleString()}</span>
             )}
           </div>
         </div>
 
         {soldOut ? (
-          <button disabled className="w-full bg-white/10 text-white/40 py-2 rounded-lg text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
+          <button disabled className="w-full bg-white/10 text-white/40 py-2 rounded-xl text-[9px] font-bold uppercase tracking-tighter cursor-not-allowed">
             Sold Out
           </button>
         ) : (
           <div className="flex gap-1.5 mt-auto">
             <button onClick={handleBuyNow}
-              className="flex-1 bg-transparent border border-gtgold/70 text-gtgold py-2 rounded-lg text-[10px] font-bold uppercase tracking-tight flex items-center justify-center gap-1 hover:bg-gtgold/10 transition-all">
-              <ShoppingBag size={11} /> Buy
+              className="flex-1 bg-transparent border border-gtgold/70 text-gtgold py-2 rounded-xl text-[10px] font-extrabold uppercase tracking-tight flex items-center justify-center gap-1 hover:bg-gtgold/10 transition-all">
+              <ShoppingBag size={11} /> BUY
             </button>
             <Link to={`/glow-predictor?product=${product.id}`}
-              className="flex-1 gt-shiny py-2 rounded-lg text-[10px] font-bold tracking-tight flex items-center justify-center gap-1 hover:brightness-105 transition-all">
+              className="flex-1 gt-shiny text-charcoal py-2 rounded-xl text-[10px] font-extrabold tracking-tight flex items-center justify-center gap-1 hover:brightness-105 transition-all shadow-md">
               <Sparkles size={11} /> Glow দেখুন
             </Link>
           </div>

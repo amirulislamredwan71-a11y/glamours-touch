@@ -61,10 +61,10 @@ const BottomNav = () => {
         <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-center relative py-1">
           {({ isActive }) => (
             <>
-              <span className="-mt-3 w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff1a6c,#b30047)' }}>
-                <span className="text-white font-black text-[10px] leading-none tracking-tight">AI</span>
+              <span className="-mt-2 w-7 h-7 rounded-full flex items-center justify-center shadow-lg border border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff1a6c,#b30047)' }}>
+                <span className="text-white font-black text-[9px] leading-none tracking-tight">AI</span>
               </span>
-              <span className={`text-[8px] font-black tracking-wider mt-0.5 whitespace-nowrap uppercase ${isActive ? 'text-gtgold' : 'text-white/70'}`}>
+              <span className={`text-[7.5px] font-bold tracking-wider mt-0.5 whitespace-nowrap uppercase ${isActive ? 'text-gtgold' : 'text-white/70'}`}>
                 GLOW AI
               </span>
             </>

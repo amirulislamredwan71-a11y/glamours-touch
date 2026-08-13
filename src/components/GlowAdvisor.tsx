@@ -42,7 +42,7 @@ const GlowAdvisor: React.FC = () => {
         <motion.div
           initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 26 }}
-          className="fixed left-2 right-2 sm:left-auto sm:right-6 sm:w-[370px] bottom-[74px] sm:bottom-6 z-[90] flex items-center justify-between gap-2 rounded-full pl-2.5 pr-1.5 py-1.5 border border-gtgold/50 backdrop-blur-md"
+          className="fixed left-2 right-2 sm:left-auto sm:right-6 sm:w-[370px] bottom-[58px] sm:bottom-6 z-[90] flex items-center justify-between gap-2 rounded-full pl-2.5 pr-1.5 py-1.5 border border-gtgold/50 backdrop-blur-md"
           style={{ background: 'rgba(18,18,22,0.95)', boxShadow: '0 8px 25px rgba(0,0,0,0.7)' }}
         >
           <div className="flex items-center gap-2.5 min-w-0">
