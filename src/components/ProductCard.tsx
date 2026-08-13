@@ -119,10 +119,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
             </button>
             <button
               onClick={handleBuyNow}
-              className="w-full gt-shiny text-charcoal font-black py-2.5 rounded-2xl text-xs tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg shadow-amber-950/40 hover:brightness-105"
+              className="w-full bg-[#161d22]/90 border-2 border-gtgold hover:border-gtgold text-white py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
             >
-              <Zap size={14} className="fill-charcoal text-charcoal" />
-              <span>BUY</span>
+              <Zap size={14} className="fill-white text-white" />
+              <span className="text-white">BUY</span>
             </button>
           </div>
         )}

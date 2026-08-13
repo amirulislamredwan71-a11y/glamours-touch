@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BadgeCheck, Truck, ShieldCheck, Sparkles } from 'lucide-react';
+import { BadgeCheck, Truck, ShieldCheck, Sparkles, ShoppingBag } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import FlashBanner from './FlashBanner';
 
@@ -111,10 +111,10 @@ const HomeSearch = () => {
         )}
       </div>
 
-      {/* 3. Circular Trust Badges Row + AI Glow Scan Icon (User spec) */}
+      {/* 3. Circular Trust Badges Row (User Spec: AI Glow Predictor in Middle + 5th Shop Button) */}
       <div className="max-w-4xl mx-auto px-4 mt-5">
-        <div className="flex items-center justify-center gap-5 sm:gap-12 py-3.5 bg-[#0e1317]/90 rounded-2xl border border-gtgold/20 backdrop-blur-md shadow-xl overflow-x-auto">
-          {/* 100% Authentic */}
+        <div className="flex items-center justify-center gap-4 sm:gap-9 py-3.5 bg-[#0e1317]/90 rounded-2xl border border-gtgold/20 backdrop-blur-md shadow-xl overflow-x-auto">
+          {/* 1. 100% Authentic */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/50 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <BadgeCheck size={20} className="text-gtgold" />
@@ -122,7 +122,7 @@ const HomeSearch = () => {
             <span className="text-[10px] sm:text-xs font-bold text-gray-200 tracking-wider">100% Authentic</span>
           </div>
 
-          {/* সারা দেশে COD */}
+          {/* 2. সারা দেশে COD */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/50 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Truck size={20} className="text-gtgold" />
@@ -130,7 +130,15 @@ const HomeSearch = () => {
             <span className="text-[10px] sm:text-xs font-bold text-gray-200 tracking-wider">সারা দেশে COD</span>
           </div>
 
-          {/* নিরাপদ পেমেন্ট */}
+          {/* 3. AI Glow প্রেডিকশন (IN THE MIDDLE - User Spec) */}
+          <Link to="/glow-predictor" className="flex flex-col items-center gap-1.5 group flex-shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/20 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Sparkles size={20} className="text-gtgold animate-pulse" />
+            </div>
+            <span className="text-[10px] sm:text-xs font-extrabold text-gtgold tracking-wider">AI Glow প্রেডিকশন</span>
+          </Link>
+
+          {/* 4. নিরাপদ পেমেন্ট */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/50 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <ShieldCheck size={20} className="text-gtgold" />
@@ -138,12 +146,12 @@ const HomeSearch = () => {
             <span className="text-[10px] sm:text-xs font-bold text-gray-200 tracking-wider">নিরাপদ পেমেন্ট</span>
           </div>
 
-          {/* AI Glow Scan Link (User Spec) */}
-          <Link to="/glow-predictor" className="flex flex-col items-center gap-1.5 group flex-shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/20 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <Sparkles size={20} className="text-gtgold animate-pulse" />
+          {/* 5. Shop Link Button (5th Circular Button - User Spec) */}
+          <Link to="/shop" className="flex flex-col items-center gap-1.5 group flex-shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-gtgold flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <ShoppingBag size={20} className="text-gtgold" />
             </div>
-            <span className="text-[10px] sm:text-xs font-bold text-gtgold tracking-wider">AI Glow Scan</span>
+            <span className="text-[10px] sm:text-xs font-bold text-gtgold tracking-wider">Shop</span>
           </Link>
         </div>
       </div>
@@ -152,4 +160,5 @@ const HomeSearch = () => {
 };
 
 export default HomeSearch;
+
 
