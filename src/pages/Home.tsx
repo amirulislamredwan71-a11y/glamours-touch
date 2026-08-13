@@ -291,7 +291,7 @@ const Home = () => {
               to="/shop"
               className="inline-flex items-center gap-2 gt-shiny text-charcoal font-bold px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-transform"
             >
-              সবকটি ৫০০+ প্রসাধনী দেখুন →
+              সকল প্রোডাক্ট দেখুন →
             </Link>
           </div>
         </div>
