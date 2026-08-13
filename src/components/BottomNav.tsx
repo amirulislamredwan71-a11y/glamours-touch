@@ -58,13 +58,15 @@ const BottomNav = () => {
         {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
 
         {/* Center — flagship Glow Predictor, raised */}
-        <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-end pb-1.5 relative">
+        <NavLink to="/glow-predictor" className="flex-1 flex flex-col items-center justify-end pb-1 relative">
           {({ isActive }) => (
             <>
-              <span className="-mt-4 w-11 h-11 rounded-full flex items-center justify-center shadow-md border-2 border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff2a6d,#9a0036)' }}>
-                <span className="text-white font-black text-sm leading-none tracking-tight">AI</span>
+              <span className="-mt-4 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-2 border-[#050507]" style={{ background: 'linear-gradient(135deg,#ff1a6c,#b30047)' }}>
+                <span className="text-white font-black text-xs leading-none tracking-tight">AI</span>
               </span>
-              <span className={`text-[8.5px] font-black tracking-tight mt-0.5 whitespace-nowrap ${isActive ? 'text-gtgold' : 'text-white/60'}`}>গ্লো প্রেডিকশন</span>
+              <span className={`text-[8px] font-black tracking-tight mt-0.5 whitespace-nowrap uppercase ${isActive ? 'text-gtgold' : 'text-white/70'}`}>
+                GLOW AI <span className="block text-[7px] text-center font-bold text-white/50 -mt-0.5">প্রেডিক্টর</span>
+              </span>
             </>
           )}
         </NavLink>
