@@ -158,19 +158,19 @@ const Navbar = () => {
               <Logo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
             </Link>
 
-            {/* Desktop Navigation Links (Visible on Laptop/PC screens from md: breakpoint) */}
+            {/* Desktop Navigation Links (Visible on Laptop/PC screens from md: breakpoint) — 1-by-1 Gold/White Alternating Pattern */}
             <div className="hidden md:flex items-center gap-3 lg:gap-5 text-xs lg:text-sm font-extrabold tracking-wide">
-              <Link to="/" className={`hover:text-gtgold transition-colors ${isActive('/') ? 'gt-gold-shiny' : 'text-white/90'}`}>
+              <Link to="/" className="gt-gold-shiny font-black hover:opacity-90 transition-opacity">
                 {t('nav.home')}
               </Link>
-              <Link to="/shop" className={`hover:text-gtgold transition-colors ${isActive('/shop') ? 'gt-gold-shiny' : 'text-white/90'}`}>
+              <Link to="/shop" className="text-white font-black hover:text-gtgold transition-colors">
                 {t('nav.shop')}
               </Link>
-              <Link to="/glow-predictor" className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold hover:bg-gtgold/25 transition-all text-xs font-black shadow-sm flex-shrink-0">
+              <Link to="/glow-predictor" className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-gtgold/15 border border-gtgold text-gtgold hover:bg-gtgold/25 transition-all text-xs font-black shadow-sm flex-shrink-0">
                 <Sparkles size={12} className="text-gtgold animate-pulse" />
                 <span>AI Glow Predictor</span>
               </Link>
-              <Link to="/blog" className={`hover:text-gtgold transition-colors ${isActive('/blog') ? 'gt-gold-shiny' : 'text-white/90'}`}>
+              <Link to="/blog" className="text-white font-black hover:text-gtgold transition-colors">
                 Blog
               </Link>
             </div>
@@ -286,23 +286,23 @@ const Navbar = () => {
 
           {/* Right Group: Language EN/বা Switcher + Login/Profile Button (Hidden on Mobile Header, Inside 3-line menu) */}
           <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-            {/* EN/বা Language Switcher (Hidden on Mobile Header, visible on md: screens and inside 3-line menu) */}
+            {/* EN/বা Language Switcher (Gold) */}
             <button
               onClick={toggleLanguage}
               title="Change Language / ভাষা পরিবর্তন করুন"
-              className="hidden md:flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#161d22] border border-gtgold/60 text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
+              className="hidden md:flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#161d22] border border-gtgold text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
             >
               <Globe size={13} className="text-gtgold" />
               <span>{i18n.language === 'en' ? 'EN' : 'বা'}</span>
             </button>
 
-            {/* Login / Profile Button (Hidden on Mobile Header, visible on md: screens and inside 3-line menu) */}
+            {/* Login / Profile Button (Pure White - 1-by-1 alternating sequence) */}
             {!user ? (
               <button
                 onClick={openLogin}
-                className="hidden md:flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-gtgold text-gtgold hover:bg-gtgold hover:text-charcoal text-xs font-black tracking-wider uppercase transition-all shadow-md items-center gap-1.5"
+                className="hidden md:flex px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#161d22] border border-white/60 text-white hover:border-gtgold hover:text-gtgold text-xs font-black tracking-wider uppercase transition-all shadow-md items-center gap-1.5"
               >
-                <User size={14} />
+                <User size={14} className="text-white" />
                 <span>LOGIN</span>
               </button>
             ) : (

@@ -215,20 +215,20 @@ const ProductDetail = () => {
   const seoCustomInfo = getProductCustomSEO(product.name, product.brand);
 
   return (
-    <div className="min-h-screen bg-cream pt-32 pb-20">
+    <div className="min-h-screen bg-midnight-gold-dust text-white pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-500 hover:text-gold transition-colors mb-8">
+          className="flex items-center gap-2 text-white/70 hover:text-gtgold transition-colors mb-8">
           <ArrowLeft size={20} /><span>Back</span>
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Image gallery */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
-            <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl border border-gold/10 aspect-square">
+            <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl border-2 border-gtgold/40 aspect-square">
               <img src={optimizeImageUrl(gallery[activeImg] || product.image, 800, 85)} alt={`${product.brand ? `${product.brand} ` : ''}${product.name} - Glamour's Touch`}
                 width="800" height="800" loading="eager" decoding="async" fetchpriority="high"
-                className={`w-full h-full object-cover ${soldOut ? 'opacity-60 grayscale' : ''}`} referrerPolicy="no-referrer" />
+                className={`w-full h-full object-contain p-4 ${soldOut ? 'opacity-60 grayscale' : ''}`} referrerPolicy="no-referrer" />
               {soldOut ? (
                 <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-lg tracking-widest">SOLD OUT</div>
               ) : hasDiscount && (
@@ -239,7 +239,7 @@ const ProductDetail = () => {
               <div className="flex gap-3 mt-4 overflow-x-auto pb-1">
                 {gallery.map((img, i) => (
                   <button key={i} onClick={() => setActiveImg(i)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? 'border-gold' : 'border-transparent opacity-70 hover:opacity-100'}`}>
+                    className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? 'border-gtgold' : 'border-white/10 opacity-70 hover:opacity-100'}`}>
                     <img src={optimizeImageUrl(img, 160, 80)} alt={`${product.name} thumbnail ${i + 1} - Glamour's Touch`} width="80" height="80" loading="lazy" decoding="async" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </button>
                 ))}
@@ -250,8 +250,8 @@ const ProductDetail = () => {
           {/* Info */}
           <div className="flex flex-col">
             <div className="mb-6">
-              <p className="text-gold font-bold uppercase tracking-[0.2em] mb-2">{product.brand}</p>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-charcoal mb-4 leading-tight">{product.name}</h1>
+              <p className="gt-gold-shiny font-extrabold uppercase tracking-[0.2em] mb-2">{product.brand}</p>
+              <h1 className="text-3xl md:text-5xl font-serif font-black text-white mb-4 leading-tight">{product.name}</h1>
 
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex text-gold">

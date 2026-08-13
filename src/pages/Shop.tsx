@@ -121,27 +121,27 @@ const Shop = () => {
       description={seoData.description}
       url={categoryFilter ? `/shop?category=${encodeURIComponent(categoryFilter)}` : "/shop"}
     />
-    <div className="min-h-screen bg-gtdark pt-32 pb-20 overflow-hidden">
+    <div className="min-h-screen bg-midnight-gold-dust pt-32 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Decorative blobs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gtgold/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gtgold/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
           className="mb-12 text-center md:text-left relative z-10">
-          <span className="text-gtgoldsoft font-bold tracking-[0.3em] uppercase text-xs mb-4 block">The Collection</span>
-          <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 leading-tight">
+          <span className="gt-gold-shiny font-extrabold tracking-[0.3em] uppercase text-xs mb-4 block">The Collection</span>
+          <h1 className="text-4xl md:text-6xl font-serif font-black text-white mb-4 leading-tight">
             {categoryFilter ? categoryFilter : <>All <span className="gt-gold-shiny">Treasures</span></>}
           </h1>
-          <p className="text-lg font-light text-white/50 max-w-2xl">
-            Discover our curated selection of premium Korean beauty products.
+          <p className="text-lg font-light text-white/80 max-w-2xl">
+            Discover our curated selection of 100% authentic premium Korean beauty products.
           </p>
         </motion.div>
 
         {/* Filters */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-10 gt-card backdrop-blur-md p-5 sm:p-6 rounded-3xl relative z-10 space-y-5">
+          className="mb-10 bg-[#161d22]/80 border border-gtgold/30 backdrop-blur-md p-5 sm:p-6 rounded-3xl relative z-10 space-y-5 shadow-2xl">
 
           {/* Category pills + Search + Sort */}
           <div className="flex flex-col lg:flex-row justify-between items-center gap-5">
@@ -149,10 +149,10 @@ const Shop = () => {
               {categories.map(cat => (
                 <button key={cat}
                   onClick={() => setSearchParams(cat === 'All' ? {} : { category: cat })}
-                  className={`px-4 py-2 rounded-full text-[11px] font-bold tracking-widest transition-all duration-300 uppercase
+                  className={`px-4 py-2 rounded-full text-[11px] font-black tracking-widest transition-all duration-300 uppercase
                     ${(cat === 'All' && !categoryFilter) || categoryFilter === cat
-                      ? 'gt-shiny shadow-md scale-105'
-                      : 'bg-white/8 text-white/75 hover:bg-gtgold/15 border border-white/10'}`}>
+                      ? 'bg-[#161d22] border-2 border-gtgold text-white shadow-md scale-105'
+                      : 'bg-white/5 text-white/80 hover:bg-gtgold/15 border border-white/10'}`}>
                   {cat}
                 </button>
               ))}
@@ -163,15 +163,15 @@ const Shop = () => {
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gtgold" size={16} />
                 <input type="text" placeholder="Search…" value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-5 py-3.5 bg-white/8 border border-white/10 rounded-full text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-gtgold/30 transition-all" />
+                  className="w-full pl-12 pr-5 py-3.5 bg-[#161d22] border border-gtgold/40 rounded-full text-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all" />
               </div>
               <div className="relative w-full sm:w-auto">
                 <select value={sortBy} onChange={e => setSortBy(e.target.value)}
-                  className="w-full sm:w-auto appearance-none pl-6 pr-12 py-3.5 bg-[#1a1a22] border border-white/10 rounded-full text-xs font-bold tracking-widest text-white/85 focus:outline-none focus:ring-2 focus:ring-gtgold/30 cursor-pointer uppercase">
-                  <option value="featured">Featured</option>
-                  <option value="price-low">Price: Low → High</option>
-                  <option value="price-high">Price: High → Low</option>
-                  <option value="rating">Top Rated</option>
+                  className="w-full sm:w-auto appearance-none pl-6 pr-12 py-3.5 bg-[#161d22] border border-gtgold/40 rounded-full text-xs font-black tracking-widest text-white focus:outline-none focus:ring-2 focus:ring-gtgold/40 cursor-pointer uppercase">
+                  <option value="featured" className="bg-[#161d22] text-white">Featured</option>
+                  <option value="price-low" className="bg-[#161d22] text-white">Price: Low → High</option>
+                  <option value="price-high" className="bg-[#161d22] text-white">Price: High → Low</option>
+                  <option value="rating" className="bg-[#161d22] text-white">Top Rated</option>
                 </select>
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gtgold pointer-events-none" size={14} />
               </div>
