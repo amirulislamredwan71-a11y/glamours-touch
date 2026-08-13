@@ -6,7 +6,7 @@ const Logo = ({ className = "w-12 h-12" }: { className?: string }) => {
   if (imgError) {
     return (
       <div
-        className={`bg-black rounded flex items-center justify-center overflow-hidden flex-shrink-0 ${className}`}
+        className={`bg-transparent flex items-center justify-center overflow-hidden flex-shrink-0 ${className}`}
         style={{ aspectRatio: '1' }}
       >
         <span

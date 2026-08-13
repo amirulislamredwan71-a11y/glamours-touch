@@ -248,11 +248,8 @@ const Home = () => {
         description="Shop 100% authentic Korean skincare, K-Beauty serums, cleansers, sunscreens & creams in Bangladesh. Try our AI Glow Predictor Studio at Glamour's Touch."
         url="/"
       />
-      {/* Search-first hero */}
+      {/* Search & Hero Banner */}
       <HomeSearch />
-
-      {/* Flash Banner */}
-      <FlashBanner />
 
       {/* Recommended Products Grid */}
       <section className="py-10 sm:py-16 relative overflow-hidden min-h-[480px]">

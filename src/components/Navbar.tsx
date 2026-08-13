@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingBag, User, Search, Menu, X, LogOut, Globe, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, User, Search, Menu, X, LogOut, Globe, ShieldCheck, Mic, Camera, Sparkles } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 import { useAuth } from '../hooks/useAuth';
 import { useUI } from '../hooks/useUI';
@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import Logo from './Logo';
+import SkinScanModal from './SkinScanModal';
 
 /* Each nav item gets its own accent colour */
 const NAV_COLORS = [
@@ -16,14 +17,14 @@ const NAV_COLORS = [
   { bg: 'bg-emerald-500',ring: 'ring-emerald-400', text: 'text-emerald-500',light: 'bg-emerald-50'},
 ];
 
-/* Rotating soft colours for category chips */
-const CAT_COLORS = [
-  'bg-pink-50 text-pink-600 border-pink-100',
-  'bg-violet-50 text-violet-600 border-violet-100',
-  'bg-emerald-50 text-emerald-600 border-emerald-100',
-  'bg-amber-50 text-amber-600 border-amber-100',
-  'bg-sky-50 text-sky-600 border-sky-100',
-  'bg-rose-50 text-rose-600 border-rose-100',
+const ROTATING_PLACEHOLDERS = [
+  'Medicube Collagen Jelly Cream • ৳২,১৯০',
+  'Anua Heartleaf 77% Toner • ৳১,৬৫০',
+  'Beauty of Joseon Relief Sun • ৳১,১৯০',
+  'COSRX 96 Snail Essence • ৳১,৬৪০',
+  'DABO Black Snail Retinal • ৳১,১৪০',
+  'SKIN1004 Centella Cleansing Oil • ৳২,০৭০',
+  'K-Secret Seoul 1988 Essence • ৳২,০৭০',
 ];
 
 const Navbar = () => {
@@ -34,54 +35,47 @@ const Navbar = () => {
   const location   = useLocation();
 
   const [isMenuOpen,   setIsMenuOpen]   = React.useState(false);
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [searchQuery,  setSearchQuery]  = React.useState('');
-  const [suggestions,  setSuggestions]  = React.useState<string[]>([]);
-  const [categories,   setCategories]   = React.useState<string[]>([]);
-  const [allProducts,  setAllProducts]  = React.useState<{ name: string; brand: string }[]>([]);
+  const [placeholderIndex, setPlaceholderIndex] = React.useState(0);
+  const [scanOpen,     setScanOpen]     = React.useState(false);
+  const [listening,    setListening]    = React.useState(false);
   const { t, i18n } = useTranslation();
 
+  /* Rotate top product placeholders every 3.5 seconds */
   React.useEffect(() => {
-    if (!isSearchOpen) return;
-    const fetchData = async () => {
-      const [{ data: cats }, { data: prods }] = await Promise.all([
-        supabase.from('categories').select('name'),
-        supabase.from('products').select('name, brand').limit(60),
-      ]);
-      if (cats)  setCategories(cats.map(c => c.name));
-      if (prods) setAllProducts(prods);
-    };
-    fetchData();
-  }, [isSearchOpen]);
-
-  /* Live autocomplete */
-  React.useEffect(() => {
-    if (!searchQuery.trim()) { setSuggestions([]); return; }
-    const q = searchQuery.toLowerCase();
-    const matches = allProducts
-      .filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q))
-      .slice(0, 6)
-      .map(p => p.name);
-    setSuggestions([...new Set(matches)]);
-  }, [searchQuery, allProducts]);
+    const timer = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % ROTATING_PLACEHOLDERS.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
 
   const toggleLanguage = () => i18n.changeLanguage(i18n.language === 'en' ? 'bn' : 'en');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery)}`);
-      setIsSearchOpen(false);
-      setSearchQuery('');
-      setSuggestions([]);
+      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
-  const pickSuggestion = (s: string) => {
-    navigate(`/shop?search=${encodeURIComponent(s)}`);
-    setIsSearchOpen(false);
-    setSearchQuery('');
-    setSuggestions([]);
+  const startVoiceSearch = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('আপনার ব্রাউজারে ভয়েস সার্চ সাপোর্ট করে না।');
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'bn-BD';
+    recognition.onstart = () => setListening(true);
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setSearchQuery(transcript);
+      setListening(false);
+      navigate(`/shop?search=${encodeURIComponent(transcript)}`);
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+    recognition.start();
   };
 
   const navItems = [
@@ -95,115 +89,101 @@ const Navbar = () => {
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#070709]/92 backdrop-blur-xl border-b border-gtgold/15 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24">
+    <>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-xl border-b border-gtgold/20 transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20 md:h-24 gap-2">
 
           {/* Mobile hamburger */}
-          <div className="flex md:hidden">
+          <div className="flex md:hidden flex-shrink-0">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-white/80 hover:text-gtgold transition-all duration-300">
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              className="p-1.5 text-white/80 hover:text-gtgold transition-all duration-300">
+              {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
 
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center mx-1 sm:mx-2">
-            <Link to="/" className="group flex items-center gap-2">
-              <Logo className="w-14 h-14 sm:w-24 sm:h-24 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
+          {/* Logo (Transparent GT Gold emblem & text, NO black square background) */}
+          <div className="flex-shrink-0 flex items-center">
+            <Link to="/" className="group flex items-center gap-1.5">
+              <Logo className="w-10 h-10 sm:w-16 sm:h-16 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col">
-                <span className="text-base sm:text-xl md:text-2xl font-display font-bold tracking-[0.06em] sm:tracking-[0.1em] text-white transition-colors duration-500 whitespace-nowrap">
+                <span className="text-xs sm:text-lg md:text-xl font-display font-bold tracking-[0.06em] text-white whitespace-nowrap">
                   GLAMOUR'S <span className="gt-gold-shiny">TOUCH</span>
                 </span>
-                <span className="text-[6px] sm:text-[8px] font-bold text-gray-400 tracking-[0.18em] sm:tracking-[0.3em] uppercase -mt-0.5 sm:-mt-1 whitespace-nowrap">BEAUTY • SKINCARE • CONFIDENCE</span>
+                <span className="text-[5px] sm:text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase -mt-0.5 whitespace-nowrap hidden xs:inline">BEAUTY • SKINCARE</span>
               </div>
             </Link>
           </div>
 
-          {/* ── Desktop Nav ── colored circle badges ── */}
-          <div className="hidden md:flex space-x-6 items-center">
-            {navItems.map((item, idx) => {
-              const col = NAV_COLORS[idx % NAV_COLORS.length];
-              const active = isActive(item.path);
-              return (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`relative flex items-center gap-2 group`}
-                >
-                  {/* Coloured circle */}
-                  <span className={`
-                    w-8 h-8 rounded-full flex items-center justify-center ring-2 transition-all duration-300
-                    ${active
-                      ? `${col.bg} ring-offset-2 ${col.ring} text-white shadow-lg`
-                      : `bg-white ${col.ring} ${col.text} group-hover:${col.bg} group-hover:text-white group-hover:shadow-md`
-                    }
-                  `}>
-                    <span className="text-[9px] font-extrabold tracking-tighter uppercase leading-none">
-                      {item.name.slice(0, 1)}
-                    </span>
-                  </span>
-                  <span className={`text-[11px] font-bold tracking-[0.25em] uppercase transition-colors duration-300
-                    ${active ? col.text : `text-charcoal group-hover:${col.text}`}`}>
-                    {item.name}
-                  </span>
-                </Link>
-              );
-            })}
+          {/* Top Integrated Gold Search Bar (Screenshot Spec) */}
+          <div className="flex-1 max-w-xl mx-1 sm:mx-4">
+            <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+              <Search size={16} className="absolute left-3.5 text-gtgold pointer-events-none z-10" />
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
+                aria-label="Search top products"
+                className="w-full bg-[#12161a] border border-gtgold/60 focus:border-gtgold rounded-full pl-10 pr-20 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-gtgold/60 shadow-lg focus:outline-none focus:ring-1 focus:ring-gtgold transition-all"
+              />
+              {searchQuery && (
+                <button type="button" onClick={() => setSearchQuery('')}
+                  className="absolute right-16 text-white/50 hover:text-white">
+                  <X size={15} />
+                </button>
+              )}
+              <div className="absolute right-1.5 flex items-center gap-1 z-10">
+                {/* Voice Mic Button */}
+                <button type="button" onClick={startVoiceSearch} title="ভয়েস সার্চ করুন"
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1a2128] border border-gtgold/40 text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all ${listening ? 'animate-pulse bg-gtgold/20' : ''}`}>
+                  <Mic size={14} />
+                </button>
+                {/* Camera AI Scan Button */}
+                <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1a2128] border border-gtgold/40 text-gtgold flex items-center justify-center shadow-md active:scale-90 transition-all">
+                  <Camera size={14} />
+                </button>
+              </div>
+            </form>
           </div>
 
           {/* ── Icons ── */}
-          <div className="flex items-center space-x-1 sm:space-x-4">
+          <div className="flex items-center space-x-1 sm:space-x-3 flex-shrink-0">
             {user ? (
-              <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="flex items-center space-x-2">
                 {isAdmin && (
-                  <Link to="/admin" className="flex items-center gap-1.5 text-gold hover:text-charcoal transition-all group" title="Admin">
-                    <ShieldCheck size={22} className="group-hover:scale-110 transition-transform" />
-                    <span className="text-[10px] font-bold tracking-widest hidden lg:inline">ADMIN</span>
+                  <Link to="/admin" className="flex items-center gap-1 text-gold hover:text-white transition-all group" title="Admin">
+                    <ShieldCheck size={20} />
                   </Link>
                 )}
-                <Link to="/profile" className="hidden xs:flex items-center text-white/80 hover:text-gtgold transition-all group">
-                  {user.user_metadata?.avatar_url ? (
-                    <img src={user.user_metadata.avatar_url} alt="Profile" className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-gold/20 group-hover:border-gold transition-all" />
-                  ) : (
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gold/10 rounded-full flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all">
-                      <User size={18} />
-                    </div>
-                  )}
+                <Link to="/profile" className="hidden xs:flex items-center text-white/80 hover:text-gtgold transition-all">
+                  <User size={20} />
                 </Link>
-                <button onClick={logout} className="text-charcoal hover:text-red-500 transition-all hidden lg:block">
-                  <LogOut size={20} />
+                <button onClick={logout} className="text-gray-400 hover:text-red-400 transition-all hidden lg:block">
+                  <LogOut size={18} />
                 </button>
               </div>
             ) : (
               <button onClick={openLogin}
-                className="hidden lg:block text-[11px] font-bold tracking-[0.3em] bg-charcoal text-white hover:bg-gold transition-all px-6 py-3 rounded-full shadow-lg uppercase whitespace-nowrap">
+                className="hidden lg:block text-[10px] font-bold tracking-[0.2em] bg-charcoal text-white hover:bg-gold transition-all px-4 py-2 rounded-full shadow-lg uppercase whitespace-nowrap">
                 {t('nav.signIn')}
               </button>
             )}
 
-            {/* Search — desktop only (mobile uses the homepage search bar) */}
-            <button onClick={() => setIsSearchOpen(true)}
-              className="hidden sm:block text-white/80 hover:text-gtgold transition-all p-2">
-              <Search size={22} />
-            </button>
-
-
-
             {/* Language */}
             <button onClick={toggleLanguage}
-              className="flex items-center gap-1 text-white/80 hover:text-gtgold transition-all group px-1 py-2">
-              <Globe size={18} className="group-hover:rotate-12 transition-transform" />
+              className="flex items-center gap-1 text-white/80 hover:text-gtgold transition-all group px-1 py-1">
+              <Globe size={16} />
               <span className="text-[10px] font-bold tracking-widest">{i18n.language === 'en' ? 'বা' : 'EN'}</span>
             </button>
 
-            {/* Cart — desktop only (mobile uses the bottom nav) */}
-            <Link to="/cart" className="relative hidden sm:block text-white/80 hover:text-gtgold transition-all group p-2">
-              <ShoppingBag size={22} />
+            {/* Cart */}
+            <Link to="/cart" className="relative text-white/80 hover:text-gtgold transition-all group p-1.5">
+              <ShoppingBag size={20} />
               <AnimatePresence>
                 {cartCount > 0 && (
                   <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    className="absolute -top-2 -right-2 bg-gold text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg">
+                    className="absolute -top-1 -right-1 bg-gtgold text-charcoal text-[9px] font-extrabold w-4 h-4 flex items-center justify-center rounded-full shadow-md">
                     {cartCount}
                   </motion.span>
                 )}
@@ -212,6 +192,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
 
       {/* ── Mobile Menu ── */}
       <AnimatePresence mode="wait">
@@ -352,6 +333,8 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </nav>
+    <SkinScanModal isOpen={scanOpen} onClose={() => setScanOpen(false)} />
+    </>
   );
 };
 
