@@ -42,16 +42,17 @@ const Navbar = () => {
   const { t, i18n } = useTranslation();
 
   React.useEffect(() => {
+    if (!isSearchOpen) return;
     const fetchData = async () => {
       const [{ data: cats }, { data: prods }] = await Promise.all([
         supabase.from('categories').select('name'),
-        supabase.from('products').select('name, brand'),
+        supabase.from('products').select('name, brand').limit(60),
       ]);
       if (cats)  setCategories(cats.map(c => c.name));
       if (prods) setAllProducts(prods);
     };
     fetchData();
-  }, []);
+  }, [isSearchOpen]);
 
   /* Live autocomplete */
   React.useEffect(() => {
