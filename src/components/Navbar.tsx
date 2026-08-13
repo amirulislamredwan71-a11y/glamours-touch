@@ -286,11 +286,11 @@ const Navbar = () => {
 
           {/* Right Group: Language EN/বা Switcher + Login/Profile Button (Hidden on Mobile Header, Inside 3-line menu) */}
           <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-            {/* EN/বা Language Switcher */}
+            {/* EN/বা Language Switcher (Hidden on Mobile Header, visible on md: screens and inside 3-line menu) */}
             <button
               onClick={toggleLanguage}
               title="Change Language / ভাষা পরিবর্তন করুন"
-              className="flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#161d22] border border-gtgold/60 text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
+              className="hidden md:flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#161d22] border border-gtgold/60 text-gtgold text-xs font-bold hover:bg-gtgold/20 transition-all cursor-pointer shadow-sm"
             >
               <Globe size={13} className="text-gtgold" />
               <span>{i18n.language === 'en' ? 'EN' : 'বা'}</span>
