@@ -139,13 +139,18 @@
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="v2VfcGvqs4fFmU7mfG7HIzYCUuEcvHlMjinD6k5PMpQ" />
 
-    <!-- Google Analytics 4 (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8T7SMPMTDD"></script>
+    <!-- Google Analytics 4 (GA4) — deferred to load event for zero paint blocking -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-8T7SMPMTDD');
+      window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-8T7SMPMTDD';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8T7SMPMTDD');
+      });
     </script>
 
     <!-- Meta Pixel -->
@@ -163,10 +168,8 @@
       fbq("track", "PageView");
     </script>
 
-    <!-- Preload critical resources -->
-    <link rel="preload" as="image" href="/hero-banner.webp" fetchpriority="high" />
+    <!-- Preload critical Supabase backend -->
     <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" />
-    <link rel="preconnect" href="https://images.unsplash.com" />
 
     <!-- Premium display font (non-render-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -177,7 +177,7 @@ const HomeSearch = () => {
             className="flex gap-3 overflow-x-auto px-4 pb-1 snap-x [&::-webkit-scrollbar]:hidden"
             style={{ scrollbarWidth: 'none' }}
           >
-            {cats.map(c => {
+            {cats.map((c, idx) => {
               const srcUrl = CATEGORY_WEBP_IMAGES[c.name] || c.image || '/categories/skincare.webp';
               return (
                 <Link key={c.id} to={`/shop?category=${encodeURIComponent(c.name)}`}
@@ -189,7 +189,7 @@ const HomeSearch = () => {
                         alt={`${c.name} - Glamour's Touch`}
                         width="64"
                         height="64"
-                        loading="lazy"
+                        loading={idx < 6 ? 'eager' : 'lazy'}
                         decoding="async"
                         className="w-full h-full object-cover rounded-full"
                         onError={(e) => {
