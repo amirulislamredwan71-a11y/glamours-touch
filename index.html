@@ -11,10 +11,11 @@
     <meta name="author" content="Glamour's Touch" />
     <link rel="canonical" href="https://glamourstouch.com" />
 
-    <!-- Critical Performance Preconnects -->
+    <!-- Critical Performance Preconnects & Image Preload (Frame 1 Instant LCP Paint) -->
     <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="/catalog-images/carousel-2.png" fetchpriority="high" />
 
     <!-- Schema Markup (JSON-LD) -->
     <script type="application/ld+json">
@@ -119,11 +120,22 @@
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
   </head>
-  <body>
+  <body style="background:#0b0e11; margin:0;">
     <noscript>
       <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=988182894209503&ev=PageView&noscript=1"/>
     </noscript>
-    <div id="root"></div>
+
+    <!-- Instant Frame 1 Pre-Rendered Hero Shell (Eliminates Blank Space Before JS Hydrates) -->
+    <div id="root">
+      <div id="gt-frame1-hero-shell" style="background:#0b0e11; min-height:100vh; padding-top:90px; box-sizing:border-box;">
+        <div style="max-width:1280px; margin:0 auto; padding:8px 16px;">
+          <div style="width:100%; aspect-ratio:16/5; border-radius:24px; overflow:hidden; border:2px solid rgba(229,184,58,0.4); box-shadow:0 12px 36px rgba(0,0,0,0.6); background:#161c20;">
+            <img src="/catalog-images/carousel-2.png" alt="Glamour's Touch Authentic Korean Skincare" fetchpriority="high" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block;" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.tsx"></script>
 
     <!-- Microsoft Clarity — deferred until after page load -->
