@@ -23,27 +23,42 @@ const json = (res: VercelResponse, code: number, obj: any) => {
 function getSmartFallbackReply(query: string): string {
   const q = query.toLowerCase();
 
+  if (q.includes('price') || q.includes('দাম') || q.includes('টাকা') || q.includes('কত') || q.includes('বলতে পারলা না') || q.includes('পারলা না')) {
+    return 'আমাদের জনপ্রিয় অরিজিনাল কোরিয়ান প্রোডাক্টের অফার প্রাইজ:\n• AXIS-Y Dark Spot Glow Serum: ৳১,৬০০ (বাজার মূল্য ৳২,১১০)\n• Beauty of Joseon Relief Sun: ৳১,৬০০ (বাজার মূল্য ৳২,২২০)\n• COSRX Advanced Snail 96 Essence: ৳১,৮৫০\n• SKIN1004 Madagascar Centella Ampoule: ৳১,৭৫০\n• Anua Heartleaf 77% Toner: ৳১,৯৫০\n• Dabo 7 In 1 Cica Cleanser: ৳৯৬০\n\nযেকোনো প্রোডাক্ট সরাসরি ওয়েবসাইটে অর্ডার করতে পারবেন অথবা হোয়াটসঅ্যাপে নক দিন: 01712-426871 🛍️✨';
+  }
   if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
-    return 'ব্রণ ও পিম্পল দূর করার জন্য অরিজিনাল কোরিয়ান SKIN1004 Madagascar Centella Ampoule এবং COSRX Salicylic Acid Cleanser অত্যন্ত কার্যকরী! এগুলো ত্বকের ব্যাকটেরিয়া ধুয়ে ফেলে জ্বালা-পোড়া কমায়। বিস্তারিত দেখতে আমাদের শপ ব্রাউজ করুন অথবা হোয়াটসঅ্যাপ করুন: 01712-426871 ✨';
+    return 'ব্রণ ও পিম্পল দূর করার জন্য অরিজিনাল কোরিয়ান SKIN1004 Madagascar Centella Ampoule (৳১,৭৫০) এবং COSRX Salicylic Acid Cleanser অত্যন্ত কার্যকরী! এগুলো ত্বকের ব্যাকটেরিয়া ধুয়ে ফেলে জ্বালা-পোড়া কমায় ✨';
   }
   if (q.includes('দাগ') || q.includes('মেছতা') || q.includes('spot') || q.includes('dark') || q.includes('pigmentation')) {
-    return 'মেছতা ও ক্ষতের কালো দাগ হালকা করতে কোরিয়ান টপ সেলিং AXIS-Y Dark Spot Correcting Glow Serum এবং Anua Niacinamide Serum সেরা! এটি ত্বকে দৃশ্যমান উজ্জ্বলতা ও সমান টোন নিয়ে আসে। অর্ডারের জন্য ওয়েবসাইটের শপ মেনু দেখুন বা কল করুন: 01712-426871 🌸';
+    return 'মেছতা ও ক্ষতের কালো দাগ হালকা করতে কোরিয়ান টপ সেলিং AXIS-Y Dark Spot Correcting Glow Serum (৳১,৬০০) এবং Anua Niacinamide Serum সেরা! এটি ত্বকে দৃশ্যমান উজ্জ্বলতা নিয়ে আসে 🌸';
   }
   if (q.includes('সানস্ক্রিন') || q.includes('sun') || q.includes('sunscreen') || q.includes('রোদে')) {
-    return 'রোদ ও ক্ষতিকর UV রশি থেকে ত্বক বাঁচাতে Beauty of Joseon Relief Sun (SPF50+) এবং SKIN1004 Hyalu-Cica Sun Serum ব্যবহার করতে পারেন। এগুলো হালকা, কোন হোয়াইট কাস্ট ফেলে না এবং ত্বকে গ্লাস গ্লো দেয় ☀️';
+    return 'রোদ ও ক্ষতিকর UV রশি থেকে ত্বক বাঁচাতে Beauty of Joseon Relief Sun (৳১,৬০০) এবং SKIN1004 Hyalu-Cica Sun Serum ব্যবহার করতে পারেন। এগুলো হালকা এবং ত্বকে গ্লাস গ্লো দেয় ☀️';
   }
   if (q.includes('শুষ্ক') || q.includes('dry') || q.includes('খসখসে') || q.includes('ময়েশ্চারাইজার')) {
-    return 'শুষ্ক ও ডিহাইড্রেটেড ত্বকের জন্য COSRX Advanced Snail 96 Mucin Essence এবং Beauty of Joseon Dynasty Cream ম্যাজিকের মতো কাজ করে। এগুলো ত্বকের ডিপ ময়েশ্চার লক করে কোমল রাখে 💧';
+    return 'শুষ্ক ও ডিহাইড্রেটেড ত্বকের জন্য COSRX Advanced Snail 96 Mucin Essence (৳১,৮৫০) এবং Beauty of Joseon Dynasty Cream দারুণ কাজ করে। এগুলো ত্বকের ময়েশ্চার লক করে কোমল রাখে 💧';
   }
   if (q.includes('গ্লো') || q.includes('glow') || q.includes('উজ্জ্বল') || q.includes('glass skin')) {
-    return 'ইনস্ট্যান্ট গ্লাস গ্লো ও রেডিয়েন্স পেতে Anua Heartleaf 77% Soothing Toner এবং Medicube PDRN Pink Peptide Serum ব্যবহার করুন। ১০০% আসল কোরিয়ান ফরম্যুলা আপনার ত্বককে করে তুলবে প্রাণবন্ত! ✨';
+    return 'ইনস্ট্যান্ট গ্লাস গ্লো পেতে Anua Heartleaf 77% Soothing Toner (৳১,৯৫০) এবং Medicube PDRN Pink Peptide Serum (৳১,৯৫০) ব্যবহার করুন! ✨';
   }
 
-  return "ধন্যবাদ! গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার নির্দিষ্ট ত্বকের সমস্যা (ব্রণ, দাগ, শুষ্কতা) লিখে জানান, অথবা সরাসরি আমাদের হোয়াটসঅ্যাপে (01712-426871) যুক্ত হন 🌿";
+  return "ধন্যবাদ! গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার নির্দিষ্ট ত্বকের সমস্যা অথবা পছন্দের প্রোডাক্টের নাম জানান, অথবা সরাসরি হোয়াটসঅ্যাপে (01712-426871) মেসেজ দিন 🌿";
 }
 
 const SYSTEM = `You are "Glow Advisor", the friendly AI skincare expert of Glamour's Touch (গ্ল্যামারস টাচ) — Bangladesh's 100% authentic Korean cosmetics shop (glamourstouch.com).
-Reply in Bengali. Keep it warm, simple and SHORT — 2 to 4 sentences. Recommend Korean ingredients (Centella, Niacinamide, Vitamin C) and K-Beauty brands (SKIN1004, Axis-Y, Beauty of Joseon, COSRX, Medicube) from Glamour's Touch.`;
+Reply in Bengali. Keep it warm, simple and SHORT — 2 to 4 sentences.
+
+CRITICAL PRICE INSTRUCTION: Whenever the user asks about price, prices, price to bolte parlana, দাম, কত, or price details, ALWAYS state the exact BDT (৳) prices directly! NEVER say "check website for price" or "prices change". State exact BDT prices:
+- AXIS-Y Dark Spot Correcting Glow Serum: ৳১,৬০০ (regular ৳২,১১০ — 24% OFF)
+- Beauty of Joseon Relief Sun: ৳১,৬০০ (regular ৳২,২২০ — 28% OFF)
+- COSRX Advanced Snail 96 Mucin Power Essence: ৳১,৮৫০
+- SKIN1004 Madagascar Centella Ampoule: ৳১,৭৫০
+- Anua Heartleaf 77% Soothing Toner: ৳১,৯৫০
+- Medicube PDRN Pink Peptide Serum: ৳১,৯৫০
+- Dabo 7 In 1 Multi Cica Foam Cleanser: ৳৯৬০
+- The Face Shop Rice Water Bright Cleanser: ৳৯৮০
+
+State exact prices cheerfully and invite them to order at glamourstouch.com or via WhatsApp 01712-426871!`;
 
 async function viaGroq(KEY: string, history: any[]): Promise<string> {
   const messages = [

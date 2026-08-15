@@ -35,8 +35,8 @@ const GlowAdvisor: React.FC = () => {
 
   const getSmartFallback = (query: string): string => {
     const q = query.toLowerCase();
-    if (q.includes('price') || q.includes('দাম') || q.includes('টাকা') || q.includes('কত')) {
-      return 'আমাদের পপুলার কোরিয়ান প্রোডাক্টের লাইভ অফার প্রাইস:\n• **AXIS-Y Dark Spot Glow Serum**: ৳১,৬০০ (নিয়মিত ৳২,১১০)\n• **Beauty of Joseon Relief Sun**: ৳১,৬০০ (নিয়মিত ৳২,২২০)\n• **COSRX Snail Mucin Essence**: ৳১,৮৫০\n• **SKIN1004 Centella Ampoule**: ৳১,৭৫০\n• **Anua Heartleaf Toner**: ৳১,৯৫০\n• **Dabo Cica Cleanser**: ৳৯৬০\n\nসকল প্রোডাক্টের লাইভ স্টক ও অর্ডার করতে ওয়েবসাইট ব্রাউজ করুন অথবা সরাসরি হোয়াটসঅ্যাপে চ্যাট করুন: 01712-426871 🛍️✨';
+    if (q.includes('price') || q.includes('দাম') || q.includes('টাকা') || q.includes('কত') || q.includes('parlana') || q.includes('bolte') || q.includes('lav ki') || q.includes('লাভ কি')) {
+      return 'ক্ষমা করবেন! আমাদের জনপ্রিয় অরিজিনাল কোরিয়ান প্রোডাক্টের লাইভ অফার প্রাইস তুলে ধরছি:\n• **AXIS-Y Dark Spot Glow Serum**: ৳১,৬০০ (নিয়মিত ৳২,১১০)\n• **Beauty of Joseon Relief Sun**: ৳১,৬০০ (নিয়মিত ৳২,২২০)\n• **COSRX Snail Mucin Essence**: ৳১,৮৫০\n• **SKIN1004 Centella Ampoule**: ৳১,৭৫০\n• **Anua Heartleaf Toner**: ৳১,৯৫০\n• **Dabo Cica Cleanser**: ৳৯৬০\n\nযে কোনো প্রোডাক্ট অর্ডারের জন্য ওয়েবসাইটের শপ মেনু ভিজিট করুন অথবা হোয়াটসঅ্যাপে চ্যাট করুন: 01712-426871 🛍️✨';
     }
     if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
       return 'ব্রণ দূর করতে **SKIN1004 Madagascar Centella Ampoule** (৳১,৭৫০) এবং **COSRX Salicylic Acid Cleanser** অত্যন্ত কার্যকরী! এগুলো ব্যাকটেরিয়া দূর করে জ্বালা-পোড়া কমায় ✨';
