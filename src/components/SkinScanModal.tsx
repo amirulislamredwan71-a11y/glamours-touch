@@ -22,19 +22,19 @@ interface ProductComboItem {
 
 const DEFAULT_RECOMMENDATIONS: Record<string, ProductComboItem[]> = {
   'মিশ্র': [
-    { id: '1', name: 'COSRX Salicylic Acid Daily Gentle Cleanser 150 ml', brand: 'COSRX', price: 980, market_price: 1300, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
-    { id: '2', name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml', brand: 'AXIS-Y', price: 1600, market_price: 2110, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
-    { id: '3', name: 'Beauty of Joseon Relief Sun : Rice + Probiotics 50 ml', brand: 'Beauty of Joseon', price: 1600, market_price: 2220, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true }
+    { id: '1', name: 'COSRX Salicylic Acid Daily Gentle Cleanser 150 ml', brand: 'COSRX', price: 980, market_price: 1300, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/c0ffb1a8-5ab2-4dcd-a8c0-f139ce392f3d.jpg', in_stock: true },
+    { id: '2', name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml', brand: 'AXIS-Y', price: 1600, market_price: 2110, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-0f6e7ace-61fd-478d-a76a-b98417cbf249.jpg', in_stock: true },
+    { id: '3', name: 'Beauty of Joseon Relief Sun : Rice + Probiotics 50 ml', brand: 'Beauty of Joseon', price: 1600, market_price: 2220, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-597327be-ab09-42d4-a948-dd4111c1f9b1.jpg', in_stock: true }
   ],
   'তৈলাক্ত': [
-    { id: '4', name: 'SKIN1004 Madagascar Centella Ampoule 100 ml', brand: 'SKIN1004', price: 1750, market_price: 2200, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
-    { id: '2', name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml', brand: 'AXIS-Y', price: 1600, market_price: 2110, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
-    { id: '5', name: 'SKIN1004 Hyalu-Cica Water-Fit Sun Serum 50 ml', brand: 'SKIN1004', price: 1600, market_price: 2100, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true }
+    { id: '4', name: 'SKIN1004 Madagascar Centella Ampoule 100 ml', brand: 'SKIN1004', price: 1750, market_price: 2200, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-9b9deea6-14ff-47ae-a15d-2fef7c4c5b61.jpg', in_stock: true },
+    { id: '2', name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml', brand: 'AXIS-Y', price: 1600, market_price: 2110, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-0f6e7ace-61fd-478d-a76a-b98417cbf249.jpg', in_stock: true },
+    { id: '3', name: 'Beauty of Joseon Relief Sun : Rice + Probiotics 50 ml', brand: 'Beauty of Joseon', price: 1600, market_price: 2220, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-597327be-ab09-42d4-a948-dd4111c1f9b1.jpg', in_stock: true }
   ],
   'শুষ্ক': [
-    { id: '6', name: 'The Face Shop Rice Water Bright Foaming Cleanser 150 ml', brand: 'The Face Shop', price: 980, market_price: 1400, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
-    { id: '7', name: 'COSRX Advanced Snail 96 Mucin Power Essence 100 ml', brand: 'COSRX', price: 1850, market_price: 2400, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
-    { id: '8', name: 'Beauty of Joseon Dynasty Cream 50 ml', brand: 'Beauty of Joseon', price: 1850, market_price: 2500, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true }
+    { id: '6', name: 'The Face Shop Rice Water Bright Foaming Cleanser 150 ml', brand: 'The Face Shop', price: 980, market_price: 1400, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/5949e151-4143-4c3c-b863-d978edfd0c09.jpg', in_stock: true },
+    { id: '7', name: 'COSRX Advanced Snail 96 Mucin Power Essence 100 ml', brand: 'COSRX', price: 1850, market_price: 2400, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/66280e1c-71ea-43aa-9b4f-1789f7cf01c6.jpg', in_stock: true },
+    { id: '8', name: 'Beauty of Joseon Dynasty Cream 50 ml', brand: 'Beauty of Joseon', price: 1850, market_price: 2500, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-df2c0254-9b47-4bc5-9398-4371fd08359d.jpg', in_stock: true }
   ]
 };
 
