@@ -1,4 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import fs from 'fs';
+import path from 'path';
 
 type VercelResponse = ServerResponse & {
   status: (code: number) => VercelResponse;
@@ -20,45 +22,76 @@ const json = (res: VercelResponse, code: number, obj: any) => {
   return res.status(code).send(JSON.stringify(obj));
 };
 
-function getSmartFallbackReply(query: string): string {
-  const q = query.toLowerCase();
-
-  if (q.includes('price') || q.includes('দাম') || q.includes('টাকা') || q.includes('কত') || q.includes('বলতে পারলা না') || q.includes('পারলা না')) {
-    return 'আমাদের জনপ্রিয় অরিজিনাল কোরিয়ান প্রোডাক্টের অফার প্রাইজ:\n• AXIS-Y Dark Spot Glow Serum: ৳১,৬০০ (বাজার মূল্য ৳২,১১০)\n• Beauty of Joseon Relief Sun: ৳১,৬০০ (বাজার মূল্য ৳২,২২০)\n• COSRX Advanced Snail 96 Essence: ৳১,৮৫০\n• SKIN1004 Madagascar Centella Ampoule: ৳১,৭৫০\n• Anua Heartleaf 77% Toner: ৳১,৯৫০\n• Dabo 7 In 1 Cica Cleanser: ৳৯৬০\n\nযেকোনো প্রোডাক্ট সরাসরি ওয়েবসাইটে অর্ডার করতে পারবেন অথবা হোয়াটসঅ্যাপে নক দিন: 01712-426871 🛍️✨';
-  }
-  if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
-    return 'ব্রণ ও পিম্পল দূর করার জন্য অরিজিনাল কোরিয়ান SKIN1004 Madagascar Centella Ampoule (৳১,৭৫০) এবং COSRX Salicylic Acid Cleanser অত্যন্ত কার্যকরী! এগুলো ত্বকের ব্যাকটেরিয়া ধুয়ে ফেলে জ্বালা-পোড়া কমায় ✨';
-  }
-  if (q.includes('দাগ') || q.includes('মেছতা') || q.includes('spot') || q.includes('dark') || q.includes('pigmentation')) {
-    return 'মেছতা ও ক্ষতের কালো দাগ হালকা করতে কোরিয়ান টপ সেলিং AXIS-Y Dark Spot Correcting Glow Serum (৳১,৬০০) এবং Anua Niacinamide Serum সেরা! এটি ত্বকে দৃশ্যমান উজ্জ্বলতা নিয়ে আসে 🌸';
-  }
-  if (q.includes('সানস্ক্রিন') || q.includes('sun') || q.includes('sunscreen') || q.includes('রোদে')) {
-    return 'রোদ ও ক্ষতিকর UV রশি থেকে ত্বক বাঁচাতে Beauty of Joseon Relief Sun (৳১,৬০০) এবং SKIN1004 Hyalu-Cica Sun Serum ব্যবহার করতে পারেন। এগুলো হালকা এবং ত্বকে গ্লাস গ্লো দেয় ☀️';
-  }
-  if (q.includes('শুষ্ক') || q.includes('dry') || q.includes('খসখসে') || q.includes('ময়েশ্চারাইজার')) {
-    return 'শুষ্ক ও ডিহাইড্রেটেড ত্বকের জন্য COSRX Advanced Snail 96 Mucin Essence (৳১,৮৫০) এবং Beauty of Joseon Dynasty Cream দারুণ কাজ করে। এগুলো ত্বকের ময়েশ্চার লক করে কোমল রাখে 💧';
-  }
-  if (q.includes('গ্লো') || q.includes('glow') || q.includes('উজ্জ্বল') || q.includes('glass skin')) {
-    return 'ইনস্ট্যান্ট গ্লাস গ্লো পেতে Anua Heartleaf 77% Soothing Toner (৳১,৯৫০) এবং Medicube PDRN Pink Peptide Serum (৳১,৯৫০) ব্যবহার করুন! ✨';
-  }
-
-  return "ধন্যবাদ! গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার নির্দিষ্ট ত্বকের সমস্যা অথবা পছন্দের প্রোডাক্টের নাম জানান, অথবা সরাসরি হোয়াটসঅ্যাপে (01712-426871) মেসেজ দিন 🌿";
+let cachedCatalog: any[] = [];
+function getCatalog(): any[] {
+  if (cachedCatalog.length) return cachedCatalog;
+  try {
+    const filePath = path.join(process.cwd(), 'api', 'catalog_knowledge.json');
+    if (fs.existsSync(filePath)) {
+      cachedCatalog = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+  } catch (e) {}
+  return cachedCatalog;
 }
 
-const SYSTEM = `You are "Glow Advisor", the friendly AI skincare expert of Glamour's Touch (গ্ল্যামারস টাচ) — Bangladesh's 100% authentic Korean cosmetics shop (glamourstouch.com).
-Reply in Bengali. Keep it warm, simple and SHORT — 2 to 4 sentences.
+function searchCatalogProducts(query: string): any[] {
+  const catalog = getCatalog();
+  if (!catalog.length) return [];
+  const q = query.toLowerCase().trim();
+  const words = q.split(/\s+/).filter(w => w.length > 1);
 
-CRITICAL PRICE INSTRUCTION: Whenever the user asks about price, prices, price to bolte parlana, দাম, কত, or price details, ALWAYS state the exact BDT (৳) prices directly! NEVER say "check website for price" or "prices change". State exact BDT prices:
-- AXIS-Y Dark Spot Correcting Glow Serum: ৳১,৬০০ (regular ৳২,১১০ — 24% OFF)
-- Beauty of Joseon Relief Sun: ৳১,৬০০ (regular ৳২,২২০ — 28% OFF)
-- COSRX Advanced Snail 96 Mucin Power Essence: ৳১,৮৫০
-- SKIN1004 Madagascar Centella Ampoule: ৳১,৭৫০
-- Anua Heartleaf 77% Soothing Toner: ৳১,৯৫০
-- Medicube PDRN Pink Peptide Serum: ৳১,৯৫০
-- Dabo 7 In 1 Multi Cica Foam Cleanser: ৳৯৬০
-- The Face Shop Rice Water Bright Cleanser: ৳৯৮০
+  return catalog.filter(p => {
+    const pName = p.name.toLowerCase();
+    const pBrand = p.brand.toLowerCase();
+    const pDesc = p.desc.toLowerCase();
+    return words.some(w => pName.includes(w) || pBrand.includes(w) || pDesc.includes(w));
+  }).slice(0, 4);
+}
 
-State exact prices cheerfully and invite them to order at glamourstouch.com or via WhatsApp 01712-426871!`;
+function buildBulletproofResponse(query: string): string {
+  const matches = searchCatalogProducts(query);
+  const q = query.toLowerCase();
+
+  if (matches.length > 0) {
+    let resText = `গ্ল্যামারস টাচের ১০০% অরিজিনাল কোরিয়ান প্রোডাক্ট ও উপকারিতা:\n\n`;
+    matches.forEach(p => {
+      const disc = Math.round(((p.market_price - p.price) / p.market_price) * 100);
+      resText += `🌟 **${p.name}** (${p.brand})\n`;
+      resText += `💰 **অফার প্রাইজ:** ৳${p.price} (বাজার মূল্য: ৳${p.market_price} — ${disc}% ছাড়!)\n`;
+      resText += `✨ **উপকারিতা:** ${p.desc || '১০০% অরিজিনাল কোরিয়ান ফরম্যুলা, যা ত্বকে কোনো সাইড ইফেক্ট ছাড়াই দ্রুত দৃশ্যমান গ্লো ও স্কিন ব্যারিয়ার রিপেয়ার করে।'}\n`;
+      resText += `🧴 **ব্যবহারের নিয়ম:** প্রতিদিন সকালে ও রাতে টোনারের পর হালকা হাতে ম্যাসাজ করে ব্যবহার করুন।\n\n`;
+    });
+    resText += `🛍️ অর্ডারের জন্য ওয়েবসাইটের শপ মেনু ভিজিট করুন অথবা হোয়াটসঅ্যাপে নক দিন: 01712-426871 ✨`;
+    return resText;
+  }
+
+  if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
+    return '🌟 **SKIN1004 Madagascar Centella Ampoule** (৳১,৭৫০)\n💰 **অফার প্রাইজ:** ৳১,৭৫০ (বাজার মূল্য ৳২,২০০)\n✨ **উপকারিতা:** ব্রণের লালচে ভাব, পিম্পল ব্যাকটেরিয়া এবং ত্বকের জ্বালা-পোড়া দূর করতে জাদুকরী কাজ করে।\n🧴 **ব্যবহারের নিয়ম:** মুখ ধুয়ে ২-৩ ফোঁটা দিয়ে মুখে হালকা চাপ দিয়ে বসিয়ে দিন।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ✨';
+  }
+
+  if (q.includes('দাগ') || q.includes('মেছতা') || q.includes('spot') || q.includes('dark') || q.includes('pigmentation')) {
+    return '🌟 **AXIS-Y Dark Spot Correcting Glow Serum** (৳১,৬০০)\n💰 **অফার প্রাইজ:** ৳১,৬০০ (বাজার মূল্য ৳২,১১০ — ২৪% ছাড়!)\n✨ **উপকারিতা:** ৫% নিয়াসিনামাইড ও পেঁপে এক্সট্র্যাক্ট যা ক্ষতের কালো দাগ, মেছতা ও একনে স্কার দ্রুত হালকা করে গ্লাস গ্লো নিয়ে আসে।\n🧴 **ব্যবহারের নিয়ম:** রাতে সিরাম হিসেবে নিয়মিত মুখে ব্যবহার করুন।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ✨';
+  }
+
+  if (q.includes('সানস্ক্রিন') || q.includes('sun') || q.includes('sunscreen') || q.includes('রোদে')) {
+    return '🌟 **Beauty of Joseon Relief Sun: Rice + Probiotics** (৳১,৬০০)\n💰 **অফার প্রাইজ:** ৳১,৬০০ (বাজার মূল্য ৳২,২২০ — ২৮% ছাড়!)\n✨ **উপকারিতা:** SPF50+ PA++++ ব্রড স্পেকট্রাম রোদ সুরক্ষা। ক্ষতিকর UV রশি ও ট্যান প্রতিরোধ করে এবং ত্বকে প্রাকৃতিক গ্লো দেয়।\n🧴 **ব্যবহারের নিয়ম:** বাইরে বের হওয়ার ১৫ মিনিট আগে মুখে ও ঘাড়ে লাগান।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ☀️';
+  }
+
+  return 'গ্ল্যামারস টাচে পাচ্ছেন ৫৬৩+ ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার প্রোডাক্ট! যেকোনো প্রোডাক্টের নাম বা স্কিন সমস্যা লিখে জানান (যেমন: Axis-Y, Beauty of Joseon, COSRX, Anua, Medicube, Dabo, Centella), সাথে সাথে অরিজিনাল দাম (৳), উপকারিতা ও ব্যবহারের নিয়ম পেয়ে যাবেন। সরাসরি অর্ডারে কল/হোয়াটসঅ্যাপ: 01712-426871 🌸';
+}
+
+const SYSTEM = `You are "Glow Advisor", the master AI skincare expert of Glamour's Touch (গ্ল্যামারস টাচ) — Bangladesh's 100% authentic Korean cosmetics shop (glamourstouch.com).
+Reply in Bengali. Keep it highly informative, respectful, clear and direct.
+
+CRITICAL MANDATE:
+Whenever a user asks about ANY product, price, benefits (উপকারিতা), or skincare concern, ALWAYS provide:
+1. Product Name & Brand
+2. Exact BDT Offer Price (৳) and Market Price Discount
+3. Exact Skincare Benefits (উপকারিতা) and Key Ingredients
+4. Usage Instructions (ব্যবহারের নিয়ম)
+5. Direct Order Call-to-Action (glamourstouch.com or WhatsApp 01712-426871)
+
+Never give generic excuses, never say "prices change", and never say "check website". State exact facts cheerfully!`;
 
 async function viaGroq(KEY: string, history: any[]): Promise<string> {
   const messages = [
@@ -113,7 +146,7 @@ export default async function handler(req: IncomingMessage & { method?: string }
   let reply = '';
   if (GROQ) { try { reply = await viaGroq(GROQ, history); } catch {} }
   if (!reply && GEMINI) { try { reply = await viaGemini(GEMINI, history); } catch {} }
-  if (!reply) { reply = getSmartFallbackReply(lastUserQuery); }
+  if (!reply) { reply = buildBulletproofResponse(lastUserQuery); }
 
   return json(res, 200, { reply });
 }

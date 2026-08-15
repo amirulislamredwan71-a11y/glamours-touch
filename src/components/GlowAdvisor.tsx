@@ -9,6 +9,20 @@ const GREETING =
 
 const QUICK = ['কালো দাগ দূর করার রুটিন', 'ব্রণের জন্য কী ব্যবহার করব?', 'গ্লোয়িং স্কিন চাই'];
 
+import catalogData from '../data/catalog_knowledge.json';
+
+const searchCatalogProducts = (query: string): any[] => {
+  if (!catalogData || !catalogData.length) return [];
+  const q = query.toLowerCase().trim();
+  const words = q.split(/\s+/).filter(w => w.length > 1);
+  return (catalogData as any[]).filter(p => {
+    const pName = p.name.toLowerCase();
+    const pBrand = p.brand.toLowerCase();
+    const pDesc = (p.desc || '').toLowerCase();
+    return words.some(w => pName.includes(w) || pBrand.includes(w) || pDesc.includes(w));
+  }).slice(0, 3);
+};
+
 const GlowAdvisor: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([{ role: 'model', content: GREETING }]);
@@ -34,9 +48,23 @@ const GlowAdvisor: React.FC = () => {
   };
 
   const getSmartFallback = (query: string): string => {
+    const matches = searchCatalogProducts(query);
+    if (matches.length > 0) {
+      let resText = `গ্ল্যামারস টাচের ১০০% অরিজিনাল কোরিয়ান প্রোডাক্ট ও উপকারিতা:\n\n`;
+      matches.forEach(p => {
+        const disc = Math.round(((p.market_price - p.price) / p.market_price) * 100);
+        resText += `🌟 **${p.name}** (${p.brand})\n`;
+        resText += `💰 **অফার প্রাইজ:** ৳${p.price} (বাজার মূল্য: ৳${p.market_price} — ${disc}% ছাড়!)\n`;
+        resText += `✨ **উপকারিতা:** ${p.desc || '১০০% অরিজিনাল কোরিয়ান ফরম্যুলা, যা ত্বকে কোনো সাইড ইফেক্ট ছাড়াই দ্রুত দৃশ্যমান গ্লো ও স্কিন ব্যারিয়ার রিপেয়ার করে।'}\n`;
+        resText += `🧴 **ব্যবহারের নিয়ম:** প্রতিদিন সকালে ও রাতে মুখ ধুয়ে ব্যবহার করুন।\n\n`;
+      });
+      resText += `🛍️ সরাসরি অর্ডার করতে ওয়েবসাইটের শপ মেনু ভিজিট করুন অথবা হোয়াটসঅ্যাপ করুন: 01712-426871 ✨`;
+      return resText;
+    }
+
     const q = query.toLowerCase();
     if (q.includes('price') || q.includes('দাম') || q.includes('টাকা') || q.includes('কত') || q.includes('parlana') || q.includes('bolte') || q.includes('lav ki') || q.includes('লাভ কি')) {
-      return 'ক্ষমা করবেন! আমাদের জনপ্রিয় অরিজিনাল কোরিয়ান প্রোডাক্টের লাইভ অফার প্রাইস তুলে ধরছি:\n• **AXIS-Y Dark Spot Glow Serum**: ৳১,৬০০ (নিয়মিত ৳২,১১০)\n• **Beauty of Joseon Relief Sun**: ৳১,৬০০ (নিয়মিত ৳২,২২০)\n• **COSRX Snail Mucin Essence**: ৳১,৮৫০\n• **SKIN1004 Centella Ampoule**: ৳১,৭৫০\n• **Anua Heartleaf Toner**: ৳১,৯৫০\n• **Dabo Cica Cleanser**: ৳৯৬০\n\nযে কোনো প্রোডাক্ট অর্ডারের জন্য ওয়েবসাইটের শপ মেনু ভিজিট করুন অথবা হোয়াটসঅ্যাপে চ্যাট করুন: 01712-426871 🛍️✨';
+      return 'আমাদের জনপ্রিয় অরিজিনাল কোরিয়ান প্রোডাক্টের লাইভ অফার প্রাইস:\n• **AXIS-Y Dark Spot Glow Serum**: ৳১,৬০০ (নিয়মিত ৳২,১১০ — ২৪% অফ)\n• **Beauty of Joseon Relief Sun**: ৳১,৬০০ (নিয়মিত ৳২,২২০ — ২৮% অফ)\n• **COSRX Snail Mucin Essence**: ৳১,৮৫০\n• **SKIN1004 Centella Ampoule**: ৳১,৭৫০\n• **Anua Heartleaf Toner**: ৳১,৯৫০\n• **Dabo Cica Cleanser**: ৳৯৬০\n\nযে কোনো প্রোডাক্ট অর্ডারের জন্য ওয়েবসাইটের শপ মেনু ভিজিট করুন অথবা হোয়াটসঅ্যাপে চ্যাট করুন: 01712-426871 🛍️✨';
     }
     if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
       return 'ব্রণ দূর করতে **SKIN1004 Madagascar Centella Ampoule** (৳১,৭৫০) এবং **COSRX Salicylic Acid Cleanser** অত্যন্ত কার্যকরী! এগুলো ব্যাকটেরিয়া দূর করে জ্বালা-পোড়া কমায় ✨';
@@ -53,7 +81,7 @@ const GlowAdvisor: React.FC = () => {
     if (q.includes('গ্লো') || q.includes('glow') || q.includes('উজ্জ্বল') || q.includes('glass skin')) {
       return 'গ্লাস গ্লো পেতে **Anua Heartleaf 77% Soothing Toner** (৳১,৯৫০) এবং **Medicube PDRN Pink Peptide Serum** (৳১,৯৫০) ব্যবহার করুন! ✨';
     }
-    return "গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার নির্দিষ্ট ত্বকের সমস্যা জানান অথবা সরাসরি হোয়াটসঅ্যাপে (01712-426871) যুক্ত হন 🌿";
+    return "গ্ল্যামারস টাচে পাচ্ছেন ৫৬৩+ ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার প্রোডাক্ট! যেকোনো প্রোডাক্টের নাম বা স্কিন সমস্যা লিখে জানান (যেমন: Axis-Y, Beauty of Joseon, COSRX, Anua, Medicube, Dabo, Centella), সাথে সাথে দাম (৳) ও উপকারিতা পেয়ে যাবেন 🌿";
   };
 
   const sendText = async (text: string) => {
