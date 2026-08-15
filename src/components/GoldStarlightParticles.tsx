@@ -4,9 +4,6 @@ const GoldStarlightParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    // Disable canvas particle animation on small mobile screens to maximize PageSpeed Insights TBT score
-    if (window.innerWidth < 768) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -24,15 +21,17 @@ const GoldStarlightParticles: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    const particleCount = 45;
+    // Restore original fast & vibrant golden starlight upward floating particles
+    const isMobile = width < 768;
+    const particleCount = isMobile ? 35 : 65;
     const particles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 2 + 0.6,
-      speedY: -(Math.random() * 0.15 + 0.04),
-      speedX: (Math.random() - 0.5) * 0.1,
-      opacity: Math.random() * 0.6 + 0.2,
-      pulseSpeed: Math.random() * 0.01 + 0.003,
+      size: isMobile ? Math.random() * 1.8 + 0.6 : Math.random() * 2.4 + 0.8,
+      speedY: isMobile ? -(Math.random() * 0.35 + 0.12) : -(Math.random() * 0.55 + 0.18),
+      speedX: (Math.random() - 0.5) * 0.2,
+      opacity: Math.random() * 0.7 + 0.3,
+      pulseSpeed: Math.random() * 0.02 + 0.005,
       color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
     }));
 
@@ -42,10 +41,10 @@ const GoldStarlightParticles: React.FC = () => {
       particles.forEach((p) => {
         p.y += p.speedY;
         p.x += p.speedX;
-        p.opacity += Math.sin(Date.now() * p.pulseSpeed) * 0.008;
+        p.opacity += Math.sin(Date.now() * p.pulseSpeed) * 0.012;
 
-        if (p.opacity > 0.9) p.opacity = 0.9;
-        if (p.opacity < 0.15) p.opacity = 0.15;
+        if (p.opacity > 0.95) p.opacity = 0.95;
+        if (p.opacity < 0.2) p.opacity = 0.2;
 
         if (p.y < -10) {
           p.y = height + 10;
@@ -60,7 +59,7 @@ const GoldStarlightParticles: React.FC = () => {
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
         ctx.shadowColor = '#e5b83a';
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 8;
         ctx.fill();
         ctx.restore();
       });
@@ -79,8 +78,8 @@ const GoldStarlightParticles: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[1] hidden md:block"
-      style={{ opacity: 0.7 }}
+      className="fixed inset-0 pointer-events-none z-[1]"
+      style={{ opacity: 0.85 }}
     />
   );
 };
