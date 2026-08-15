@@ -23,6 +23,10 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext',
       cssCodeSplit: true,
+      minify: 'esbuild',
+      modulePreload: {
+        polyfill: false,
+      },
       rollupOptions: {
         output: {
           manualChunks(id) {

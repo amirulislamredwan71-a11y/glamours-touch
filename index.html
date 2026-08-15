@@ -11,6 +11,11 @@
     <meta name="author" content="Glamour's Touch" />
     <link rel="canonical" href="https://glamourstouch.com" />
 
+    <!-- Critical Performance Preconnects -->
+    <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <!-- Schema Markup (JSON-LD) -->
     <script type="application/ld+json">
     {
@@ -46,15 +51,15 @@
     <meta name="twitter:description" content="100% authentic Korean skincare products। Order: 01712-426871" />
     <meta name="twitter:image" content="https://glamourstouch.com/logo.png" />
 
-    <!-- Structured Data (JSON-LD) — AI ও Google পড়তে পারবে -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Store",
       "name": "Glamour's Touch",
       "url": "https://glamourstouch.com",
-      "logo": "https://git.auraajenticai.cloud/khondokar/assets/raw/branch/main/glamours-touch/gt_logo.png",
-      "image": "https://glamourstouch.com/catalog-images/carousel-2.png",
+      "logo": "https://glamourstouch.com/logo.png",
+      "image": "https://glamourstouch.com/logo.png",
       "description": "Glamour's Touch হলো Bangladesh এর একটি premium Korean skincare shop। আমরা 100% authentic Korean beauty products বিক্রি করি।",
       "address": {
         "@type": "PostalAddress",
@@ -70,78 +75,17 @@
       },
       "sameAs": [
         "https://www.facebook.com/glamourstouch26"
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Korean Skincare Products",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "DABO All In One Black Snail Repair Cream",
-              "description": "Deep Moisturizing + Brightening + Anti-wrinkle। Korean formula, all skin types।",
-              "brand": "DABO",
-              "offers": { "@type": "Offer", "price": "980", "priceCurrency": "BDT" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Retinal Shot Tightening Booster",
-              "description": "Firm Skin। Smooth Lines। Glow Naturally।",
-              "offers": { "@type": "Offer", "price": "1300", "priceCurrency": "BDT" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Glutathione Niacinamide Facial Cream",
-              "description": "Brightening & Repairing — Radiant Even Skin।",
-              "offers": { "@type": "Offer", "price": "1000", "priceCurrency": "BDT" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Mary & May Tranexamic Acid Eye Cream",
-              "description": "Brighter Under Eyes। Reduces Dark Circles।",
-              "brand": "Mary & May",
-              "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "BDT" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Rice Ceramide Moisturizing Cream",
-              "description": "Hydrate। Nourish। Strengthen Skin Barrier।",
-              "offers": { "@type": "Offer", "price": "1050", "priceCurrency": "BDT" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Beauté Glutathione Brightening Cream",
-              "description": "Whitening & Moisturizing। Glow your skin!",
-              "offers": { "@type": "Offer", "price": "640", "priceCurrency": "BDT" }
-            }
-          }
-        ]
-      }
+      ]
     }
     </script>
 
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="v2VfcGvqs4fFmU7mfG7HIzYCUuEcvHlMjinD6k5PMpQ" />
 
-    <!-- Google Analytics 4 (GA4) — deferred to load event for zero paint blocking -->
+    <!-- Deferred Third-Party Tracking Scripts (Zero Main Thread Blocking Time) -->
     <script>
       window.addEventListener('load', function() {
+        // GA4
         var s = document.createElement('script');
         s.async = true;
         s.src = 'https://www.googletagmanager.com/gtag/js?id=G-8T7SMPMTDD';
@@ -150,30 +94,23 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-8T7SMPMTDD');
+
+        // Meta Pixel
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+          if (!f._fbq) f._fbq = n;
+          n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+          t = b.createElement(e); t.async = !0; t.src = v;
+          s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", "900500432991738");
+        fbq("init", "988182894209503");
+        fbq("track", "PageView");
       });
     </script>
 
-    <!-- Meta Pixel -->
-    <script>
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-        if (!f._fbq) f._fbq = n;
-        n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
-        t = b.createElement(e); t.async = !0; t.src = v;
-        s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-      fbq("init", "900500432991738");
-      fbq("init", "988182894209503");
-      fbq("track", "PageView");
-    </script>
-
-    <!-- Preload critical Supabase backend -->
-    <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" />
-
-    <!-- Premium display font (non-render-blocking) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-render-blocking web fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" />
@@ -188,6 +125,7 @@
     </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
     <!-- Microsoft Clarity — deferred until after page load -->
     <script>
       window.addEventListener('load', function() {
