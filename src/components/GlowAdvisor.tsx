@@ -18,6 +18,26 @@ const GlowAdvisor: React.FC = () => {
 
   useEffect(() => { scrollRef.current?.scrollTo({ top: 9e9, behavior: 'smooth' }); }, [msgs, loading, open]);
 
+  const getSmartFallback = (query: string): string => {
+    const q = query.toLowerCase();
+    if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
+      return 'ব্রণ ও পিম্পল দূর করার জন্য অরিজিনাল কোরিয়ান SKIN1004 Madagascar Centella Ampoule এবং COSRX Salicylic Acid Cleanser অত্যন্ত কার্যকরী! এগুলো ত্বকের ব্যাকটেরিয়া ধুয়ে ফেলে জ্বালা-পোড়া কমায় ✨';
+    }
+    if (q.includes('দাগ') || q.includes('মেছতা') || q.includes('spot') || q.includes('dark') || q.includes('pigmentation')) {
+      return 'মেছতা ও ক্ষতের কালো দাগ হালকা করতে কোরিয়ান টপ সেলিং AXIS-Y Dark Spot Correcting Glow Serum এবং Anua Niacinamide Serum সেরা! এটি ত্বকে দৃশ্যমান উজ্জ্বলতা নিয়ে আসে 🌸';
+    }
+    if (q.includes('সানস্ক্রিন') || q.includes('sun') || q.includes('sunscreen') || q.includes('রোদে')) {
+      return 'রোদ থেকে ত্বক বাঁচাতে Beauty of Joseon Relief Sun (SPF50+) এবং SKIN1004 Hyalu-Cica Sun Serum ব্যবহার করতে পারেন। এগুলো হালকা, ক্ষতিকারক UV আটকায় এবং ত্বকে গ্লাস গ্লো দেয় ☀️';
+    }
+    if (q.includes('শুষ্ক') || q.includes('dry') || q.includes('খসখসে') || q.includes('ময়েশ্চারাইজার')) {
+      return 'শুষ্ক ত্বকের জন্য COSRX Advanced Snail 96 Mucin Essence এবং Beauty of Joseon Dynasty Cream দারুণ কাজ করে। এগুলো ত্বকের ডিপ ময়েশ্চার লক করে কোমল রাখে 💧';
+    }
+    if (q.includes('গ্লো') || q.includes('glow') || q.includes('উজ্জ্বল') || q.includes('glass skin')) {
+      return 'ইনস্ট্যান্ট গ্লাস গ্লো ও রেডিয়েন্স পেতে Anua Heartleaf 77% Soothing Toner এবং Medicube PDRN Pink Peptide Serum ব্যবহার করুন। ১০০% আসল কোরিয়ান ফরম্যুলা আপনার ত্বককে করে তুলবে প্রাণবন্ত! ✨';
+    }
+    return "গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার ত্বকের নির্দিষ্ট সমস্যাটি জানান অথবা সরাসরি হোয়াটসঅ্যাপে (01712-426871) চ্যাট করুন 🌿";
+  };
+
   const sendText = async (text: string) => {
     const t = text.trim();
     if (!t || loading) return;
@@ -29,9 +49,9 @@ const GlowAdvisor: React.FC = () => {
         body: JSON.stringify({ messages: next }),
       });
       const d = await r.json();
-      setMsgs((m) => [...m, { role: 'model', content: d.reply || 'দুঃখিত, একটু পরে আবার চেষ্টা করুন — অথবা WhatsApp-এ লিখুন 🙏' }]);
+      setMsgs((m) => [...m, { role: 'model', content: d.reply || getSmartFallback(t) }]);
     } catch {
-      setMsgs((m) => [...m, { role: 'model', content: 'সংযোগে সমস্যা হলো — WhatsApp (01712-426871)-এ লিখুন 🙏' }]);
+      setMsgs((m) => [...m, { role: 'model', content: getSmartFallback(t) }]);
     } finally { setLoading(false); }
   };
 
