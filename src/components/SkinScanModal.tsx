@@ -19,134 +19,200 @@ interface ProductComboItem {
   image: string;
   in_stock: boolean;
   reason?: string;
+  concernKey: string;
 }
 
-const KBEAUTY_KNOWLEDGE_POOL: Record<string, ProductComboItem> = {
-  cosrx_cleanser: {
-    id: 'cb_1',
+const KBEAUTY_EXPANDED_POOL: Record<string, ProductComboItem> = {
+  // Cleansers
+  cosrx_salicylic: {
+    id: 'p_1',
     name: 'COSRX Salicylic Acid Daily Gentle Cleanser 150 ml',
     brand: 'COSRX',
     price: 980,
     market_price: 1300,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/c0ffb1a8-5ab2-4dcd-a8c0-f139ce392f3d.jpg',
     in_stock: true,
-    reason: 'পিম্পল ব্যাকটেরিয়া ও অতিরিক্ত তেল পরিষ্কার করে'
+    concernKey: 'ব্রণ',
+    reason: 'ব্রণের ব্যাকটেরিয়া ও পিম্পল দূর করে'
+  },
+  cosrx_low_ph: {
+    id: 'p_2',
+    name: 'COSRX Low pH Good Morning Gel Cleanser 150 ml',
+    brand: 'COSRX',
+    price: 950,
+    market_price: 1350,
+    image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/c0ffb1a8-5ab2-4dcd-a8c0-f139ce392f3d.jpg',
+    in_stock: true,
+    concernKey: 'পোরস',
+    reason: 'পোরস পরিষ্কার ও সিবাম ব্যালেন্স করে'
   },
   rice_cleanser: {
-    id: 'cb_2',
+    id: 'p_3',
     name: 'The Face Shop Rice Water Bright Foaming Cleanser 150 ml',
     brand: 'The Face Shop',
     price: 980,
     market_price: 1400,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/5949e151-4143-4c3c-b863-d978edfd0c09.jpg',
     in_stock: true,
-    reason: 'ত্বক খসখসে না করে উজ্জ্বল ও সফ্ট রাখে'
+    concernKey: 'শুষ্কতা',
+    reason: 'শুষ্ক ত্বককে সফট ও ব্রাইট রাখে'
   },
+  dabo_cica_cleanser: {
+    id: 'p_4',
+    name: 'Dabo 7 In 1 Multi Cica Foam Cleanser 180 ml',
+    brand: 'Dabo',
+    price: 960,
+    market_price: 1300,
+    image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg',
+    in_stock: true,
+    concernKey: 'অসমান টোন',
+    reason: '৭-ইন-১ ফরম্যুলায় ত্বক ডিপ ক্লিন করে'
+  },
+
+  // Treatments & Serums
   axisy_dark_spot: {
-    id: 'cb_3',
+    id: 'p_5',
     name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml',
     brand: 'AXIS-Y',
     price: 1600,
     market_price: 2110,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-0f6e7ace-61fd-478d-a76a-b98417cbf249.jpg',
     in_stock: true,
+    concernKey: 'মেছতা',
     reason: '৫% নিয়াসিনামাইড কালো দাগ ও মেছতা হালকা করে'
   },
+  anua_txa_serum: {
+    id: 'p_6',
+    name: 'Anua Niacinamide 10% + TXA 4% Dark Spot Serum 30 ml',
+    brand: 'Anua',
+    price: 1950,
+    market_price: 2600,
+    image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg',
+    in_stock: true,
+    concernKey: 'অসমান টোন',
+    reason: 'অসমান ত্বকের টোন ও জেদি ছোপ দাগ দূর করে'
+  },
   centella_ampoule: {
-    id: 'cb_4',
+    id: 'p_7',
     name: 'SKIN1004 Madagascar Centella Ampoule 100 ml',
     brand: 'SKIN1004',
     price: 1750,
     market_price: 2200,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-9b9deea6-14ff-47ae-a15d-2fef7c4c5b61.jpg',
     in_stock: true,
-    reason: 'ত্বকের লালচে ভাব ও ব্যারিয়ার ড্যামেজ সারায়'
+    concernKey: 'ব্রণ',
+    reason: '১০০% সেনটেলা নির্যাস লালচে ভাব ও পিম্পল শান্ত করে'
   },
   snail_mucin: {
-    id: 'cb_5',
+    id: 'p_8',
     name: 'COSRX Advanced Snail 96 Mucin Power Essence 100 ml',
     brand: 'COSRX',
     price: 1850,
     market_price: 2400,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/66280e1c-71ea-43aa-9b4f-1789f7cf01c6.jpg',
     in_stock: true,
-    reason: 'ডিপ হাইড্রেটিং ও একনে স্কার রিপেয়ার করে'
+    concernKey: 'শুষ্কতা',
+    reason: '৯৬% স্নেল মিউসিন ত্বক গভীর থেকে হাইড্রেট ও স্মুথ করে'
   },
-  anua_toner: {
-    id: 'cb_6',
-    name: 'Anua Heartleaf 77% Soothing Toner 250 ml',
-    brand: 'Anua',
+  medicube_pdrn: {
+    id: 'p_9',
+    name: 'Medicube PDRN Pink Peptide Serum 30 ml',
+    brand: 'Medicube',
     price: 1950,
-    market_price: 2500,
+    market_price: 2420,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg',
     in_stock: true,
-    reason: 'ত্বকের রেডনেস কমায় ও ইনস্ট্যান্ট গ্লাস গ্লো দেয়'
+    concernKey: 'নিস্তেজ ভাব',
+    reason: 'PDRN পেপটাইড গ্লাস গ্লো ও ত্বকের স্থিতিস্থাপকতা বাড়ায়'
   },
+
+  // Moisturizers & Sunscreens
   boj_sunscreen: {
-    id: 'cb_7',
+    id: 'p_10',
     name: 'Beauty of Joseon Relief Sun : Rice + Probiotics 50 ml',
     brand: 'Beauty of Joseon',
     price: 1600,
     market_price: 2220,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-597327be-ab09-42d4-a948-dd4111c1f9b1.jpg',
     in_stock: true,
-    reason: 'SPF50+ ব্রড স্পেকট্রাম UV রোদ সুরক্ষা ও ন্যাচারাল গ্লো'
+    concernKey: 'সান প্রোটেকশন',
+    reason: 'SPF50+ PA++++ ব্রড স্পেকট্রাম UV সুরক্ষা'
   },
   boj_dynasty: {
-    id: 'cb_8',
+    id: 'p_11',
     name: 'Beauty of Joseon Dynasty Cream 50 ml',
     brand: 'Beauty of Joseon',
     price: 1850,
     market_price: 2500,
     image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/koba-df2c0254-9b47-4bc5-9398-4371fd08359d.jpg',
     in_stock: true,
-    reason: 'ত্বককে পুষ্টি জুগিয়ে লাক্সারি সফট ময়েশ্চার দেয়'
+    concernKey: 'শুষ্কতা',
+    reason: 'ত্বকে ডিপ ময়েশ্চার ও রাজকীয় গ্লো লক করে'
   }
 };
 
-function generateDynamicCombo(scan: Scan): ProductComboItem[] {
-  const concernsStr = scan.concerns.map(c => c.name).join(' ');
-  const items: ProductComboItem[] = [];
+function generateTrulyDynamicCombo(scan: Scan): ProductComboItem[] {
+  const concerns = scan.concerns || [];
+  const selected: ProductComboItem[] = [];
+  const addedIds = new Set<string>();
 
-  // Cleanser Selection
-  if (/তৈলাক্ত|ব্রণ|পোরস/.test(scan.skinType + concernsStr)) {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.cosrx_cleanser);
+  const skinType = scan.skinType || 'মিশ্র';
+  const concernsStr = concerns.map(c => c.name).join(' ');
+
+  // 1. Select 1 Specific Cleanser based on Skin Type & Primary Concern
+  if (/তৈলাক্ত|ব্রণ/.test(skinType + concernsStr)) {
+    selected.push(KBEAUTY_EXPANDED_POOL.cosrx_salicylic);
+    addedIds.add(KBEAUTY_EXPANDED_POOL.cosrx_salicylic.id);
+  } else if (/পোরস/.test(concernsStr)) {
+    selected.push(KBEAUTY_EXPANDED_POOL.cosrx_low_ph);
+    addedIds.add(KBEAUTY_EXPANDED_POOL.cosrx_low_ph.id);
+  } else if (/অসমান টোন/.test(concernsStr)) {
+    selected.push(KBEAUTY_EXPANDED_POOL.dabo_cica_cleanser);
+    addedIds.add(KBEAUTY_EXPANDED_POOL.dabo_cica_cleanser.id);
   } else {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.rice_cleanser);
+    selected.push(KBEAUTY_EXPANDED_POOL.rice_cleanser);
+    addedIds.add(KBEAUTY_EXPANDED_POOL.rice_cleanser.id);
   }
 
-  // Treatment / Serum Selection based on concerns
-  if (/কালো দাগ|মেছতা|অসমান টোন/.test(concernsStr)) {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.axisy_dark_spot);
-  }
-  if (/ব্রণ|লালচে|ব্যারিয়ার/.test(concernsStr)) {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.centella_ampoule);
-  }
-  if (/শুষ্কতা|নিস্তেজ/.test(concernsStr) || scan.skinType === 'শুষ্ক') {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.snail_mucin);
-  }
-  if (items.length < 3) {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.anua_toner);
-  }
-
-  // Sunscreen or Cream
-  if (scan.skinType === 'শুষ্ক') {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.boj_dynasty);
-  } else {
-    items.push(KBEAUTY_KNOWLEDGE_POOL.boj_sunscreen);
-  }
-
-  // Deduplicate items
-  const uniqueItems: ProductComboItem[] = [];
-  const seenIds = new Set<string>();
-  for (const item of items) {
-    if (!seenIds.has(item.id)) {
-      seenIds.add(item.id);
-      uniqueItems.push(item);
+  // 2. Select 1 or 2 Target Treatment Serums ONLY for Detected Skin Concerns
+  for (const c of concerns) {
+    const name = c.name;
+    if (/অসমান টোন/.test(name) && !addedIds.has(KBEAUTY_EXPANDED_POOL.anua_txa_serum.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.anua_txa_serum);
+      addedIds.add(KBEAUTY_EXPANDED_POOL.anua_txa_serum.id);
+    } else if (/কালো দাগ|মেছতা/.test(name) && !addedIds.has(KBEAUTY_EXPANDED_POOL.axisy_dark_spot.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.axisy_dark_spot);
+      addedIds.add(KBEAUTY_EXPANDED_POOL.axisy_dark_spot.id);
+    } else if (/ব্রণ/.test(name) && !addedIds.has(KBEAUTY_EXPANDED_POOL.centella_ampoule.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.centella_ampoule);
+      addedIds.add(KBEAUTY_EXPANDED_POOL.centella_ampoule.id);
+    } else if (/শুষ্কতা/.test(name) && !addedIds.has(KBEAUTY_EXPANDED_POOL.snail_mucin.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.snail_mucin);
+      addedIds.add(KBEAUTY_EXPANDED_POOL.snail_mucin.id);
+    } else if (/নিস্তেজ/.test(name) && !addedIds.has(KBEAUTY_EXPANDED_POOL.medicube_pdrn.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.medicube_pdrn);
+      addedIds.add(KBEAUTY_EXPANDED_POOL.medicube_pdrn.id);
     }
   }
 
-  return uniqueItems.slice(0, 4); // Returns 2 to 4 items dynamically
+  // 3. Optional Finish Product (Sunscreen or Cream) ONLY if severe dryness or user has >2 concerns
+  if (selected.length === 1) {
+    // If only 1 product selected so far, add a relevant serum
+    if (skinType === 'শুষ্ক') {
+      selected.push(KBEAUTY_EXPANDED_POOL.snail_mucin);
+    } else {
+      selected.push(KBEAUTY_EXPANDED_POOL.axisy_dark_spot);
+    }
+  } else if (concerns.length >= 3 || skinType === 'শুষ্ক') {
+    if (skinType === 'শুষ্ক' && !addedIds.has(KBEAUTY_EXPANDED_POOL.boj_dynasty.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.boj_dynasty);
+    } else if (!addedIds.has(KBEAUTY_EXPANDED_POOL.boj_sunscreen.id)) {
+      selected.push(KBEAUTY_EXPANDED_POOL.boj_sunscreen);
+    }
+  }
+
+  // Final count will strictly be 2, 3, or 4 items depending on exact concerns!
+  return selected;
 }
 
 function resizeImage(dataUrl: string, max = 720): Promise<{ b64: string; mime: string }> {
@@ -228,7 +294,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
     } catch { setError('সমস্যা হলো, আবার চেষ্টা করুন।'); } finally { setLoading(false); }
   };
 
-  const dynamicCombo = scan ? generateDynamicCombo(scan) : [];
+  const dynamicCombo = scan ? generateTrulyDynamicCombo(scan) : [];
   const comboTotal = dynamicCombo.reduce((acc, item) => acc + item.price, 0);
 
   const handleAddSingleProduct = (p: ProductComboItem) => {
@@ -359,7 +425,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
                   {/* ── Dynamic AI Custom Routine Combo Box ── */}
                   <div className="rounded-2xl bg-[#161d22] border-2 border-gtgold/40 p-3.5 shadow-xl">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-gtgold text-[12px] font-black flex items-center gap-1.5">🧴 আপনার ত্বকের জন্য {dynamicCombo.length}-টি প্রোডাক্টের বিশেষ রুটিন কম্বো:</p>
+                      <p className="text-gtgold text-[12px] font-black flex items-center gap-1.5">🧴 আপনার ত্বকের জন্য {dynamicCombo.length}-টি প্রোডাক্টের রুটিন কম্বো:</p>
                       <span className="text-xs font-black text-white bg-gtgold/20 border border-gtgold/40 px-2 py-0.5 rounded-full">মোট ৳{comboTotal}</span>
                     </div>
 
