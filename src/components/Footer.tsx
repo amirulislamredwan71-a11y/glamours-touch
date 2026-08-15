@@ -65,8 +65,8 @@ const Footer = () => {
               Bangladesh's home for 100% authentic Korean skincare & beauty — glass-skin routines, delivered to your doorstep.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
-              <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Glamour's Touch Instagram" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
+              <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" aria-label="Glamour's Touch Facebook" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
             </div>
           </div>
 

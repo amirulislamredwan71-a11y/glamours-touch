@@ -30,6 +30,15 @@ const FlashBanner: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    banners.forEach(b => {
+      if (b.image) {
+        const img = new Image();
+        img.src = optimizeImageUrl(b.image);
+      }
+    });
+  }, [banners]);
+
+  useEffect(() => {
     if (banners.length < 2) return;
     const t = setInterval(() => setIdx(i => (i + 1) % banners.length), 4500);
     return () => clearInterval(t);
@@ -41,7 +50,7 @@ const FlashBanner: React.FC = () => {
   const img = (
     <img
       src={imgUrl}
-      alt={b.title || 'Flash Sale'}
+      alt={b.title || "Glamour's Touch Banner"}
       width="1200"
       height="450"
       fetchPriority="high"
@@ -54,11 +63,11 @@ const FlashBanner: React.FC = () => {
     <section className="bg-gtdark">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-4">
         <div className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl shadow-2xl aspect-[16/6] sm:aspect-[16/5] border-2 border-gtgold/40">
-          {b.link ? <a href={b.link} className="block w-full h-full">{img}</a> : img}
+          {b.link ? <a href={b.link} aria-label={b.title || "Glamour's Touch Special Offer"} className="block w-full h-full">{img}</a> : img}
           {banners.length > 1 && (
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-              {banners.map((_, i) => (
-                <button key={i} aria-label={`banner ${i + 1}`} onClick={() => setIdx(i)}
+              {banners.map((bn, i) => (
+                <button key={bn.id || i} aria-label={`View banner ${i + 1}: ${bn.title || 'Special Promo'}`} onClick={() => setIdx(i)}
                   className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-5 bg-gtgold shadow-md' : 'w-1.5 bg-white/50'}`} />
               ))}
             </div>
