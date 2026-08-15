@@ -1,0 +1,37 @@
+{
+  "promotions": [
+    {
+      "promotionId": "GT_KBEAUTY_DISCOUNT_2026",
+      "targetCountry": "BD",
+      "contentLanguage": "en",
+      "promotionEffectiveDates": "2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00",
+      "redemptionChannel": ["ONLINE"],
+      "title": "Up to 28% Off Authentic Korean Cosmetics & Skincare Routines",
+      "longTitle": "Get up to 28% instant discount on authentic Korean cosmetics including DABO, COSRX, AXIS-Y, Anua and Beauty of Joseon",
+      "offerType": "NO_CODE",
+      "productApplicability": "ALL_PRODUCTS"
+    },
+    {
+      "promotionId": "GT_FREE_SHIPPING_COMBO",
+      "targetCountry": "BD",
+      "contentLanguage": "en",
+      "promotionEffectiveDates": "2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00",
+      "redemptionChannel": ["ONLINE"],
+      "title": "Free Fast Home Delivery Nationwide in Bangladesh on Combo Routines",
+      "longTitle": "Enjoy 100% free cash on delivery shipping across all 64 districts in Bangladesh on AI Glow Routine Combos",
+      "offerType": "NO_CODE",
+      "productApplicability": "ALL_PRODUCTS"
+    },
+    {
+      "promotionId": "GT_DABO_SPECIAL_OFFER",
+      "targetCountry": "BD",
+      "contentLanguage": "en",
+      "promotionEffectiveDates": "2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00",
+      "redemptionChannel": ["ONLINE"],
+      "title": "Special Discount on DABO Korean Tone-Up & Black Snail Cream",
+      "longTitle": "Special promo offer on 100% original DABO Black Snail and Glutathione Brightening Tone-Up Creams",
+      "offerType": "NO_CODE",
+      "productApplicability": "ALL_PRODUCTS"
+    }
+  ]
+}

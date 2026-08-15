@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>Glamour's Touch Promotions Feed</title>
+    <link>https://glamourstouch.com</link>
+    <description>Google Merchant Center Promotions Feed for 100% Authentic Korean Cosmetics Bangladesh</description>
+
+    <!-- Promotion 1: Storewide K-Beauty Discount Offer -->
+    <item>
+      <g:promotion_id>GT_KBEAUTY_DISCOUNT_2026</g:promotion_id>
+      <g:target_country>BD</g:target_country>
+      <g:content_language>en</g:content_language>
+      <g:promotion_effective_dates>2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00</g:promotion_effective_dates>
+      <g:redemption_channel>ONLINE</g:redemption_channel>
+      <g:promotion_display_dates>2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00</g:promotion_display_dates>
+      <g:title>Up to 28% Off Authentic Korean Cosmetics &amp; Skincare Routines</g:title>
+      <g:long_title>Get up to 28% instant discount on authentic Korean cosmetics including DABO, COSRX, AXIS-Y, Anua and Beauty of Joseon</g:long_title>
+      <g:offer_type>NO_CODE</g:offer_type>
+      <g:product_applicability>ALL_PRODUCTS</g:product_applicability>
+    </item>
+
+    <!-- Promotion 2: Free Delivery on AI Custom Routine Combos -->
+    <item>
+      <g:promotion_id>GT_FREE_SHIPPING_COMBO</g:promotion_id>
+      <g:target_country>BD</g:target_country>
+      <g:content_language>en</g:content_language>
+      <g:promotion_effective_dates>2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00</g:promotion_effective_dates>
+      <g:redemption_channel>ONLINE</g:redemption_channel>
+      <g:promotion_display_dates>2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00</g:promotion_display_dates>
+      <g:title>Free Fast Home Delivery Nationwide in Bangladesh on Combo Routines</g:title>
+      <g:long_title>Enjoy 100% free cash on delivery shipping across all 64 districts in Bangladesh on AI Glow Routine Combos</g:long_title>
+      <g:offer_type>NO_CODE</g:offer_type>
+      <g:product_applicability>ALL_PRODUCTS</g:product_applicability>
+      <g:shipping_option_price>0.00 BDT</g:shipping_option_price>
+    </item>
+
+    <!-- Promotion 3: Special DABO Black Snail & Tone-Up Cream Promo -->
+    <item>
+      <g:promotion_id>GT_DABO_SPECIAL_OFFER</g:promotion_id>
+      <g:target_country>BD</g:target_country>
+      <g:content_language>en</g:content_language>
+      <g:promotion_effective_dates>2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00</g:promotion_effective_dates>
+      <g:redemption_channel>ONLINE</g:redemption_channel>
+      <g:promotion_display_dates>2026-01-01T00:00:00+06:00/2027-12-31T23:59:59+06:00</g:promotion_display_dates>
+      <g:title>Special Discount on DABO Korean Tone-Up &amp; Black Snail All-In-One Cream</g:title>
+      <g:long_title>Special promo offer on 100% original DABO Black Snail and Glutathione Brightening Tone-Up Creams</g:long_title>
+      <g:offer_type>NO_CODE</g:offer_type>
+      <g:product_applicability>ALL_PRODUCTS</g:product_applicability>
+    </item>
+  </channel>
+</rss>
