@@ -261,13 +261,12 @@ const ProductDetail = () => {
                 </div>
                 <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
               </div>
-
               <div className="flex items-baseline flex-wrap gap-3 mb-6">
-                <p className="text-3xl font-serif font-bold text-charcoal">৳{product.price.toLocaleString()}</p>
+                <p className="text-3xl md:text-5xl font-serif font-black gt-gold-shiny drop-shadow-md">৳{product.price.toLocaleString()}</p>
                 {hasDiscount && (
                   <>
-                    <span className="text-lg text-gray-400 line-through">৳{mp!.toLocaleString()}</span>
-                    <span className="text-sm font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded">-{discountPct}% OFF</span>
+                    <span className="text-xl text-white/60 font-bold line-through">৳{mp!.toLocaleString()}</span>
+                    <span className="text-xs font-black text-white bg-gradient-to-r from-pink-600 to-rose-600 border border-pink-400/40 px-3 py-1 rounded-full shadow-lg shadow-pink-500/20">-{discountPct}% OFF</span>
                   </>
                 )}
               </div>
@@ -281,43 +280,29 @@ const ProductDetail = () => {
 
               {/* Launch offer — admin-controlled via site_settings.free_delivery */}
               {freeDelivery && (
-              <div className="flex items-center gap-2.5 mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100 rounded-xl px-4 py-3">
+              <div className="flex items-center gap-2.5 mb-6 bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-amber-500/40 rounded-xl px-4 py-3">
                 <span className="text-xl">🎁</span>
-                <p className="text-sm font-bold text-orange-700 leading-snug">
-                  এই সপ্তাহে <span className="text-orange-600">ফ্রি হোম ডেলিভারি</span> — ক্যাশ অন ডেলিভারি, হাতে পেয়ে টাকা দিন!
+                <p className="text-sm font-bold text-amber-300 leading-snug">
+                  এই সপ্তাহে <span className="text-gtgold font-black">ফ্রি হোম ডেলিভারি</span> — ক্যাশ অন ডেলিভারি, হাতে পেয়ে টাকা দিন!
                 </p>
               </div>
               )}
 
               <div
-                className="prose prose-sm text-gray-600 mb-8 max-w-none"
+                className="prose prose-invert prose-sm text-white/80 mb-8 max-w-none"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
 
               {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 {soldOut ? (
-                  <button disabled
-                    className="flex-grow bg-gray-200 text-gray-500 py-5 rounded-full font-bold tracking-widest cursor-not-allowed flex items-center justify-center gap-3">
-                    SOLD OUT — বর্তমানে নেই
-                  </button>
+                  <button disabled className="w-full bg-gray-700 text-white/50 py-4 rounded-full font-black tracking-widest text-sm uppercase">SOLD OUT</button>
                 ) : (
                   <>
-                    <button onClick={() => {
-                        addToCart(product);
-                        trackEvent('AddToCart', {
-                          content_ids:  [product.id],
-                          content_name: product.name,
-                          content_type: 'product',
-                          value:        product.price,
-                          currency:     'BDT',
-                        });
-                      }}
-                      className="flex-grow bg-yellow-400 text-gray-900 py-5 rounded-full font-bold tracking-widest hover:bg-yellow-500 transition-all flex items-center justify-center gap-3 shadow-lg">
-                      <ShoppingBag size={20} /> ADD TO BAG
+                    <button onClick={() => addToCart(product)} className="flex-1 bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-black py-4 rounded-full font-black tracking-wider text-sm transition-all shadow-xl">
+                      ADD TO BAG
                     </button>
-                    <button onClick={() => { clearCart(); addToCart(product); navigate('/checkout'); }}
-                      className="flex-grow bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-full font-bold tracking-widest hover:bg-orange-600 transition-all flex items-center justify-center gap-3 shadow-lg">
+                    <button onClick={() => { clearCart(); addToCart(product); navigate('/checkout'); }} className="flex-1 gt-shiny text-black py-4 rounded-full font-black tracking-wider text-sm transition-all shadow-xl hover:scale-[1.02]">
                       BUY NOW
                     </button>
                   </>
@@ -327,18 +312,18 @@ const ProductDetail = () => {
               {showTryOn && product && <TryOnModal product={product} onClose={() => setShowTryOn(false)} />}
 
               {/* Trust badges — kill hesitation right beside the buy button */}
-              <div className="grid grid-cols-3 gap-2 mb-8">
-                <div className="flex flex-col items-center text-center gap-1.5 bg-gray-50 rounded-xl py-3 px-1">
-                  <ShieldCheck size={20} className="text-gold" />
-                  <span className="text-[10px] font-bold text-charcoal leading-tight">১০০% আসল<br />অথেন্টিক</span>
+              <div className="grid grid-cols-3 gap-3 mb-8">
+                <div className="flex flex-col items-center text-center gap-1.5 bg-[#161d22] border border-gtgold/30 rounded-xl py-3 px-1 shadow-md">
+                  <ShieldCheck size={22} className="text-gtgold" />
+                  <span className="text-[11px] font-extrabold text-white/90 leading-snug">১০০% আসল<br />অথেন্টিক</span>
                 </div>
-                <div className="flex flex-col items-center text-center gap-1.5 bg-gray-50 rounded-xl py-3 px-1">
-                  <Truck size={20} className="text-gold" />
-                  <span className="text-[10px] font-bold text-charcoal leading-tight">ক্যাশ অন<br />ডেলিভারি</span>
+                <div className="flex flex-col items-center text-center gap-1.5 bg-[#161d22] border border-gtgold/30 rounded-xl py-3 px-1 shadow-md">
+                  <Truck size={22} className="text-gtgold" />
+                  <span className="text-[11px] font-extrabold text-white/90 leading-snug">ক্যাশ অন<br />ডেলিভারি</span>
                 </div>
-                <div className="flex flex-col items-center text-center gap-1.5 bg-gray-50 rounded-xl py-3 px-1">
-                  <RefreshCw size={20} className="text-gold" />
-                  <span className="text-[10px] font-bold text-charcoal leading-tight">সহজ<br />রিটার্ন</span>
+                <div className="flex flex-col items-center text-center gap-1.5 bg-[#161d22] border border-gtgold/30 rounded-xl py-3 px-1 shadow-md">
+                  <RefreshCw size={22} className="text-gtgold" />
+                  <span className="text-[11px] font-extrabold text-white/90 leading-snug">সহজ<br />রিটার্ন</span>
                 </div>
               </div>
 
