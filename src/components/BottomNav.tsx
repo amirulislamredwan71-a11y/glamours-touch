@@ -64,33 +64,39 @@ const BottomNav = () => {
   );
 
   return (
-    <nav className="fixed bottom-2 left-3 right-3 z-50 sm:hidden bg-[#0c1015]/95 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.92)] px-2 py-1.5">
-      <div className="flex items-center justify-between">
-        {link('/', Home, 'Home', true)}
-        {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
+    <>
+      {/* Solid Dark Floor Mask — 100% seals bottom screen edge so no content peeks behind */}
+      <div className="fixed bottom-0 left-0 right-0 h-10 bg-[#0b0e11] sm:hidden z-40 pointer-events-none" />
 
-        {/* Center — Flagship Floating AI Glow Orb */}
-        <NavLink to="/glow-predictor" aria-label="AI Glow Predictor Studio" className="flex-1 flex flex-col items-center justify-center relative py-1 group">
-          {({ isActive }) => (
-            <div className="flex flex-col items-center justify-center -mt-5">
-              <span className={`w-11 h-11 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(236,72,153,0.7)] ring-4 ring-[#0a0d11] transition-transform duration-300 group-active:scale-95 ${
-                isActive ? 'scale-110 ring-gtgold shadow-[0_0_25px_rgba(229,184,58,0.9)]' : ''
-              }`} style={{ background: 'linear-gradient(135deg, #e5b83a 0%, #ec4899 50%, #8b5cf6 100%)' }}>
-                <span className="text-white font-black text-[11px] leading-none tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">AI</span>
-              </span>
-              <span className={`text-[8.5px] font-black tracking-widest mt-1 uppercase whitespace-nowrap px-1.5 py-0.5 rounded-full ${
-                isActive ? 'text-gtgold bg-gtgold/20 border border-gtgold/40 shadow-sm' : 'text-white/90 bg-black/60 border border-white/20'
-              }`}>
-                GLOW AI
-              </span>
-            </div>
-          )}
-        </NavLink>
+      {/* Floating Pill Capsule Dock — sits flush at bottom-0.5 with full 4-side gold border */}
+      <nav className="fixed bottom-0.5 left-3 right-3 z-50 sm:hidden bg-[#0c1015]/98 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.95)] px-2 py-1.5">
+        <div className="flex items-center justify-between">
+          {link('/', Home, 'Home', true)}
+          {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
 
-        {ext('https://wa.me/8801712426871', WhatsAppIcon, 'WhatsApp')}
-        {link('/track-order', Truck, 'Track')}
-      </div>
-    </nav>
+          {/* Center — Flagship Floating AI Glow Orb */}
+          <NavLink to="/glow-predictor" aria-label="AI Glow Predictor Studio" className="flex-1 flex flex-col items-center justify-center relative py-1 group">
+            {({ isActive }) => (
+              <div className="flex flex-col items-center justify-center -mt-5">
+                <span className={`w-11 h-11 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(236,72,153,0.7)] ring-4 ring-[#0a0d11] transition-transform duration-300 group-active:scale-95 ${
+                  isActive ? 'scale-110 ring-gtgold shadow-[0_0_25px_rgba(229,184,58,0.9)]' : ''
+                }`} style={{ background: 'linear-gradient(135deg, #e5b83a 0%, #ec4899 50%, #8b5cf6 100%)' }}>
+                  <span className="text-white font-black text-[11px] leading-none tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">AI</span>
+                </span>
+                <span className={`text-[8.5px] font-black tracking-widest mt-1 uppercase whitespace-nowrap px-1.5 py-0.5 rounded-full ${
+                  isActive ? 'text-gtgold bg-gtgold/20 border border-gtgold/40 shadow-sm' : 'text-white/90 bg-black/60 border border-white/20'
+                }`}>
+                  GLOW AI
+                </span>
+              </div>
+            )}
+          </NavLink>
+
+          {ext('https://wa.me/8801712426871', WhatsAppIcon, 'WhatsApp')}
+          {link('/track-order', Truck, 'Track')}
+        </div>
+      </nav>
+    </>
   );
 };
 
