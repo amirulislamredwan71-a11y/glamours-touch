@@ -21,27 +21,36 @@ const GoldStarlightParticles: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Fast, buoyant, super-responsive golden starlight upward floating particles
     const isMobile = width < 768;
     const particleCount = isMobile ? 40 : 65;
     const particles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
       size: isMobile ? Math.random() * 2.0 + 0.8 : Math.random() * 2.4 + 0.8,
-      speedY: -(Math.random() * 0.75 + 0.25), // Fast & dynamic upward velocity for both mobile & desktop
+      speedY: -(Math.random() * 0.75 + 0.25),
       speedX: (Math.random() - 0.5) * 0.25,
       opacity: Math.random() * 0.7 + 0.3,
       pulseSpeed: Math.random() * 0.02 + 0.005,
       color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
     }));
 
-    const render = () => {
+    // Exact 50 FPS Frame Rate Throttling (20ms per frame)
+    let lastTime = performance.now();
+    const fpsInterval = 1000 / 50;
+
+    const render = (now: number) => {
+      animationFrameId = requestAnimationFrame(render);
+
+      const elapsed = now - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = now - (elapsed % fpsInterval);
+
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p) => {
         p.y += p.speedY;
         p.x += p.speedX;
-        p.opacity += Math.sin(Date.now() * p.pulseSpeed) * 0.015;
+        p.opacity += Math.sin(now * p.pulseSpeed) * 0.015;
 
         if (p.opacity > 0.95) p.opacity = 0.95;
         if (p.opacity < 0.2) p.opacity = 0.2;
@@ -63,11 +72,9 @@ const GoldStarlightParticles: React.FC = () => {
         ctx.fill();
         ctx.restore();
       });
-
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', handleResize);
