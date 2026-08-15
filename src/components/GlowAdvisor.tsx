@@ -37,31 +37,22 @@ const GlowAdvisor: React.FC = () => {
 
   return (
     <>
-      {/* ── Docked "Glow Adviser • Live" bar (prototype) ── */}
+      {/* ── Floating Compact "Live Chat" button ── */}
       {!open && (
-        <motion.div
-          initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 26 }}
-          className="fixed left-2 right-2 sm:left-auto sm:right-6 sm:w-[370px] bottom-[80px] sm:bottom-6 z-[90] flex items-center justify-between gap-2 rounded-full pl-2.5 pr-1.5 py-1.5 border border-gtgold/50 backdrop-blur-md"
-          style={{ background: 'rgba(18,18,22,0.95)', boxShadow: '0 8px 25px rgba(0,0,0,0.7)' }}
+        <motion.button
+          onClick={() => setOpen(true)}
+          initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.5, type: 'spring', stiffness: 260, damping: 26 }}
+          className="fixed right-4 bottom-[76px] sm:bottom-6 z-[90] bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-black font-black text-xs px-4 py-2.5 rounded-full flex items-center gap-2 shadow-2xl hover:scale-105 transition-all group"
+          style={{ boxShadow: '0 8px 25px rgba(0,0,0,0.7)' }}
         >
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="relative shrink-0">
-              <div className="w-9 h-9 rounded-full gt-shiny flex items-center justify-center"><Headphones size={16} /></div>
-              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-[#00e676] border-2 border-black" />
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span className="text-[12px] font-bold text-white">Glow Adviser</span>
-                <span className="text-[9px] font-semibold text-[#00e676]">• Live</span>
-              </div>
-              <p className="text-[10px] text-white/55 leading-none mt-0.5 truncate">আপনার স্কিন ও প্রোডাক্ট নিয়ে প্রশ্ন করুন</p>
-            </div>
-          </div>
-          <button onClick={() => setOpen(true)} className="bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-charcoal font-black text-[12px] px-4 py-2 rounded-full flex items-center gap-1.5 shadow-lg shrink-0 transition-all">
-            <MessageCircle size={14} className="text-gtgold" /> Live Chat
-          </button>
-        </motion.div>
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00e676]"></span>
+          </span>
+          <MessageCircle size={15} className="text-gtgold group-hover:text-black transition-colors" />
+          <span>Live Chat</span>
+        </motion.button>
       )}
 
       {/* ── Chat panel (dark) ── */}
