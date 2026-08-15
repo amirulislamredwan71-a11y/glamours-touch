@@ -42,7 +42,7 @@ const GlowAdvisor: React.FC = () => {
         <motion.div
           initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 26 }}
-          className="fixed left-2 right-2 sm:left-auto sm:right-6 sm:w-[370px] bottom-[58px] sm:bottom-6 z-[90] flex items-center justify-between gap-2 rounded-full pl-2.5 pr-1.5 py-1.5 border border-gtgold/50 backdrop-blur-md"
+          className="fixed left-2 right-2 sm:left-auto sm:right-6 sm:w-[370px] bottom-[80px] sm:bottom-6 z-[90] flex items-center justify-between gap-2 rounded-full pl-2.5 pr-1.5 py-1.5 border border-gtgold/50 backdrop-blur-md"
           style={{ background: 'rgba(18,18,22,0.95)', boxShadow: '0 8px 25px rgba(0,0,0,0.7)' }}
         >
           <div className="flex items-center gap-2.5 min-w-0">
@@ -69,7 +69,7 @@ const GlowAdvisor: React.FC = () => {
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            className="fixed bottom-[72px] sm:bottom-6 left-2 right-2 sm:left-auto sm:right-6 sm:w-[380px] z-[100] rounded-3xl shadow-2xl border border-gtgold/25 flex flex-col overflow-hidden gt-card"
+            className="fixed bottom-[88px] sm:bottom-6 left-2 right-2 sm:left-auto sm:right-6 sm:w-[380px] z-[100] rounded-3xl shadow-2xl border border-gtgold/25 flex flex-col overflow-hidden gt-card"
             style={{ maxHeight: '72vh' }}
           >
             {/* Header — dark with gold-ring avatar (chatbox model) */}
