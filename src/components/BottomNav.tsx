@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Truck } from 'lucide-react';
+import { Home, Menu } from 'lucide-react';
 
 /** Official Messenger logo with brand gradient */
 const MessengerIcon = ({ size = 19 }: { size?: number; className?: string }) => (
@@ -93,7 +93,18 @@ const BottomNav = () => {
           </NavLink>
 
           {ext('https://wa.me/8801712426871', WhatsAppIcon, 'WhatsApp')}
-          {link('/track-order', Truck, 'Track')}
+
+          {/* 5th Item: MENU Drawer Button (3-Line Hamburger Icon) */}
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('gt-toggle-menu'))}
+            aria-label="Open Navigation Menu"
+            className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 text-gray-300 active:scale-95 transition-all duration-200"
+          >
+            <div className="flex flex-col items-center justify-center w-full py-1 rounded-xl hover:bg-gtgold/15 hover:text-gtgold">
+              <Menu size={19} className="text-gtgold" />
+              <span className="text-[9.5px] font-black tracking-wider uppercase text-gtgold mt-0.5">MENU</span>
+            </div>
+          </button>
         </div>
       </nav>
     </>

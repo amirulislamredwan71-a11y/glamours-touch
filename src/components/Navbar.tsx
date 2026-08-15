@@ -98,6 +98,13 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  /* Listen for BottomNav 3-Line Menu trigger */
+  React.useEffect(() => {
+    const handleToggle = () => setIsMenuOpen((prev) => !prev);
+    window.addEventListener('gt-toggle-menu', handleToggle);
+    return () => window.removeEventListener('gt-toggle-menu', handleToggle);
+  }, []);
+
   const toggleLanguage = () => i18n.changeLanguage(i18n.language === 'en' ? 'bn' : 'en');
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -144,21 +151,21 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 md:h-24 gap-2 lg:gap-4">
 
-          {/* Left Group: Hamburger + Logo + Desktop Nav Links */}
-          <div className="flex items-center gap-2 lg:gap-5 flex-shrink-0">
-            {/* Hamburger Menu Button (Three line icon) */}
+          {/* Left Group: Logo on Mobile / Hamburger+Logo+Desktop Links on Desktop */}
+          <div className="flex items-center gap-1.5 lg:gap-5 flex-shrink-0">
+            {/* Hamburger Menu Button (Visible on Desktop/Tablet header, hidden on mobile in favor of Bottom Nav Menu button) */}
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle Menu"
-              className="p-1.5 text-white/80 hover:text-gtgold transition-all duration-300">
+              className="hidden md:flex p-1.5 text-white/80 hover:text-gtgold transition-all duration-300">
               {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
 
-            {/* Logo */}
-            <Link to="/" className="group flex items-center">
-              <Logo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-md group-hover:scale-105 transition-transform duration-300" />
+            {/* Top Left Logo (Prominent on Mobile & Desktop) */}
+            <Link to="/" className="group flex items-center shrink-0 pr-1">
+              <Logo className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-[0_0_10px_rgba(229,184,58,0.7)] group-hover:scale-105 transition-transform duration-300" />
             </Link>
 
-            {/* Desktop Navigation Links (Visible on Laptop/PC screens from md: breakpoint) — 1-by-1 Gold/White Alternating Pattern */}
+            {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center gap-3 lg:gap-5 text-xs lg:text-sm font-extrabold tracking-wide">
               <Link to="/" className="gt-gold-shiny font-black hover:opacity-90 transition-opacity">
                 {t('nav.home')}
@@ -176,16 +183,16 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Center Group: Top Integrated Gold Search Bar (Takes Maximum Space on Mobile) */}
+          {/* Center Group: World-Class Expanded Top Search Bar (Fills 100% of Mobile Header Space) */}
           <div className="flex-1 max-w-full md:max-w-md xl:max-w-xl mx-1 sm:mx-3 relative">
-            <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-              <Search size={15} className="absolute left-3 text-gtgold pointer-events-none z-10" />
+            <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
+              <Search size={16} className="absolute left-3 text-gtgold pointer-events-none z-10" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
                 aria-label="Search top products"
-                className="w-full bg-[#12161a] border-2 border-gtgold focus:border-gtgold rounded-full pl-9 pr-16 sm:pr-20 py-1.5 sm:py-2 text-xs sm:text-sm text-white placeholder:text-white/90 shadow-xl focus:outline-none focus:ring-2 focus:ring-gtgold/40 transition-all font-medium"
+                className="w-full bg-[#12161a] border-2 border-gtgold/90 focus:border-gtgold rounded-full pl-9 pr-16 sm:pr-20 py-2 sm:py-2 text-xs sm:text-sm text-white placeholder:text-white/80 shadow-[0_0_15px_rgba(229,184,58,0.25)] focus:outline-none focus:ring-2 focus:ring-gtgold/50 transition-all font-semibold"
               />
               {searchQuery && (
                 <button type="button" onClick={() => { setSearchQuery(''); setShowDropdown(false); }}
