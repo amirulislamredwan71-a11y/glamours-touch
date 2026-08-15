@@ -35,13 +35,22 @@ const GoldStarlightParticles: React.FC = () => {
       color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
     }));
 
-    const render = () => {
+    let lastTime = performance.now();
+    const fpsInterval = isMobile ? 1000 / 30 : 1000 / 60;
+
+    const render = (now: number) => {
+      animationFrameId = requestAnimationFrame(render);
+
+      const elapsed = now - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = now - (elapsed % fpsInterval);
+
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p) => {
         p.y += p.speedY;
         p.x += p.speedX;
-        p.opacity += Math.sin(Date.now() * p.pulseSpeed) * 0.012;
+        p.opacity += Math.sin(now * p.pulseSpeed) * 0.012;
 
         if (p.opacity > 0.95) p.opacity = 0.95;
         if (p.opacity < 0.2) p.opacity = 0.2;
@@ -59,15 +68,13 @@ const GoldStarlightParticles: React.FC = () => {
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
         ctx.shadowColor = '#e5b83a';
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = isMobile ? 3 : 8;
         ctx.fill();
         ctx.restore();
       });
-
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', handleResize);

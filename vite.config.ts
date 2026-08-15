@@ -27,6 +27,9 @@ export default defineConfig(({ mode }) => {
       modulePreload: {
         polyfill: false,
       },
+      esbuild: {
+        drop: mode === 'production' ? ['console', 'debugger'] : [],
+      },
       rollupOptions: {
         output: {
           manualChunks(id) {
