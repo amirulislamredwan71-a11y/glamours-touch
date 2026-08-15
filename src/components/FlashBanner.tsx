@@ -7,16 +7,16 @@ interface Banner { id: string; image: string; link: string | null; title: string
 /* Initial static fallback luxury original hero banner for instant LCP paint and zero layout shift */
 const DEFAULT_HERO_BANNER: Banner = {
   id: 'default_hero',
-  image: '/catalog-images/carousel-2.webp',
-  link: '/shop',
-  title: "Glamour's Touch 100% Authentic Korean Skincare"
+  image: '/catalog-images/ai_glow_banner.webp',
+  link: '/glow-predictor',
+  title: 'AI Glow Predictor Studio - Predictive Skincare AI'
 };
 
 const FlashBanner: React.FC = () => {
   const [banners, setBanners] = useState<Banner[]>([
     DEFAULT_HERO_BANNER,
-    { id: 'default_hero_2', image: '/catalog-images/carousel-1.webp', link: '/shop', title: 'Premium K-Beauty' },
-    { id: 'default_hero_3', image: '/catalog-images/carousel-3.webp', link: '/shop', title: 'Glass Skin Glow' }
+    { id: 'default_hero_2', image: '/catalog-images/carousel-2.webp', link: '/shop', title: "Glamour's Touch Authentic Korean Skincare" },
+    { id: 'default_hero_3', image: '/catalog-images/carousel-1.webp', link: '/shop', title: 'Premium K-Beauty' }
   ]);
   const [idx, setIdx] = useState(0);
 
