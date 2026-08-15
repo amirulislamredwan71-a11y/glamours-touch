@@ -66,10 +66,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         {/* Product Image */}
         <Link to={`/product/${product.id}`} className="block w-full h-full flex items-center justify-center">
           <img
-            src={optimizeImageUrl(product.image, 400, 80)}
+            src={optimizeImageUrl(product.image, 280, 75)}
             alt={`${product.brand ? `${product.brand} ` : ''}${product.name} - Glamour's Touch`}
-            width="400"
-            height="400"
+            width="280"
+            height="280"
             loading={priority ? 'eager' : 'lazy'}
             decoding="async"
             fetchPriority={priority ? 'high' : undefined}

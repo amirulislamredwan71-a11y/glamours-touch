@@ -5,7 +5,6 @@ import { AuthProvider } from './hooks/useAuth';
 import { UIProvider } from './hooks/useUI';
 import ErrorBoundary from './components/ErrorBoundary';
 import Navbar from './components/Navbar';
-import FloatingCart from './components/FloatingCart';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import ScrollToTop from './components/ScrollToTop';
@@ -14,6 +13,7 @@ import Home from './pages/Home';
 import { useAuth } from './hooks/useAuth';
 import { useUI } from './hooks/useUI';
 
+const FloatingCart = lazy(() => import('./components/FloatingCart'));
 const GlowAdvisor = lazy(() => import('./components/GlowAdvisor'));
 
 const Shop = lazy(() => import('./pages/Shop'));
@@ -66,7 +66,7 @@ const AppContent = () => {
     <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white relative">
       <GoldStarlightParticles />
       <Navbar />
-      <FloatingCart />
+      <Suspense fallback={null}><FloatingCart /></Suspense>
       <main className="flex-grow pb-32 sm:pb-8">
         <Routes>
           <Route path="/" element={<Home />} />

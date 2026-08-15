@@ -264,7 +264,7 @@ const Home = () => {
             {featuredProducts.length > 0 ? (
               featuredProducts.map((product, idx) => (
                 <div key={product.id}>
-                  <ProductCard product={product} priority={idx < 4} />
+                  <ProductCard product={product} priority={idx < 2} />
                 </div>
               ))
             ) : (
