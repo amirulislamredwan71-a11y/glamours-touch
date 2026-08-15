@@ -18,24 +18,42 @@ const GlowAdvisor: React.FC = () => {
 
   useEffect(() => { scrollRef.current?.scrollTo({ top: 9e9, behavior: 'smooth' }); }, [msgs, loading, open]);
 
+  const formatMessageText = (text: string) => {
+    // Clean markdown asterisks for beautiful rendering
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return (
+          <strong key={index} className="font-extrabold text-gtgold">
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+      return part;
+    });
+  };
+
   const getSmartFallback = (query: string): string => {
     const q = query.toLowerCase();
+    if (q.includes('price') || q.includes('দাম') || q.includes('টাকা') || q.includes('কত')) {
+      return 'আমাদের পপুলার কোরিয়ান প্রোডাক্টের লাইভ অফার প্রাইস:\n• **AXIS-Y Dark Spot Glow Serum**: ৳১,৬০০ (নিয়মিত ৳২,১১০)\n• **Beauty of Joseon Relief Sun**: ৳১,৬০০ (নিয়মিত ৳২,২২০)\n• **COSRX Snail Mucin Essence**: ৳১,৮৫০\n• **SKIN1004 Centella Ampoule**: ৳১,৭৫০\n• **Anua Heartleaf Toner**: ৳১,৯৫০\n• **Dabo Cica Cleanser**: ৳৯৬০\n\nসকল প্রোডাক্টের লাইভ স্টক ও অর্ডার করতে ওয়েবসাইট ব্রাউজ করুন অথবা সরাসরি হোয়াটসঅ্যাপে চ্যাট করুন: 01712-426871 🛍️✨';
+    }
     if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
-      return 'ব্রণ ও পিম্পল দূর করার জন্য অরিজিনাল কোরিয়ান SKIN1004 Madagascar Centella Ampoule এবং COSRX Salicylic Acid Cleanser অত্যন্ত কার্যকরী! এগুলো ত্বকের ব্যাকটেরিয়া ধুয়ে ফেলে জ্বালা-পোড়া কমায় ✨';
+      return 'ব্রণ দূর করতে **SKIN1004 Madagascar Centella Ampoule** (৳১,৭৫০) এবং **COSRX Salicylic Acid Cleanser** অত্যন্ত কার্যকরী! এগুলো ব্যাকটেরিয়া দূর করে জ্বালা-পোড়া কমায় ✨';
     }
     if (q.includes('দাগ') || q.includes('মেছতা') || q.includes('spot') || q.includes('dark') || q.includes('pigmentation')) {
-      return 'মেছতা ও ক্ষতের কালো দাগ হালকা করতে কোরিয়ান টপ সেলিং AXIS-Y Dark Spot Correcting Glow Serum এবং Anua Niacinamide Serum সেরা! এটি ত্বকে দৃশ্যমান উজ্জ্বলতা নিয়ে আসে 🌸';
+      return 'কালো দাগ ও মেছতা হালকা করতে **AXIS-Y Dark Spot Correcting Glow Serum** (৳১,৬০০) এবং **Anua Niacinamide Serum** সেরা! নিয়মিত ব্যবহারে ত্বক দাগহীন ও উজ্জ্বল হয় 🌸';
     }
     if (q.includes('সানস্ক্রিন') || q.includes('sun') || q.includes('sunscreen') || q.includes('রোদে')) {
-      return 'রোদ থেকে ত্বক বাঁচাতে Beauty of Joseon Relief Sun (SPF50+) এবং SKIN1004 Hyalu-Cica Sun Serum ব্যবহার করতে পারেন। এগুলো হালকা, ক্ষতিকারক UV আটকায় এবং ত্বকে গ্লাস গ্লো দেয় ☀️';
+      return 'সান প্রোটেশনের জন্য **Beauty of Joseon Relief Sun** (৳১,৬০০) এবং **SKIN1004 Sun Serum** বেস্ট। এগুলো হালকা এবং ত্বকে কোনো হোয়াইট কাস্ট ফেলে না ☀️';
     }
     if (q.includes('শুষ্ক') || q.includes('dry') || q.includes('খসখসে') || q.includes('ময়েশ্চারাইজার')) {
-      return 'শুষ্ক ত্বকের জন্য COSRX Advanced Snail 96 Mucin Essence এবং Beauty of Joseon Dynasty Cream দারুণ কাজ করে। এগুলো ত্বকের ডিপ ময়েশ্চার লক করে কোমল রাখে 💧';
+      return 'শুষ্ক ত্বকে ইনস্ট্যান্ট ময়েশ্চার লক করতে **COSRX Advanced Snail Mucin Essence** (৳১,৮৫০) এবং **Beauty of Joseon Dynasty Cream** দারুণ কার্যকর 💧';
     }
     if (q.includes('গ্লো') || q.includes('glow') || q.includes('উজ্জ্বল') || q.includes('glass skin')) {
-      return 'ইনস্ট্যান্ট গ্লাস গ্লো ও রেডিয়েন্স পেতে Anua Heartleaf 77% Soothing Toner এবং Medicube PDRN Pink Peptide Serum ব্যবহার করুন। ১০০% আসল কোরিয়ান ফরম্যুলা আপনার ত্বককে করে তুলবে প্রাণবন্ত! ✨';
+      return 'গ্লাস গ্লো পেতে **Anua Heartleaf 77% Soothing Toner** (৳১,৯৫০) এবং **Medicube PDRN Pink Peptide Serum** (৳১,৯৫০) ব্যবহার করুন! ✨';
     }
-    return "গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার ত্বকের নির্দিষ্ট সমস্যাটি জানান অথবা সরাসরি হোয়াটসঅ্যাপে (01712-426871) চ্যাট করুন 🌿";
+    return "গ্ল্যামারস টাচে পাচ্ছেন ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার ও কসমেটিকস। আপনার নির্দিষ্ট ত্বকের সমস্যা জানান অথবা সরাসরি হোয়াটসঅ্যাপে (01712-426871) যুক্ত হন 🌿";
   };
 
   const sendText = async (text: string) => {
@@ -101,8 +119,8 @@ const GlowAdvisor: React.FC = () => {
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-2.5" style={{ minHeight: 240, background: '#101014' }}>
               {msgs.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user' ? 'gt-shiny rounded-br-sm' : 'bg-white/8 border border-white/10 text-white/85 rounded-bl-sm'}`}>
-                    {m.content}
+                  <div className={`max-w-[85%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user' ? 'gt-shiny text-black font-semibold rounded-br-sm' : 'bg-white/8 border border-white/10 text-white/90 rounded-bl-sm'}`}>
+                    {formatMessageText(m.content)}
                   </div>
                 </div>
               ))}
