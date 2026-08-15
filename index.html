@@ -11,11 +11,11 @@
     <meta name="author" content="Glamour's Touch" />
     <link rel="canonical" href="https://glamourstouch.com" />
 
-    <!-- Critical Performance Preconnects & Image Preload (Frame 1 Instant LCP Paint) -->
+    <!-- Critical Performance Preconnects & Ultra-Fast Hero Image Preload -->
     <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="image" href="/catalog-images/carousel-2.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/catalog-images/carousel-2.webp" fetchpriority="high" />
 
     <!-- Schema Markup (JSON-LD) -->
     <script type="application/ld+json">
@@ -125,36 +125,8 @@
       <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=988182894209503&ev=PageView&noscript=1"/>
     </noscript>
 
-    <!-- Pixel-Perfect Seamless Frame 1 Shell (Identical to React Layout for Zero Flicker) -->
-    <div id="root">
-      <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white relative">
-        <section className="pt-24 sm:pt-28 pb-4 bg-midnight-gold-dust">
-          <div className="max-w-5xl mx-auto px-3 mb-3.5 text-center">
-            <div className="py-2 px-4 rounded-full bg-[#12161a] border border-[#e5b83a]/40 backdrop-blur-md shadow-lg inline-flex items-center justify-center gap-1.5 flex-wrap">
-              <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
-                <span className="text-[#e5b83a]">GLAMOUR'S</span> <span className="text-white">TOUCH</span>
-              </span>
-              <span className="text-[#e5b83a] font-bold text-xs">•</span>
-              <span className="text-xs sm:text-sm font-bold text-white tracking-tight">বাংলাদেশের ১০০% অরিজিনাল কোরিয়ান কসমেটিকস শপ 🇰🇷</span>
-            </div>
-          </div>
-
-          <section className="bg-[#0b0e11]">
-            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-4">
-              <div className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl shadow-2xl aspect-[16/6] sm:aspect-[16/5] border-2 border-[#e5b83a]/40 bg-[#161c20]">
-                <img
-                  src="/catalog-images/carousel-2.png"
-                  alt="Glamour's Touch 100% Authentic Korean Skincare"
-                  fetchpriority="high"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </section>
-        </section>
-      </div>
-    </div>
+    <!-- Clean Standard React Root Mount Point -->
+    <div id="root"></div>
 
     <script type="module" src="/src/main.tsx"></script>
 
