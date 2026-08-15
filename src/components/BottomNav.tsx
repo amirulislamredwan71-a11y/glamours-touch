@@ -64,7 +64,7 @@ const BottomNav = () => {
   );
 
   return (
-    <nav className="fixed bottom-0 left-2 right-2 z-50 sm:hidden bg-[#0a0d11]/96 backdrop-blur-2xl border-t border-x border-gtgold/40 rounded-t-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.95)] px-2 pt-1 pb-3">
+    <nav className="fixed bottom-2 left-3 right-3 z-50 sm:hidden bg-[#0c1015]/95 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.92)] px-2 py-1.5">
       <div className="flex items-center justify-between">
         {link('/', Home, 'Home', true)}
         {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
