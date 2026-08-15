@@ -109,7 +109,7 @@ const GlowAdvisor: React.FC = () => {
           onClick={() => setOpen(true)}
           initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.5, type: 'spring', stiffness: 260, damping: 26 }}
-          className="fixed left-4 bottom-[84px] sm:bottom-6 z-[90] bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-black font-black text-xs px-4 py-2.5 rounded-full flex items-center gap-2 shadow-2xl hover:scale-105 transition-all group backdrop-blur-md"
+          className="fixed left-4 bottom-[70px] sm:bottom-6 z-[90] bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-black font-black text-xs px-4 py-2.5 rounded-full flex items-center gap-2 shadow-2xl hover:scale-105 transition-all group backdrop-blur-md"
           style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.85)' }}
         >
           <span className="relative flex h-2.5 w-2.5">
@@ -126,7 +126,7 @@ const GlowAdvisor: React.FC = () => {
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            className="fixed bottom-[96px] sm:bottom-6 left-2 right-2 sm:right-auto sm:left-6 sm:w-[380px] z-[100] rounded-3xl shadow-2xl border border-gtgold/25 flex flex-col overflow-hidden gt-card"
+            className="fixed bottom-[78px] sm:bottom-6 left-2 right-2 sm:right-auto sm:left-6 sm:w-[380px] z-[100] rounded-3xl shadow-2xl border border-gtgold/25 flex flex-col overflow-hidden gt-card"
             style={{ maxHeight: '72vh' }}
           >
             {/* Header — dark with gold-ring avatar (chatbox model) */}
