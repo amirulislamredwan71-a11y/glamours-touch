@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Camera, Upload, Loader2, Sparkles, RotateCcw, ShoppingBag, MessageCircle, Plus, Check } from 'lucide-react';
+import { X, Camera, Upload, Loader2, Sparkles, RotateCcw, ShoppingBag, MessageCircle, Plus, Check, Heart, Droplets, Sun, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../hooks/useCart';
 
 interface Scan {
-  skinType: string; glowScore: number;
+  skinType: string;
+  glowScore: number;
   concerns: { name: string; level: string }[];
-  ingredients: string[]; routine: string[]; combo: string[];
+  ingredients: string[];
+  routine: string[];
+  combo: string[];
+  lifestyleTips?: string[];
 }
 
 interface ProductComboItem {
@@ -174,7 +178,7 @@ function generateTrulyDynamicCombo(scan: Scan): ProductComboItem[] {
     addedIds.add(KBEAUTY_EXPANDED_POOL.rice_cleanser.id);
   }
 
-  // 2. Select 1 or 2 Target Treatment Serums ONLY for Detected Skin Concerns
+  // 2. Select Target Treatment Serums ONLY for Detected Skin Concerns
   for (const c of concerns) {
     const name = c.name;
     if (/অসমান টোন/.test(name) && !addedIds.has(KBEAUTY_EXPANDED_POOL.anua_txa_serum.id)) {
@@ -197,7 +201,6 @@ function generateTrulyDynamicCombo(scan: Scan): ProductComboItem[] {
 
   // 3. Optional Finish Product (Sunscreen or Cream) ONLY if severe dryness or user has >2 concerns
   if (selected.length === 1) {
-    // If only 1 product selected so far, add a relevant serum
     if (skinType === 'শুষ্ক') {
       selected.push(KBEAUTY_EXPANDED_POOL.snail_mucin);
     } else {
@@ -211,7 +214,6 @@ function generateTrulyDynamicCombo(scan: Scan): ProductComboItem[] {
     }
   }
 
-  // Final count will strictly be 2, 3, or 4 items depending on exact concerns!
   return selected;
 }
 
@@ -297,6 +299,13 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
   const dynamicCombo = scan ? generateTrulyDynamicCombo(scan) : [];
   const comboTotal = dynamicCombo.reduce((acc, item) => acc + item.price, 0);
 
+  const defaultLifestyleTips = [
+    '💧 প্রতিদিন অন্তত ২.৫ থেকে ৩ লিটার পরিষ্কার পানি পান করুন — ত্বক ভেতর থেকে সতেজ থাকবে।',
+    '🥗 অতিরিক্ত তেলে ভাজা ও মিষ্টি জাতীয় খাবার কম খান — এতে ব্রণের মাত্রা অনেক কমে যায়।',
+    '☀️ সকালে বা রোদে বের হওয়ার ১৫ মিনিট আগে অবশ্যই সানস্ক্রিন লাগান ও নিয়মিত মুখ পরিষ্কার রাখুন।'
+  ];
+  const tipsToDisplay = (scan?.lifestyleTips && scan.lifestyleTips.length > 0) ? scan.lifestyleTips : defaultLifestyleTips;
+
   const handleAddSingleProduct = (p: ProductComboItem) => {
     addToCart({
       id: p.id,
@@ -348,8 +357,8 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
             {/* Header */}
             <div className="px-4 py-3.5 flex items-center justify-between border-b border-gtgold/20" style={{ background: '#141418' }}>
               <div>
-                <span className="inline-flex items-center gap-1 text-gtgold text-[9px] font-bold tracking-[0.2em] uppercase px-2 py-0.5 rounded-full border border-gtgold/30 bg-gtgold/10 mb-1">✨ K-Beauty AI Scan</span>
-                <p className="text-white font-display font-bold leading-none">AI GLOW SKIN <span className="gt-gold-shiny">SCAN</span></p>
+                <span className="inline-flex items-center gap-1 text-gtgold text-[9px] font-bold tracking-[0.2em] uppercase px-2 py-0.5 rounded-full border border-gtgold/30 bg-gtgold/10 mb-1">✨ K-Beauty AI Holistic Care</span>
+                <p className="text-white font-display font-bold leading-none">AI GLOW SKIN <span className="gt-gold-shiny">MENTOR</span></p>
               </div>
               <button onClick={onClose} className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/70"><X size={16} /></button>
             </div>
@@ -357,7 +366,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
             <div className="p-4 overflow-y-auto">
               {!scan ? (
                 <>
-                  <p className="text-white/60 text-xs text-center mb-3">সেলফি তুলুন বা ছবি দিন — AI আপনার ত্বক বিশ্লেষণ করে <span className="text-gtgold">উপযুক্ত ডায়নামিক কম্বো</span> তৈরি করে দেবে।</p>
+                  <p className="text-white/60 text-xs text-center mb-3">সেলফি তুলুন বা ছবি দিন — AI আপনার ত্বকের অবস্থা বিশ্লেষণ করে <span className="text-gtgold">লাইফস্টাইল গাইড ও উপযুক্ত প্রোডাক্ট পরামর্শ</span> প্রদান করবে।</p>
                   {mode === 'camera' ? (
                     <div>
                       <video ref={videoRef} playsInline muted className="w-full rounded-2xl bg-black aspect-[3/4] object-cover" />
@@ -373,7 +382,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
                         <button onClick={() => setPhoto(null)} className="absolute top-2 right-2 bg-black/60 text-white p-1.5 rounded-full"><X size={15} /></button>
                       </div>
                       <button onClick={runScan} disabled={loading} className="w-full mt-3 gt-shiny py-3.5 rounded-full font-bold flex items-center justify-center gap-2 disabled:opacity-50">
-                        {loading ? <><Loader2 size={18} className="animate-spin" /> স্ক্যান হচ্ছে...</> : <><Sparkles size={18} /> Start AI Scan</>}
+                        {loading ? <><Loader2 size={18} className="animate-spin" /> স্ক্যান হচ্ছে...</> : <><Sparkles size={18} /> Start AI Care Analysis</>}
                       </button>
                     </div>
                   ) : (
@@ -398,9 +407,9 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
                       <span className="absolute inset-0 flex items-center justify-center text-gtgold font-black text-base">{scan.glowScore}</span>
                     </div>
                     <div>
-                      <p className="text-white/60 text-[11px]">আপনার ত্বকের ধরন</p>
+                      <p className="text-white/60 text-[11px]">আপনার ত্বকের বর্তমান ধরন</p>
                       <p className="text-white font-bold text-lg leading-tight">{scan.skinType}</p>
-                      <p className="text-gtgold text-[10px] font-bold uppercase tracking-wide">Glow Score {scan.glowScore}/100</p>
+                      <p className="text-gtgold text-[10px] font-bold uppercase tracking-wide">Glow Health Score {scan.glowScore}/100</p>
                     </div>
                   </div>
 
@@ -411,9 +420,24 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
                     ))}
                   </div>
 
+                  {/* ── EMPATHETIC HOLISTIC LIFESTYLE & DIET CARE ── */}
+                  <div className="mb-3.5 bg-gradient-to-r from-amber-500/10 via-gtgold/10 to-amber-500/10 border border-gtgold/30 rounded-2xl p-3">
+                    <p className="text-gtgold text-[11px] font-black uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                      <Heart size={14} className="text-rose-400 fill-rose-400" /> 🌿 আপনার ত্বকের প্রাকৃতিক যত্ন ও লাইফস্টাইল টিপস:
+                    </p>
+                    <ul className="space-y-1.5">
+                      {tipsToDisplay.map((tip, idx) => (
+                        <li key={idx} className="text-white/90 text-xs flex items-start gap-2 bg-black/20 p-2 rounded-xl border border-white/5">
+                          <span className="text-gtgold font-bold shrink-0">{idx + 1}.</span>
+                          <span className="leading-snug">{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
                   {scan.routine.length > 0 && (
                     <div className="mb-3">
-                      <p className="text-gtgold text-[11px] font-bold uppercase tracking-wide mb-1.5">সাজেস্টেড রুটিন</p>
+                      <p className="text-gtgold text-[11px] font-bold uppercase tracking-wide mb-1.5">সহজ স্কিনকেয়ার রুটিন</p>
                       <ol className="space-y-1">
                         {scan.routine.map((s, i) => (
                           <li key={i} className="text-white/75 text-xs flex gap-2"><span className="text-gtgold font-bold">{i + 1}.</span> {s}</li>
@@ -472,7 +496,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
                   </div>
 
                   <button onClick={() => { setScan(null); setPhoto(null); }} className="w-full mt-3 text-white/55 py-2 text-sm font-bold flex items-center justify-center gap-2"><RotateCcw size={14} /> আবার স্ক্যান করুন</button>
-                  <p className="text-white/35 text-[10px] text-center mt-1">⚠️ AI cosmetic guidance — চিকিৎসা নয়।</p>
+                  <p className="text-white/35 text-[10px] text-center mt-1">⚠️ AI cosmetic & lifestyle guidance — চিকিৎসকের পরামর্শের বিকল্প নয়।</p>
                 </div>
               )}
               {error && <p className="text-gtred text-xs font-bold text-center mt-3">{error}</p>}

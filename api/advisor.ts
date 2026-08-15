@@ -53,7 +53,8 @@ function buildBulletproofResponse(query: string): string {
   const q = query.toLowerCase();
 
   if (matches.length > 0) {
-    let resText = `গ্ল্যামারস টাচের ১০০% অরিজিনাল কোরিয়ান প্রোডাক্ট ও উপকারিতা:\n\n`;
+    let resText = `🌸 **ত্বকের যত্নে আমাদের পরামর্শ ও অরিজিনাল কোরিয়ান সমাধান:**\n\n`;
+    resText += `🌿 **দৈনন্দিন জীবনযাপন পরামর্শ:** পর্যাপ্ত পানি পান করুন (২.৫-৩ লিটার), মিষ্টি ও ভাজাপোড়া খাবার কমিয়ে আনুন এবং রাতে ত্বকে কেমিক্যাল না জমিয়ে ডাবল ক্লিনজিং করুন।\n\n`;
     matches.forEach(p => {
       const disc = Math.round(((p.market_price - p.price) / p.market_price) * 100);
       resText += `🌟 **${p.name}** (${p.brand})\n`;
@@ -61,37 +62,30 @@ function buildBulletproofResponse(query: string): string {
       resText += `✨ **উপকারিতা:** ${p.desc || '১০০% অরিজিনাল কোরিয়ান ফরম্যুলা, যা ত্বকে কোনো সাইড ইফেক্ট ছাড়াই দ্রুত দৃশ্যমান গ্লো ও স্কিন ব্যারিয়ার রিপেয়ার করে।'}\n`;
       resText += `🧴 **ব্যবহারের নিয়ম:** প্রতিদিন সকালে ও রাতে টোনারের পর হালকা হাতে ম্যাসাজ করে ব্যবহার করুন।\n\n`;
     });
-    resText += `🛍️ অর্ডারের জন্য ওয়েবসাইটের শপ মেনু ভিজিট করুন অথবা হোয়াটসঅ্যাপে নক দিন: 01712-426871 ✨`;
+    resText += `🛍️ সরাসরি অর্ডারের জন্য ওয়েবসাইট ভিজিট করুন অথবা হোয়াটসঅ্যাপে নক দিন: 01712-426871 ✨`;
     return resText;
   }
 
   if (q.includes('ব্রণ') || q.includes('acne') || q.includes('pimple') || q.includes('বিচি')) {
-    return '🌟 **SKIN1004 Madagascar Centella Ampoule** (৳১,৭৫০)\n💰 **অফার প্রাইজ:** ৳১,৭৫০ (বাজার মূল্য ৳২,২০০)\n✨ **উপকারিতা:** ব্রণের লালচে ভাব, পিম্পল ব্যাকটেরিয়া এবং ত্বকের জ্বালা-পোড়া দূর করতে জাদুকরী কাজ করে।\n🧴 **ব্যবহারের নিয়ম:** মুখ ধুয়ে ২-৩ ফোঁটা দিয়ে মুখে হালকা চাপ দিয়ে বসিয়ে দিন।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ✨';
+    return '🌿 **ব্রণ দূর করার প্রাকৃতিক পরামর্শ:**\n১. প্রতিদিন ৩ লিটার পানি পান করুন ও মিষ্টি/অতিরিক্ত তেলে ভাজা খাবার পরিহার করুন।\n২. রাতে তোয়ালে দিয়ে মুখ ঘষে না মুছে নরম সুতি কাপড় ব্যবহার করুন।\n\n🌟 **উপযুক্ত প্রোডাক্ট:** SKIN1004 Madagascar Centella Ampoule (৳১,৭৫০)\n💰 **অফার প্রাইজ:** ৳১,৭৫০ (বাজার মূল্য ৳২,২০০)\n✨ **উপকারিতা:** ব্রণের লালচে ভাব, পিম্পল ব্যাকটেরিয়া এবং ত্বকের জ্বালা-পোড়া শান্ত করে।\n🧴 **ব্যবহারের নিয়ম:** মুখ ধুয়ে ২-৩ ফোঁটা দিয়ে মুখে হালকা চাপ দিয়ে বসিয়ে দিন।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ✨';
   }
 
   if (q.includes('দাগ') || q.includes('মেছতা') || q.includes('spot') || q.includes('dark') || q.includes('pigmentation')) {
-    return '🌟 **AXIS-Y Dark Spot Correcting Glow Serum** (৳১,৬০০)\n💰 **অফার প্রাইজ:** ৳১,৬০০ (বাজার মূল্য ৳২,১১০ — ২৪% ছাড়!)\n✨ **উপকারিতা:** ৫% নিয়াসিনামাইড ও পেঁপে এক্সট্র্যাক্ট যা ক্ষতের কালো দাগ, মেছতা ও একনে স্কার দ্রুত হালকা করে গ্লাস গ্লো নিয়ে আসে।\n🧴 **ব্যবহারের নিয়ম:** রাতে সিরাম হিসেবে নিয়মিত মুখে ব্যবহার করুন।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ✨';
+    return '🌿 **দাগ ও মেছতা হালকা করার প্রাকৃতিক পরামর্শ:**\n১. রোদে বের হওয়ার ১৫ মিনিট আগে অবশ্যই সানস্ক্রিন ব্যবহার করুন (সূর্যের আল্ট্রাভায়োলেট রশ্মি দাগ বাড়িয়ে দেয়)।\n২. ত্বকের ব্যারিয়ার ড্যামেজ রোধ করতে রাতে মাইল্ড ক্লিনজার ব্যবহার করুন।\n\n🌟 **উপযুক্ত প্রোডাক্ট:** AXIS-Y Dark Spot Correcting Glow Serum (৳১,৬০০)\n💰 **অফার প্রাইজ:** ৳১,৬০০ (বাজার মূল্য ৳২,১১০ — ২৪% ছাড়!)\n✨ **উপকারিতা:** ৫% নিয়াসিনামাইড ও পেঁপে এক্সট্র্যাক্ট যা ক্ষতের কালো দাগ, মেছতা ও একনে স্কার দ্রুত হালকা করে।\n🧴 **ব্যবহারের নিয়ম:** রাতে সিরাম হিসেবে নিয়মিত মুখে ব্যবহার করুন।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ✨';
   }
 
-  if (q.includes('সানস্ক্রিন') || q.includes('sun') || q.includes('sunscreen') || q.includes('রোদে')) {
-    return '🌟 **Beauty of Joseon Relief Sun: Rice + Probiotics** (৳১,৬০০)\n💰 **অফার প্রাইজ:** ৳১,৬০০ (বাজার মূল্য ৳২,২২০ — ২৮% ছাড়!)\n✨ **উপকারিতা:** SPF50+ PA++++ ব্রড স্পেকট্রাম রোদ সুরক্ষা। ক্ষতিকর UV রশি ও ট্যান প্রতিরোধ করে এবং ত্বকে প্রাকৃতিক গ্লো দেয়।\n🧴 **ব্যবহারের নিয়ম:** বাইরে বের হওয়ার ১৫ মিনিট আগে মুখে ও ঘাড়ে লাগান।\n\n🛍️ ওয়েবসাইট বা হোয়াটসঅ্যাপে অর্ডার করুন: 01712-426871 ☀️';
-  }
-
-  return 'গ্ল্যামারস টাচে পাচ্ছেন ৫৬৩+ ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার প্রোডাক্ট! যেকোনো প্রোডাক্টের নাম বা স্কিন সমস্যা লিখে জানান (যেমন: Axis-Y, Beauty of Joseon, COSRX, Anua, Medicube, Dabo, Centella), সাথে সাথে অরিজিনাল দাম (৳), উপকারিতা ও ব্যবহারের নিয়ম পেয়ে যাবেন। সরাসরি অর্ডারে কল/হোয়াটসঅ্যাপ: 01712-426871 🌸';
+  return 'গ্ল্যামারস টাচে আপনাকে স্বাগতম! 🌸 আমরা শুধু প্রোডাক্ট বিক্রি করি না, কাস্টমারের ত্বকের সত্যিকারের যত্ন ও সঠিক পরামর্শ দেওয়া আমাদের মূল লক্ষ্য। যেকোনো স্কিন সমস্যা (ব্রণ, দাগ, শুষ্কতা, পোরস) নিয়ে প্রশ্ন করুন, পেয়ে যাবেন প্রাকৃতিক পরামর্শ ও ১০০% অরিজিনাল কোরিয়ান সমাধানের সঠিক দাম (৳)। অর্ডারে কল/হোয়াটসঅ্যাপ: 01712-426871 ✨';
 }
 
-const SYSTEM = `You are "Glow Advisor", the master AI skincare expert of Glamour's Touch (গ্ল্যামারস টাচ) — Bangladesh's 100% authentic Korean cosmetics shop (glamourstouch.com).
-Reply in Bengali. Keep it highly informative, respectful, clear and direct.
+const SYSTEM = `You are "Glow Advisor", a compassionate, world-class K-Beauty skincare mentor & holistic health advisor for Glamour's Touch (glamourstouch.com).
+Your primary goal is NOT just selling products — your core mission is TRULY HELPING PEOPLE heal their skin, build healthy skincare habits, and feel confident.
 
-CRITICAL MANDATE:
-Whenever a user asks about ANY product, price, benefits (উপকারিতা), or skincare concern, ALWAYS provide:
-1. Product Name & Brand
-2. Exact BDT Offer Price (৳) and Market Price Discount
-3. Exact Skincare Benefits (উপকারিতা) and Key Ingredients
-4. Usage Instructions (ব্যবহারের নিয়ম)
-5. Direct Order Call-to-Action (glamourstouch.com or WhatsApp 01712-426871)
-
-Never give generic excuses, never say "prices change", and never say "check website". State exact facts cheerfully!`;
+Rules for your responses:
+1. Always reply in warm, respectful, empathetic Bengali.
+2. Provide HOLISTIC ADVICE FIRST: Include natural lifestyle tips (hydration 2.5-3L water, avoiding excess sugar/oily foods for acne, 8-hour sleep, stress reduction, double cleansing, sun protection, patch testing).
+3. If recommending products, ALWAYS state the exact BDT Price (৳), exact Benefits (উপকারিতা), and clear Usage Instructions (ব্যবহারের নিয়ম).
+4. Be honest: Recommend simple 1-2 product routines if that's all the person needs. Never force unnecessary products.
+5. If the user has severe cystic acne, eczema, or painful skin infections, gently advise consulting a professional dermatologist.`;
 
 async function viaGroq(KEY: string, history: any[]): Promise<string> {
   const messages = [
