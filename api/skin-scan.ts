@@ -14,12 +14,12 @@ function readBody(req: IncomingMessage): Promise<any> {
     req.on('error', reject);
   });
 }
+
 const json = (res: VercelResponse, code: number, obj: any) => {
   res.setHeader('Content-Type', 'application/json');
   return res.status(code).send(JSON.stringify(obj));
 };
 
-// AI Skin Scan — Gemini vision analyzes a real face → personalized skin analysis + Korean routine + combo.
 export default async function handler(req: IncomingMessage & { method?: string }, res: VercelResponse) {
   if (req.method !== 'POST') return json(res, 405, { error: 'POST only' });
   const KEY = process.env.GEMINI_API_KEY;
@@ -32,15 +32,15 @@ export default async function handler(req: IncomingMessage & { method?: string }
   if (!imageData) return json(res, 400, { error: 'imageBase64 required' });
 
   const prompt =
-    `You are a friendly Korean-skincare AI analyzing a real person's face photo for Glamour's Touch (glamourstouch.com). ` +
-    `Assess ONLY what is visibly present on the skin and respond with ONLY minified JSON, no markdown, exactly: ` +
+    `You are a master Korean-skincare AI analyzing a face photo for Glamour's Touch (glamourstouch.com). ` +
+    `Assess visibly present skin condition and respond with ONLY minified JSON, no markdown, exactly: ` +
     `{"skinType":"<Bangla: শুষ্ক | তৈলাক্ত | মিশ্র | স্বাভাবিক>", ` +
-    `"glowScore":<int 40-85, current visible skin health>, ` +
-    `"concerns":[{"name":"<Bangla concern e.g. কালো দাগ / শুষ্কতা / ব্রণ / অসমান টোন / বড় পোরস / নিস্তেজ ভাব>","level":"<কম | মাঝারি | বেশি>"}] (2-4 items), ` +
-    `"ingredients":["<Bangla Korean active that helps>"] (2-3, e.g. নিয়াসিনামাইড, হায়ালুরোনিক অ্যাসিড, সেন্টেলা, PDRN, ভিটামিন সি), ` +
-    `"routine":["<Bangla step>"] (exactly 3 short morning/night steps), ` +
-    `"combo":["<Bangla product-type>"] (exactly 3 items = a suggested 1-month routine combo)}. ` +
-    `All text fields in Bangla. Be honest, encouraging and NON-diagnostic (this is cosmetic guidance, not medical).`;
+    `"glowScore":<int 40-85, visible skin health score>, ` +
+    `"concerns":[{"name":"<Bangla concern e.g. মেছতা ও দাগ / ব্রণ / অসমান টোন / পোরস / শুষ্কতা>","level":"<কম | মাঝারি | বেশি>"}] (2-4 items), ` +
+    `"ingredients":["<Bangla active>"] (e.g. সেন্টেলা, নিয়াসিনামাইড, স্নেল মিউসিন, ভিটামিন সি, পেপটাইড), ` +
+    `"routine":["<Bangla routine step>"] (3 steps), ` +
+    `"combo":["<Exact Authentic Korean Product Name with Price BDT>"] (exactly 3 items e.g. "COSRX Salicylic Cleanser (৳৯৮০)", "AXIS-Y Dark Spot Serum (৳১,৬০০)", "Beauty of Joseon Sunscreen (৳১,৬০০)")}. ` +
+    `All text fields in Bangla. Be honest and encouraging.`;
 
   try {
     const r = await fetch(
@@ -65,7 +65,7 @@ export default async function handler(req: IncomingMessage & { method?: string }
       concerns: (Array.isArray(parsed.concerns) ? parsed.concerns : []).slice(0, 4).map((c: any) => ({ name: String(c.name || '').slice(0, 40), level: String(c.level || '').slice(0, 12) })).filter((c: any) => c.name),
       ingredients: (Array.isArray(parsed.ingredients) ? parsed.ingredients : []).slice(0, 3).map((x: any) => String(x).slice(0, 40)).filter(Boolean),
       routine: (Array.isArray(parsed.routine) ? parsed.routine : []).slice(0, 3).map((x: any) => String(x).slice(0, 80)).filter(Boolean),
-      combo: (Array.isArray(parsed.combo) ? parsed.combo : []).slice(0, 3).map((x: any) => String(x).slice(0, 60)).filter(Boolean),
+      combo: (Array.isArray(parsed.combo) ? parsed.combo : []).slice(0, 3).map((x: any) => String(x).slice(0, 80)).filter(Boolean),
     };
     return json(res, 200, out);
   } catch (e: any) {

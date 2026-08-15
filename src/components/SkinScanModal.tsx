@@ -1,12 +1,42 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Camera, Upload, Loader2, Sparkles, RotateCcw, ShoppingBag } from 'lucide-react';
+import { X, Camera, Upload, Loader2, Sparkles, RotateCcw, ShoppingBag, MessageCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../hooks/useCart';
 
 interface Scan {
   skinType: string; glowScore: number;
   concerns: { name: string; level: string }[];
   ingredients: string[]; routine: string[]; combo: string[];
 }
+
+interface ProductComboItem {
+  id: string;
+  name: string;
+  brand: string;
+  price: number;
+  market_price: number;
+  image: string;
+  in_stock: boolean;
+}
+
+const DEFAULT_RECOMMENDATIONS: Record<string, ProductComboItem[]> = {
+  'মিশ্র': [
+    { id: '1', name: 'COSRX Salicylic Acid Daily Gentle Cleanser 150 ml', brand: 'COSRX', price: 980, market_price: 1300, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
+    { id: '2', name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml', brand: 'AXIS-Y', price: 1600, market_price: 2110, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
+    { id: '3', name: 'Beauty of Joseon Relief Sun : Rice + Probiotics 50 ml', brand: 'Beauty of Joseon', price: 1600, market_price: 2220, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true }
+  ],
+  'তৈলাক্ত': [
+    { id: '4', name: 'SKIN1004 Madagascar Centella Ampoule 100 ml', brand: 'SKIN1004', price: 1750, market_price: 2200, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
+    { id: '2', name: 'AXIS-Y Dark Spot Correcting Glow Serum 50 ml', brand: 'AXIS-Y', price: 1600, market_price: 2110, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
+    { id: '5', name: 'SKIN1004 Hyalu-Cica Water-Fit Sun Serum 50 ml', brand: 'SKIN1004', price: 1600, market_price: 2100, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true }
+  ],
+  'শুষ্ক': [
+    { id: '6', name: 'The Face Shop Rice Water Bright Foaming Cleanser 150 ml', brand: 'The Face Shop', price: 980, market_price: 1400, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
+    { id: '7', name: 'COSRX Advanced Snail 96 Mucin Power Essence 100 ml', brand: 'COSRX', price: 1850, market_price: 2400, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true },
+    { id: '8', name: 'Beauty of Joseon Dynasty Cream 50 ml', brand: 'Beauty of Joseon', price: 1850, market_price: 2500, image: 'https://fmcltrjnuvuooarkvufn.supabase.co/storage/v1/object/public/products/product-images/a90f97eb-3c8d-4d81-b8f1-cd063b0b48ce.jpg', in_stock: true }
+  ]
+};
 
 function resizeImage(dataUrl: string, max = 720): Promise<{ b64: string; mime: string }> {
   return new Promise((resolve) => {
@@ -36,6 +66,9 @@ interface SkinScanModalProps {
 
 const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) => {
   const isModalOpen = Boolean(open ?? isOpen);
+  const navigate = useNavigate();
+  const { addToCart, clearCart } = useCart();
+
   const [mode, setMode] = useState<'idle' | 'camera'>('idle');
   const [photo, setPhoto] = useState<string | null>(null);
   const [scan, setScan] = useState<Scan | null>(null);
@@ -80,7 +113,35 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
     } catch { setError('সমস্যা হলো, আবার চেষ্টা করুন।'); } finally { setLoading(false); }
   };
 
-  const comboMsg = scan ? `আমার AI Skin Scan অনুযায়ী (${scan.skinType}) ১ মাসের রুটিন কম্বো অর্ডার করতে চাই: ${scan.combo.join(', ')}` : '';
+  const getRecommendedProducts = (): ProductComboItem[] => {
+    if (!scan) return DEFAULT_RECOMMENDATIONS['মিয়াল'] || DEFAULT_RECOMMENDATIONS['মিশ্র'];
+    return DEFAULT_RECOMMENDATIONS[scan.skinType] || DEFAULT_RECOMMENDATIONS['মিশ্র'];
+  };
+
+  const handleBuyRoutineOnWebsite = () => {
+    const prods = getRecommendedProducts();
+    clearCart();
+    prods.forEach(p => {
+      addToCart({
+        id: p.id,
+        name: p.name,
+        brand: p.brand,
+        price: p.price,
+        market_price: p.market_price,
+        image: p.image,
+        in_stock: p.in_stock,
+        rating: 5,
+        reviews: 42,
+        category: 'Skincare',
+        description: 'AI Skin Scan Recommended Routine Product'
+      });
+    });
+    onClose();
+    navigate('/checkout');
+  };
+
+  const recommendedProds = getRecommendedProducts();
+  const comboMsg = scan ? `আমার AI Skin Scan অনুযায়ী (${scan.skinType}) ১ মাসের রুটিন কম্বো অর্ডার করতে চাই: ${recommendedProds.map(p => `${p.name} (৳${p.price})`).join(', ')}` : '';
 
   return (
     <AnimatePresence>
@@ -167,14 +228,26 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
                     </div>
                   )}
 
-                  <div className="rounded-xl bg-gtgold/10 border border-gtgold/25 p-3">
-                    <p className="text-gtgold text-[11px] font-bold mb-1.5">🧴 আপনার জন্য ১-মাসের কম্বো:</p>
-                    <div className="flex flex-wrap gap-1.5 mb-2.5">
-                      {scan.combo.map((c, i) => <span key={i} className="text-[11px] bg-white/10 text-white/85 px-2.5 py-1 rounded-full border border-white/10">{c}</span>)}
+                  <div className="rounded-2xl bg-[#161d22] border-2 border-gtgold/40 p-3.5 shadow-xl">
+                    <p className="text-gtgold text-[12px] font-black mb-2 flex items-center gap-1.5">🧴 আপনার ত্বকের অরিজিনাল ১-মাসের কম্বো:</p>
+                    <div className="space-y-2 mb-3">
+                      {recommendedProds.map((p, i) => (
+                        <div key={i} className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-2 text-xs">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="w-5 h-5 rounded-full bg-gtgold/20 text-gtgold font-black text-[10px] flex items-center justify-center shrink-0">{i + 1}</span>
+                            <span className="text-white font-bold truncate">{p.name}</span>
+                          </div>
+                          <span className="text-gtgold font-black shrink-0 ml-2">৳{p.price}</span>
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex gap-2">
-                      <a href={`https://wa.me/8801712426871?text=${encodeURIComponent(comboMsg)}`} target="_blank" rel="noopener noreferrer" className="flex-1 text-center gt-shiny py-2.5 rounded-full font-bold text-sm flex items-center justify-center gap-1.5"><ShoppingBag size={15} /> Buy Routine</a>
-                      <a href="/shop" className="flex-1 text-center bg-white/10 border border-white/15 text-white py-2.5 rounded-full font-bold text-sm">Shop</a>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <button onClick={handleBuyRoutineOnWebsite} className="flex-1 gt-shiny text-black py-3 rounded-full font-black text-xs uppercase flex items-center justify-center gap-1.5 shadow-lg">
+                        <ShoppingBag size={16} /> ওয়েবসাইটে চেকআউট করুন
+                      </button>
+                      <a href={`https://wa.me/8801712426871?text=${encodeURIComponent(comboMsg)}`} target="_blank" rel="noopener noreferrer" className="flex-1 text-center bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg">
+                        <MessageCircle size={16} /> WhatsApp Order
+                      </a>
                     </div>
                   </div>
 
