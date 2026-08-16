@@ -183,33 +183,33 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Center Group: World-Class Expanded Top Search Bar (Fills 100% of Mobile Header Space) */}
-          <div className="flex-1 max-w-full md:max-w-md xl:max-w-xl mx-1 sm:mx-3 relative">
+          {/* Center Group: World-Class Expanded Top Search Bar (Fills 100% of Available Header Space) */}
+          <div className="flex-1 max-w-full md:max-w-xl xl:max-w-3xl mx-1 sm:mx-4 relative">
             <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
-              <Search size={16} className="absolute left-3 text-gtgold pointer-events-none z-10" />
+              <Search size={17} className="absolute left-3.5 text-gtgold pointer-events-none z-10" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
                 aria-label="Search top products"
-                className="w-full bg-[#12161a] border-2 border-gtgold/90 focus:border-gtgold rounded-full pl-9 pr-16 sm:pr-20 py-2 sm:py-2 text-xs sm:text-sm text-white placeholder:text-white/80 shadow-[0_0_15px_rgba(229,184,58,0.25)] focus:outline-none focus:ring-2 focus:ring-gtgold/50 transition-all font-semibold"
+                className="w-full h-[40px] sm:h-[44px] bg-[#12161a] border border-gtgold/40 focus:border-gtgold rounded-full pl-9 sm:pl-10 pr-20 sm:pr-24 text-xs sm:text-sm text-white placeholder:text-white/80 shadow-[0_0_12px_rgba(229,184,58,0.2)] focus:shadow-[0_0_20px_rgba(229,184,58,0.4)] focus:outline-none focus:ring-2 focus:ring-gtgold/50 transition-all font-semibold tracking-wide backdrop-blur-md"
               />
               {searchQuery && (
                 <button type="button" onClick={() => { setSearchQuery(''); setShowDropdown(false); }}
-                  className="absolute right-14 sm:right-16 text-white/50 hover:text-white z-10">
+                  className="absolute right-18 sm:right-22 text-white/50 hover:text-white z-10">
                   <X size={14} />
                 </button>
               )}
-              <div className="absolute right-1 flex items-center gap-1 z-10">
+              <div className="absolute right-1.5 flex items-center gap-1.5 z-10">
                 {/* Voice Mic Button */}
                 <button type="button" onClick={startVoiceSearch} title="ভয়েস সার্চ করুন"
-                  className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-white flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30' : ''}`}>
-                  <Mic size={13} className="text-white" />
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#161d22] border border-gtgold/60 text-white flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20 ${listening ? 'animate-pulse bg-gtgold/30 border-gtgold' : ''}`}>
+                  <Mic size={14} className="text-white" />
                 </button>
                 {/* Camera AI Scan Button */}
                 <button type="button" onClick={() => setScanOpen(true)} title="AI Skin Scan — মুখ স্ক্যান করুন"
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#161d22] border border-gtgold text-white flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
-                  <Camera size={13} className="text-white" />
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#161d22] border border-gtgold/60 text-white flex items-center justify-center shadow-md active:scale-90 transition-all hover:bg-gtgold/20">
+                  <Camera size={14} className="text-white" />
                 </button>
               </div>
             </form>
