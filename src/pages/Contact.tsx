@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Globe, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram, Globe, Send, CheckCircle2, MessageSquare } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 
@@ -19,7 +19,7 @@ const Contact = () => {
     try {
       await supabase.from('contact_messages').insert(formData);
       setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch (err) {
       console.error('Contact form error:', err);
     } finally {
@@ -28,140 +28,143 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#0a0a0c] text-white min-h-screen">
       <SEO
         title="যোগাযোগ করুন — Contact Us"
         description="Glamour's Touch এ যোগাযোগ করুন। 📞 01712-426871 | 💬 WhatsApp: +880 1712-426871 | Facebook: glamourstouch26। Korean skincare order এবং inquiry এর জন্য।"
         url="/contact"
       />
-      {/* Hero Section */}
-      <section className="relative py-32 bg-charcoal text-cream overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img 
-            src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=1920" 
-            alt="Contact Hero" 
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-        </div>
+
+      {/* Hero Section (Pure Royal Dark Gradient - No generic stock images) */}
+      <section className="relative py-20 bg-gradient-to-b from-[#0a0a0c] via-[#121418] to-[#0a0a0c] text-white border-b border-gtgold/20 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-gold font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Connect with Us</span>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8">Get in <span className="text-gold">Touch</span></h1>
-            <p className="text-xl max-w-3xl mx-auto font-light text-gray-300 leading-relaxed">
-              We're here to help you on your beauty journey. Whether you have a question about our products or just want to say hello, we'd love to hear from you.
+            <span className="text-gtgold font-bold tracking-[0.3em] uppercase text-xs mb-3 block">Connect with Us</span>
+            <h1 className="text-4xl md:text-6xl font-serif font-extrabold mb-5">Get in <span className="text-gtgold">Touch</span></h1>
+            <p className="text-base md:text-lg max-w-2xl mx-auto font-normal text-gray-300 leading-relaxed">
+              আপনার যেকোনো স্কিনকেয়ার জিজ্ঞাসা, প্রোডাক্ট সম্পর্কিত তথ্য বা অর্ডারের জন্য আমাদের জানান। গ্ল্যামারস টাচ বিউটি টিম আপনার সহায়তায় ২৪/৭ নিয়োজিত।
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            {/* Contact Form Container (Ultra-luxurious 24K Dark Glass Form) */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="bg-cream p-10 rounded-3xl shadow-sm"
+              className="bg-[#121216]/90 border border-gtgold/30 p-8 sm:p-10 rounded-3xl shadow-2xl backdrop-blur-md"
             >
               {isSubmitted ? (
                 <div className="h-full flex flex-col items-center justify-center text-center py-12">
-                  <div className="w-20 h-20 bg-gold/10 text-gold rounded-full flex items-center justify-center mb-6">
+                  <div className="w-20 h-20 bg-gtgold/20 text-gtgold rounded-full flex items-center justify-center mb-6 border border-gtgold/40">
                     <CheckCircle2 size={48} />
                   </div>
-                  <h2 className="text-3xl font-serif font-bold text-charcoal mb-4">Message Sent!</h2>
-                  <p className="text-gray-500 mb-8">Thank you for reaching out. Our beauty experts will get back to you within 24 hours.</p>
+                  <h2 className="text-3xl font-serif font-bold text-white mb-4">Message Sent!</h2>
+                  <p className="text-gray-300 mb-8">ধন্যবাদ! আপনার বার্তাটি আমাদের টিমের কাছে সফলভাবে পৌঁছেছে। আমরা ২৪ ঘণ্টার মধ্যে আপনার সাথে যোগাযোগ করব।</p>
                   <button 
                     onClick={() => setIsSubmitted(false)}
-                    className="text-gold font-bold hover:underline"
+                    className="text-gtgold font-bold hover:underline"
                   >
-                    SEND ANOTHER MESSAGE
+                    আরেকটি বার্তা পাঠান
                   </button>
                 </div>
               ) : (
                 <>
-                  <h2 className="text-3xl font-serif font-bold text-charcoal mb-8">Send us a <span className="text-gold">Message</span></h2>
-                  <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <MessageSquare size={24} className="text-gtgold" />
+                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-white">Send us a <span className="text-gtgold">Message</span></h2>
+                  </div>
+
+                  <form className="space-y-5" onSubmit={handleSubmit}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Your Name</label>
+                        <label className="block text-xs font-bold text-gtgold/90 mb-2 uppercase tracking-widest">আপনার নাম *</label>
                         <input
                           required
                           name="name"
                           type="text"
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
-                          placeholder="John Doe"
+                          className="w-full bg-[#1c1c22] text-white placeholder:text-gray-500 border border-gtgold/30 rounded-xl px-4 py-3.5 focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold font-medium transition-all text-sm"
+                          placeholder="আপনার নাম লিখুন"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Email Address</label>
+                        <label className="block text-xs font-bold text-gtgold/90 mb-2 uppercase tracking-widest">ইমেইল এড্রেস</label>
                         <input
                           name="email"
                           type="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
-                          placeholder="john@example.com"
+                          className="w-full bg-[#1c1c22] text-white placeholder:text-gray-500 border border-gtgold/30 rounded-xl px-4 py-3.5 focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold font-medium transition-all text-sm"
+                          placeholder="name@example.com"
                         />
                       </div>
                     </div>
+
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Mobile Number <span className="text-red-500">*</span></label>
+                      <label className="block text-xs font-bold text-gtgold/90 mb-2 uppercase tracking-widest">মোবাইল নম্বর <span className="text-red-400">*</span></label>
                       <input
                         required
                         name="phone"
                         type="tel"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
-                        placeholder="+880 1700-000000"
+                        className="w-full bg-[#1c1c22] text-white placeholder:text-gray-500 border border-gtgold/30 rounded-xl px-4 py-3.5 focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold font-medium transition-all text-sm"
+                        placeholder="01700-000000"
                       />
                     </div>
+
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Subject</label>
+                      <label className="block text-xs font-bold text-gtgold/90 mb-2 uppercase tracking-widest">বিষয় (Subject)</label>
                       <input
                         required
                         name="subject"
                         type="text"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors"
-                        placeholder="Product Inquiry"
+                        className="w-full bg-[#1c1c22] text-white placeholder:text-gray-500 border border-gtgold/30 rounded-xl px-4 py-3.5 focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold font-medium transition-all text-sm"
+                        placeholder="প্রোডাক্ট সম্পর্কে জানতে চাই..."
                       />
                     </div>
+
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-widest">Message</label>
+                      <label className="block text-xs font-bold text-gtgold/90 mb-2 uppercase tracking-widest">আপনার বার্তা (Message) *</label>
                       <textarea
                         required
                         name="message"
-                        rows={6}
+                        rows={4}
                         value={formData.message}
                         onChange={handleChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-6 py-4 focus:outline-none focus:border-gold transition-colors resize-none"
-                        placeholder="How can we help you today?"
+                        className="w-full bg-[#1c1c22] text-white placeholder:text-gray-500 border border-gtgold/30 rounded-xl px-4 py-3.5 focus:outline-none focus:border-gtgold focus:ring-1 focus:ring-gtgold font-medium transition-all text-sm resize-none"
+                        placeholder="আপনার বিস্তারিত বার্তা এখানে লিখুন..."
                       ></textarea>
                     </div>
+
                     <button 
                       disabled={isSubmitting}
-                      className="w-full bg-gold hover:bg-charcoal text-white py-5 rounded-xl font-bold tracking-[0.2em] transition-all flex items-center justify-center gap-3 group disabled:opacity-50"
+                      className="w-full gt-shiny text-black font-extrabold py-4 rounded-xl tracking-wider uppercase text-sm transition-all flex items-center justify-center gap-2 group disabled:opacity-50 shadow-lg hover:brightness-105"
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          SENDING...
+                          <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                          মেসেজ পাঠানো হচ্ছে...
                         </>
                       ) : (
                         <>
-                          SEND MESSAGE <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          পাঠিয়ে দিন <Send size={18} className="group-hover:translate-x-1 transition-transform" />
                         </>
                       )}
                     </button>
@@ -172,69 +175,72 @@ const Contact = () => {
 
             {/* Contact Info */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col justify-center"
+              className="flex flex-col justify-center space-y-8"
             >
-              <h2 className="text-3xl font-serif font-bold text-charcoal mb-8">Contact <span className="text-gold">Information</span></h2>
-              <div className="space-y-10">
-                <div className="flex items-start gap-6 group">
-                  <div className="w-14 h-14 bg-cream rounded-2xl flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-colors flex-shrink-0">
-                    <Mail size={24} />
+              <div>
+                <h2 className="text-3xl font-serif font-bold text-white mb-3">Contact <span className="text-gtgold">Information</span></h2>
+                <p className="text-gray-300 text-sm">সরাসরি যোগাযোগের ঠিকানা ও কাস্টমার সার্ভিস চ্যানেলসমূহ:</p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-5 p-5 bg-[#141418] border border-gtgold/20 rounded-2xl group hover:border-gtgold/60 transition-all">
+                  <div className="w-12 h-12 bg-gtgold/10 border border-gtgold/40 rounded-xl flex items-center justify-center text-gtgold group-hover:bg-gtgold group-hover:text-black transition-all flex-shrink-0">
+                    <Mail size={22} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-serif font-bold mb-1">Email Us</h4>
-                    <p className="text-gray-500">support@glamourstouch.com</p>
-                    <p className="text-gray-400 text-sm">We respond within 24 hours.</p>
+                    <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Email Us</h4>
+                    <a href="mailto:support@glamourstouch.com" className="text-base font-bold text-white hover:text-gtgold transition-colors">support@glamourstouch.com</a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-6 group">
-                  <div className="w-14 h-14 bg-cream rounded-2xl flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-colors flex-shrink-0">
-                    <Phone size={24} />
+                <div className="flex items-center gap-5 p-5 bg-[#141418] border border-gtgold/20 rounded-2xl group hover:border-gtgold/60 transition-all">
+                  <div className="w-12 h-12 bg-gtgold/10 border border-gtgold/40 rounded-xl flex items-center justify-center text-gtgold group-hover:bg-gtgold group-hover:text-black transition-all flex-shrink-0">
+                    <Phone size={22} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-serif font-bold mb-1">Call Us</h4>
-                    <p className="text-gray-500">+880 1712-426871</p>
-                    <p className="text-gray-400 text-sm">We respond within 24 hours.</p>
+                    <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Call / WhatsApp Us</h4>
+                    <a href="tel:+8801712426871" className="text-base font-bold text-white hover:text-gtgold transition-colors">+880 1712-426871</a>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-6 group">
-                  <div className="w-14 h-14 bg-cream rounded-2xl flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-colors flex-shrink-0">
-                    <MapPin size={24} />
+                <div className="flex items-center gap-5 p-5 bg-[#141418] border border-gtgold/20 rounded-2xl group hover:border-gtgold/60 transition-all">
+                  <div className="w-12 h-12 bg-gtgold/10 border border-gtgold/40 rounded-xl flex items-center justify-center text-gtgold group-hover:bg-gtgold group-hover:text-black transition-all flex-shrink-0">
+                    <MapPin size={22} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-serif font-bold mb-1">Visit Us</h4>
-                    <p className="text-gray-500">Dhaka, Bangladesh, 1207</p>
-                  </div>
-                </div>
-
-                <div className="pt-8 border-t border-gray-100">
-                  <h4 className="text-lg font-serif font-bold mb-6">Follow Our Journey</h4>
-                  <div className="flex gap-4">
-                    {[
-                      { icon: <Facebook />, label: 'গ্ল্যামার্স টাচ', href: 'https://www.facebook.com/glamourstouch26' },
-                      { icon: <Instagram />, label: '@glamourstouch.bd', href: 'https://www.instagram.com/glamourstouch.bd' },
-                      { icon: <Globe />, label: 'glamourstouch.com', href: 'https://glamourstouch.com' },
-                    ].map((social, idx) => (
-                      <a
-                        key={idx}
-                        href={social.href}
-                        target={social.href !== '#' ? '_blank' : undefined}
-                        rel="noopener noreferrer"
-                        className="w-12 h-12 bg-cream rounded-xl flex items-center justify-center text-gold hover:bg-gold hover:text-white transition-all transform hover:-translate-y-1"
-                        title={social.label}
-                      >
-                        {social.icon}
-                      </a>
-                    ))}
+                    <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Office Location</h4>
+                    <p className="text-base font-bold text-white">Dhaka, Bangladesh, 1207</p>
                   </div>
                 </div>
               </div>
+
+              <div className="pt-6 border-t border-white/10">
+                <h4 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-4">Follow Glamour's Touch</h4>
+                <div className="flex gap-4">
+                  {[
+                    { icon: <Facebook size={20} />, label: 'গ্ল্যামার্স টাচ', href: 'https://www.facebook.com/glamourstouch26' },
+                    { icon: <Instagram size={20} />, label: '@glamourstouch.bd', href: 'https://www.instagram.com/glamourstouch.bd' },
+                    { icon: <Globe size={20} />, label: 'glamourstouch.com', href: 'https://glamourstouch.com' },
+                  ].map((social, idx) => (
+                    <a
+                      key={idx}
+                      href={social.href}
+                      target={social.href !== '#' ? '_blank' : undefined}
+                      rel="noopener noreferrer"
+                      className="w-11 h-11 bg-[#141418] border border-gtgold/30 rounded-xl flex items-center justify-center text-gtgold hover:bg-gtgold hover:text-black transition-all transform hover:-translate-y-1 shadow-md"
+                      title={social.label}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </motion.div>
+
           </div>
         </div>
       </section>
