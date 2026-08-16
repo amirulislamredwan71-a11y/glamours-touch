@@ -1,81 +1,100 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Heart, ShieldCheck, Globe } from 'lucide-react';
+import { Sparkles, Heart, ShieldCheck, Globe, Award, CheckCircle } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const About = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-[#0a0d11] text-white min-h-screen">
       <SEO
         title="আমাদের সম্পর্কে — About Us"
-        description="Glamour's Touch হলো Bangladesh এর একটি trusted Korean skincare shop। আমরা 100% authentic Korean beauty products import করি। আমাদের লক্ষ্য — সবার কাছে real Korean skincare পৌঁছে দেওয়া।"
+        description="Glamour's Touch হলো Bangladesh এর একটি trusted 100% authentic Korean skincare shop। আমাদের লক্ষ্য — সেরা K-Beauty প্রোডাক্টস আপনার দরগোড়ায় পৌঁছে দেওয়া।"
         url="/about"
       />
-      {/* Hero Section */}
-      <section className="relative py-32 bg-charcoal text-cream overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img 
-            src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=1920" 
-            alt="About Hero" 
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-        </div>
+
+      {/* Hero Section — 100% Pure Lightweight Luxury Dark Gold Gradient (Zero Heavy Images) */}
+      <section className="relative py-24 sm:py-32 bg-gradient-to-b from-[#06080b] via-[#12171c] to-[#0a0d11] text-white overflow-hidden border-b border-gtgold/25">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gtgold/15 via-transparent to-transparent pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
-            <span className="text-gold font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Our Story</span>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8">The Essence of <span className="text-gold">Glamour</span></h1>
-            <p className="text-xl max-w-3xl mx-auto font-light text-gray-300 leading-relaxed">
-              Glamour's Touch was born from a passion for authentic beauty traditions and a commitment to modern scientific excellence.
+            <span className="gt-gold-shiny font-black tracking-[0.3em] uppercase text-xs sm:text-sm mb-4 inline-block px-4 py-1.5 rounded-full bg-gtgold/10 border border-gtgold/30">
+              OUR STORY • আমাদের গল্প
+            </span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold mb-6 tracking-tight">
+              The Essence of <span className="gt-gold-shiny">Glamour</span>
+            </h1>
+            <p className="text-base sm:text-xl max-w-3xl mx-auto font-medium text-gray-300 leading-relaxed drop-shadow-md">
+              Glamour's Touch was born from a passion for authentic Korean beauty traditions and a commitment to modern scientific dermatological excellence in Bangladesh.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="py-24">
+      <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.7 }}
             >
-              <h2 className="text-4xl font-serif font-bold text-charcoal mb-8">Bridging Traditions with <span className="text-gold">Innovation</span></h2>
-              <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
+              <span className="text-xs font-black uppercase tracking-widest text-gtgold block mb-2">আমাদের ভিশন ও মিশন</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6 leading-tight">
+                Bridging Traditions with <span className="gt-gold-shiny">K-Beauty Innovation</span>
+              </h2>
+              <div className="space-y-4 text-gray-300 leading-relaxed text-sm sm:text-base font-medium">
                 <p>
-                  At Glamour's Touch, we believe that beauty is a bridge between the wisdom of the past and the possibilities of the future. Our journey began in the heart of Dhaka, inspired by the glow-first philosophy of Korean skincare that has captivated the world — bringing authentic K-beauty to every doorstep in Bangladesh.
+                  At Glamour's Touch, we believe that true skincare excellence comes from authentic, science-backed Korean formulations. Our journey began in the heart of Dhaka, driven by the vision to make 100% genuine, original K-Beauty cosmetics accessible to everyone in Bangladesh.
                 </p>
                 <p>
-                  We've spent years researching the most potent natural ingredients from our region—from the soothing properties of turmeric to the rejuvenating essence of sandalwood—and combining them with cutting-edge dermatological science.
+                  We source our products straight from certified Korean manufacturers, ensuring every bottle of serum, moisturizer, toner, and sunscreen carries guaranteed batch authenticity and safety approvals.
                 </p>
                 <p>
-                  Our mission is simple: to provide you with ethically crafted, high-performance cosmetics that celebrate your natural glow while adhering to the highest global standards of quality and safety.
+                  Our mission is simple: to provide high-performance, dermatologist-approved skincare that celebrates your natural skin glow while adhering to strict quality controls.
                 </p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-[#12171c] border border-gtgold/30 flex items-center gap-3">
+                  <Award size={24} className="text-gtgold shrink-0" />
+                  <div>
+                    <p className="text-xs font-black text-white">১০০% অরিজিনাল</p>
+                    <p className="text-[10px] text-gtgold/80">গারান্টিড কোরিয়ান ইম্পোর্ট</p>
+                  </div>
+                </div>
+                <div className="p-4 rounded-2xl bg-[#12171c] border border-gtgold/30 flex items-center gap-3">
+                  <CheckCircle size={24} className="text-gtgold shrink-0" />
+                  <div>
+                    <p className="text-xs font-black text-white">সারা দেশে ডেলিভারি</p>
+                    <p className="text-[10px] text-gtgold/80">ক্যাশ অন ডেলিভারি সুবিধা</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
+
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.7 }}
               className="relative"
             >
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="aspect-[4/3] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-2 border-gtgold/40 relative bg-[#12171c]">
                 <img 
-                  src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=1000" 
+                  src="/categories/skincare.webp" 
                   alt="Our Mission" 
                   className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0d11] via-transparent to-transparent opacity-80" />
               </div>
-              <div className="absolute -bottom-10 -left-10 bg-gold p-8 rounded-2xl text-white hidden md:block">
-                <p className="text-3xl font-serif font-bold italic">"Beauty is the light in the heart."</p>
+              <div className="absolute -bottom-6 -left-4 bg-[#141a20] border-2 border-gtgold p-6 rounded-2xl text-white shadow-2xl hidden md:block max-w-xs">
+                <p className="text-lg font-serif italic text-gtgold">"Beauty is the confidence in your natural skin glow."</p>
               </div>
             </motion.div>
           </div>
@@ -83,18 +102,18 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-24 bg-cream">
+      <section className="py-20 bg-[#070a0e] border-t border-gtgold/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif font-bold text-charcoal mb-4">Our Core <span className="text-gold">Values</span></h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">The principles that guide every product we create and every decision we make.</p>
+          <div className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">Our Core <span className="gt-gold-shiny">Values</span></h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-xs sm:text-sm font-medium">The core principles that guide every decision and product we curate for you.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <Sparkles />, title: 'Authenticity', desc: 'Real ingredients, real results, and a commitment to our cultural roots.' },
-              { icon: <ShieldCheck />, title: 'Quality', desc: 'Rigorous testing and premium sourcing for every single item.' },
-              { icon: <Heart />, title: 'Ethical', desc: 'Cruelty-free practices and sustainable sourcing for a better world.' },
-              { icon: <Globe />, title: 'Inclusivity', desc: 'Beauty for every skin tone, every age, and every unique individual.' },
+              { icon: <Sparkles className="text-gtgold" size={28} />, title: 'Authenticity', desc: '100% genuine ingredients directly imported from Korea.' },
+              { icon: <ShieldCheck className="text-gtgold" size={28} />, title: 'Quality Assurance', desc: 'Rigorous batch code testing and dermatological safety.' },
+              { icon: <Heart className="text-gtgold" size={28} />, title: 'Customer Care', desc: 'Personalized AI & Expert skincare recommendation support.' },
+              { icon: <Globe className="text-gtgold" size={28} />, title: 'Global Standards', desc: 'Bringing world-class K-Beauty to every doorstep in BD.' },
             ].map((value, idx) => (
               <motion.div
                 key={idx}
@@ -102,13 +121,13 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow text-center"
+                className="bg-[#12171c] p-6 rounded-2xl border border-gtgold/30 hover:border-gtgold transition-all text-center group shadow-xl"
               >
-                <div className="w-16 h-16 bg-cream rounded-full flex items-center justify-center text-gold mx-auto mb-6">
+                <div className="w-14 h-14 bg-gtgold/15 border border-gtgold/40 rounded-full flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
                   {value.icon}
                 </div>
-                <h3 className="text-xl font-serif font-bold mb-3">{value.title}</h3>
-                <p className="text-gray-500 text-sm">{value.desc}</p>
+                <h3 className="text-lg font-bold text-white mb-2">{value.title}</h3>
+                <p className="text-gray-400 text-xs leading-relaxed">{value.desc}</p>
               </motion.div>
             ))}
           </div>
