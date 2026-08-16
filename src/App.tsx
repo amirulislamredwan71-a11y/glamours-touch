@@ -67,7 +67,7 @@ const AppContent = () => {
       <GoldStarlightParticles />
       <Navbar />
       <Suspense fallback={null}><FloatingCart /></Suspense>
-      <main className="flex-grow pb-32 sm:pb-8">
+      <main className="flex-grow pt-20 sm:pt-24 pb-32 sm:pb-8">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Suspense fallback={<LoadingFallback />}><Shop /></Suspense>} />

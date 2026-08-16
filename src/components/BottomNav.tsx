@@ -66,10 +66,10 @@ const BottomNav = () => {
   return (
     <>
       {/* Solid Dark Floor Mask — 100% seals bottom screen edge so no content peeks behind */}
-      <div className="fixed bottom-0 left-0 right-0 h-10 bg-[#0b0e11] sm:hidden z-40 pointer-events-none" />
+      <div className="fixed bottom-0 left-0 right-0 h-10 bg-[#0b0e11] sm:hidden z-[998] pointer-events-none" />
 
       {/* Floating Pill Capsule Dock — sits flush at bottom-0.5 with full 4-side gold border */}
-      <nav className="fixed bottom-0.5 left-3 right-3 z-50 sm:hidden bg-[#0c1015]/98 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.95)] px-2 py-1.5">
+      <nav className="fixed bottom-0.5 left-3 right-3 z-[999] sm:hidden bg-[#0c1015]/98 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.95)] px-2 py-1.5">
         <div className="flex items-center justify-between">
           {link('/', Home, 'Home', true)}
           {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}

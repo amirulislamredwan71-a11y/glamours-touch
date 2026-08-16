@@ -147,7 +147,7 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080c16]/95 backdrop-blur-xl border-b border-gtgold/20 transition-all duration-300">
+    <nav className="fixed top-0 left-0 right-0 z-[999] bg-[#080c16]/98 backdrop-blur-xl border-b border-gtgold/30 transition-all duration-300 shadow-2xl">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 md:h-24 gap-2 lg:gap-4">
 
