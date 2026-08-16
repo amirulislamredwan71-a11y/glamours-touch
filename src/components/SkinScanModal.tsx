@@ -349,11 +349,11 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
   return (
     <AnimatePresence>
       {isModalOpen && (
-        <motion.div className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center p-2 sm:p-4"
+        <motion.div className="fixed inset-0 z-[120] flex items-center justify-center p-2 sm:p-4"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
           <motion.div initial={{ y: 40, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 40, opacity: 0 }}
-            className="relative w-full sm:max-w-md gt-card rounded-3xl overflow-hidden max-h-[92dvh] flex flex-col">
+            className="relative w-full sm:max-w-md gt-card rounded-3xl overflow-hidden max-h-[92dvh] min-h-[65dvh] sm:min-h-0 flex flex-col">
             {/* Header */}
             <div className="px-4 py-3.5 flex items-center justify-between border-b border-gtgold/20" style={{ background: '#141418' }}>
               <div>
@@ -363,7 +363,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
               <button onClick={onClose} className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/70"><X size={16} /></button>
             </div>
 
-            <div className="p-4 overflow-y-auto flex-1 min-h-0 overscroll-contain">
+            <div className={`p-4 overflow-y-auto flex-1 min-h-0 overscroll-contain flex flex-col ${!scan ? 'justify-center' : ''}`}>
               {!scan ? (
                 <>
                   <p className="text-white/60 text-xs text-center mb-3">সেলফি তুলুন বা ছবি দিন — AI আপনার ত্বকের অবস্থা বিশ্লেষণ করে <span className="text-gtgold">লাইফস্টাইল গাইড ও উপযুক্ত প্রোডাক্ট পরামর্শ</span> প্রদান করবে।</p>
