@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GT — WhatsApp Business App সংযুক্ত করুন</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #0f0f14; color: #eee; display: flex;
+    align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+  .card { max-width: 460px; background: #1a1a22; border-radius: 20px; padding: 32px 28px; text-align: center; }
+  h1 { font-size: 20px; margin: 0 0 8px; }
+  p { color: #aaa; font-size: 14px; line-height: 1.6; }
+  button { background: #1877f2; color: white; border: none; padding: 16px 28px; border-radius: 12px;
+    font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  #log { margin-top: 20px; text-align: left; background: #000; border-radius: 10px; padding: 14px;
+    font-family: monospace; font-size: 12px; max-height: 260px; overflow: auto; white-space: pre-wrap;
+    display: none; }
+  .ok { color: #4ade80; }
+  .err { color: #f87171; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>🌸 Glamour's Touch</h1>
+    <p>এই বাটনে ক্লিক করে <b>01712-426871</b> নম্বরের WhatsApp Business App-কে Cloud API-র সাথে সংযুক্ত করুন (Coexistence)। ফোনে code confirm করার জন্য প্রস্তুত থাকুন।</p>
+    <button id="connectBtn">WhatsApp সংযুক্ত করুন</button>
+    <pre id="log"></pre>
+  </div>
+
+  <script>
+    const APP_ID = '1322315399797461';
+    const CONFIG_ID = '27533843849641314';
+    const logEl = document.getElementById('log');
+    function log(msg, cls) {
+      logEl.style.display = 'block';
+      const line = document.createElement('div');
+      if (cls) line.className = cls;
+      line.textContent = (typeof msg === 'string') ? msg : JSON.stringify(msg, null, 2);
+      logEl.appendChild(line);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    window.fbAsyncInit = function () {
+      FB.init({ appId: APP_ID, autoLogAppEvents: true, xfbml: true, version: 'v21.0' });
+      log('Facebook SDK লোড হয়েছে ✅', 'ok');
+    };
+
+    window.addEventListener('message', (event) => {
+      if (!event.origin.endsWith('facebook.com')) return;
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'WA_EMBEDDED_SIGNUP') {
+          log('WA_EMBEDDED_SIGNUP event:', 'ok');
+          log(data);
+        }
+      } catch (e) { /* not JSON, ignore */ }
+    });
+
+    document.getElementById('connectBtn').addEventListener('click', () => {
+      log('লগইন শুরু হচ্ছে...');
+      FB.login(
+        function (response) {
+          log('FB.login response:');
+          log(response, response.authResponse ? 'ok' : 'err');
+          if (response.authResponse && response.authResponse.code) {
+            log('✅ সফল! Authorization code পাওয়া গেছে — এই code Claude-কে দিন:', 'ok');
+            log(response.authResponse.code, 'ok');
+          }
+        },
+        {
+          config_id: CONFIG_ID,
+          response_type: 'code',
+          override_default_response_type: true,
+          extras: {
+            setup: {},
+            featureType: 'whatsapp_business_app_onboarding',
+            sessionInfoVersion: '3'
+          }
+        }
+      );
+    });
+  </script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
+</html>
