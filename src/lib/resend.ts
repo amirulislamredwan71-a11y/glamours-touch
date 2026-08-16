@@ -165,6 +165,11 @@ export async function sendOrderEmailsViaResend(payload: OrderEmailPayload): Prom
   `;
 
   try {
+    const recipients = [adminEmail];
+    if (payload.customerEmail && payload.customerEmail.trim().length > 3) {
+      recipients.push(payload.customerEmail.trim());
+    }
+
     const sendRequest = async (fromAddress: string) => {
       return await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -174,7 +179,7 @@ export async function sendOrderEmailsViaResend(payload: OrderEmailPayload): Prom
         },
         body: JSON.stringify({
           from: fromAddress,
-          to: [adminEmail],
+          to: recipients,
           subject: `📦 নতুন অর্ডার #${displayId} — ৳${payload.grandTotal.toLocaleString()} (${payload.customerName})`,
           html: emailHtml,
         }),

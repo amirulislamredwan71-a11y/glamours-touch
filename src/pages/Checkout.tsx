@@ -215,6 +215,7 @@ const Checkout = () => {
           orderId: data.id,
           customerName: form.name,
           customerPhone: form.phone,
+          customerEmail: form.email,
           customerAddress: form.address,
           upazila: form.upazila,
           district: form.district,
