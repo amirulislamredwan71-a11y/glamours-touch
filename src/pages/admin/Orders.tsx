@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { ShoppingBag, Search, Eye, CheckCircle, Clock, Truck, XCircle, Download } from 'lucide-react';
+import { ShoppingBag, Search, Eye, CheckCircle, Clock, Truck, XCircle, Download, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface Order {
@@ -121,6 +121,13 @@ const AdminOrders = () => {
     }
   };
 
+  // The WhatsApp/Messenger bot flags COD-abuse risk signals (fake-looking phone, incomplete
+  // address, repeat cancellations for the same number) into this note before shipping.
+  const riskNote = (order: Order) => {
+    const note = order.shipping_address?.note as string | undefined;
+    return note && note.startsWith('⚠️') ? note.replace(/^⚠️\s*VERIFY BEFORE SHIP:\s*/, '') : null;
+  };
+
   const exportCSV = () => {
     if (!orders.length) return;
     const header = ['Order ID','Date','Customer','Phone','District','Address','Items','Total','Status'];
@@ -181,7 +188,14 @@ const AdminOrders = () => {
               ) : (
                 orders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50 transition-colors group">
-                    <td className="px-6 py-4 text-sm font-bold text-gray-900">#{order.id.slice(0, 8)}</td>
+                    <td className="px-6 py-4 text-sm font-bold text-gray-900">
+                      <span className="flex items-center gap-1.5">
+                        {riskNote(order) && (
+                          <AlertTriangle size={14} className="text-amber-500 flex-shrink-0" aria-label="Verify before shipping" />
+                        )}
+                        #{order.id.slice(0, 8)}
+                      </span>
+                    </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
                       {new Date(order.created_at).toLocaleDateString()}
                     </td>
@@ -263,6 +277,16 @@ const AdminOrders = () => {
               </div>
 
               <div className="p-8 overflow-y-auto space-y-8">
+                {riskNote(selectedOrder) && (
+                  <div className="bg-amber-50 border border-amber-300 rounded-2xl p-4 flex items-start gap-3">
+                    <AlertTriangle size={18} className="flex-shrink-0 mt-0.5 text-amber-600" />
+                    <div>
+                      <p className="font-bold text-amber-800 text-sm">Verify before shipping</p>
+                      <p className="text-xs text-amber-700 mt-0.5">{riskNote(selectedOrder)}</p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Status Update */}
                 <div className="flex flex-wrap gap-3">
                   {['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'].map((status) => (
