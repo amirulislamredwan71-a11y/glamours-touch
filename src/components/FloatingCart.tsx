@@ -31,7 +31,7 @@ const FloatingCart = () => {
               </motion.div>
 
               {/* Bottom hot-pink section */}
-              <div className="bg-[#e91e8c] text-white px-2 py-1.5 text-center">
+              <div className="bg-[#d21b7e] text-white px-2 py-1.5 text-center">
                 <span className="text-[11px] font-bold tracking-wide">৳ {cartTotal.toLocaleString()}</span>
               </div>
             </div>
