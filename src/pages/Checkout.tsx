@@ -383,7 +383,7 @@ const Checkout = () => {
             <div>
               <input type="text" placeholder="Name" value={form.name}
                 onChange={e => setField('name', e.target.value)}
-                className={`w-full bg-white border rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 transition-all
+                className={`w-full bg-white text-gray-900 border rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 transition-all
                   ${errors.name ? 'border-red-400 focus:ring-red-200' : 'border-gray-200 focus:ring-pink-200 focus:border-pink-400'}`}
               />
               {errors.name && <p className="text-red-500 text-sm mt-1.5 ml-1">{errors.name}</p>}
@@ -393,7 +393,7 @@ const Checkout = () => {
             <div>
               <input type="tel" placeholder="Phone" value={form.phone}
                 onChange={e => setField('phone', e.target.value)}
-                className={`w-full bg-white border rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 transition-all
+                className={`w-full bg-white text-gray-900 border rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 transition-all
                   ${errors.phone ? 'border-red-400 focus:ring-red-200' : 'border-gray-200 focus:ring-pink-200 focus:border-pink-400'}`}
               />
               {errors.phone && <p className="text-red-500 text-sm mt-1.5 ml-1">{errors.phone}</p>}
@@ -416,7 +416,7 @@ const Checkout = () => {
             <div>
               <input type="text" placeholder="Address" value={form.address}
                 onChange={e => setField('address', e.target.value)}
-                className={`w-full bg-white border rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 transition-all
+                className={`w-full bg-white text-gray-900 border rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 transition-all
                   ${errors.address ? 'border-red-400 focus:ring-red-200' : 'border-gray-200 focus:ring-pink-200 focus:border-pink-400'}`}
               />
               {errors.address && <p className="text-red-500 text-sm mt-1.5 ml-1">{errors.address}</p>}
@@ -425,13 +425,13 @@ const Checkout = () => {
             {/* Email */}
             <input type="email" placeholder="Email (optional)" value={form.email}
               onChange={e => setField('email', e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-400 transition-all"
+              className="w-full bg-white text-gray-900 border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-400 transition-all"
             />
 
             {/* Note */}
             <textarea rows={3} placeholder="Order Note (optional)" value={form.note}
               onChange={e => setField('note', e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-400 transition-all resize-none"
+              className="w-full bg-white text-gray-900 border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-400 transition-all resize-none"
             />
 
             {/* Save Address Checkbox */}

@@ -101,7 +101,7 @@ const OrderTracking = () => {
                 placeholder="যেমন: AB12CD34"
                 value={orderId}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOrderId(e.target.value)}
-                className="w-full border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-gold/20 uppercase"
+                className="w-full text-gray-900 border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-gold/20 uppercase"
               />
             </div>
             <div>
@@ -113,7 +113,7 @@ const OrderTracking = () => {
                 placeholder="01XXXXXXXXX"
                 value={phone}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
-                className="w-full border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-gold/20"
+                className="w-full text-gray-900 border border-gray-200 rounded-2xl px-5 py-4 text-base focus:outline-none focus:ring-2 focus:ring-gold/20"
               />
             </div>
             <button

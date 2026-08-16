@@ -104,7 +104,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full pl-14 pr-6 py-4 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-gold/20 outline-none transition-all"
+                      className="w-full pl-14 pr-6 py-4 bg-gray-50 text-gray-900 border-none rounded-2xl text-sm focus:ring-2 focus:ring-gold/20 outline-none transition-all"
                     />
                   </div>
 
