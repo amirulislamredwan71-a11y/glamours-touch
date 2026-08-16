@@ -349,7 +349,7 @@ const SkinScanModal: React.FC<SkinScanModalProps> = ({ open, isOpen, onClose }) 
   return (
     <AnimatePresence>
       {isModalOpen && (
-        <motion.div className="fixed inset-0 z-[120] flex items-center justify-center p-2 sm:p-4"
+        <motion.div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
           <motion.div initial={{ y: 40, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 40, opacity: 0 }}
