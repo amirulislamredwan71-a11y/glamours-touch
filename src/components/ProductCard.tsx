@@ -112,14 +112,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
           <div className="grid grid-cols-2 gap-2 mb-2">
             <button
               onClick={fireAddToCart}
-              className="w-full bg-[#161d22]/90 border border-gtgold/60 hover:border-gtgold text-white py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
+              className="w-full h-[36px] bg-[#161d22]/90 border border-gtgold/60 hover:border-gtgold text-white rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
             >
               <ShoppingBag size={14} className="text-white" />
               <span className="text-white">ADD</span>
             </button>
             <button
               onClick={handleBuyNow}
-              className="w-full bg-[#161d22]/90 border-2 border-gtgold hover:border-gtgold text-white py-2.5 rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
+              className="w-full h-[37px] bg-[#161d22]/90 border-2 border-gtgold hover:border-gtgold text-white rounded-2xl text-xs font-extrabold tracking-wider flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md hover:bg-gtgold/10"
             >
               <Zap size={14} className="fill-white text-white" />
               <span className="text-white">BUY</span>
@@ -131,7 +131,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
         {!soldOut && (
           <Link
             to={`/product/${product.id}`}
-            className="w-full bg-[#161d22] border border-gtgold/60 hover:border-gtgold py-2.5 rounded-2xl text-xs font-extrabold tracking-tight flex items-center justify-center gap-1.5 transition-all shadow-md group/glow hover:bg-gtgold/10"
+            className="w-full h-[37px] bg-[#161d22] border border-gtgold/60 hover:border-gtgold rounded-2xl text-xs font-extrabold tracking-tight flex items-center justify-center gap-1.5 transition-all shadow-md group/glow hover:bg-gtgold/10"
           >
             <Sparkles size={14} className="text-gtgold group-hover/glow:scale-110 transition-transform" />
             <span className="gt-gold-shiny">Glow দেখুন</span>

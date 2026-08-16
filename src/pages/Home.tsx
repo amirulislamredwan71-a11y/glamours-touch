@@ -252,9 +252,9 @@ const Home = () => {
       <HomeSearch />
 
       {/* Recommended Products Grid */}
-      <section className="py-10 sm:py-16 relative overflow-hidden min-h-[480px]">
+      <section className="pt-2.5 pb-8 sm:py-16 relative overflow-hidden min-h-[480px]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center justify-center gap-3 mb-6 sm:mb-10">
+          <div className="flex items-center justify-center gap-3 mb-2.5 sm:mb-10">
             <span className="h-px w-8 bg-gradient-to-r from-transparent to-gtgold" />
             <h2 className="text-xs md:text-sm font-black gt-gold-shiny tracking-[0.3em] uppercase font-display">Recommended for You</h2>
             <span className="h-px w-8 bg-gradient-to-l from-transparent to-gtgold" />

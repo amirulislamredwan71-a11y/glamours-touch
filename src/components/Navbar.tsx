@@ -149,7 +149,7 @@ const Navbar = () => {
     <>
     <nav className="fixed top-0 left-0 right-0 z-[999] bg-[#080c16]/98 backdrop-blur-xl border-b border-gtgold/30 transition-all duration-300 shadow-2xl">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24 gap-2 lg:gap-4">
+        <div className="flex justify-between items-center h-[68px] md:h-24 gap-2 lg:gap-4">
 
           {/* Left Group: Logo on Mobile / Hamburger+Logo+Desktop Links on Desktop */}
           <div className="flex items-center gap-1.5 lg:gap-5 flex-shrink-0">

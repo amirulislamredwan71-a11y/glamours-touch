@@ -61,9 +61,9 @@ const HomeSearch = () => {
   }, []);
 
   return (
-    <section className="pt-24 sm:pt-28 pb-4 bg-midnight-gold-dust">
+    <section className="pt-[78px] sm:pt-28 pb-2.5 sm:pb-4 bg-midnight-gold-dust">
       {/* GLAMOUR'S TOUCH Headline Banner (Premium Gold + White Mix, No ১নং) */}
-      <div className="max-w-5xl mx-auto px-3 mb-3.5 text-center">
+      <div className="max-w-5xl mx-auto px-3 mb-2.5 text-center">
         <div className="py-2 px-4 rounded-full bg-[#12161a] border border-gtgold/40 backdrop-blur-md shadow-lg inline-flex items-center justify-center gap-1.5 flex-wrap">
           <span className="text-xs sm:text-sm font-black tracking-wider uppercase">
             <span className="gt-gold-shiny">GLAMOUR'S</span> <span className="text-white">TOUCH</span>
@@ -77,10 +77,10 @@ const HomeSearch = () => {
       <FlashBanner />
 
       {/* 2. Swipeable Category Chips with Gold Rings */}
-      <div className="mt-4 max-w-5xl mx-auto min-h-[96px]">
+      <div className="mt-2.5 max-w-5xl mx-auto min-h-[96px]">
         {cats.length > 0 && (
           <div
-            className="flex gap-3.5 overflow-x-auto px-4 pb-2 snap-x [&::-webkit-scrollbar]:hidden"
+            className="flex gap-3.5 overflow-x-auto px-4 pb-1 sm:pb-2 snap-x [&::-webkit-scrollbar]:hidden"
             style={{ scrollbarWidth: 'none' }}
           >
             {cats.map((c) => {
@@ -112,8 +112,8 @@ const HomeSearch = () => {
       </div>
 
       {/* 3. Circular Floating Icons Row (Gold Rings + Pure White Inner Icons + 1-by-1 Alternating Text) */}
-      <div className="max-w-4xl mx-auto px-4 mt-5">
-        <div className="flex items-center justify-center gap-4 sm:gap-9 py-2 overflow-x-auto [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
+      <div className="max-w-4xl mx-auto px-4 mt-2.5 sm:mt-5">
+        <div className="flex items-center justify-center gap-4 sm:gap-9 pt-0 pb-1 sm:py-2 overflow-x-auto [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
           {/* 1. 100% Authentic (Gold Text, White Icon) */}
           <div className="flex flex-col items-center gap-1.5 group flex-shrink-0">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 border-gtgold/60 bg-gtgold/10 text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
