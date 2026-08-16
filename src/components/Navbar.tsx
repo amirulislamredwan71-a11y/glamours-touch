@@ -337,20 +337,30 @@ const Navbar = () => {
             className="bg-[#0b0e12]/98 backdrop-blur-2xl border-b border-gtgold/30 text-white shadow-[0_20px_50px_rgba(0,0,0,0.95)] max-h-[78vh] overflow-y-auto overscroll-contain touch-pan-y"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
-            <div className="max-w-3xl mx-auto px-4 py-5 space-y-6">
+            <div className="max-w-3xl mx-auto px-4 pt-4 pb-32 space-y-6">
 
-              {/* Header Close Bar */}
+              {/* Header Close Bar with Language Switcher */}
               <div className="flex items-center justify-between border-b border-gtgold/20 pb-3">
                 <div className="flex items-center gap-2">
                   <Logo className="w-7 h-7" />
                   <span className="text-xs font-black tracking-wider text-gtgold uppercase">Glamour's Touch Menu</span>
                 </div>
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="p-1.5 rounded-full bg-white/10 text-white/80 hover:text-gtgold hover:bg-gtgold/20 transition-all"
-                >
-                  <X size={20} />
-                </button>
+                <div className="flex items-center gap-2">
+                  {/* Top Quick Language Switcher */}
+                  <button
+                    onClick={() => { toggleLanguage(); }}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold text-[11px] font-black hover:bg-gtgold/25 transition-all"
+                  >
+                    <Globe size={13} className="text-gtgold" />
+                    <span>{i18n.language === 'en' ? 'বাংলা' : 'EN'}</span>
+                  </button>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-1.5 rounded-full bg-white/10 text-white/80 hover:text-gtgold hover:bg-gtgold/20 transition-all"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
               </div>
               
               {/* 1. Profile & Track Order Hero Card */}
