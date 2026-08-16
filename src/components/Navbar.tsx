@@ -326,7 +326,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ── 3-Line Menu (Hamburger Dropdown Drawer) ── */}
+      {/* ── 3-Line Menu (World-Class Mega Mobile Drawer) ── */}
       <AnimatePresence mode="wait">
         {isMenuOpen && (
           <motion.div
@@ -334,48 +334,65 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-[#0d1216]/98 backdrop-blur-2xl border-b border-gtgold/20 overflow-hidden text-white shadow-2xl"
+            className="bg-[#0b0e12]/98 backdrop-blur-2xl border-b border-gtgold/30 text-white shadow-[0_20px_50px_rgba(0,0,0,0.95)] max-h-[78vh] overflow-y-auto overscroll-contain touch-pan-y"
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
-            <div className="max-w-3xl mx-auto px-5 py-5 space-y-5">
+            <div className="max-w-3xl mx-auto px-4 py-5 space-y-6">
+
+              {/* Header Close Bar */}
+              <div className="flex items-center justify-between border-b border-gtgold/20 pb-3">
+                <div className="flex items-center gap-2">
+                  <Logo className="w-7 h-7" />
+                  <span className="text-xs font-black tracking-wider text-gtgold uppercase">Glamour's Touch Menu</span>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-1.5 rounded-full bg-white/10 text-white/80 hover:text-gtgold hover:bg-gtgold/20 transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </div>
               
-              {/* Profile Card inside 3-Line Menu */}
-              <div className="bg-[#141a20] border border-gtgold/30 rounded-2xl p-4 shadow-xl">
+              {/* 1. Profile & Track Order Hero Card */}
+              <div className="bg-gradient-to-r from-[#141a20] via-[#101418] to-[#161d24] border border-gtgold/40 rounded-2xl p-4 shadow-xl">
                 {!user ? (
-                  <button
-                    onClick={() => { openLogin(); setIsMenuOpen(false); }}
-                    className="w-full flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/40 hover:border-gtgold text-white px-4 py-3.5 rounded-xl font-bold transition-all group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <User size={22} />
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => { openLogin(); setIsMenuOpen(false); }}
+                      className="w-full flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/50 hover:border-gtgold text-white px-4 py-3 rounded-xl font-bold transition-all group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
+                          <User size={20} />
+                        </div>
+                        <div className="text-left">
+                          <p className="text-xs font-extrabold text-white">আমার প্রোফাইল (Sign In)</p>
+                          <p className="text-[10px] text-gtgold/80">অর্ডার ট্র্যাকিং ও প্রোফাইল দেখতে লগইন করুন</p>
+                        </div>
                       </div>
-                      <div className="text-left">
-                        <p className="text-sm font-extrabold text-white">আমার প্রোফাইল (Sign In)</p>
-                        <p className="text-[11px] text-gtgold/80">অর্ডার ট্র্যাকিং ও প্রোফাইল দেখতে লগইন করুন</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold text-gtgold bg-gtgold/10 px-3 py-1.5 rounded-full border border-gtgold/30">
-                      লগইন
-                    </span>
-                  </button>
+                      <span className="text-[11px] font-black text-gtgold bg-gtgold/15 px-3 py-1.5 rounded-full border border-gtgold/40">
+                        লগইন ➔
+                      </span>
+                    </button>
+                  </div>
                 ) : (
                   <div className="space-y-3">
                     <Link
                       to="/profile"
                       onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/40 hover:border-gtgold text-white px-4 py-3.5 rounded-xl font-bold transition-all group"
+                      className="flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/50 hover:border-gtgold text-white px-4 py-3 rounded-xl font-bold transition-all group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <User size={22} />
+                          <User size={20} />
                         </div>
                         <div className="text-left">
-                          <p className="text-sm font-extrabold text-white">{user.email || 'আমার প্রোফাইল'}</p>
-                          <p className="text-[11px] text-gtgold">প্রোফাইল বিবরণ ও অর্ডার হিস্ট্রি</p>
+                          <p className="text-xs font-extrabold text-white truncate max-w-[170px]">{user.email || 'আমার প্রোফাইল'}</p>
+                          <p className="text-[10px] text-gtgold">প্রোফাইল বিবরণ ও অর্ডার হিস্ট্রি</p>
                         </div>
                       </div>
-                      <span className="text-xs font-bold text-gtgold bg-gtgold/10 px-3 py-1.5 rounded-full border border-gtgold/30">
-                        View Profile
+                      <span className="text-[11px] font-black text-gtgold bg-gtgold/15 px-3 py-1.5 rounded-full border border-gtgold/40">
+                        Profile
                       </span>
                     </Link>
 
@@ -383,48 +400,158 @@ const Navbar = () => {
                       <Link
                         to="/admin"
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-3 w-full bg-gtgold/15 border border-gtgold/40 text-gtgold px-4 py-3 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-gtgold/25 transition-all"
+                        className="flex items-center gap-2.5 w-full bg-gtgold/15 border border-gtgold/40 text-gtgold px-4 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-gtgold/25 transition-all"
                       >
-                        <ShieldCheck size={18} /> Admin Dashboard
+                        <ShieldCheck size={16} /> Admin Dashboard
                       </Link>
                     )}
 
                     <button
                       onClick={() => { logout(); setIsMenuOpen(false); }}
-                      className="flex items-center justify-center gap-2 w-full bg-red-500/10 border border-red-500/30 text-red-400 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-red-500/20 transition-all"
+                      className="flex items-center justify-center gap-2 w-full bg-red-500/10 border border-red-500/30 text-red-400 py-2 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-red-500/20 transition-all"
                     >
-                      <LogOut size={16} /> {t('nav.signOut')}
+                      <LogOut size={15} /> {t('nav.signOut')}
                     </button>
                   </div>
                 )}
               </div>
 
-              {/* Compact nav grid */}
-              <div className="grid grid-cols-2 gap-2.5">
-                {navItems.map((item, idx) => {
-                  const col = NAV_COLORS[idx % NAV_COLORS.length];
-                  const active = isActive(item.path);
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`flex items-center gap-2.5 px-3.5 py-3 rounded-xl border transition-all active:scale-[0.97]
-                        ${active ? `bg-gtgold/20 text-gtgold border-gtgold/50 font-bold` : 'bg-[#12161a] text-gray-200 border-white/10 hover:border-gtgold/40'}`}
-                    >
-                      <span className={`w-2.5 h-2.5 rounded-full ${col.bg} flex-shrink-0`} />
-                      <span className="text-sm font-bold tracking-wide">{item.name}</span>
-                    </Link>
-                  );
-                })}
+              {/* 2. Primary Navigation Quick Grid */}
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5 flex items-center gap-1.5">
+                  <Sparkles size={12} className="text-gtgold animate-pulse" />
+                  <span>মূল পেজসমূহ (Main Pages)</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    to="/"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/40 bg-[#141a20] text-gtgold hover:bg-gtgold/15 font-black text-xs transition-all shadow-md"
+                  >
+                    <span>🏠</span> <span>হোম (Home)</span>
+                  </Link>
+                  <Link
+                    to="/shop"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/40 bg-[#141a20] text-gtgold hover:bg-gtgold/15 font-black text-xs transition-all shadow-md"
+                  >
+                    <span>🛍️</span> <span>সব শপ (Shop)</span>
+                  </Link>
+                  <Link
+                    to="/glow-predictor"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-pink-500/40 bg-pink-500/10 text-pink-300 hover:bg-pink-500/20 font-black text-xs transition-all shadow-md col-span-2"
+                  >
+                    <span>✨</span> <span>AI Glow Predictor Studio</span>
+                  </Link>
+                  <Link
+                    to="/track-order"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 font-black text-xs transition-all shadow-md"
+                  >
+                    <span>📦</span> <span>অর্ডার ট্র্যাক (Track)</span>
+                  </Link>
+                  <Link
+                    to="/blog"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
+                  >
+                    <span>📰</span> <span>ব্লগ ও টিপস (Blog)</span>
+                  </Link>
+                  <Link
+                    to="/about"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
+                  >
+                    <span>ℹ️</span> <span>আমাদের সম্পর্কে</span>
+                  </Link>
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
+                  >
+                    <span>📞</span> <span>যোগাযোগ (Contact)</span>
+                  </Link>
+                </div>
               </div>
 
-              {/* Language Switcher */}
+              {/* 3. Shop by Category Section */}
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5 flex items-center justify-between">
+                  <span>ক্যাটাগরি সিলেক্ট করুন (Shop by Category)</span>
+                  <Link to="/shop" onClick={() => setIsMenuOpen(false)} className="text-[9.5px] font-bold text-white/60 hover:text-gtgold underline">সবগুলো ➔</Link>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { name: 'Serum & Essence', icon: '🧪', cat: 'Serum & Essence' },
+                    { name: 'Moisturizer & Cream', icon: '🧴', cat: 'Moisturizer & Cream' },
+                    { name: 'Cleanser & Oil', icon: '🧼', cat: 'Cleanser' },
+                    { name: 'Sunscreen & Toneup', icon: '☀️', cat: 'Sunscreen' },
+                    { name: 'Eye & Lip Care', icon: '👁️', cat: 'Eye Care' },
+                    { name: 'Hair & Body Care', icon: '💆', cat: 'Hair Care' },
+                  ].map((c) => (
+                    <Link
+                      key={c.name}
+                      to={`/shop?category=${encodeURIComponent(c.cat)}`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-2 p-2.5 bg-[#141a20] border border-gtgold/20 hover:border-gtgold/50 rounded-xl text-xs font-extrabold text-gray-200 hover:text-gtgold transition-all"
+                    >
+                      <span className="text-base">{c.icon}</span>
+                      <span className="truncate">{c.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Top K-Beauty Brands Section */}
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5">
+                  অফিশিয়াল কোরিয়ান ব্র্যান্ডস (Popular Brands)
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {['COSRX', 'Anua', 'Beauty of Joseon', 'Medicube', 'SKIN1004', 'K-Secret', 'DABO', 'Christian Dean'].map((b) => (
+                    <Link
+                      key={b}
+                      to={`/shop?brand=${encodeURIComponent(b)}`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="px-3 py-1.5 bg-[#141a20] border border-gtgold/30 hover:border-gtgold rounded-lg text-[11px] font-bold text-gray-200 hover:text-gtgold transition-all"
+                    >
+                      {b}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* 5. Customer Care & Policies */}
+              <div className="pt-2 border-t border-gtgold/20 space-y-2">
+                <div className="text-[10px] font-black uppercase tracking-widest text-white/50">
+                  কাস্টমার কেয়ার ও পলিসি (Policies)
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-400">
+                  <Link to="/shipping-policy" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                    🚚 শিপিং পলিসি
+                  </Link>
+                  <Link to="/returns-exchanges" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                    🔄 রিটার্ন ও এক্সচেঞ্জ
+                  </Link>
+                  <Link to="/privacy-policy" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                    🛡️ প্রাইভেসি পলিসি
+                  </Link>
+                  <Link to="/terms-of-service" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                    📜 টার্মস অফ সার্ভিস
+                  </Link>
+                  <Link to="/faq" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors col-span-2">
+                    ❓ সাধারণ প্রশ্নাবলী (FAQ)
+                  </Link>
+                </div>
+              </div>
+
+              {/* 6. Language Switcher Button */}
               <div className="pt-3 border-t border-gtgold/20">
                 <button onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
-                  className="flex items-center justify-center gap-3 w-full text-white font-bold text-xs tracking-widest py-3 bg-[#12161a] border border-gtgold/30 rounded-xl hover:bg-gtgold/10 transition-colors">
+                  className="flex items-center justify-center gap-3 w-full text-white font-black text-xs tracking-widest py-3 bg-[#141a20] border border-gtgold/40 rounded-xl hover:bg-gtgold/20 transition-all shadow-md">
                   <Globe size={18} className="text-gtgold" />
-                  {i18n.language === 'en' ? 'বাংলায় দেখুন' : 'View in English'}
+                  {i18n.language === 'en' ? 'বাংলায় দেখুন (Switch to Bangla)' : 'View in English'}
                 </button>
               </div>
 
