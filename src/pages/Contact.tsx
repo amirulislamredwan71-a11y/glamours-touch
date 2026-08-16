@@ -186,7 +186,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-serif font-bold mb-1">Email Us</h4>
-                    <p className="text-gray-500">glamourstouch26@gmail.com</p>
+                    <p className="text-gray-500">support@glamourstouch.com</p>
                     <p className="text-gray-400 text-sm">We respond within 24 hours.</p>
                   </div>
                 </div>
@@ -217,7 +217,7 @@ const Contact = () => {
                   <div className="flex gap-4">
                     {[
                       { icon: <Facebook />, label: 'গ্ল্যামার্স টাচ', href: 'https://www.facebook.com/glamourstouch26' },
-                      { icon: <Instagram />, label: 'Instagram', href: '#' },
+                      { icon: <Instagram />, label: '@glamourstouch.bd', href: 'https://www.instagram.com/glamourstouch.bd' },
                       { icon: <Globe />, label: 'glamourstouch.com', href: 'https://glamourstouch.com' },
                     ].map((social, idx) => (
                       <a

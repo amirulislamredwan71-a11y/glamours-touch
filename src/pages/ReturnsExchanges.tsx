@@ -32,7 +32,7 @@ const ReturnsExchanges = () => {
 
             <section>
               <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">How to Initiate a Return</h2>
-              <p>To start a return or exchange, please contact our customer support team at <span className="text-gold font-bold">glamourstouch26@gmail.com</span> with your order number and reason for return. We will provide you with further instructions.</p>
+              <p>To start a return or exchange, please contact our customer support team at <span className="text-gold font-bold">support@glamourstouch.com</span> with your order number and reason for return. We will provide you with further instructions.</p>
             </section>
 
             <section>

@@ -65,7 +65,7 @@ const Footer = () => {
               Bangladesh's home for 100% authentic Korean skincare & beauty — glass-skin routines, delivered to your doorstep.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Glamour's Touch Instagram" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
+              <a href="https://www.instagram.com/glamourstouch.bd" target="_blank" rel="noopener noreferrer" aria-label="Glamour's Touch Instagram (@glamourstouch.bd)" className="hover:text-gold transition-colors"><Instagram size={20} /></a>
               <a href="https://www.facebook.com/glamourstouch26" target="_blank" rel="noopener noreferrer" aria-label="Glamour's Touch Facebook" className="hover:text-gold transition-colors"><Facebook size={20} /></a>
             </div>
           </div>
@@ -107,7 +107,7 @@ const Footer = () => {
             <ul className="space-y-4 text-sm">
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-gold" />
-                <a href="mailto:glamourstouch26@gmail.com" className="hover:text-gold transition-colors">glamourstouch26@gmail.com</a>
+                <a href="mailto:support@glamourstouch.com" className="hover:text-gold transition-colors">support@glamourstouch.com</a>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={16} className="text-gold" />

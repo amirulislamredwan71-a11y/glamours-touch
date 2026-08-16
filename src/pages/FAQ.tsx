@@ -25,7 +25,7 @@ const FAQ = () => {
     },
     {
       question: "How can I contact customer support?",
-      answer: "You can reach our customer support team via email at glamourstouch26@gmail.com or by calling us at +880 1712-426871 during business hours."
+      answer: "You can reach our customer support team via email at support@glamourstouch.com or by calling us at +880 1712-426871 during business hours."
     }
   ];
 
