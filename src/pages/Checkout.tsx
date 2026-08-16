@@ -11,6 +11,7 @@ import { supabase } from '../lib/supabase';
 import { DISTRICTS } from '../data/bangladeshLocations';
 import emailjs from '@emailjs/browser';
 import { trackEvent } from '../lib/fbCapi';
+import { sendOrderEmailsViaResend } from '../lib/resend';
 
 const INSIDE_COST  = 78;
 const OUTSIDE_COST = 118;
@@ -208,12 +209,33 @@ const Checkout = () => {
         data = rpc.data as { id: string };
       }
 
-      // Send Email Notification (Background)
+      // Send Email Notification via Resend + EmailJS Fallback (Background)
       try {
+        sendOrderEmailsViaResend({
+          orderId: data.id,
+          customerName: form.name,
+          customerPhone: form.phone,
+          customerAddress: form.address,
+          upazila: form.upazila,
+          district: form.district,
+          cart: cart.map((i) => ({
+            title: i.title,
+            quantity: i.quantity,
+            price: i.price,
+            image: i.image,
+            variant: i.selectedVariant,
+          })),
+          subtotal: subtotal,
+          deliveryFee: shippingCost,
+          grandTotal: grandTotal,
+          paymentMethod: 'ক্যাশ অন ডেলিভারি (COD)',
+          notes: form.note || undefined,
+        }).catch((e) => console.error('Resend email failed:', e));
+
         const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
         const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
         const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
-        
+
         if (serviceId && templateId && publicKey) {
           const emailParams = {
             order_id: data.id.slice(-8).toUpperCase(),
@@ -224,9 +246,7 @@ const Checkout = () => {
             items_count: cart.reduce((s, i) => s + i.quantity, 0),
           };
           emailjs.send(serviceId, templateId, emailParams, publicKey)
-            .catch(e => console.error('Email failed:', e));
-        } else {
-          console.log('EmailJS keys not configured. Skipping email notification.');
+            .catch(e => console.error('EmailJS failed:', e));
         }
       } catch (err) {
         console.error('Email preparation error:', err);
