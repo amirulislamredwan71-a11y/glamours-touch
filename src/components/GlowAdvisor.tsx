@@ -7,9 +7,9 @@ import { processGTBotQuery } from '../lib/gt_bot_engine';
 interface Msg { role: 'user' | 'model'; content: string; }
 
 const GREETING =
-  "আসসালামু আলাইকুম! 🌿 আমি Glamour's Touch-এর 24/7 AI Seller Assistant (GT BOT)। আপনার ত্বকের সমস্যা বা পছন্দের পণ্য সম্পর্কে বলুন — সেরা কোরিয়ান রুটিন, অফার প্রাইজ ও সরাসরি অর্ডার সুবিধা একসাথে পেয়ে যাবেন ✨";
+  "আসসালামু আলাইকুম! 🌿 আমি Glamour's Touch-এর Glow Adviser। আপনার ত্বকের সমস্যা বা লক্ষ্য বলুন (ব্রণ, কালো দাগ, শুষ্কতা, গ্লো) — সেরা Korean রুটিন ও পণ্য বলে দিচ্ছি ✨";
 
-const QUICK = ['📦 অর্ডার ট্র্যাকিং', '🔥 দামাকা অফার', '✨ গ্লাস স্কিন সিক্রেট', '💬 WhatsApp-এ কথা বলুন'];
+const QUICK = ['কালো দাগ দূর করার রুটিন', 'ব্রণের জন্য কী ব্যবহার করব?', 'গ্লোয়িং স্কিন চাই', '📦 অর্ডার ট্র্যাকিং'];
 
 const GlowAdvisor: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -48,35 +48,48 @@ const GlowAdvisor: React.FC = () => {
     const next: Msg[] = [...msgs, { role: 'user', content: t }];
     setMsgs(next); setInput(''); setLoading(true);
 
-    if (t.includes('WhatsApp') || t.includes('হোয়াটসঅ্যাপ')) {
+    if (t.toLowerCase().includes('whatsapp') || t.includes('হোয়াটসঅ্যাপ')) {
       window.open('https://wa.me/8801712426871', '_blank');
     }
 
     try {
+      // First try local fast engine (handles Order Tracking & exact Catalog Math)
       const botRes = await processGTBotQuery(t);
-      setMsgs((m) => [...m, { role: 'model', content: botRes.reply }]);
+      if (botRes && botRes.reply && !botRes.reply.includes('গ্ল্যামারস টাচে পাচ্ছেন')) {
+        setMsgs((m) => [...m, { role: 'model', content: botRes.reply }]);
+        setLoading(false);
+        return;
+      }
+
+      // Try Groq / Gemini API route
+      const r = await fetch('/api/advisor', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: next }),
+      });
+      const d = await r.json();
+      setMsgs((m) => [...m, { role: 'model', content: d.reply || botRes.reply }]);
     } catch {
-      setMsgs((m) => [...m, { role: 'model', content: "গ্ল্যামারস টাচে পাচ্ছেন ৫৬৩+ ১০০% অরিজিনাল কোরিয়ান কসমেটিকস! যেকোনো প্রোডাক্টের নাম বা স্কিন সমস্যা লিখে জানান ✨" }]);
+      setMsgs((m) => [...m, { role: 'model', content: "গ্ল্যামারস টাচে পাচ্ছেন ৫৬৩+ ১০০% অরিজিনাল কোরিয়ান কসমেটিকস! যেকোনো প্রোডাক্টের নাম (যেমন: Cosrx, Anua, Axis-Y) বা স্কিন সমস্যা লিখে জানান ✨" }]);
     } finally { setLoading(false); }
   };
 
   return (
     <>
-      {/* ── Floating Compact "GT BOT AI" button (Left Aligned) ── */}
+      {/* ── Floating Compact "Live Chat" button (Left Aligned for Ergonomic Thumb Scrolling) ── */}
       {!open && (
         <motion.button
           onClick={() => setOpen(true)}
           initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.5, type: 'spring', stiffness: 260, damping: 26 }}
-          className="fixed left-3.5 bottom-[88px] sm:bottom-6 z-[90] bg-[#12171c]/95 border-2 border-gtgold/90 text-white hover:bg-gtgold hover:text-black font-extrabold text-[11px] px-3.5 py-2 rounded-full flex items-center gap-2 shadow-[0_8px_25px_rgba(0,0,0,0.85)] hover:scale-105 transition-all group backdrop-blur-md"
+          className="fixed left-3.5 bottom-[84px] sm:bottom-6 z-[90] bg-[#12171c]/95 border-2 border-gtgold/90 text-white hover:bg-gtgold hover:text-black font-extrabold text-[11px] px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.85)] hover:scale-105 transition-all group backdrop-blur-md"
           style={{ boxShadow: '0 8px 25px rgba(0,0,0,0.85)' }}
         >
-          <span className="relative flex h-2.5 w-2.5">
+          <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00e676]"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e676]"></span>
           </span>
-          <Sparkles size={15} className="text-gtgold group-hover:text-black transition-colors animate-pulse" />
-          <span className="font-extrabold tracking-wide uppercase">GT BOT AI</span>
+          <MessageCircle size={14} className="text-gtgold group-hover:text-black transition-colors" />
+          <span className="font-extrabold tracking-wide">Live Chat</span>
         </motion.button>
       )}
 
@@ -85,28 +98,25 @@ const GlowAdvisor: React.FC = () => {
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            className="fixed bottom-[96px] sm:bottom-6 left-2 right-2 sm:right-auto sm:left-6 sm:w-[400px] z-[100] rounded-3xl shadow-2xl border border-gtgold/30 flex flex-col overflow-hidden gt-card backdrop-blur-xl"
-            style={{ maxHeight: '75vh' }}
+            className="fixed bottom-[88px] sm:bottom-6 left-2 right-2 sm:right-auto sm:left-6 sm:w-[380px] z-[100] rounded-3xl shadow-2xl border border-gtgold/30 flex flex-col overflow-hidden gt-card backdrop-blur-xl"
+            style={{ maxHeight: '64vh' }}
           >
             {/* Header */}
-            <div className="px-4 py-3.5 flex items-center justify-between border-b border-gtgold/20" style={{ background: '#141418' }}>
+            <div className="px-4 py-3 flex items-center justify-between border-b border-gtgold/20" style={{ background: '#141418' }}>
               <div className="flex items-center gap-2.5">
                 <span className="gt-cat-ring w-9 h-9 shrink-0 block">
                   <span className="w-full h-full rounded-full flex items-center justify-center" style={{ background: '#141418' }}><Headphones size={16} className="text-gtgold" /></span>
                 </span>
                 <div>
-                  <div className="flex items-center gap-1.5">
-                    <p className="font-extrabold text-sm leading-none text-white tracking-wide">GT BOT AI</p>
-                    <span className="bg-gtgold/20 text-gtgold text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-gtgold/40">BD #1 SELLER</span>
-                  </div>
-                  <p className="text-[10px] font-semibold mt-1 text-[#00e676]">Online 24/7 • Instant AI Sales Assistant</p>
+                  <p className="font-bold text-sm leading-none text-white">Glow Adviser AI</p>
+                  <p className="text-[10px] font-semibold mt-1 text-[#00e676]">Online • Instant Reply</p>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} aria-label="close" className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:text-white"><X size={16} /></button>
             </div>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-3.5 space-y-3" style={{ minHeight: 260, background: '#101014' }}>
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-2.5" style={{ minHeight: 220, background: '#101014' }}>
               {msgs.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[88%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user' ? 'gt-shiny text-black font-semibold rounded-br-sm shadow-md' : 'bg-white/8 border border-white/10 text-white/90 rounded-bl-sm shadow-sm'}`}>
@@ -123,9 +133,9 @@ const GlowAdvisor: React.FC = () => {
                 </div>
               )}
               {msgs.length === 1 && !loading && (
-                <div className="flex flex-wrap gap-2 pt-2">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {QUICK.map((q) => (
-                    <button key={q} onClick={() => sendText(q)} className="text-[11px] bg-gtgold/10 border border-gtgold/40 text-gtgold px-3 py-1.5 rounded-full hover:bg-gtgold hover:text-black font-bold transition-all shadow-sm">
+                    <button key={q} onClick={() => sendText(q)} className="text-[11px] bg-gtgold/10 border border-gtgold/40 text-gtgold px-2.5 py-1 rounded-full hover:bg-gtgold hover:text-black font-bold transition-all shadow-sm">
                       {q}
                     </button>
                   ))}
