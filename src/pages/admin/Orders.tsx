@@ -54,14 +54,43 @@ const AdminOrders = () => {
     }
   };
 
+  const firePurchaseEvent = (order: Order) => {
+    fetch('/api/fb-events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'Purchase',
+        event_id: `purchase-${order.id}`,
+        event_source_url: 'https://www.glamourstouch.com/checkout',
+        em: order.shipping_address?.email || undefined,
+        ph: order.shipping_address?.phone || undefined,
+        custom_data: {
+          value: order.total,
+          currency: 'BDT',
+          content_ids: (order.items || []).map((i: any) => i.id).filter(Boolean),
+          contents: (order.items || []).map((i: any) => ({ id: i.id, quantity: i.quantity, item_price: i.price })),
+          num_items: (order.items || []).reduce((n: number, i: any) => n + (i.quantity || 1), 0),
+        },
+      }),
+    }).catch((err) => console.error('Purchase CAPI fire failed:', err));
+  };
+
   const updateStatus = async (id: string, status: string) => {
     try {
+      const previous = orders.find((o) => o.id === id);
       const { error } = await supabase
         .from('orders')
         .update({ status })
         .eq('id', id);
       if (error) throw error;
-      
+
+      // Purchase is only a real, confirmed sale the moment an order leaves "Pending" for
+      // "Processing" — fire the server-side Meta Conversions API event on exactly that edge,
+      // not on every status change, so re-toggling status never double-counts.
+      if (previous?.status?.toLowerCase() === 'pending' && status.toLowerCase() === 'processing') {
+        firePurchaseEvent({ ...previous, status });
+      }
+
       // Refresh list
       fetchOrders();
       if (selectedOrder?.id === id) {

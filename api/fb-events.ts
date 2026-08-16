@@ -1,4 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { createHash } from 'node:crypto';
+
+const sha256 = (s: string) => createHash('sha256').update(s).digest('hex');
 
 type VercelResponse = ServerResponse & {
   status: (code: number) => VercelResponse;
@@ -38,7 +41,7 @@ export default async function handler(req: IncomingMessage & { method?: string; 
   let body: any;
   try { body = await readBody(req); } catch { return json(res, 400, { error: 'bad body' }); }
 
-  const { event_name, event_id, event_source_url, custom_data, fbp, fbc } = body || {};
+  const { event_name, event_id, event_source_url, custom_data, fbp, fbc, em, ph } = body || {};
   if (!event_name || !event_id) return json(res, 400, { error: 'event_name and event_id required' });
 
   const xff = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
@@ -48,6 +51,10 @@ export default async function handler(req: IncomingMessage & { method?: string; 
   if (xff) user_data.client_ip_address = xff;
   if (fbp) user_data.fbp = fbp;
   if (fbc) user_data.fbc = fbc;
+  // Admin-triggered events (e.g. order confirmation) have no browser cookies to match on —
+  // fall back to hashed customer contact info from the order instead, per Meta's CAPI spec.
+  if (em) user_data.em = sha256(String(em).trim().toLowerCase());
+  if (ph) user_data.ph = sha256(String(ph).replace(/\D/g, ''));
 
   try {
     const r = await fetch(`https://graph.facebook.com/v21.0/${PIXEL_ID}/events`, {
