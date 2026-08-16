@@ -20,10 +20,10 @@ const json = (res: VercelResponse, code: number, obj: any) => {
 };
 
 // The single pixel every campaign is wired to (see index.html) — kept in sync manually.
-// (2026-08-16: fixed a stray trailing backtick on META_CAPI_ACCESS_TOKEN that was making every
-// server-side call fail with "Malformed access token" — this comment forces a fresh git-triggered
-// build so the corrected env var actually gets picked up, since a plain Vercel "redeploy" reuses
-// the old build artifact rather than re-reading env vars.)
+// (2026-08-16: the earlier fix targeted the wrong Vercel project — this repo's Vercel-connected
+// deploy target is prj_vB9pFH3Ax6xx0L80wG8r789hG2FG under the amirulislamredwan71-a11y account,
+// not the khondokartowsif171-owned "glamours-touch" project. Re-fixed META_CAPI_ACCESS_TOKEN
+// there; this commit triggers the actual production build.)
 const PIXEL_ID = '988182894209503';
 
 // Server-side mirror of the browser Meta Pixel (Conversions API). Reaches Meta even when
