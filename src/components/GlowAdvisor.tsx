@@ -98,8 +98,8 @@ const GlowAdvisor: React.FC = () => {
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            className="fixed bottom-[88px] sm:bottom-6 left-2 right-2 sm:right-auto sm:left-6 sm:w-[380px] z-[100] rounded-3xl shadow-2xl border border-gtgold/30 flex flex-col overflow-hidden gt-card backdrop-blur-xl"
-            style={{ maxHeight: '64vh' }}
+            className="fixed top-[74px] bottom-[86px] sm:top-auto sm:bottom-6 left-2 right-2 sm:right-auto sm:left-6 sm:w-[380px] z-[9999] rounded-3xl shadow-2xl border border-gtgold/30 flex flex-col overflow-hidden gt-card backdrop-blur-xl"
+            style={{ maxHeight: 'calc(100vh - 168px)' }}
           >
             {/* Header */}
             <div className="px-4 py-3 flex items-center justify-between border-b border-gtgold/20" style={{ background: '#141418' }}>
