@@ -106,7 +106,7 @@ const Cart = () => {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Shipping</span>
-                  <span className="text-xs text-gray-400">Calculated at checkout<br/>(Inside Dhaka ৳78 / Outside ৳118)</span>
+                  <span className="text-xs text-gray-400">Calculated at checkout<br/>(Inside Dhaka ৳78 / Outside ৳150)</span>
                 </div>
                 <div className="border-t border-white/10 pt-4 flex justify-between text-xl font-bold">
                   <span>Subtotal</span>

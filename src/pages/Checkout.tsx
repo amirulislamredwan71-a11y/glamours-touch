@@ -14,7 +14,7 @@ import { trackEvent } from '../lib/fbCapi';
 import { sendOrderEmailsViaResend } from '../lib/resend';
 
 const INSIDE_COST  = 78;
-const OUTSIDE_COST = 118;
+const OUTSIDE_COST = 150;
 
 /* ── Styled select ─────────────────────────────────────────── */
 const SelectField = ({
@@ -220,13 +220,12 @@ const Checkout = () => {
           upazila: form.upazila,
           district: form.district,
           cart: cart.map((i) => ({
-            title: i.title,
+            title: i.name,
             quantity: i.quantity,
             price: i.price,
             image: i.image,
-            variant: i.selectedVariant,
           })),
-          subtotal: subtotal,
+          subtotal: cartTotal,
           deliveryFee: shippingCost,
           grandTotal: grandTotal,
           paymentMethod: 'ক্যাশ অন ডেলিভারি (COD)',

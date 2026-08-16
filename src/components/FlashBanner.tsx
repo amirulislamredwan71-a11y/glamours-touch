@@ -65,10 +65,12 @@ const FlashBanner: React.FC = () => {
         <div className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl shadow-2xl aspect-[16/6] sm:aspect-[16/5] border-2 border-gtgold/40">
           {b.link ? <a href={b.link} aria-label={b.title || "Glamour's Touch Special Offer"} className="block w-full h-full">{img}</a> : img}
           {banners.length > 1 && (
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex z-10 bg-black/50 backdrop-blur-md px-1 rounded-full border border-white/20">
               {banners.map((bn, i) => (
                 <button key={bn.id || i} aria-label={`View banner ${i + 1}: ${bn.title || 'Special Promo'}`} onClick={() => setIdx(i)}
-                  className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-5 bg-gtgold shadow-md' : 'w-1.5 bg-white/50'}`} />
+                  className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                  <span className={`h-1.5 rounded-full transition-all block ${i === idx ? 'w-5 bg-gtgold shadow-md' : 'w-1.5 bg-white/50'}`} />
+                </button>
               ))}
             </div>
           )}
