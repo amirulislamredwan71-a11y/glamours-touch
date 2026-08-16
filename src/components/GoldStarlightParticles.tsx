@@ -1,5 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 
+interface Particle {
+  x: number;
+  y: number;
+  size: number;
+  speedY: number;
+  speedX: number;
+  opacity: number;
+  pulseSpeed: number;
+  color: string;
+  isEmblemParticle?: boolean;
+  angle?: number;
+  spawnY?: number;
+}
+
 const GoldStarlightParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -22,19 +36,47 @@ const GoldStarlightParticles: React.FC = () => {
     window.addEventListener('resize', handleResize);
 
     const isMobile = width < 768;
-    const particleCount = isMobile ? 40 : 65;
-    const particles = Array.from({ length: particleCount }).map(() => ({
+    const maxInnerRadius = isMobile ? 110 : 200;
+    const totalCount = isMobile ? 45 : 70;
+
+    // Restored exact elegant micro starlight size (0.6px - 2.0px)
+    const createEmblemParticle = (): Particle => {
+      const angle = Math.random() * Math.PI * 2;
+      const r = Math.random() * maxInnerRadius;
+      const cx = width / 2;
+      const cy = height / 2;
+      return {
+        x: cx + Math.cos(angle) * r,
+        y: cy + Math.sin(angle) * r,
+        spawnY: cy + Math.sin(angle) * r,
+        size: isMobile ? Math.random() * 1.4 + 0.6 : Math.random() * 1.8 + 0.7,
+        speedY: -(Math.random() * 0.8 + 0.3),
+        speedX: Math.cos(angle) * 0.25 + (Math.random() - 0.5) * 0.2,
+        opacity: Math.random() * 0.8 + 0.2,
+        pulseSpeed: Math.random() * 0.03 + 0.01,
+        color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
+        isEmblemParticle: true,
+        angle,
+      };
+    };
+
+    const createAmbientParticle = (): Particle => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: isMobile ? Math.random() * 2.0 + 0.8 : Math.random() * 2.4 + 0.8,
+      size: isMobile ? Math.random() * 1.6 + 0.6 : Math.random() * 2.0 + 0.7,
       speedY: -(Math.random() * 0.75 + 0.25),
       speedX: (Math.random() - 0.5) * 0.25,
       opacity: Math.random() * 0.7 + 0.3,
       pulseSpeed: Math.random() * 0.02 + 0.005,
       color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
-    }));
+      isEmblemParticle: false,
+    });
 
-    // Exact 50 FPS Frame Rate Throttling (20ms per frame)
+    const particles: Particle[] = Array.from({ length: totalCount }).map((_, i) => {
+      return i % 2 === 0 ? createEmblemParticle() : createAmbientParticle();
+    });
+
+    // Throttled 50 FPS Frame Loop (20ms per frame)
     let lastTime = performance.now();
     const fpsInterval = 1000 / 50;
 
@@ -55,10 +97,16 @@ const GoldStarlightParticles: React.FC = () => {
         if (p.opacity > 0.95) p.opacity = 0.95;
         if (p.opacity < 0.2) p.opacity = 0.2;
 
-        if (p.y < -10) {
-          p.y = height + 10;
-          p.x = Math.random() * width;
+        if (p.y < -10 || (p.isEmblemParticle && p.spawnY && p.spawnY - p.y > 350)) {
+          if (p.isEmblemParticle) {
+            const fresh = createEmblemParticle();
+            Object.assign(p, fresh);
+          } else {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
         }
+
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
 
@@ -68,7 +116,7 @@ const GoldStarlightParticles: React.FC = () => {
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
         ctx.shadowColor = '#e5b83a';
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 5;
         ctx.fill();
         ctx.restore();
       });
