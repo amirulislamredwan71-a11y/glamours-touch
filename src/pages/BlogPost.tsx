@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Clock, ArrowLeft, ArrowRight, Phone, MessageCircle } from 'lucide-react';
 import SEO from '../components/SEO';
+import BlogProductCard from '../components/BlogProductCard';
 import { supabase } from '../lib/supabase';
 
 import { optimizeImageUrl } from '../lib/imageUtils';
@@ -21,7 +22,7 @@ interface BlogPost {
   created_at: string;
 }
 
-// Very lightweight markdown renderer
+// Very lightweight markdown renderer with BlogProductCard support
 const renderContent = (content: string) => {
   const lines = content.trim().split('\n');
   const elements: React.ReactNode[] = [];
@@ -29,6 +30,38 @@ const renderContent = (content: string) => {
 
   while (i < lines.length) {
     const line = lines[i];
+
+    if (line.startsWith('::product') || line.startsWith('::card')) {
+      // Syntax: ::product title="Anua Niacinamide Serum" price="2150" regular="2970" image="url" slug="id" badge="100% Authentic"::
+      try {
+        const titleMatch = line.match(/title="([^"]+)"/);
+        const priceMatch = line.match(/price="([^"]+)"/);
+        const regMatch = line.match(/regular="([^"]+)"/);
+        const imgMatch = line.match(/image="([^"]+)"/);
+        const slugMatch = line.match(/slug="([^"]+)"/);
+        const badgeMatch = line.match(/badge="([^"]+)"/);
+        const subMatch = line.match(/subtitle="([^"]+)"/);
+
+        if (titleMatch && priceMatch && slugMatch) {
+          elements.push(
+            <BlogProductCard
+              key={`prod-card-${i}`}
+              title={titleMatch[1]}
+              price={parseFloat(priceMatch[1])}
+              regularPrice={regMatch ? parseFloat(regMatch[1]) : undefined}
+              imageUrl={imgMatch ? imgMatch[1] : '/logo.png'}
+              productSlug={slugMatch[1]}
+              badge={badgeMatch ? badgeMatch[1] : '100% Authentic Korean'}
+              subtitle={subMatch ? subMatch[1] : undefined}
+            />
+          );
+          i++;
+          continue;
+        }
+      } catch (e) {
+        console.error('Error parsing inline product card:', e);
+      }
+    }
 
     if (line.startsWith('## ')) {
       elements.push(
