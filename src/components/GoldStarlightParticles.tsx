@@ -36,8 +36,8 @@ const GoldStarlightParticles: React.FC = () => {
     window.addEventListener('resize', handleResize);
 
     const isMobile = width < 768;
-    const maxInnerRadius = isMobile ? 110 : 200;
-    const totalCount = isMobile ? 45 : 70;
+    const maxInnerRadius = isMobile ? 80 : 200;
+    const totalCount = isMobile ? 14 : 65;
 
     // Restored exact elegant micro starlight size (0.6px - 2.0px)
     const createEmblemParticle = (): Particle => {
@@ -49,11 +49,11 @@ const GoldStarlightParticles: React.FC = () => {
         x: cx + Math.cos(angle) * r,
         y: cy + Math.sin(angle) * r,
         spawnY: cy + Math.sin(angle) * r,
-        size: isMobile ? Math.random() * 1.4 + 0.6 : Math.random() * 1.8 + 0.7,
-        speedY: -(Math.random() * 0.8 + 0.3),
-        speedX: Math.cos(angle) * 0.25 + (Math.random() - 0.5) * 0.2,
-        opacity: Math.random() * 0.8 + 0.2,
-        pulseSpeed: Math.random() * 0.03 + 0.01,
+        size: isMobile ? Math.random() * 1.0 + 0.5 : Math.random() * 1.8 + 0.7,
+        speedY: -(Math.random() * 0.5 + 0.2),
+        speedX: Math.cos(angle) * 0.2 + (Math.random() - 0.5) * 0.15,
+        opacity: Math.random() * 0.7 + 0.2,
+        pulseSpeed: Math.random() * 0.02 + 0.01,
         color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
         isEmblemParticle: true,
         angle,
@@ -63,11 +63,11 @@ const GoldStarlightParticles: React.FC = () => {
     const createAmbientParticle = (): Particle => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: isMobile ? Math.random() * 1.6 + 0.6 : Math.random() * 2.0 + 0.7,
-      speedY: -(Math.random() * 0.75 + 0.25),
-      speedX: (Math.random() - 0.5) * 0.25,
-      opacity: Math.random() * 0.7 + 0.3,
-      pulseSpeed: Math.random() * 0.02 + 0.005,
+      size: isMobile ? Math.random() * 1.2 + 0.5 : Math.random() * 2.0 + 0.7,
+      speedY: -(Math.random() * 0.5 + 0.2),
+      speedX: (Math.random() - 0.5) * 0.2,
+      opacity: Math.random() * 0.6 + 0.2,
+      pulseSpeed: Math.random() * 0.015 + 0.005,
       color: Math.random() > 0.3 ? '#e5b83a' : '#ffffff',
       isEmblemParticle: false,
     });
@@ -76,12 +76,27 @@ const GoldStarlightParticles: React.FC = () => {
       return i % 2 === 0 ? createEmblemParticle() : createAmbientParticle();
     });
 
-    // Throttled 50 FPS Frame Loop (20ms per frame)
+    // Throttled frame loop (30 FPS on mobile, 50 FPS on desktop)
     let lastTime = performance.now();
-    const fpsInterval = 1000 / 50;
+    const fpsInterval = 1000 / (isMobile ? 30 : 50);
+    let isScrolling = false;
+    let scrollTimeout: any = null;
+
+    const handleScroll = () => {
+      if (!isMobile) return;
+      isScrolling = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     const render = (now: number) => {
       animationFrameId = requestAnimationFrame(render);
+
+      if (document.hidden || isScrolling) return;
 
       const elapsed = now - lastTime;
       if (elapsed < fpsInterval) return;
@@ -94,7 +109,7 @@ const GoldStarlightParticles: React.FC = () => {
         p.x += p.speedX;
         p.opacity += Math.sin(now * p.pulseSpeed) * 0.015;
 
-        if (p.opacity > 0.95) p.opacity = 0.95;
+        if (p.opacity > 0.9) p.opacity = 0.9;
         if (p.opacity < 0.2) p.opacity = 0.2;
 
         if (p.y < -10 || (p.isEmblemParticle && p.spawnY && p.spawnY - p.y > 350)) {
@@ -115,8 +130,10 @@ const GoldStarlightParticles: React.FC = () => {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
-        ctx.shadowColor = '#e5b83a';
-        ctx.shadowBlur = 5;
+        if (!isMobile) {
+          ctx.shadowColor = '#e5b83a';
+          ctx.shadowBlur = 4;
+        }
         ctx.fill();
         ctx.restore();
       });
@@ -126,6 +143,8 @@ const GoldStarlightParticles: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

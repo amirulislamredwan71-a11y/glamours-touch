@@ -93,7 +93,7 @@
 
     <!-- Deferred Third-Party Tracking Scripts (Zero Main Thread Blocking Time) -->
     <script>
-      window.addEventListener('load', function() {
+      function initAnalytics() {
         // GA4
         var s = document.createElement('script');
         s.async = true;
@@ -116,7 +116,13 @@
         fbq("init", "900500432991738");
         fbq("init", "988182894209503");
         fbq("track", "PageView");
-      });
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() { setTimeout(initAnalytics, 1500); });
+      } else {
+        window.addEventListener('load', function() { setTimeout(initAnalytics, 2000); });
+      }
     </script>
 
     <!-- Non-render-blocking web fonts -->
@@ -155,13 +161,19 @@
 
     <!-- Microsoft Clarity — deferred until after page load -->
     <script>
-      window.addEventListener('load', function() {
+      function initClarity() {
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "wrb6g9dqmt");
-      });
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() { setTimeout(initClarity, 2500); });
+      } else {
+        window.addEventListener('load', function() { setTimeout(initClarity, 3000); });
+      }
     </script>
   </body>
 </html>

@@ -40,7 +40,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
   };
 
   return (
-    <div className="flex flex-col h-full group relative">
+    <div 
+      className="flex flex-col h-full group relative"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '0 340px' }}
+    >
       {/* 1. SEPARATE Floating Crisp White Image Card with GT Gold Frame */}
       <div className="relative rounded-[32px] overflow-hidden bg-white aspect-square flex items-center justify-center p-4 shadow-xl border-2 border-gtgold/40 group-hover:border-gtgold transition-all duration-300 group-hover:scale-[1.02]">
         {/* Discount / Sold-out badge (Cyberpunk Neon Pink) */}
