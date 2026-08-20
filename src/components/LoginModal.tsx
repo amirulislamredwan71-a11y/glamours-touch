@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Mail, Lock, User, ArrowRight, Loader2, CheckCircle2, ShieldAlert, KeyRound } from 'lucide-react';
+import { X, Sparkles, CheckCircle2, ShieldCheck, Zap, Package, ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import { useTranslation } from 'react-i18next';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -10,63 +9,17 @@ interface LoginModalProps {
 }
 
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const { signIn, signInWithEmail, signUpWithEmail, resetPassword } = useAuth();
-  const { t } = useTranslation();
-
-  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { signIn } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleGoogleSignIn = async () => {
     setError(null);
+    setLoading(true);
     try {
       await signIn();
     } catch (err: any) {
-      setError(err.message || 'গুগল দিয়ে লগইন করা সম্ভব হয়নি। ইমেইল ও পাসওয়ার্ড দিয়ে চেষ্টা করুন।');
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setLoading(true);
-    setError(null);
-    setSuccessMsg(null);
-
-    try {
-      if (mode === 'login') {
-        const { error } = await signInWithEmail(email, password);
-        if (error) {
-          setError(error.message === 'Invalid login credentials' 
-            ? 'ভুল ইমেইল বা পাসওয়ার্ড! অনুগ্রহ করে সঠিক তথ্য দিন।' 
-            : error.message || 'লগইন ব্যর্থ হয়েছে');
-        } else {
-          onClose();
-        }
-      } else if (mode === 'signup') {
-        const { error } = await signUpWithEmail(email, password, name);
-        if (error) {
-          setError(error.message || 'রেজিস্ট্রেশন ব্যর্থ হয়েছে');
-        } else {
-          setSuccessMsg('🎉 একাউন্ট সফলভাবে তৈরি হয়েছে! আপনি এখন লগইন অবস্থায় আছেন।');
-          setTimeout(() => onClose(), 1500);
-        }
-      } else if (mode === 'forgot') {
-        const { error } = await (resetPassword ? resetPassword(email) : { error: null });
-        if (error) {
-          setError(error.message || 'পাসওয়ার্ড রিসেট লিংক পাঠানো সম্ভব হয়নি');
-        } else {
-          setSuccessMsg('✅ আপনার ইমেইলে পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে!');
-        }
-      }
-    } catch (err: any) {
-      setError(err.message || 'একটি সমস্যা হয়েছে');
-    } finally {
+      setError(err.message || 'গুগল দিয়ে লগইন করা সম্ভব হয়নি। আবার চেষ্টা করুন।');
       setLoading(false);
     }
   };
@@ -76,187 +29,92 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-charcoal/70 backdrop-blur-md"
         />
 
+        {/* Modal Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.92, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-md bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gold/20"
+          exit={{ opacity: 0, scale: 0.92, y: 20 }}
+          className="relative w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gold/30 p-8 sm:p-10 text-center"
         >
+          {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 text-gray-400 hover:text-gold transition-colors z-10"
+            className="absolute top-6 right-6 text-gray-400 hover:text-gold hover:bg-gold/10 p-2 rounded-full transition-all"
+            aria-label="Close"
           >
-            <X size={22} />
+            <X size={20} />
           </button>
 
-          <div className="p-7 sm:p-9">
-            {/* Header */}
-            <div className="text-center mb-6">
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-charcoal mb-1">
-                {mode === 'signup' ? 'নতুন একাউন্ট তৈরি করুন' : mode === 'forgot' ? 'পাসওয়ার্ড রিসেট' : 'লগইন করুন'}
-              </h2>
-              <p className="text-gray-500 text-xs sm:text-sm">
-                {mode === 'signup' 
-                  ? 'গ্ল্যামারস টাচে আপনাকে স্বাগতম' 
-                  : mode === 'forgot' 
-                  ? 'আপনার ইমেইল দিয়ে পাসওয়ার্ড রিসেট করুন' 
-                  : 'আপনার একাউন্টে প্রবেশ করুন'}
-              </p>
-            </div>
-
-            {/* Google 1-Click Login */}
-            {mode !== 'forgot' && (
-              <div className="mb-5">
-                <button
-                  type="button"
-                  onClick={handleGoogleSignIn}
-                  className="w-full bg-white border border-gray-200 hover:border-gold/50 hover:bg-gold/5 text-charcoal py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-3 active:scale-[0.98]"
-                >
-                  <img
-                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                    alt="Google"
-                    className="w-4 h-4"
-                  />
-                  গুগল দিয়ে লগইন করুন / Continue with Google
-                </button>
-
-                <div className="relative flex items-center justify-center my-4">
-                  <div className="border-t border-gray-200 w-full" />
-                  <span className="bg-white px-3 text-[11px] text-gray-400 font-medium uppercase">অথবা ইমেইল দিয়ে</span>
-                  <div className="border-t border-gray-200 w-full" />
-                </div>
-              </div>
-            )}
-
-            {/* Mode Switcher Tabs */}
-            {mode !== 'forgot' && (
-              <div className="flex bg-gray-100 p-1 rounded-xl mb-5 text-xs font-bold">
-                <button
-                  type="button"
-                  onClick={() => { setMode('login'); setError(null); setSuccessMsg(null); }}
-                  className={`flex-1 py-2 rounded-lg transition-all ${mode === 'login' ? 'bg-white text-charcoal shadow-sm' : 'text-gray-500 hover:text-charcoal'}`}
-                >
-                  লগইন
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setMode('signup'); setError(null); setSuccessMsg(null); }}
-                  className={`flex-1 py-2 rounded-lg transition-all ${mode === 'signup' ? 'bg-white text-charcoal shadow-sm' : 'text-gray-500 hover:text-charcoal'}`}
-                >
-                  নতুন একাউন্ট
-                </button>
-              </div>
-            )}
-
-            {/* Success Message */}
-            {successMsg && (
-              <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold rounded-xl flex items-center gap-2">
-                <CheckCircle2 size={16} className="flex-shrink-0" />
-                <span>{successMsg}</span>
-              </div>
-            )}
-
-            {/* Error Message */}
-            {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-xs font-semibold rounded-xl flex items-center gap-2">
-                <ShieldAlert size={16} className="flex-shrink-0" />
-                <span>{error}</span>
-              </div>
-            )}
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-3">
-              {mode === 'signup' && (
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                  <input
-                    type="text"
-                    placeholder="আপনার পুরো নাম"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="w-full pl-11 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-100 rounded-xl text-xs sm:text-sm focus:border-gold focus:bg-white outline-none transition-all"
-                  />
-                </div>
-              )}
-
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                <input
-                  type="email"
-                  placeholder="ইমেইল এড্রেস"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-100 rounded-xl text-xs sm:text-sm focus:border-gold focus:bg-white outline-none transition-all"
-                />
-              </div>
-
-              {mode !== 'forgot' && (
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                  <input
-                    type="password"
-                    placeholder={mode === 'signup' ? 'পাসওয়ার্ড সেট করুন (কমপক্ষে ৬ অক্ষর)' : 'পাসওয়ার্ড'}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength={6}
-                    className="w-full pl-11 pr-4 py-3 bg-gray-50 text-gray-900 border border-gray-100 rounded-xl text-xs sm:text-sm focus:border-gold focus:bg-white outline-none transition-all"
-                  />
-                </div>
-              )}
-
-              {mode === 'login' && (
-                <div className="text-right">
-                  <button
-                    type="button"
-                    onClick={() => { setMode('forgot'); setError(null); setSuccessMsg(null); }}
-                    className="text-[11px] text-gray-500 hover:text-gold font-medium transition-colors"
-                  >
-                    পাসওয়ার্ড ভুলে গেছেন?
-                  </button>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-charcoal py-3.5 rounded-xl font-bold text-xs sm:text-sm tracking-wider transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 active:scale-[0.98] mt-2"
-              >
-                {loading ? (
-                  <Loader2 className="animate-spin" size={18} />
-                ) : (
-                  <>
-                    {mode === 'signup' ? 'একাউন্ট তৈরি করুন' : mode === 'forgot' ? 'রিসেট লিংক পাঠান' : 'লগইন করুন'}
-                    <ArrowRight size={16} />
-                  </>
-                )}
-              </button>
-
-              {mode === 'forgot' && (
-                <button
-                  type="button"
-                  onClick={() => { setMode('login'); setError(null); setSuccessMsg(null); }}
-                  className="w-full text-center text-xs text-gold font-bold hover:underline mt-3"
-                >
-                  লগইন পেজে ফিরে যান
-                </button>
-              )}
-            </form>
-
-            <p className="mt-6 text-center text-[10px] text-gray-400">
-              নিরাপদ এনক্রিপশন ও ১০০% প্রাইভেসির সাথে সুরক্ষিত 🔒
-            </p>
+          {/* Logo / Brand Header */}
+          <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-gold/20 via-gold/10 to-transparent flex items-center justify-center border border-gold/40 shadow-inner">
+            <Sparkles className="text-gold w-8 h-8 animate-pulse" />
           </div>
+
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-charcoal mb-2">
+            Glamour's Touch
+          </h2>
+          <p className="text-gray-500 text-xs sm:text-sm mb-8 leading-relaxed">
+            ১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার শপিং ও এক্সক্লুসিভ অফার পেতে গুগল দিয়ে ১-ট্যাপে প্রবেশ করুন।
+          </p>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 text-xs font-semibold rounded-xl text-left">
+              {error}
+            </div>
+          )}
+
+          {/* Pure 1-Click Google Sign-In Button */}
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+            className="w-full bg-white hover:bg-gray-50 text-charcoal border-2 border-gray-200 hover:border-gold py-4 px-6 rounded-2xl font-bold text-sm sm:text-base transition-all shadow-md hover:shadow-xl flex items-center justify-center gap-3 active:scale-[0.98] group disabled:opacity-75 relative overflow-hidden"
+          >
+            {loading ? (
+              <Loader2 className="animate-spin text-gold" size={22} />
+            ) : (
+              <>
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  alt="Google"
+                  className="w-6 h-6 flex-shrink-0 group-hover:scale-110 transition-transform"
+                />
+                <span className="tracking-wide">গুগল দিয়ে সরাসরি লগইন করুন</span>
+                <ArrowRight size={18} className="text-gold group-hover:translate-x-1 transition-transform ml-auto" />
+              </>
+            )}
+          </button>
+
+          {/* Benefits Feature List */}
+          <div className="mt-8 pt-6 border-t border-gray-100 space-y-3 text-left">
+            <div className="flex items-center gap-3 text-xs text-gray-600 font-medium">
+              <Zap size={16} className="text-gold flex-shrink-0" />
+              <span>পাসওয়ার্ড বা ইমেইল টাইপিংয়ের কোনো ঝামেলা নেই</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-600 font-medium">
+              <Package size={16} className="text-gold flex-shrink-0" />
+              <span>রিয়েল-টাইম অর্ডার ট্র্যাকিং ও দ্রুত ক্যাশ অন ডেলিভারি</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-600 font-medium">
+              <ShieldCheck size={16} className="text-emerald-600 flex-shrink-0" />
+              <span>১০০% নিরাপদ ও এনক্রিপ্টেড গুগল সিকিউরিটি</span>
+            </div>
+          </div>
+
+          {/* Footer Note */}
+          <p className="mt-8 text-[11px] text-gray-400">
+            লগইন করার মাধ্যমে আপনি আমাদের শর্তাবলী ও প্রাইভেসিতে সম্মত হচ্ছেন।
+          </p>
         </motion.div>
       </div>
     </AnimatePresence>
