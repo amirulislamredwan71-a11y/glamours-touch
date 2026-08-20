@@ -112,30 +112,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               </p>
             </div>
 
-            {/* Google 1-Click Login */}
-            {mode !== 'forgot' && (
-              <div className="mb-5">
-                <button
-                  type="button"
-                  onClick={handleGoogleSignIn}
-                  className="w-full bg-white border border-gray-200 hover:border-gold/50 hover:bg-gold/5 text-charcoal py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-3 active:scale-[0.98]"
-                >
-                  <img
-                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                    alt="Google"
-                    className="w-4 h-4"
-                  />
-                  গুগল দিয়ে লগইন করুন / Continue with Google
-                </button>
-
-                <div className="relative flex items-center justify-center my-4">
-                  <div className="border-t border-gray-200 w-full" />
-                  <span className="bg-white px-3 text-[11px] text-gray-400 font-medium uppercase">অথবা ইমেইল দিয়ে</span>
-                  <div className="border-t border-gray-200 w-full" />
-                </div>
-              </div>
-            )}
-
             {/* Mode Switcher Tabs */}
             {mode !== 'forgot' && (
               <div className="flex bg-gray-100 p-1 rounded-xl mb-5 text-xs font-bold">
