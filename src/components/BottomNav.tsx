@@ -66,11 +66,17 @@ const BottomNav = () => {
   return (
     <>
       {/* Solid Dark Floor Mask — 100% seals bottom screen edge so no content peeks behind */}
-      <div className="fixed bottom-0 left-0 right-0 h-10 bg-[#0b0e11] sm:hidden z-[998] pointer-events-none" />
+      <div 
+        className="fixed bottom-0 left-0 right-0 bg-[#0b0e11] sm:hidden z-[998] pointer-events-none" 
+        style={{ height: 'max(env(safe-area-inset-bottom, 0px), 12px)' }}
+      />
 
-      {/* Floating Pill Capsule Dock — sits flush at bottom-0.5 with full 4-side gold border */}
-      <nav className="fixed bottom-0.5 left-3 right-3 z-[999] sm:hidden bg-[#0c1015]/98 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.95)] px-2 py-1.5">
-        <div className="flex items-center justify-between">
+      {/* Floating Pill Capsule Dock — sits flush at bottom with safe-area insets */}
+      <nav 
+        className="fixed left-3 right-3 z-[999] sm:hidden bg-[#0c1015]/98 backdrop-blur-2xl border border-gtgold/45 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.95)] px-2 pt-1.5"
+        style={{ bottom: 'max(env(safe-area-inset-bottom, 0px), 4px)', paddingBottom: '6px' }}
+      >
+        <div className="flex items-center justify-between" onClick={() => navigator.vibrate?.(8)}>
           {link('/', Home, 'Home', true)}
           {ext('https://m.me/1002146686323797', MessengerIcon, 'Messenger')}
 
@@ -96,7 +102,10 @@ const BottomNav = () => {
 
           {/* 5th Item: MENU Drawer Button (3-Line Hamburger Icon) */}
           <button
-            onClick={() => window.dispatchEvent(new CustomEvent('gt-toggle-menu'))}
+            onClick={() => {
+              navigator.vibrate?.(10);
+              window.dispatchEvent(new CustomEvent('gt-toggle-menu'));
+            }}
             aria-label="Open Navigation Menu"
             className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 text-gray-300 active:scale-95 transition-all duration-200"
           >

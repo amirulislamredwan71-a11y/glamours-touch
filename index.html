@@ -2,7 +2,16 @@
 <html lang="bn">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0e11" />
+
+    <!-- iOS & Android Native PWA Standalone Metas -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Glamour's Touch" />
+    <meta name="application-name" content="Glamour's Touch" />
+    <link rel="manifest" href="/manifest.webmanifest" />
 
     <!-- SEO Meta Tags -->
     <title>Glamour's Touch | Authentic Korean Skincare & Cosmetics Bangladesh</title>
@@ -13,7 +22,17 @@
 
     <!-- Instant Midnight Gold Critical Inline Styling (Zero Render Blocking Delay) -->
     <style>
-      html, body { background-color: #0b0e11 !important; color: #ffffff; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      html, body { 
+        background-color: #0b0e11 !important; 
+        color: #ffffff; 
+        margin: 0; 
+        padding: 0; 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
       #root { min-height: 100vh; background-color: #0b0e11; }
       .gt-badge-inline { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 16px; border-radius: 9999px; background: #12161a; border: 1px solid rgba(229,184,58,0.4); }
       .gt-gold-txt { color: #e5b83a; font-weight: 900; }
@@ -173,6 +192,22 @@
         requestIdleCallback(function() { setTimeout(initClarity, 2500); });
       } else {
         window.addEventListener('load', function() { setTimeout(initClarity, 3000); });
+      }
+    </script>
+
+    <!-- Register PWA Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').then(
+            function(reg) {
+              console.log('[PWA] Service Worker registered with scope:', reg.scope);
+            },
+            function(err) {
+              console.warn('[PWA] Service Worker registration failed:', err);
+            }
+          );
+        });
       }
     </script>
   </body>
