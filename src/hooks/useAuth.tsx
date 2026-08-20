@@ -110,12 +110,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signInWithEmail = async (email: string) => {
+  const signInWithEmail = async (email: string, password?: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email,
+      if (!password) {
+        return { error: { message: 'অনুগ্রহ করে আপনার পাসওয়ার্ড দিন' } };
+      }
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      return { data, error };
+    } catch (error) {
+      return { error };
+    }
+  };
+
+  const signUpWithEmail = async (email: string, password?: string, name?: string) => {
+    try {
+      if (!password) {
+        return { error: { message: 'অনুগ্রহ করে পাসওয়ার্ড সেট করুন (কমপক্ষে ৬ অক্ষর)' } };
+      }
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
         options: {
-          emailRedirectTo: window.location.origin,
+          data: {
+            full_name: name || email.split('@')[0],
+          },
         },
       });
       return { data, error };
@@ -124,13 +145,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUpWithEmail = async (email: string) => {
+  const resetPassword = async (email: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: window.location.origin,
-        },
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: window.location.origin,
       });
       return { data, error };
     } catch (error) {
@@ -148,7 +166,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, loading, signIn, signInWithEmail, signUpWithEmail, logout, adminLogin }}>
+    <AuthContext.Provider value={{ user, isAdmin, loading, signIn, signInWithEmail, signUpWithEmail, logout, adminLogin, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );
@@ -161,3 +179,4 @@ export const useAuth = () => {
   }
   return context;
 };
+
