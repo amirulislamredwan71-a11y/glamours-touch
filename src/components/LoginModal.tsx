@@ -95,6 +95,26 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               </motion.div>
             ) : (
               <div className="space-y-6">
+                {/* Google Sign-In Button */}
+                <button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  className="w-full bg-white border border-gray-200 hover:border-gold/50 hover:bg-gold/5 text-charcoal py-3.5 px-4 rounded-2xl font-semibold text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-3 active:scale-[0.98]"
+                >
+                  <img
+                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                    alt="Google"
+                    className="w-5 h-5"
+                  />
+                  গুগল দিয়ে লগইন করুন / Sign in with Google
+                </button>
+
+                <div className="relative flex items-center justify-center my-4">
+                  <div className="border-t border-gray-200 w-full" />
+                  <span className="bg-white px-3 text-xs text-gray-400 font-medium">অথবা ইমেইল দিয়ে</span>
+                  <div className="border-t border-gray-200 w-full" />
+                </div>
+
                 <form onSubmit={handleEmailSignIn} className="space-y-4">
                   <div className="relative">
                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
