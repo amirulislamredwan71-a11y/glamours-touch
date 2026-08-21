@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gt-app-cache-v1';
+const CACHE_NAME = 'gt-app-cache-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -27,6 +27,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('[SW] Purging old cache:', key);
             return caches.delete(key);
           }
         })
@@ -39,9 +40,11 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  // Don't intercept API requests, Supabase calls, or admin endpoints
+  // NEVER intercept admin routes, API requests, Supabase calls, or external analytics
   if (
     request.method !== 'GET' ||
+    request.url.includes('/admin') ||
+    request.url.includes('/assets/') ||
     request.url.includes('/rest/v1/') ||
     request.url.includes('/auth/v1/') ||
     request.url.includes('google') ||
@@ -51,31 +54,29 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Stale-while-revalidate for static assets & pages
+  // Network-First strategy: Always fetch fresh content, fallback to cache if offline
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      const fetchPromise = fetch(request)
-        .then((networkResponse) => {
-          if (
-            networkResponse &&
-            networkResponse.status === 200 &&
-            networkResponse.type === 'basic'
-          ) {
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseToCache);
-            });
-          }
-          return networkResponse;
-        })
-        .catch(() => {
-          // If offline and not in cache, fallback to root
+    fetch(request)
+      .then((networkResponse) => {
+        if (
+          networkResponse &&
+          networkResponse.status === 200 &&
+          networkResponse.type === 'basic'
+        ) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
           if (request.mode === 'navigate') {
             return caches.match('/');
           }
         });
-
-      return cachedResponse || fetchPromise;
-    })
+      })
   );
 });

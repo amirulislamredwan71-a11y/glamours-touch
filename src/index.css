@@ -68,9 +68,12 @@
   :lang(bn),
   [lang="bn"],
   .font-bn {
-    font-family: "Hind Siliguri", "Noto Sans Bengali", "SolaimanLipi", Arial, sans-serif !important;
-    line-height: 1.8;
+    font-family: "Hind Siliguri", "Noto Sans Bengali", "SolaimanLipi", Arial, sans-serif;
     letter-spacing: 0;
+  }
+
+  input, textarea, select {
+    line-height: normal !important;
   }
 
   /* ── Dark Mode ── */
