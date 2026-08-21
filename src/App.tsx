@@ -72,6 +72,17 @@ const AppContent = () => {
       document.body.style.backgroundColor = '#f9fafb';
       document.body.style.color = '#111827';
       document.body.style.backgroundImage = 'none';
+
+      // Auto Purge old service worker caches on Admin entry
+      if ('caches' in window) {
+        caches.keys().then((names) => {
+          names.forEach((name) => {
+            if (name !== 'gt-app-cache-v4') {
+              caches.delete(name);
+            }
+          });
+        });
+      }
     } else {
       document.documentElement.style.colorScheme = 'dark';
       document.documentElement.style.backgroundColor = '#0b0e11';
