@@ -63,6 +63,23 @@ const AppContent = () => {
   const { isLoginOpen, closeLogin } = useUI();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+
+  React.useEffect(() => {
+    if (isAdminRoute) {
+      document.documentElement.style.colorScheme = 'light';
+      document.documentElement.style.backgroundColor = '#f9fafb';
+      document.documentElement.style.color = '#111827';
+      document.body.style.backgroundColor = '#f9fafb';
+      document.body.style.color = '#111827';
+      document.body.style.backgroundImage = 'none';
+    } else {
+      document.documentElement.style.colorScheme = 'dark';
+      document.documentElement.style.backgroundColor = '#0b0e11';
+      document.documentElement.style.color = '#ffffff';
+      document.body.style.backgroundColor = '#080c16';
+      document.body.style.color = '#ffffff';
+    }
+  }, [isAdminRoute]);
   
   if (isAdminRoute) {
     return (
