@@ -233,17 +233,93 @@ const AdminProducts = () => {
             placeholder="Search products..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
           />
         </div>
-        <button className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-50 transition-all">
+        <button className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-xl font-bold text-gray-700 hover:bg-gray-50 transition-all">
           <Filter size={20} />
           Filters
         </button>
       </div>
 
-      {/* Products Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      {/* Mobile-Friendly Product Cards (Shown on mobile screens) */}
+      <div className="block md:hidden space-y-4">
+        {loading && products.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center">
+            <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <p className="text-sm text-gray-500">Loading products...</p>
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center text-gray-500 text-sm">
+            No products found.
+          </div>
+        ) : (
+          filteredProducts.map((product) => (
+            <div key={product.id} className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-grow min-w-0">
+                  <p className="text-xs text-gold font-bold uppercase">{product.brand || 'K-Beauty'}</p>
+                  <h3 className="text-sm font-bold text-gray-900 truncate">{product.name}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-sm font-black text-charcoal">৳{product.price.toLocaleString()}</span>
+                    <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full font-medium">
+                      {product.category}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${
+                  product.isFeatured ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-gray-100 text-gray-500'
+                }`}>
+                  {product.isFeatured ? 'Featured' : 'Standard'}
+                </span>
+
+                <div className="flex items-center gap-1.5">
+                  <button 
+                    onClick={() => {
+                      setEditingProduct(product);
+                      setFormData({
+                        name: product.name,
+                        brand: product.brand || '',
+                        price: product.price.toString(),
+                        market_price: product.market_price ? product.market_price.toString() : '',
+                        description: product.description || '',
+                        image: product.image,
+                        category: product.category || categories[0] || '',
+                        origin: product.origin || 'International',
+                        rating: product.rating || 5,
+                        reviews: product.reviews || 0,
+                        isFeatured: product.isFeatured || false,
+                        images: product.images || [],
+                        in_stock: product.in_stock ?? true,
+                        stock: product.stock != null ? product.stock.toString() : ''
+                      });
+                      setIsModalOpen(true);
+                    }}
+                    className="p-2 text-gray-500 hover:text-gold hover:bg-gold/10 rounded-xl transition-all"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(product.id)}
+                    className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop Products Table (Hidden on mobile) */}
+      <div className="hidden md:block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
@@ -303,23 +379,23 @@ const AdminProducts = () => {
                       )}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => {
                             setEditingProduct(product);
                             setFormData({
                               name: product.name,
-                              brand: product.brand,
+                              brand: product.brand || '',
                               price: product.price.toString(),
-                              market_price: product.market_price != null ? product.market_price.toString() : '',
-                              description: product.description,
+                              market_price: product.market_price ? product.market_price.toString() : '',
+                              description: product.description || '',
                               image: product.image,
-                              category: product.category,
-                              origin: product.origin,
-                              rating: product.rating,
-                              reviews: product.reviews,
+                              category: product.category || categories[0] || '',
+                              origin: product.origin || 'International',
+                              rating: product.rating || 5,
+                              reviews: product.reviews || 0,
                               isFeatured: product.isFeatured || false,
-                              images: product.images ?? [],
+                              images: product.images || [],
                               in_stock: product.in_stock ?? true,
                               stock: product.stock != null ? product.stock.toString() : ''
                             });
@@ -331,19 +407,19 @@ const AdminProducts = () => {
                         </button>
                         <button 
                           onClick={() => handleDelete(product.id)}
-                          className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50/50 rounded-lg transition-all"
+                          className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                         >
                           <Trash2 size={18} />
                         </button>
                       </div>
                     </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
       {/* Add/Edit Modal */}
       <AnimatePresence>

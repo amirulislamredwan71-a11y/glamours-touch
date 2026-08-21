@@ -33,7 +33,16 @@
         padding-top: env(safe-area-inset-top, 0px);
         padding-bottom: env(safe-area-inset-bottom, 0px);
       }
-      #root { min-height: 100vh; background-color: #0b0e11; }
+      input, textarea, select {
+        color: #111827 !important;
+        -webkit-text-fill-color: #111827 !important;
+      }
+      .bg-midnight-gold-dust input, 
+      .bg-midnight-gold-dust textarea {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+      }
+      #root { min-height: 100vh; }
       .gt-badge-inline { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 16px; border-radius: 9999px; background: #12161a; border: 1px solid rgba(229,184,58,0.4); }
       .gt-gold-txt { color: #e5b83a; font-weight: 900; }
     </style>

@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { CartProvider } from './hooks/useCart';
 import { AuthProvider } from './hooks/useAuth';
 import { UIProvider } from './hooks/useUI';
@@ -61,7 +61,30 @@ const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const AppContent = () => {
   const { isLoginOpen, closeLogin } = useUI();
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
   
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen bg-gray-50 text-gray-900">
+        <main className="min-h-screen">
+          <Routes>
+            <Route path="/admin/login" element={<Suspense fallback={<LoadingFallback />}><AdminLogin /></Suspense>} />
+            <Route path="/admin" element={<AdminRoute><Suspense fallback={<LoadingFallback />}><AdminLayout /></Suspense></AdminRoute>}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="categories" element={<AdminCategories />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="customers" element={<AdminCustomers />} />
+              <Route path="blogs" element={<AdminBlogPosts />} />
+              <Route path="banners" element={<AdminBanners />} />
+            </Route>
+          </Routes>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white relative">
       <GoldStarlightParticles />
@@ -88,18 +111,6 @@ const AppContent = () => {
           <Route path="/track-order" element={<Suspense fallback={<LoadingFallback />}><OrderTracking /></Suspense>} />
           <Route path="/blog" element={<Suspense fallback={<LoadingFallback />}><Blog /></Suspense>} />
           <Route path="/blog/:slug" element={<Suspense fallback={<LoadingFallback />}><BlogPost /></Suspense>} />
-
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<Suspense fallback={<LoadingFallback />}><AdminLogin /></Suspense>} />
-          <Route path="/admin" element={<AdminRoute><Suspense fallback={<LoadingFallback />}><AdminLayout /></Suspense></AdminRoute>}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="categories" element={<AdminCategories />} />
-            <Route path="orders" element={<AdminOrders />} />
-            <Route path="customers" element={<AdminCustomers />} />
-            <Route path="blogs" element={<AdminBlogPosts />} />
-            <Route path="banners" element={<AdminBanners />} />
-          </Route>
         </Routes>
       </main>
       <Footer />

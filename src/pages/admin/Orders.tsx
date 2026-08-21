@@ -161,7 +161,92 @@ const AdminOrders = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      {/* Mobile-Friendly Order Cards (Shown on mobile devices) */}
+      <div className="block md:hidden space-y-4">
+        {loading && orders.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center">
+            <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <p className="text-sm text-gray-500">Loading orders...</p>
+          </div>
+        ) : orders.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center text-gray-500 text-sm">
+            No orders found.
+          </div>
+        ) : (
+          orders.map((order) => (
+            <div key={order.id} className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-3">
+              {/* Header: ID + Date + Status */}
+              <div className="flex items-center justify-between border-b border-gray-100 pb-2.5">
+                <div>
+                  <span className="text-xs font-black text-gray-900 flex items-center gap-1">
+                    {riskNote(order) && (
+                      <AlertTriangle size={13} className="text-amber-500 flex-shrink-0" />
+                    )}
+                    #{order.id.slice(0, 8)}
+                  </span>
+                  <span className="text-[11px] text-gray-400 block mt-0.5">
+                    {new Date(order.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+                <select
+                  value={order.status}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateStatus(order.id, e.target.value)}
+                  className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/30 ${getStatusColor(order.status)}`}
+                >
+                  {['Pending','Processing','Shipped','Delivered','Cancelled'].map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Customer Info */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-gray-900">{order.shipping_address?.fullName || 'Guest Customer'}</p>
+                  <p className="text-xs text-gray-500">{order.shipping_address?.phone || order.shipping_address?.email}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-400 uppercase font-semibold">Total</p>
+                  <p className="text-sm font-black text-charcoal">৳{order.total.toLocaleString()}</p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100 gap-2">
+                {order.status.toLowerCase() === 'pending' ? (
+                  <div className="flex items-center gap-2 flex-grow">
+                    <button 
+                      onClick={() => handleAcceptOrder(order.id)}
+                      className="flex-1 py-2 bg-green-500 text-white text-xs font-bold rounded-xl hover:bg-green-600 transition-colors shadow-sm uppercase"
+                    >
+                      Accept
+                    </button>
+                    <button 
+                      onClick={() => handleDenyOrder(order.id)}
+                      className="flex-1 py-2 bg-red-500 text-white text-xs font-bold rounded-xl hover:bg-red-600 transition-colors shadow-sm uppercase"
+                    >
+                      Deny
+                    </button>
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-400 flex-grow font-medium">
+                    Status: <span className="font-bold text-gray-700">{order.status}</span>
+                  </div>
+                )}
+                <button 
+                  onClick={() => setSelectedOrder(order)}
+                  className="px-3.5 py-2 bg-gold/15 text-charcoal border border-gold/40 hover:bg-gold hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+                >
+                  <Eye size={14} /> Details
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop Table View (Hidden on mobile) */}
+      <div className="hidden md:block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
