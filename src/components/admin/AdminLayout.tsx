@@ -123,9 +123,56 @@ const AdminLayout = () => {
         </header>
 
         {/* Page Content */}
-        <div className="p-6 lg:p-10">
+        <div className="p-4 sm:p-6 lg:p-10 pb-28 lg:pb-10">
           <Outlet />
         </div>
+
+        {/* Admin Mobile Bottom App Bar (Only on smartphones) */}
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 px-2 py-2 flex items-center justify-around shadow-lg">
+          <Link 
+            to="/admin" 
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+              location.pathname === '/admin' ? 'text-gold font-bold' : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            <LayoutDashboard size={20} />
+            <span className="text-[10px]">Dashboard</span>
+          </Link>
+          <Link 
+            to="/admin/orders" 
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+              location.pathname === '/admin/orders' ? 'text-gold font-bold' : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            <ShoppingBag size={20} />
+            <span className="text-[10px]">Orders</span>
+          </Link>
+          <Link 
+            to="/admin/products" 
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+              location.pathname === '/admin/products' ? 'text-gold font-bold' : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            <Package size={20} />
+            <span className="text-[10px]">Products</span>
+          </Link>
+          <Link 
+            to="/admin/categories" 
+            className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition-all ${
+              location.pathname === '/admin/categories' ? 'text-gold font-bold' : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            <Tags size={20} />
+            <span className="text-[10px]">Categories</span>
+          </Link>
+          <button 
+            onClick={() => setIsSidebarOpen(true)} 
+            className="flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl text-gray-500 hover:text-gold transition-all"
+          >
+            <Menu size={20} />
+            <span className="text-[10px]">Menu</span>
+          </button>
+        </nav>
       </main>
     </div>
   );

@@ -79,19 +79,19 @@ const Banners = () => {
       </div>
 
       {/* Upload card */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-8">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 mb-8">
         <div className="grid sm:grid-cols-2 gap-4 mb-4">
           <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title (optional)"
-            className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-gold/20 focus:border-gold" />
+            className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold" />
           <input value={link} onChange={e => setLink(e.target.value)} placeholder="Link e.g. /shop?category=Sale (optional)"
-            className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-gold/20 focus:border-gold" />
+            className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold" />
         </div>
-        <label className="flex items-center justify-center gap-2 w-full px-4 py-4 bg-gold/5 border-2 border-dashed border-gold/30 rounded-xl cursor-pointer hover:bg-gold/10 transition-all text-gold font-bold">
-          <Upload size={18} className={uploading ? 'animate-bounce' : ''} />
+        <label className="flex items-center justify-center gap-2 w-full px-4 py-4 bg-gold/10 border-2 border-dashed border-gold/40 rounded-xl cursor-pointer hover:bg-gold/15 transition-all text-charcoal font-bold">
+          <Upload size={18} className={uploading ? 'animate-bounce text-gold' : 'text-gold'} />
           {uploading ? 'Uploading...' : 'Upload Banner Image'}
           <input type="file" className="hidden" accept="image/*" onChange={handleUpload} disabled={uploading} />
         </label>
-        <p className="text-[11px] text-gray-400 mt-2">টিপ: wide/landscape post-card (16:5 অনুপাত) সবচেয়ে সুন্দর দেখাবে।</p>
+        <p className="text-[11px] text-gray-500 mt-2">টিপ: wide/landscape post-card (16:5 অনুপাত) সবচেয়ে সুন্দর দেখাবে।</p>
       </div>
 
       {/* List */}
@@ -102,17 +102,17 @@ const Banners = () => {
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {banners.map(b => (
-            <div key={b.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div key={b.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
               <div className="aspect-[16/7] bg-gray-100"><img src={b.image} alt="" className="w-full h-full object-cover" /></div>
               <div className="p-4">
-                {b.title && <p className="font-bold text-sm text-charcoal mb-1 truncate">{b.title}</p>}
-                {b.link && <p className="text-xs text-gray-400 mb-3 truncate flex items-center gap-1"><LinkIcon size={11} />{b.link}</p>}
+                {b.title && <p className="font-bold text-sm text-gray-900 mb-1 truncate">{b.title}</p>}
+                {b.link && <p className="text-xs text-gray-500 mb-3 truncate flex items-center gap-1"><LinkIcon size={11} />{b.link}</p>}
                 <div className="flex items-center gap-2">
                   <button onClick={() => toggleActive(b)}
-                    className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${b.active ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-400'}`}>
-                    {b.active ? 'Active ✓ (দেখাচ্ছে)' : 'Hidden'}
+                    className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${b.active ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : 'bg-gray-100 text-gray-600'}`}>
+                    {b.active ? 'Active ✓ (দেখাচ্ছে)' : 'Hidden (বন্ধ)'}
                   </button>
-                  <button onClick={() => remove(b.id)} className="p-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-100"><Trash2 size={16} /></button>
+                  <button onClick={() => remove(b.id)} className="p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100"><Trash2 size={18} /></button>
                 </div>
               </div>
             </div>

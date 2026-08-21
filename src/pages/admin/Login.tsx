@@ -60,7 +60,7 @@ const AdminLogin = () => {
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none transition-all text-charcoal font-medium"
+                  className="w-full pl-12 pr-6 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none transition-all text-gray-900 font-bold placeholder:text-gray-400"
                   placeholder="admin@glamourstouch.com"
                   required
                 />
@@ -75,7 +75,7 @@ const AdminLogin = () => {
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none transition-all text-charcoal font-medium"
+                  className="w-full pl-12 pr-6 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none transition-all text-gray-900 font-bold placeholder:text-gray-400"
                   placeholder="••••••••"
                   required
                 />

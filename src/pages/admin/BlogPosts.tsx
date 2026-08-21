@@ -237,12 +237,95 @@ const AdminBlogPosts = () => {
           placeholder="Search blog posts..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
         />
       </div>
 
-      {/* Posts Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      {/* Mobile-Friendly Blog Cards (Shown on mobile screens) */}
+      <div className="block md:hidden space-y-4">
+        {loading && posts.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center">
+            <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <p className="text-sm text-gray-500">Loading blog posts...</p>
+          </div>
+        ) : filteredPosts.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center text-gray-500 text-sm">
+            No blog posts found.
+          </div>
+        ) : (
+          filteredPosts.map((post) => (
+            <div key={post.id} className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-3">
+              <div className="flex items-center gap-3">
+                {post.image ? (
+                  <div className="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-16 h-16 bg-gold/10 text-gold rounded-xl flex items-center justify-center font-bold flex-shrink-0">
+                    Blog
+                  </div>
+                )}
+                <div className="flex-grow min-w-0">
+                  <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full font-medium">
+                    {post.category}
+                  </span>
+                  <h3 className="text-sm font-bold text-gray-900 truncate mt-1">{post.title_bn || post.title}</h3>
+                  <p className="text-[11px] text-gray-400 mt-0.5">
+                    {new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                <button
+                  onClick={() => togglePublish(post)}
+                  className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    post.published
+                      ? 'bg-emerald-500 text-white shadow-sm'
+                      : 'bg-gray-100 text-gray-600'
+                  }`}
+                >
+                  {post.published ? <Eye size={14} /> : <EyeOff size={14} />}
+                  {post.published ? 'Published ✓' : 'Draft'}
+                </button>
+
+                <div className="flex items-center gap-1.5">
+                  <button 
+                    onClick={() => {
+                      setEditingPost(post);
+                      setFormData({
+                        title: post.title,
+                        title_bn: post.title_bn || '',
+                        slug: post.slug,
+                        excerpt: post.excerpt || '',
+                        content: post.content || '',
+                        category: post.category,
+                        image: post.image || '',
+                        author: post.author,
+                        read_time: post.read_time,
+                        published: post.published
+                      });
+                      setIsModalOpen(true);
+                    }}
+                    className="p-2 text-gray-600 hover:text-gold hover:bg-gold/10 rounded-xl transition-all"
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(post.id)}
+                    className="p-2 text-gray-600 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop Posts Table (Hidden on mobile) */}
+      <div className="hidden md:block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
@@ -308,7 +391,7 @@ const AdminBlogPosts = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => {
                             setEditingPost(post);
@@ -382,7 +465,7 @@ const AdminBlogPosts = () => {
                       type="text" 
                       value={formData.title}
                       onChange={(e) => handleTitleChange(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="e.g. Korean Skincare Guide"
                     />
                   </div>
@@ -395,7 +478,7 @@ const AdminBlogPosts = () => {
                       type="text" 
                       value={formData.title_bn}
                       onChange={(e) => setFormData({...formData, title_bn: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="e.g. কোরিয়ান স্কিনকেয়ার গাইড"
                     />
                   </div>
@@ -408,7 +491,7 @@ const AdminBlogPosts = () => {
                       type="text" 
                       value={formData.slug}
                       onChange={(e) => setFormData({...formData, slug: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="e.g. korean-skincare-guide"
                     />
                     <p className="text-[10px] text-gray-400 mt-1">Auto-generated from English title</p>
@@ -420,7 +503,7 @@ const AdminBlogPosts = () => {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({...formData, category: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                     >
                       {CATEGORIES.map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
@@ -435,7 +518,7 @@ const AdminBlogPosts = () => {
                       type="text" 
                       value={formData.author}
                       onChange={(e) => setFormData({...formData, author: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="Author name"
                     />
                   </div>
@@ -447,7 +530,7 @@ const AdminBlogPosts = () => {
                       type="text" 
                       value={formData.read_time}
                       onChange={(e) => setFormData({...formData, read_time: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="e.g. 5 min read"
                     />
                   </div>
@@ -459,7 +542,7 @@ const AdminBlogPosts = () => {
                       value={formData.excerpt}
                       onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
                       rows={3}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
                       placeholder="Brief summary of the blog post..."
                     />
                   </div>
@@ -475,14 +558,14 @@ const AdminBlogPosts = () => {
                             type="url" 
                             value={formData.image}
                             onChange={(e) => setFormData({...formData, image: e.target.value})}
-                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all text-sm"
+                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all text-sm"
                             placeholder="Or paste an image URL..."
                           />
                         </div>
                         <div className="relative">
                           <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all group">
                             <Upload size={18} className={uploading ? "animate-bounce text-gold" : "text-gray-400 group-hover:text-gold"} />
-                            <span className="text-sm font-bold text-gray-500 group-hover:text-gold">
+                            <span className="text-sm font-bold text-gray-700 group-hover:text-gold">
                               {uploading ? 'Uploading...' : 'Upload Image'}
                             </span>
                             <input 

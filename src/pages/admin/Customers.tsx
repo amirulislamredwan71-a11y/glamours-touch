@@ -54,7 +54,7 @@ const AdminCustomers = () => {
           placeholder="Search by name or email..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
         />
       </div>
 
@@ -97,9 +97,14 @@ const AdminCustomers = () => {
                 </div>
               </div>
 
-              <button className="w-full mt-6 py-3 bg-gray-50 text-gray-600 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-white transition-all">
-                View Profile
-              </button>
+              <div className="mt-6 pt-4 border-t border-gray-100 flex gap-2">
+                <a 
+                  href={`mailto:${customer.email}`}
+                  className="flex-1 py-2.5 bg-gold/15 text-charcoal border border-gold/30 hover:bg-gold hover:text-white rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5"
+                >
+                  <Mail size={14} /> Send Email
+                </a>
+              </div>
             </div>
           ))
         )}

@@ -146,27 +146,29 @@ const AdminCategories = () => {
               <div className="h-40 bg-gray-100 relative overflow-hidden">
                 <img src={category.image} alt={category.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-3 right-3 flex gap-1.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                   <button 
                     onClick={() => {
                       setEditingCategory(category);
                       setFormData({ name: category.name, image: category.image, description: category.description || '' });
                       setIsModalOpen(true);
                     }}
-                    className="p-2 bg-white text-gray-600 rounded-lg hover:text-gold transition-colors shadow-lg"
+                    className="p-2.5 bg-white text-gray-700 rounded-xl hover:text-gold transition-colors shadow-md"
+                    title="Edit Category"
                   >
                     <Edit2 size={16} />
                   </button>
                   <button 
                     onClick={() => handleDelete(category.id)}
-                    className="p-2 bg-white text-gray-600 rounded-lg hover:text-red-500 transition-colors shadow-lg"
+                    className="p-2.5 bg-white text-gray-700 rounded-xl hover:text-red-500 transition-colors shadow-md"
+                    title="Delete Category"
                   >
                     <Trash2 size={16} />
                   </button>
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-charcoal">{category.name}</h3>
+              <div className="p-5 sm:p-6">
+                <h3 className="text-lg font-bold text-gray-900">{category.name}</h3>
                 <p className="text-sm text-gray-500 mt-1 line-clamp-2">{category.description || 'No description provided.'}</p>
               </div>
             </motion.div>
@@ -207,7 +209,7 @@ const AdminCategories = () => {
                     type="text" 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
                     placeholder="e.g. Skincare"
                   />
                 </div>
@@ -221,14 +223,14 @@ const AdminCategories = () => {
                         type="url" 
                         value={formData.image}
                         onChange={(e) => setFormData({...formData, image: e.target.value})}
-                        className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
+                        className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
                         placeholder="Image URL..."
                       />
                     </div>
                     
                     <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all group">
                       <Upload size={18} className={uploading ? "animate-bounce text-gold" : "text-gray-400 group-hover:text-gold"} />
-                      <span className="text-sm font-bold text-gray-500 group-hover:text-gold">
+                      <span className="text-sm font-bold text-gray-700 group-hover:text-gold">
                         {uploading ? 'Uploading...' : 'Direct Upload'}
                       </span>
                       <input 
@@ -260,14 +262,14 @@ const AdminCategories = () => {
                     rows={3}
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
-                    placeholder="Brief description of this category..."
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
+                    placeholder="Brief description of the category..."
                   />
                 </div>
-                <button 
+                <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full py-4 bg-gold text-white rounded-xl font-bold shadow-lg shadow-gold/20 hover:bg-charcoal transition-all disabled:opacity-50 mt-4"
+                  disabled={loading || uploading}
+                  className="w-full py-4 bg-gold text-white font-bold rounded-xl shadow-lg shadow-gold/20 hover:bg-charcoal transition-all disabled:opacity-50 mt-4"
                 >
                   {loading ? 'Saving...' : editingCategory ? 'Update Category' : 'Create Category'}
                 </button>
