@@ -54,7 +54,8 @@ const AdminCustomers = () => {
           placeholder="Search by name or email..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+          style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+          className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
         />
       </div>
 

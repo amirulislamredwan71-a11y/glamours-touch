@@ -53,14 +53,15 @@ const AdminLogin = () => {
         <div className="bg-white p-10 rounded-3xl shadow-2xl border border-gold/10 relative">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-3">Admin Email</label>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-[0.2em] mb-3">Admin Email</label>
               <div className="relative group">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-gold transition-colors" size={20} />
                 <input 
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-6 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none transition-all text-gray-900 font-bold placeholder:text-gray-400"
+                  style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                  className="w-full pl-12 pr-6 py-4 bg-white border border-gray-300 rounded-2xl focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none transition-all text-gray-900 font-bold placeholder:text-gray-400"
                   placeholder="admin@glamourstouch.com"
                   required
                 />
@@ -68,14 +69,15 @@ const AdminLogin = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-3">Password</label>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-[0.2em] mb-3">Password</label>
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-gold transition-colors" size={20} />
                 <input 
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-6 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none transition-all text-gray-900 font-bold placeholder:text-gray-400"
+                  style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                  className="w-full pl-12 pr-6 py-4 bg-white border border-gray-300 rounded-2xl focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none transition-all text-gray-900 font-bold placeholder:text-gray-400"
                   placeholder="••••••••"
                   required
                 />

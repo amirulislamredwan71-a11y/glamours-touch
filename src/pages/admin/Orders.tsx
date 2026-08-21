@@ -17,6 +17,8 @@ const AdminOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
 
   useEffect(() => {
     fetchOrders();
@@ -148,17 +150,56 @@ const AdminOrders = () => {
     a.download = `orders_${new Date().toISOString().slice(0,10)}.csv`; a.click();
   };
 
+  const filteredOrders = orders.filter((o) => {
+    const q = searchTerm.toLowerCase();
+    const matchesSearch =
+      !searchTerm ||
+      o.id.toLowerCase().includes(q) ||
+      (o.shipping_address?.fullName || '').toLowerCase().includes(q) ||
+      (o.shipping_address?.phone || '').toLowerCase().includes(q);
+    const matchesStatus = statusFilter === 'ALL' || o.status.toLowerCase() === statusFilter.toLowerCase();
+    return matchesSearch && matchesStatus;
+  });
+
   return (
-    <div className="space-y-8">
-      <div className="flex items-start justify-between">
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif font-bold text-charcoal">Orders</h1>
-          <p className="text-gray-500 mt-1">Track and manage customer orders and fulfillment.</p>
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-charcoal">Orders</h1>
+          <p className="text-gray-500 mt-1 text-sm">Track and manage customer orders and fulfillment.</p>
         </div>
         <button onClick={exportCSV} disabled={!orders.length}
-          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm disabled:opacity-40">
+          className="self-start sm:self-auto flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold rounded-xl transition-all shadow-sm disabled:opacity-40">
           <Download size={16} /> Export CSV
         </button>
+      </div>
+
+      {/* Search & Status Filter */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-grow">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input 
+            type="text" 
+            placeholder="Search by Order #, Customer, Phone..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+            className="w-full pl-11 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
+          />
+        </div>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+          className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
+        >
+          <option value="ALL">All Statuses ({orders.length})</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
       </div>
 
       {/* Mobile-Friendly Order Cards (Shown on mobile devices) */}
@@ -168,12 +209,12 @@ const AdminOrders = () => {
             <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto mb-2" />
             <p className="text-sm text-gray-500">Loading orders...</p>
           </div>
-        ) : orders.length === 0 ? (
+        ) : filteredOrders.length === 0 ? (
           <div className="bg-white rounded-2xl p-8 border border-gray-200 text-center text-gray-500 text-sm">
             No orders found.
           </div>
         ) : (
-          orders.map((order) => (
+          filteredOrders.map((order) => (
             <div key={order.id} className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-3">
               {/* Header: ID + Date + Status */}
               <div className="flex items-center justify-between border-b border-gray-100 pb-2.5">
@@ -266,12 +307,12 @@ const AdminOrders = () => {
                     <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto" />
                   </td>
                 </tr>
-              ) : orders.length === 0 ? (
+              ) : filteredOrders.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-10 text-center text-gray-500">No orders found.</td>
                 </tr>
               ) : (
-                orders.map((order) => (
+                filteredOrders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50 transition-colors group">
                     <td className="px-6 py-4 text-sm font-bold text-gray-900">
                       <span className="flex items-center gap-1.5">

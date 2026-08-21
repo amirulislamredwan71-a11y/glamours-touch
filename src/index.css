@@ -228,13 +228,17 @@ footer [lang="bn"] {
 
 /* ── Admin & Light Input Text Visibility Fix ── */
 input, textarea, select {
-  color: #111827 !important;
-  -webkit-text-fill-color: #111827 !important;
+  color-scheme: light !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #0f172a !important;
+  opacity: 1 !important;
 }
 
 input::placeholder, textarea::placeholder {
-  color: #9ca3af !important;
-  -webkit-text-fill-color: #9ca3af !important;
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  opacity: 1 !important;
 }
 
 /* Dark store inputs */
@@ -244,8 +248,10 @@ input::placeholder, textarea::placeholder {
 .bg-charcoal textarea,
 .dark input,
 .dark textarea {
+  color-scheme: dark !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
+  caret-color: #e5b83a !important;
 }
 
 

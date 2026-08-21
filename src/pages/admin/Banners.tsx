@@ -82,9 +82,11 @@ const Banners = () => {
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 mb-8">
         <div className="grid sm:grid-cols-2 gap-4 mb-4">
           <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title (optional)"
-            className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold" />
+            style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+            className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-sm text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold" />
           <input value={link} onChange={e => setLink(e.target.value)} placeholder="Link e.g. /shop?category=Sale (optional)"
-            className="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold" />
+            style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+            className="px-4 py-3 bg-white border border-gray-300 rounded-xl text-sm text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold" />
         </div>
         <label className="flex items-center justify-center gap-2 w-full px-4 py-4 bg-gold/10 border-2 border-dashed border-gold/40 rounded-xl cursor-pointer hover:bg-gold/15 transition-all text-charcoal font-bold">
           <Upload size={18} className={uploading ? 'animate-bounce text-gold' : 'text-gold'} />

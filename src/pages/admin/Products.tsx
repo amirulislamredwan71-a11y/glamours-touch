@@ -233,7 +233,8 @@ const AdminProducts = () => {
             placeholder="Search products..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+            style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
           />
         </div>
         <button className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-xl font-bold text-gray-700 hover:bg-gray-50 transition-all">
@@ -447,57 +448,62 @@ const AdminProducts = () => {
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto">
+              <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6 overflow-y-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Product Name</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Product Name</label>
                     <input 
                       required
                       type="text" 
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                       placeholder="e.g. Saffron Glow Serum"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Brand</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Brand</label>
                     <input 
                       required
                       type="text" 
                       value={formData.brand}
                       onChange={(e) => setFormData({...formData, brand: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                       placeholder="e.g. Glamour's Touch"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Price (৳)</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Price (৳)</label>
                     <input 
                       required
                       type="number" 
                       value={formData.price}
                       onChange={(e) => setFormData({...formData, price: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                       placeholder="0.00"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">বাজার দাম / Market Price (৳)</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">বাজার দাম / Market Price (৳)</label>
                     <input
                       type="number"
                       value={formData.market_price}
                       onChange={(e) => setFormData({...formData, market_price: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                       placeholder="বাজার দাম (বেশি হলে কাটা-দাম + %OFF দেখাবে)"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Category</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Category</label>
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({...formData, category: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                     >
                       {categories.length === 0 ? (
                         <option value="">Loading categories...</option>
@@ -514,18 +520,19 @@ const AdminProducts = () => {
                     )}
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Origin</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Origin</label>
                     <select 
                       value={formData.origin}
                       onChange={(e) => setFormData({...formData, origin: e.target.value})}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                     >
                       <option>International</option>
                       <option>Local</option>
                     </select>
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Product Image</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Product Image</label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-4">
                         <div className="relative">
@@ -535,14 +542,15 @@ const AdminProducts = () => {
                             type="url" 
                             value={formData.image}
                             onChange={(e) => setFormData({...formData, image: e.target.value})}
-                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold transition-all text-sm"
+                            style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all text-sm"
                             placeholder="Or paste an image URL..."
                           />
                         </div>
                         <div className="relative">
-                          <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all group">
+                          <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all group">
                             <Upload size={18} className={uploading ? "animate-bounce text-gold" : "text-gray-400 group-hover:text-gold"} />
-                            <span className="text-sm font-bold text-gray-500 group-hover:text-gold">
+                            <span className="text-sm font-bold text-gray-700 group-hover:text-gold">
                               {uploading ? 'Uploading...' : 'Direct Image Upload'}
                             </span>
                             <input 
@@ -572,7 +580,7 @@ const AdminProducts = () => {
                           </>
                         ) : (
                           <div className="text-center">
-                            <ImageIcon size={40} className="mx-auto text-gray-200 mb-2" />
+                            <ImageIcon size={40} className="mx-auto text-gray-300 mb-2" />
                             <p className="text-xs text-gray-400">Image Preview</p>
                           </div>
                         )}
@@ -581,7 +589,7 @@ const AdminProducts = () => {
                   </div>
                   {/* Gallery — multiple view images */}
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">গ্যালারি / More View Images</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">গ্যালারি / More View Images</label>
                     <div className="flex flex-wrap gap-3 items-center">
                       {(formData.images || []).map((img, i) => (
                         <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden border border-gray-200 group">
@@ -593,13 +601,13 @@ const AdminProducts = () => {
                           </button>
                         </div>
                       ))}
-                      <label className="flex flex-col items-center justify-center gap-1 w-20 h-20 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all text-gray-400 hover:text-gold">
+                      <label className="flex flex-col items-center justify-center gap-1 w-20 h-20 bg-white border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all text-gray-500 hover:text-gold">
                         <Upload size={18} />
                         <span className="text-[9px] font-bold">Add</span>
                         <input type="file" className="hidden" accept="image/*" multiple onChange={handleGalleryUpload} disabled={uploading} />
                       </label>
                     </div>
-                    <p className="text-[11px] text-gray-400 mt-1.5">প্রোডাক্টে ক্লিক করার পর এই ছবিগুলো detail পেজে gallery হিসেবে দেখাবে।</p>
+                    <p className="text-[11px] text-gray-500 mt-1.5">প্রোডাক্টে ক্লিক করার পর এই ছবিগুলো detail পেজে gallery হিসেবে দেখাবে।</p>
                   </div>
 
                   {/* In stock / Sold out toggle */}
@@ -616,14 +624,15 @@ const AdminProducts = () => {
 
                   {/* Real stock count — shows "মাত্র X টি বাকি" on the site when 1–10 pcs */}
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">স্টক / কত পিস বাকি (খালি রাখলে "বাকি" badge দেখাবে না)</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">স্টক / কত পিস বাকি (খালি রাখলে "বাকি" badge দেখাবে না)</label>
                     <input
                       type="number"
                       min="0"
                       value={formData.stock}
                       onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                       placeholder="যেমন 5 — সাইটে দেখাবে: মাত্র 5টি বাকি!"
-                      className="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:border-gold focus:outline-none"
+                      style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
                     />
                   </div>
 

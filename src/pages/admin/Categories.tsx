@@ -203,18 +203,19 @@ const AdminCategories = () => {
               </div>
               <form onSubmit={handleSubmit} className="p-6 space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Name</label>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Name</label>
                   <input 
                     required
                     type="text" 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
+                    style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none"
                     placeholder="e.g. Skincare"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Category Image</label>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Category Image</label>
                   <div className="space-y-4">
                     <div className="relative">
                       <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
@@ -223,12 +224,13 @@ const AdminCategories = () => {
                         type="url" 
                         value={formData.image}
                         onChange={(e) => setFormData({...formData, image: e.target.value})}
-                        className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
+                        style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                        className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none"
                         placeholder="Image URL..."
                       />
                     </div>
                     
-                    <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all group">
+                    <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-gold hover:bg-gold/5 transition-all group">
                       <Upload size={18} className={uploading ? "animate-bounce text-gold" : "text-gray-400 group-hover:text-gold"} />
                       <span className="text-sm font-bold text-gray-700 group-hover:text-gold">
                         {uploading ? 'Uploading...' : 'Direct Upload'}
@@ -257,12 +259,13 @@ const AdminCategories = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Description</label>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">Description</label>
                   <textarea 
                     rows={3}
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 font-medium placeholder-gray-400 focus:ring-2 focus:ring-gold/20 focus:border-gold outline-none"
+                    style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-semibold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none"
                     placeholder="Brief description of the category..."
                   />
                 </div>
