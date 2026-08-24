@@ -6,6 +6,16 @@ User-agent: *
 Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
+# Google Search & Shopping Crawlers — Explicitly Unrestricted
+User-agent: Googlebot
+Allow: /
+Allow: /sitemap.xml
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /catalog-images/
+Allow: /banners/
+
 # Sitemap
 Sitemap: https://glamourstouch.com/sitemap.xml
 
