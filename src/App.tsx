@@ -40,6 +40,7 @@ const AdminOrders = lazy(() => import('./pages/admin/Orders'));
 const AdminCustomers = lazy(() => import('./pages/admin/Customers'));
 const AdminBlogPosts = lazy(() => import('./pages/admin/BlogPosts'));
 const AdminBanners = lazy(() => import('./pages/admin/Banners'));
+const AdminReviews = lazy(() => import('./pages/admin/Reviews'));
 const AdminLogin = lazy(() => import('./pages/admin/Login'));
 
 const LoadingFallback = () => (
@@ -106,6 +107,7 @@ const AppContent = () => {
               <Route path="customers" element={<AdminCustomers />} />
               <Route path="blogs" element={<AdminBlogPosts />} />
               <Route path="banners" element={<AdminBanners />} />
+              <Route path="reviews" element={<AdminReviews />} />
             </Route>
           </Routes>
         </main>

@@ -20,6 +20,11 @@ interface Product {
   reviews: number; isFeatured: boolean; description: string;
 }
 
+interface ReviewItem {
+  id: string; customer_name: string; rating: number;
+  comment: string | null; created_at: string;
+}
+
 const getProductCustomSEO = (productName: string, brand: string) => {
   const nameLower = productName.toLowerCase();
   const brandLower = (brand || '').toLowerCase();
@@ -92,6 +97,12 @@ const ProductDetail = () => {
   const [activeImg, setActiveImg] = useState(0);
   const [freeDelivery, setFreeDelivery] = useState(false);
   const [showTryOn, setShowTryOn] = useState(false);
+
+  const [reviewList, setReviewList] = useState<ReviewItem[]>([]);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ name: '', phone: '', rating: 5, comment: '' });
 
   // Admin-controlled free-delivery offer (site_settings.free_delivery = 'on'/'off'); default off
   useEffect(() => {
@@ -197,6 +208,14 @@ const ProductDetail = () => {
             .eq('category', data.category).neq('id', data.id).limit(4);
           if (rel) setRelated(rel);
 
+          // Explicit column list on purpose -- never select('*') here. customer_phone is only
+          // ever readable by an admin session; the public view doesn't even have that column.
+          const { data: revs } = await supabase
+            .from('product_reviews_public')
+            .select('id, customer_name, rating, comment, created_at')
+            .eq('product_id', data.id)
+            .order('created_at', { ascending: false });
+          setReviewList(revs || []);
         }
       } catch (e) { console.error(e); }
       finally { setLoading(false); }
@@ -215,6 +234,32 @@ const ProductDetail = () => {
   const shareOnFacebook  = () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
   const shareOnWhatsApp  = () => window.open(`https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}`, '_blank');
   const copyLink         = () => { navigator.clipboard.writeText(shareUrl); setShared(true); setTimeout(() => setShared(false), 2000); };
+
+  const submitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!product) return;
+    setReviewSubmitting(true);
+    try {
+      // status is intentionally omitted -- a DB trigger forces every new review to 'pending'
+      // no matter what's sent, so this insert can never self-publish.
+      const { error } = await supabase.from('product_reviews').insert({
+        product_id: product.id,
+        customer_name: reviewForm.name.trim(),
+        customer_phone: reviewForm.phone.trim(),
+        rating: reviewForm.rating,
+        comment: reviewForm.comment.trim() || null,
+      });
+      if (error) throw error;
+      setReviewSubmitted(true);
+      setShowReviewForm(false);
+      setReviewForm({ name: '', phone: '', rating: 5, comment: '' });
+    } catch (err) {
+      console.error(err);
+      alert('Review জমা দেওয়া যায়নি। আবার চেষ্টা করুন।');
+    } finally {
+      setReviewSubmitting(false);
+    }
+  };
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-cream">
@@ -278,14 +323,16 @@ const ProductDetail = () => {
               <p className="gt-gold-shiny font-extrabold uppercase tracking-[0.2em] mb-2">{product.brand}</p>
               <h1 className="text-3xl md:text-5xl font-serif font-black text-white mb-4 leading-tight">{product.name}</h1>
 
-              {product.reviews > 0 && (
+              {reviewList.length > 0 && (
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex text-gold">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={18} fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'} />
+                      <Star key={i} size={18} fill={i < Math.round(reviewList.reduce((s, r) => s + r.rating, 0) / reviewList.length) ? 'currentColor' : 'none'} />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
+                  <span className="text-sm text-gray-500">
+                    {(reviewList.reduce((s, r) => s + r.rating, 0) / reviewList.length).toFixed(1)} / 5.0 ({reviewList.length} reviews)
+                  </span>
                 </div>
               )}
               <div className="flex items-baseline flex-wrap gap-3 mb-6">
@@ -421,6 +468,81 @@ const ProductDetail = () => {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* ── Reviews ── */}
+        <div className="mt-16 pt-16 border-t border-gold/10">
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
+            <h2 className="text-2xl md:text-3xl font-serif font-black text-white">
+              Reviews{reviewList.length > 0 && ` (${reviewList.length})`}
+            </h2>
+            {!showReviewForm && !reviewSubmitted && (
+              <button onClick={() => setShowReviewForm(true)}
+                className="px-6 py-2.5 rounded-full text-sm font-bold bg-[#161d22] border-2 border-gtgold text-white hover:bg-gtgold hover:text-black transition-all">
+                Write a Review
+              </button>
+            )}
+          </div>
+
+          {reviewSubmitted && (
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-5 mb-8 text-emerald-300 text-sm">
+              ধন্যবাদ! আপনার review জমা হয়েছে — verify করে খুব শীঘ্রই এখানে দেখানো হবে।
+            </div>
+          )}
+
+          {showReviewForm && (
+            <form onSubmit={submitReview} className="bg-[#161d22] border border-gtgold/20 rounded-2xl p-6 mb-8 space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input required value={reviewForm.name} onChange={e => setReviewForm(f => ({ ...f, name: e.target.value }))}
+                  placeholder="আপনার নাম"
+                  className="px-4 py-3 bg-[#0d1216] border border-white/10 rounded-xl text-white placeholder:text-white/40 text-sm outline-none focus:border-gtgold" />
+                <input required value={reviewForm.phone} onChange={e => setReviewForm(f => ({ ...f, phone: e.target.value }))}
+                  placeholder="মোবাইল নম্বর (অর্ডারের সাথে মিলিয়ে verify করা হবে)"
+                  className="px-4 py-3 bg-[#0d1216] border border-white/10 rounded-xl text-white placeholder:text-white/40 text-sm outline-none focus:border-gtgold" />
+              </div>
+              <div className="flex items-center gap-2">
+                {[1, 2, 3, 4, 5].map(n => (
+                  <button type="button" key={n} onClick={() => setReviewForm(f => ({ ...f, rating: n }))} aria-label={`${n} star`}>
+                    <Star size={26} className="text-gold" fill={n <= reviewForm.rating ? 'currentColor' : 'none'} />
+                  </button>
+                ))}
+              </div>
+              <textarea value={reviewForm.comment} onChange={e => setReviewForm(f => ({ ...f, comment: e.target.value }))}
+                placeholder="প্রোডাক্টটা কেমন লাগলো লিখুন (ঐচ্ছিক)" rows={3}
+                className="w-full px-4 py-3 bg-[#0d1216] border border-white/10 rounded-xl text-white placeholder:text-white/40 text-sm outline-none focus:border-gtgold resize-none" />
+              <div className="flex gap-3">
+                <button type="submit" disabled={reviewSubmitting}
+                  className="px-6 py-3 rounded-full text-sm font-bold gt-shiny text-black disabled:opacity-50">
+                  {reviewSubmitting ? 'জমা হচ্ছে...' : 'Submit Review'}
+                </button>
+                <button type="button" onClick={() => setShowReviewForm(false)}
+                  className="px-6 py-3 rounded-full text-sm font-bold text-white/60 hover:text-white">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          )}
+
+          {reviewList.length > 0 && (
+            <div className="grid gap-4">
+              {reviewList.map(r => (
+                <div key={r.id} className="bg-[#161d22] border border-white/5 rounded-2xl p-5">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-bold text-white text-sm">{r.customer_name}</span>
+                    <div className="flex text-gold">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={14} fill={i < r.rating ? 'currentColor' : 'none'} />
+                      ))}
+                    </div>
+                  </div>
+                  {r.comment && <p className="text-sm text-gray-400 leading-relaxed">{r.comment}</p>}
+                  <p className="text-[11px] text-gray-600 mt-2">
+                    {new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Related Products ── */}
