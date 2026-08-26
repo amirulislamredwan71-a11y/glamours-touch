@@ -156,11 +156,15 @@ const GoldStarlightParticles: React.FC = () => {
         aria-hidden="true"
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] md:w-[620px] aspect-square pointer-events-none z-[0] opacity-[0.14] select-none flex items-center justify-center transition-all duration-700"
       >
-        <img
-          src="/gt-watermark-logo-transparent.png"
-          alt=""
-          className="w-full h-full object-contain filter drop-shadow-[0_0_50px_rgba(229,184,58,0.8)]"
-        />
+        <picture>
+          <source srcSet="/gt-watermark-logo-transparent.webp" type="image/webp" />
+          <img
+            src="/gt-watermark-logo-transparent.png"
+            alt=""
+            fetchPriority="high"
+            className="w-full h-full object-contain filter drop-shadow-[0_0_50px_rgba(229,184,58,0.8)]"
+          />
+        </picture>
       </div>
 
       <canvas
