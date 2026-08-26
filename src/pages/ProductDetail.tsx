@@ -278,20 +278,16 @@ const ProductDetail = () => {
               <p className="gt-gold-shiny font-extrabold uppercase tracking-[0.2em] mb-2">{product.brand}</p>
               <h1 className="text-3xl md:text-5xl font-serif font-black text-white mb-4 leading-tight">{product.name}</h1>
 
-              <div className="flex items-center gap-4 mb-6">
-                {product.reviews > 0 ? (
-                  <>
-                    <div className="flex text-gold">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={18} fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'} />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
-                  </>
-                ) : (
-                  <span className="text-sm text-gray-500">এখনো কোনো review নেই — প্রথম রিভিউ আপনিই দিন!</span>
-                )}
-              </div>
+              {product.reviews > 0 && (
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex text-gold">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={18} fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'} />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
+                </div>
+              )}
               <div className="flex items-baseline flex-wrap gap-3 mb-6">
                 <p className="text-3xl md:text-5xl font-serif font-black gt-gold-shiny drop-shadow-md">৳{product.price.toLocaleString()}</p>
                 {hasDiscount && (
