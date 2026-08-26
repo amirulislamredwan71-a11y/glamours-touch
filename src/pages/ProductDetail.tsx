@@ -170,13 +170,17 @@ const ProductDetail = () => {
                 "name": "Glamour's Touch"
               }
             },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": String(data.rating || "4.9"),
-              "reviewCount": String(data.reviews || "28"),
-              "bestRating": "5",
-              "worstRating": "1"
-            }
+            // Google's own guidelines: never include aggregateRating without real reviews behind it.
+            // This product has none yet -- omit the block entirely rather than claim a fake rating.
+            ...(data.reviews > 0 ? {
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": String(data.rating),
+                "reviewCount": String(data.reviews),
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            } : {})
           });
 
           // Facebook Pixel + Conversions API — ViewContent
@@ -275,12 +279,18 @@ const ProductDetail = () => {
               <h1 className="text-3xl md:text-5xl font-serif font-black text-white mb-4 leading-tight">{product.name}</h1>
 
               <div className="flex items-center gap-4 mb-6">
-                <div className="flex text-gold">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={18} fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'} />
-                  ))}
-                </div>
-                <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
+                {product.reviews > 0 ? (
+                  <>
+                    <div className="flex text-gold">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={18} fill={i < Math.floor(product.rating) ? 'currentColor' : 'none'} />
+                      ))}
+                    </div>
+                    <span className="text-sm text-gray-500">{product.rating} / 5.0 ({product.reviews} reviews)</span>
+                  </>
+                ) : (
+                  <span className="text-sm text-gray-500">এখনো কোনো review নেই — প্রথম রিভিউ আপনিই দিন!</span>
+                )}
               </div>
               <div className="flex items-baseline flex-wrap gap-3 mb-6">
                 <p className="text-3xl md:text-5xl font-serif font-black gt-gold-shiny drop-shadow-md">৳{product.price.toLocaleString()}</p>
@@ -309,10 +319,15 @@ const ProductDetail = () => {
               </div>
               )}
 
-              <div
-                className="prose prose-invert prose-sm text-white/80 mb-8 max-w-none"
-                dangerouslySetInnerHTML={{ __html: product.description }}
-              />
+              {/* Internal pricing notes ("Minimum Retail Selling Price...") got seeded into this
+                  field for most of the catalog instead of a real description -- never show that
+                  to a customer, it reads like a leaked internal number. */}
+              {product.description && !/minimum\s+retail\s+selling\s+price/i.test(product.description) && (
+                <div
+                  className="prose prose-invert prose-sm text-white/80 mb-8 max-w-none"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
+              )}
 
               {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -329,6 +344,17 @@ const ProductDetail = () => {
                   </>
                 )}
               </div>
+
+              {!soldOut && (
+                <a
+                  href={`https://wa.me/8801712426871?text=${encodeURIComponent(`আমি ${product.name} (৳${product.price.toLocaleString()}) নিতে চাই। এটা কীভাবে অর্ডার করব?`)}`}
+                  target="_blank" rel="noopener noreferrer"
+                  onClick={() => trackEvent('Contact', { content_name: product.name, content_type: 'whatsapp_order_click' })}
+                  className="flex items-center justify-center gap-2 w-full mb-8 bg-[#25D366] hover:bg-[#1ebc59] text-white py-4 rounded-full font-black tracking-wide text-sm transition-all shadow-xl hover:scale-[1.01]"
+                >
+                  <MessageCircle size={20} /> WhatsApp-এ অর্ডার করুন
+                </a>
+              )}
 
               {showTryOn && product && <TryOnModal product={product} onClose={() => setShowTryOn(false)} />}
 
