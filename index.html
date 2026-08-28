@@ -185,7 +185,17 @@
     <link rel="apple-touch-icon" sizes="120x120" href="/logo.png" />
     <meta name="apple-touch-fullscreen" content="yes" />
   </head>
-  <body class="bg-midnight-gold-dust">
+  <!-- Inline style, not the bg-midnight-gold-dust CLASS: same pre-hydration dark background
+       (#080c16, matches the class's own background-color), but without the class name that
+       src/index.css's ".bg-midnight-gold-dust input { color: #fff !important }" rule keys off of.
+       That rule is meant to style inputs on the dark public storefront -- it's supposed to be
+       scoped to the React-rendered wrapper div (App.tsx) that carries the real class, not <body>.
+       Because this static class sat directly on <body> from the very first paint (before React
+       even mounts) and nothing ever removed it, it applied everywhere, all the time, including
+       admin's light-themed forms -- every admin input rendered white-on-white, text invisible
+       while typing, on every admin page (found 2026-08-28: owner reported unreadable input boxes,
+       traced to this). -->
+  <body style="background-color:#080c16;color:#ffffff">
     <noscript>
       <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=988182894209503&ev=PageView&noscript=1"/>
     </noscript>
