@@ -129,15 +129,25 @@ const Dashboard = () => {
   };
 
   // ---- KPIs ----
-  const totalRevenue = useMemo(() => orders.reduce((sum, o) => sum + num(o.total), 0), [orders]);
+  // Cancelled orders (including test/bogus ones marked Cancelled for exactly this reason) never
+  // counted as revenue -- summing every status here made a cancelled ৳0-value order look identical
+  // to a real completed sale.
+  const totalRevenue = useMemo(
+    () => orders.filter((o) => (o.status || '').toLowerCase() !== 'cancelled').reduce((sum, o) => sum + num(o.total), 0),
+    [orders]
+  );
   const totalOrders = orders.length;
+  const nonCancelledOrders = useMemo(
+    () => orders.filter((o) => (o.status || '').toLowerCase() !== 'cancelled').length,
+    [orders]
+  );
   const pendingOrders = useMemo(
     () => orders.filter((o) => (o.status || '').toLowerCase() === 'pending').length,
     [orders]
   );
   const totalProducts = products.length;
   const soldOutCount = useMemo(() => products.filter((p) => p.in_stock === false).length, [products]);
-  const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+  const avgOrderValue = nonCancelledOrders > 0 ? totalRevenue / nonCancelledOrders : 0;
 
   // ---- Revenue / orders trend (last 14 days) ----
   const trendData = useMemo(() => {
