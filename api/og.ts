@@ -33,7 +33,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (!p) return res.status(404).send('Not found');
 
-  const plainDesc = p.description?.replace(/<[^>]*>/g, '').slice(0, 120) ?? '';
+  // `description` is an internal "Minimum Retail Selling Price" note for most of the catalog, not
+  // a real customer-facing description (see ProductDetail.tsx's own guard for the same field) --
+  // this route feeds Facebook/WhatsApp link-preview crawlers directly, so leaking it here means it
+  // shows up in a real shared post's caption card, not just a hidden page field (confirmed live,
+  // 2026-08-28: "The Face Shop · ৳1,250. Minimum Retail Selling Price: ৳ 1,200" on a real post).
+  const rawDesc = p.description ?? '';
+  const plainDesc = /minimum\s+retail\s+selling\s+price/i.test(rawDesc)
+    ? ''
+    : rawDesc.replace(/<[^>]*>/g, '').slice(0, 120);
   const pageUrl   = `https://glamourstouch.com/product/${p.id}`;
   const imageUrl  = `https://res.cloudinary.com/dgidarjkt/image/fetch/q_auto,f_auto/${encodeURIComponent(p.image)}`;
   const title     = `${p.name} — Glamour's Touch`;
