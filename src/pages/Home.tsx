@@ -213,7 +213,7 @@ const Home = () => {
         .order('isFeatured', { ascending: false })
         .order('featured_rank', { ascending: true, nullsFirst: false })
         .order('created_at', { ascending: false })
-        .limit(30);
+        .limit(100);
 
       if (productsData && productsData.length > 0) {
         setFeaturedProducts(productsData as Product[]);
