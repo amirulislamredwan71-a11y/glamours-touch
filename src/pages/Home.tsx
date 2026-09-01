@@ -209,8 +209,9 @@ const Home = () => {
     const fetchData = async () => {
       const { data: productsData } = await supabase
         .from('products')
-        .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, stock, in_stock')
+        .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, featured_rank, stock, in_stock')
         .order('isFeatured', { ascending: false })
+        .order('featured_rank', { ascending: true, nullsFirst: false })
         .order('created_at', { ascending: false })
         .limit(30);
 

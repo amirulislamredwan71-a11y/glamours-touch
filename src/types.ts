@@ -14,6 +14,7 @@ export interface Product {
   rating: number;
   reviews: number;
   isFeatured?: boolean;
+  featured_rank?: number | null;
 }
 
 export interface CartItem extends Product {

@@ -23,6 +23,7 @@ const AdminProducts = () => {
   const [loading,     setLoading]     = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm,  setSearchTerm]  = useState('');
+  const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploading,   setUploading]   = useState(false);
 
@@ -39,6 +40,7 @@ const AdminProducts = () => {
     rating: 5,
     reviews: 0,
     isFeatured: false,
+    featured_rank: '' as string,
     images: [] as string[],
     in_stock: true,
     stock: ''
@@ -145,7 +147,8 @@ const AdminProducts = () => {
         market_price: formData.market_price ? parseFloat(formData.market_price) : null,
         rating: parseFloat(formData.rating.toString()),
         reviews: parseInt(formData.reviews.toString()),
-        stock: formData.stock !== '' && formData.stock != null ? parseInt(formData.stock.toString()) : null
+        stock: formData.stock !== '' && formData.stock != null ? parseInt(formData.stock.toString()) : null,
+        featured_rank: formData.featured_rank !== '' && formData.featured_rank != null ? parseInt(formData.featured_rank.toString()) : null
       };
 
       if (editingProduct) {
@@ -188,18 +191,49 @@ const AdminProducts = () => {
     }
   };
 
+  // Quick rank change without opening the full edit modal -- this is the fast path for actually
+  // curating homepage order across many products (opening the modal per product doesn't scale to
+  // managing a "top 100" list). Optimistic local update + a direct PATCH; featured_rank of null/1
+  // both mean "no rank set yet" so we always compute a real next number from what's on screen.
+  const handleRankNudge = async (product: Product, direction: 'up' | 'down') => {
+    const currentRank = product.featured_rank ?? (featuredOrdered.length + 1);
+    const newRank = direction === 'up' ? Math.max(1, currentRank - 1) : currentRank + 1;
+    setProducts(prev => prev.map(p => p.id === product.id ? { ...p, featured_rank: newRank } : p));
+    try {
+      const { error } = await supabase
+        .from('products')
+        .update({ featured_rank: newRank })
+        .eq('id', product.id);
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error nudging rank:', error);
+      fetchProducts(); // roll back to real state on failure
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       name: '', brand: '', price: '', market_price: '',
       description: '', image: '',
       category: categories[0] || '',
       origin: 'International',
-      rating: 5, reviews: 0, isFeatured: false,
+      rating: 5, reviews: 0, isFeatured: false, featured_rank: '',
       images: [], in_stock: true, stock: ''
     });
   };
 
-  const filteredProducts = products.filter(p => 
+  // The site's homepage shows featured products ordered by featured_rank (lowest first, unranked
+  // last) -- this list mirrors that exact order so "reorder here" and "what shows on the homepage"
+  // never drift apart.
+  const featuredOrdered = products
+    .filter(p => p.isFeatured)
+    .sort((a, b) => {
+      const ra = a.featured_rank ?? Infinity;
+      const rb = b.featured_rank ?? Infinity;
+      return ra !== rb ? ra - rb : a.name.localeCompare(b.name);
+    });
+
+  const filteredProducts = (showFeaturedOnly ? featuredOrdered : products).filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.brand.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -237,11 +271,24 @@ const AdminProducts = () => {
             className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
           />
         </div>
-        <button className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-xl font-bold text-gray-700 hover:bg-gray-50 transition-all">
+        <button
+          onClick={() => setShowFeaturedOnly(v => !v)}
+          className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${
+            showFeaturedOnly
+              ? 'bg-gold text-white border-gold shadow-lg shadow-gold/20'
+              : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+          }`}
+        >
           <Filter size={20} />
-          Filters
+          {showFeaturedOnly ? `Featured (${featuredOrdered.length})` : 'Show Featured Only'}
         </button>
       </div>
+
+      {showFeaturedOnly && (
+        <p className="text-sm text-gray-500 -mt-2">
+          এই লিস্টটাই homepage-এর "RECOMMENDED FOR YOU" order — উপরে থাকা প্রোডাক্ট আগে দেখায়। ↑/↓ দিয়ে সাজান।
+        </p>
+      )}
 
       {/* Mobile-Friendly Product Cards (Shown on mobile screens) */}
       <div className="block md:hidden space-y-4">
@@ -274,11 +321,19 @@ const AdminProducts = () => {
               </div>
 
               <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${
-                  product.isFeatured ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-gray-100 text-gray-500'
-                }`}>
-                  {product.isFeatured ? 'Featured' : 'Standard'}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full whitespace-nowrap ${
+                    product.isFeatured ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-gray-100 text-gray-500'
+                  }`}>
+                    {product.isFeatured ? `#${product.featured_rank ?? '—'} Featured` : 'Standard'}
+                  </span>
+                  {product.isFeatured && (
+                    <div className="flex items-center gap-0.5">
+                      <button onClick={() => handleRankNudge(product, 'up')} className="text-gray-400 hover:text-gold px-1">▲</button>
+                      <button onClick={() => handleRankNudge(product, 'down')} className="text-gray-400 hover:text-gold px-1">▼</button>
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex items-center gap-1.5">
                   <button 
@@ -296,6 +351,7 @@ const AdminProducts = () => {
                         rating: product.rating || 5,
                         reviews: product.reviews || 0,
                         isFeatured: product.isFeatured || false,
+                        featured_rank: product.featured_rank != null ? product.featured_rank.toString() : '',
                         images: product.images || [],
                         in_stock: product.in_stock ?? true,
                         stock: product.stock != null ? product.stock.toString() : ''
@@ -370,9 +426,23 @@ const AdminProducts = () => {
                     </td>
                     <td className="px-6 py-4">
                       {product.isFeatured ? (
-                        <span className="px-3 py-1 bg-gold/10 text-gold rounded-full text-[10px] font-bold uppercase tracking-wider">
-                          Featured
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="px-3 py-1 bg-gold/10 text-gold rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                            #{product.featured_rank ?? '—'} Featured
+                          </span>
+                          <div className="flex flex-col">
+                            <button
+                              onClick={() => handleRankNudge(product, 'up')}
+                              title="উপরে সরান (আগে দেখাবে)"
+                              className="text-gray-400 hover:text-gold leading-none px-1"
+                            >▲</button>
+                            <button
+                              onClick={() => handleRankNudge(product, 'down')}
+                              title="নিচে সরান (পরে দেখাবে)"
+                              className="text-gray-400 hover:text-gold leading-none px-1"
+                            >▼</button>
+                          </div>
+                        </div>
                       ) : (
                         <span className="px-3 py-1 bg-gray-100 text-gray-500 rounded-full text-[10px] font-bold uppercase tracking-wider">
                           Standard
@@ -666,6 +736,20 @@ const AdminProducts = () => {
                       </div>
                       <span className="text-sm font-bold text-gray-700">Feature this product on home page</span>
                     </label>
+                    {formData.isFeatured && (
+                      <div className="mt-3 flex items-center gap-3">
+                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Homepage Position</label>
+                        <input
+                          type="number"
+                          min={1}
+                          placeholder="যত ছোট নম্বর, তত আগে দেখাবে"
+                          value={formData.featured_rank}
+                          onChange={(e) => setFormData({...formData, featured_rank: e.target.value})}
+                          style={{ color: '#0f172a', backgroundColor: '#ffffff', WebkitTextFillColor: '#0f172a' }}
+                          className="w-40 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-bold placeholder:text-gray-400 placeholder:text-xs focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
 
