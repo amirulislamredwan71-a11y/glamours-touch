@@ -22,7 +22,7 @@ export interface SEOProps {
 }
 
 const SITE_NAME = "Glamour's Touch";
-const BASE_URL  = 'https://glamourstouch.com';
+const BASE_URL  = 'https://www.glamourstouch.com';
 const DEFAULT_IMG = `${BASE_URL}/logo.png`;
 const DEFAULT_DESC = "Shop 100% authentic Korean skincare, K-Beauty serums, sunscreens, cleansers & creams in Bangladesh. Fast delivery in Dhaka & across BD with cash on delivery.";
 const DEFAULT_KEYWORDS = "Korean skincare Bangladesh, K-Beauty Dhaka, authentic Korean cosmetics, AXIS-Y dark spot serum price in BD, Beauty of Joseon sunscreen BD, COSRX snail mucin Bangladesh, DABO snail cream, Korean glass skin routine";

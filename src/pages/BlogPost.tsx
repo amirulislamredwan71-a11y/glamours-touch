@@ -214,7 +214,7 @@ const BlogPost = () => {
     "@type": "Article",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://glamourstouch.com/blog/${post.slug}`
+      "@id": `https://www.glamourstouch.com/blog/${post.slug}`
     },
     "headline": post.title_bn || post.title,
     "name": post.title,
@@ -225,14 +225,14 @@ const BlogPost = () => {
     "author": {
       "@type": "Organization",
       "name": post.author || "Glamour's Touch Beauty Team",
-      "url": "https://glamourstouch.com"
+      "url": "https://www.glamourstouch.com"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Glamour's Touch",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://glamourstouch.com/logo.png"
+        "url": "https://www.glamourstouch.com/logo.png"
       }
     },
     "inLanguage": "bn-BD",

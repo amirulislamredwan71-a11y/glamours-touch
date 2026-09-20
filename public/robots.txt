@@ -1,7 +1,7 @@
 # Glamour's Touch — Robots.txt
-# Official Store: https://glamourstouch.com
-# Sitemap: https://glamourstouch.com/sitemap.xml
-# Feed: https://glamourstouch.com/rss.xml
+# Official Store: https://www.glamourstouch.com
+# Sitemap: https://www.glamourstouch.com/sitemap.xml
+# Feed: https://www.glamourstouch.com/rss.xml
 
 User-agent: *
 Allow: /
@@ -75,4 +75,4 @@ Allow: /
 Disallow: /admin/
 
 # Sitemaps & Feeds
-Sitemap: https://glamourstouch.com/sitemap.xml
+Sitemap: https://www.glamourstouch.com/sitemap.xml

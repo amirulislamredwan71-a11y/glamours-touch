@@ -119,82 +119,6 @@ const ProductDetail = () => {
         if (data) {
           setProduct(data);
 
-          const seoInfo = getProductCustomSEO(data.name, data.brand);
-
-          // Dynamic SEO Meta Tags
-          document.title = seoInfo.title;
-          const plainDesc = data.description?.replace(/<[^>]*>/g, '').slice(0, 150) ?? '';
-          const metaDesc = `Buy 100% authentic ${data.brand || 'Korean'} ${data.name} in Bangladesh at ৳${data.price.toLocaleString()}. 100% authentic guarantee with Cash on Delivery (COD) across BD.`;
-
-          const setMeta = (sel: string, attr: string, val: string) => {
-            let el = document.querySelector<HTMLMetaElement>(sel);
-            if (!el) { el = document.createElement('meta'); if (attr === 'name') el.name = val; else el.setAttribute('property', val); document.head.appendChild(el); return; }
-            el.content = val;
-          };
-          setMeta('meta[name="description"]', 'name', metaDesc);
-          setMeta('meta[name="keywords"]', 'name', seoInfo.keywords);
-
-          // Open Graph tags for Facebook & Social Sharing
-          const pageUrl = `${window.location.origin}/product/${data.id}`;
-          setMeta('meta[property="og:title"]',       'property', seoInfo.title);
-          setMeta('meta[property="og:description"]', 'property', metaDesc);
-          setMeta('meta[property="og:image"]',       'property', data.image);
-          setMeta('meta[property="og:url"]',         'property', pageUrl);
-          setMeta('meta[property="og:type"]',        'property', 'product');
-          setMeta('meta[property="product:price:amount"]',   'property', String(data.price));
-          setMeta('meta[property="product:price:currency"]', 'property', 'BDT');
-
-          // Twitter Card
-          setMeta('meta[name="twitter:card"]',        'name', 'summary_large_image');
-          setMeta('meta[name="twitter:title"]',       'name', seoInfo.title);
-          setMeta('meta[name="twitter:description"]', 'name', metaDesc);
-          setMeta('meta[name="twitter:image"]',       'name', data.image);
-
-          // Google Search Console Schema.org Product & Offer JSON-LD Structured Data
-          let schemaEl = document.querySelector<HTMLScriptElement>('#product-json-ld');
-          if (!schemaEl) {
-            schemaEl = document.createElement('script');
-            schemaEl.id = 'product-json-ld';
-            schemaEl.type = 'application/ld+json';
-            document.head.appendChild(schemaEl);
-          }
-          schemaEl.textContent = JSON.stringify({
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": data.name,
-            "image": [data.image, ...(data.images || [])].filter(Boolean),
-            "description": plainDesc || metaDesc,
-            "sku": data.id,
-            "brand": {
-              "@type": "Brand",
-              "name": data.brand || "Korean Authentic"
-            },
-            "offers": {
-              "@type": "Offer",
-              "url": pageUrl,
-              "priceCurrency": "BDT",
-              "price": String(data.price),
-              "priceValidUntil": "2027-12-31",
-              "itemCondition": "https://schema.org/NewCondition",
-              "availability": data.in_stock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-              "seller": {
-                "@type": "Organization",
-                "name": "Glamour's Touch"
-              }
-            },
-            // Google's own guidelines: never include aggregateRating without real reviews behind it.
-            // This product has none yet -- omit the block entirely rather than claim a fake rating.
-            ...(data.reviews > 0 ? {
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": String(data.rating),
-                "reviewCount": String(data.reviews),
-                "bestRating": "5",
-                "worstRating": "1"
-              }
-            } : {})
-          });
-
           // Facebook Pixel + Conversions API — ViewContent
           trackEvent('ViewContent', {
             content_ids:  [data.id],
@@ -222,11 +146,6 @@ const ProductDetail = () => {
       finally { setLoading(false); }
     };
     if (id) fetchProduct();
-    return () => {
-      document.title = "Glamour's Touch | Authentic Korean Skincare & Cosmetics Bangladesh";
-      const schemaEl = document.querySelector('#product-json-ld');
-      if (schemaEl) schemaEl.remove();
-    };
   }, [id]);
 
   const shareUrl  = window.location.href;
@@ -300,7 +219,7 @@ const ProductDetail = () => {
     },
     "offers": {
       "@type": "Offer",
-      "url": `https://glamourstouch.com/product/${product.id}`,
+      "url": `https://www.glamourstouch.com/product/${product.id}`,
       "priceCurrency": "BDT",
       "price": String(product.price),
       "priceValidUntil": "2027-12-31",

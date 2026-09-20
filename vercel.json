@@ -31,7 +31,7 @@
       "headers": [
         {
           "key": "Link",
-          "value": "<https://glamourstouch.com/sitemap.xml>; rel=\"sitemap\", <https://glamourstouch.com/products.html>; rel=\"related\""
+          "value": "<https://www.glamourstouch.com/sitemap.xml>; rel=\"sitemap\", <https://www.glamourstouch.com/rss.xml>; rel=\"alternate\""
         }
       ]
     }
@@ -43,7 +43,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|TelegramBot|bot|crawler|spider).*"
+          "value": ".*(facebookexternalhit|Facebot|Twitterbot|WhatsApp|LinkedInBot|TelegramBot|Pinterestbot|Slackbot|Discordbot).*"
         }
       ],
       "destination": "/api/og?id=:id"

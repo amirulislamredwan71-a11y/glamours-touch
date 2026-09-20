@@ -42,18 +42,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const plainDesc = /minimum\s+retail\s+selling\s+price/i.test(rawDesc)
     ? ''
     : rawDesc.replace(/<[^>]*>/g, '').slice(0, 120);
-  const pageUrl   = `https://glamourstouch.com/product/${p.id}`;
-  const imageUrl  = `https://res.cloudinary.com/dgidarjkt/image/fetch/q_auto,f_auto/${encodeURIComponent(p.image)}`;
-  const title     = `${p.name} — Glamour's Touch`;
-  const desc      = `${p.brand} · ৳${p.price.toLocaleString()}. ${plainDesc}`;
+  const pageUrl   = `https://www.glamourstouch.com/product/${p.id}`;
+  const imageUrl  = p.image;
+  const title     = `${p.name} — 100% Original Price in BD | Glamour's Touch`;
+  const desc      = `Buy authentic ${p.brand || 'Korean'} ${p.name} at Glamour's Touch Bangladesh for ৳${p.price.toLocaleString()}. 100% authentic Korean cosmetics with Cash on Delivery across BD.`;
 
-  res.setHeader('Content-Type', 'text/html');
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": p.name,
+    "image": [imageUrl],
+    "description": plainDesc || desc,
+    "sku": p.id,
+    "brand": {
+      "@type": "Brand",
+      "name": p.brand || "Korean Authentic"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": pageUrl,
+      "priceCurrency": "BDT",
+      "price": String(p.price),
+      "priceValidUntil": "2027-12-31",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Glamour's Touch"
+      }
+    }
+  };
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
   return res.status(200).send(`<!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
   <title>${escapeHtml(title)}</title>
+  <link rel="canonical" href="${pageUrl}" />
+  <meta name="description" content="${escapeHtml(desc)}" />
+  
   <meta property="og:title"       content="${escapeHtml(title)}" />
   <meta property="og:description" content="${escapeHtml(desc)}" />
   <meta property="og:image"       content="${imageUrl}" />
@@ -62,13 +91,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <meta property="og:site_name"   content="Glamour's Touch" />
   <meta property="product:price:amount"   content="${p.price}" />
   <meta property="product:price:currency" content="BDT" />
+  
   <meta name="twitter:card"  content="summary_large_image" />
-  <meta property="fb:app_id" content="1322315399797461" />
+  <meta name="twitter:title" content="${escapeHtml(title)}" />
+  <meta name="twitter:description" content="${escapeHtml(desc)}" />
   <meta name="twitter:image" content="${imageUrl}" />
-  <script>window.location.href="/product/${p.id}";</script>
+  <meta property="fb:app_id" content="1322315399797461" />
+
+  <script type="application/ld+json">
+  ${JSON.stringify(jsonLd)}
+  </script>
 </head>
-<body>
-  <a href="/product/${p.id}">${escapeHtml(p.name)}</a>
+<body style="font-family:sans-serif;background:#080c16;color:#fff;padding:24px;text-align:center;">
+  <h1>${escapeHtml(p.name)}</h1>
+  <p style="color:#e5b83a;font-size:20px;font-weight:bold;">৳${p.price.toLocaleString()}</p>
+  <p>${escapeHtml(desc)}</p>
+  <a href="/product/${p.id}" style="color:#e5b83a;text-decoration:underline;">View on Glamour's Touch</a>
 </body>
 </html>`);
 }

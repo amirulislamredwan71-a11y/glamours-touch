@@ -247,10 +247,10 @@ const Home = () => {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Glamour's Touch",
-      "url": "https://glamourstouch.com",
+      "url": "https://www.glamourstouch.com",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://glamourstouch.com/shop?search={search_term_string}",
+        "target": "https://www.glamourstouch.com/shop?search={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     },
@@ -258,9 +258,9 @@ const Home = () => {
       "@context": "https://schema.org",
       "@type": "Store",
       "name": "Glamour's Touch",
-      "url": "https://glamourstouch.com",
-      "logo": "https://glamourstouch.com/logo.png",
-      "image": "https://glamourstouch.com/logo.png",
+      "url": "https://www.glamourstouch.com",
+      "logo": "https://www.glamourstouch.com/logo.png",
+      "image": "https://www.glamourstouch.com/logo.png",
       "description": "Glamour's Touch হলো Bangladesh এর একটি premium Korean skincare shop। আমরা 100% authentic Korean beauty products বিক্রি করি।",
       "telephone": "+8801712426871",
       "priceRange": "$$",

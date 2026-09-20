@@ -23,7 +23,7 @@ async function generateRSS() {
     supabase.from('products').select('*').eq('isFeatured', true).limit(20)
   ]);
 
-  const baseUrl = 'https://glamourstouch.com';
+  const baseUrl = 'https://www.glamourstouch.com';
   const pubDate = new Date().toUTCString();
 
   let rss = `<?xml version="1.0" encoding="UTF-8"?>

@@ -128,11 +128,11 @@ const Shop = () => {
     "@type": "CollectionPage",
     "name": seoData.title,
     "description": seoData.description,
-    "url": categoryFilter ? `https://glamourstouch.com/shop?category=${encodeURIComponent(categoryFilter)}` : "https://glamourstouch.com/shop",
+    "url": categoryFilter ? `https://www.glamourstouch.com/shop?category=${encodeURIComponent(categoryFilter)}` : "https://www.glamourstouch.com/shop",
     "isPartOf": {
       "@type": "WebSite",
       "name": "Glamour's Touch",
-      "url": "https://glamourstouch.com"
+      "url": "https://www.glamourstouch.com"
     }
   };
 

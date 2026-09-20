@@ -75,19 +75,19 @@ const Blog = () => {
     "@type": "Blog",
     "name": "Glamour's Touch Beauty Blog",
     "description": "Korean skincare tips, product reviews এবং beauty secrets — সব বাংলায়",
-    "url": "https://glamourstouch.com/blog",
+    "url": "https://www.glamourstouch.com/blog",
     "publisher": {
       "@type": "Organization",
       "name": "Glamour's Touch",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://glamourstouch.com/logo.png"
+        "url": "https://www.glamourstouch.com/logo.png"
       }
     },
     "blogPost": posts.slice(0, 10).map(p => ({
       "@type": "BlogPosting",
       "headline": p.title_bn || p.title,
-      "url": `https://glamourstouch.com/blog/${p.slug}`,
+      "url": `https://www.glamourstouch.com/blog/${p.slug}`,
       "image": p.image,
       "datePublished": (p as any).created_at || new Date().toISOString(),
       "description": p.excerpt
