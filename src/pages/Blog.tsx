@@ -70,12 +70,43 @@ const Blog = () => {
   const featuredPost = posts[0];
   const remainingPosts = posts.slice(1);
 
+  const blogListSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Glamour's Touch Beauty Blog",
+    "description": "Korean skincare tips, product reviews এবং beauty secrets — সব বাংলায়",
+    "url": "https://glamourstouch.com/blog",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Glamour's Touch",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://glamourstouch.com/logo.png"
+      }
+    },
+    "blogPost": posts.slice(0, 10).map(p => ({
+      "@type": "BlogPosting",
+      "headline": p.title_bn || p.title,
+      "url": `https://glamourstouch.com/blog/${p.slug}`,
+      "image": p.image,
+      "datePublished": (p as any).created_at || new Date().toISOString(),
+      "description": p.excerpt
+    }))
+  };
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Blog", item: "/blog" }
+  ];
+
   return (
     <>
       <SEO
-        title="Skincare Blog — Korean Beauty Tips Bangla"
-        description="Korean skincare tips, product reviews এবং beauty guide বাংলায়। DABO, Rice Ceramide, Glutathione সহ সব Korean beauty products সম্পর্কে জানুন। glamourstouch.com"
+        title="Korean Skincare Blog — K-Beauty Tips & Product Reviews Bangla"
+        description="Korean skincare tips, product reviews এবং beauty guide বাংলায়। AXIS-Y, Beauty of Joseon, COSRX, DABO সহ সব Korean beauty products সম্পর্কে বিস্তারিত জানুন।"
         url="/blog"
+        breadcrumbs={breadcrumbs}
+        schema={blogListSchema}
       />
 
       <div className="min-h-screen bg-cream pt-32 pb-20">

@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.mjs && node scripts/generate-rss.mjs && vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "sitemap": "node scripts/generate-sitemap.cjs",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "rss": "node scripts/generate-rss.mjs",
     "catalog": "node scripts/generate-fb-catalog.cjs"
   },
   "dependencies": {

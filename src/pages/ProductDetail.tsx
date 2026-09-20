@@ -10,6 +10,7 @@ import {
 import { motion } from 'motion/react';
 import ProductCard from '../components/ProductCard';
 import TryOnModal from '../components/TryOnModal';
+import SEO from '../components/SEO';
 
 import { optimizeImageUrl } from '../lib/imageUtils';
 
@@ -283,9 +284,64 @@ const ProductDetail = () => {
   const discountPct = hasDiscount ? Math.round((1 - product.price / mp) * 100) : 0;
 
   const seoCustomInfo = getProductCustomSEO(product.name, product.brand);
+  const plainDesc = (product.description || '').replace(/<[^>]*>/g, '').trim().slice(0, 160) || `Buy 100% original ${product.name} at Glamour's Touch Bangladesh. Best price ৳${product.price}. Cash on delivery available.`;
+  
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": gallery.length > 0 ? gallery : [product.image],
+    "description": plainDesc,
+    "sku": product.id,
+    "mpn": product.id,
+    "brand": {
+      "@type": "Brand",
+      "name": product.brand || "Korean Authentic"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": `https://glamourstouch.com/product/${product.id}`,
+      "priceCurrency": "BDT",
+      "price": String(product.price),
+      "priceValidUntil": "2027-12-31",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": product.in_stock === false ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Glamour's Touch"
+      }
+    },
+    ...(product.reviews > 0 ? {
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": String(product.rating || 5),
+        "reviewCount": String(product.reviews),
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    } : {})
+  };
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Shop", item: "/shop" },
+    ...(product.category ? [{ name: product.category, item: `/shop?category=${encodeURIComponent(product.category)}` }] : []),
+    { name: product.name, item: `/product/${product.id}` }
+  ];
 
   return (
-    <div className="min-h-screen bg-midnight-gold-dust text-white pt-32 pb-20">
+    <>
+      <SEO
+        title={seoCustomInfo.title || `${product.name} — 100% Original Price in BD`}
+        description={plainDesc}
+        image={product.image}
+        url={`/product/${product.id}`}
+        type="product"
+        keywords={seoCustomInfo.keywords || `${product.name}, ${product.brand} price in bd, korean cosmetics bangladesh`}
+        breadcrumbs={breadcrumbs}
+        schema={productSchema}
+      />
+      <div className="min-h-screen bg-midnight-gold-dust text-white pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-white/70 hover:text-gtgold transition-colors mb-8">
@@ -564,6 +620,7 @@ const ProductDetail = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

@@ -29,12 +29,32 @@ const FAQ = () => {
     }
   ];
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.answer
+      }
+    }))
+  };
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "FAQ", item: "/faq" }
+  ];
+
   return (
     <>
     <SEO
-      title="FAQ — সাধারণ জিজ্ঞাসা"
+      title="FAQ — সাধারণ জিজ্ঞাসা ও উত্তর"
       description="Glamour's Touch সম্পর্কে সাধারণ প্রশ্নের উত্তর। Delivery, payment, authenticity, return policy সহ সব কিছু। Korean skincare Bangladesh। Call: 01712-426871"
       url="/faq"
+      breadcrumbs={breadcrumbs}
+      schema={faqSchema}
     />
     <div className="pt-40 pb-20 bg-cream min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-12 rounded-[2.5rem] shadow-sm border border-gold/10">

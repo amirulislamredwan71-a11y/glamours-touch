@@ -242,12 +242,50 @@ const Home = () => {
     }
   };
 
+  const homeSchemas = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Glamour's Touch",
+      "url": "https://glamourstouch.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://glamourstouch.com/shop?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Glamour's Touch",
+      "url": "https://glamourstouch.com",
+      "logo": "https://glamourstouch.com/logo.png",
+      "image": "https://glamourstouch.com/logo.png",
+      "description": "Glamour's Touch হলো Bangladesh এর একটি premium Korean skincare shop। আমরা 100% authentic Korean beauty products বিক্রি করি।",
+      "telephone": "+8801712426871",
+      "priceRange": "$$",
+      "currenciesAccepted": "BDT",
+      "paymentAccepted": "Cash on Delivery, bKash, Nagad, Card",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BD",
+        "addressLocality": "Dhaka",
+        "addressRegion": "Dhaka"
+      },
+      "sameAs": [
+        "https://www.facebook.com/glamourstouch26",
+        "https://www.instagram.com/glamourstouch.bd"
+      ]
+    }
+  ];
+
   return (
     <div className="flex flex-col overflow-hidden bg-gtdark gt-neural-grid">
       <SEO
-        title="Authentic Korean Skincare & Cosmetics Bangladesh"
+        title="100% Authentic Korean Skincare & Cosmetics Bangladesh"
         description="Shop 100% authentic Korean skincare, K-Beauty serums, cleansers, sunscreens & creams in Bangladesh. Try our AI Glow Predictor Studio at Glamour's Touch."
         url="/"
+        schema={homeSchemas}
       />
       {/* Search & Hero Banner */}
       <HomeSearch />

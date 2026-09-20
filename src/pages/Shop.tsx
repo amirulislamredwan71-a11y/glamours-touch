@@ -114,12 +114,33 @@ const Shop = () => {
 
   const seoData = getCategorySEO(categoryFilter);
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": seoData.title,
+    "description": seoData.description,
+    "url": categoryFilter ? `https://glamourstouch.com/shop?category=${encodeURIComponent(categoryFilter)}` : "https://glamourstouch.com/shop",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Glamour's Touch",
+      "url": "https://glamourstouch.com"
+    }
+  };
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Shop", item: "/shop" },
+    ...(categoryFilter ? [{ name: categoryFilter, item: `/shop?category=${encodeURIComponent(categoryFilter)}` }] : [])
+  ];
+
   return (
     <>
     <SEO
       title={seoData.title}
       description={seoData.description}
       url={categoryFilter ? `/shop?category=${encodeURIComponent(categoryFilter)}` : "/shop"}
+      breadcrumbs={breadcrumbs}
+      schema={collectionSchema}
     />
     <div className="min-h-screen bg-midnight-gold-dust pt-32 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

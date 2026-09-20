@@ -1,61 +1,78 @@
-# Glamour's Touch — robots.txt
-# Website: https://glamourstouch.com
+# Glamour's Touch — Robots.txt
+# Official Store: https://glamourstouch.com
+# Sitemap: https://glamourstouch.com/sitemap.xml
+# Feed: https://glamourstouch.com/rss.xml
 
-# Global rules — allow all, with Content Signals
 User-agent: *
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
+Allow: /shop
+Allow: /blog
+Allow: /product/
+Allow: /glow-predictor
+Allow: /about
+Allow: /contact
+Allow: /faq
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /cart
+Disallow: /api/
+Allow: /api/feed
+Allow: /api/og
 
-# Google Search & Shopping Crawlers — Explicitly Unrestricted
+# Googlebot & Googlebot-Image
 User-agent: Googlebot
 Allow: /
 Allow: /sitemap.xml
+Allow: /rss.xml
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /cart
 
 User-agent: Googlebot-Image
 Allow: /
 Allow: /catalog-images/
 Allow: /banners/
+Allow: /products/
 
-# Sitemap
-Sitemap: https://glamourstouch.com/sitemap.xml
-
-# ── AI Crawlers — explicitly allowed ──────────────────────────
-User-agent: GPTBot
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
+# Bingbot & Applebot
+User-agent: Bingbot
 Allow: /
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /cart
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin/
+
+# AI Search Crawlers & Agents
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
 
 User-agent: OAI-SearchBot
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
+Disallow: /admin/
 
 User-agent: ChatGPT-User
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
+Disallow: /admin/
 
 User-agent: Claude-Web
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
+Disallow: /admin/
 
 User-agent: ClaudeBot
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
-
-User-agent: anthropic-ai
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
-Allow: /
-
-User-agent: Google-Extended
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
-Allow: /
+Disallow: /admin/
 
 User-agent: PerplexityBot
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
+Disallow: /admin/
 
-User-agent: Perplexity-User
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
+User-agent: Google-Extended
 Allow: /
+Disallow: /admin/
 
-User-agent: BingBot
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
-Allow: /
+# Sitemaps & Feeds
+Sitemap: https://glamourstouch.com/sitemap.xml

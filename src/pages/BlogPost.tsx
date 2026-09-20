@@ -209,14 +209,55 @@ const BlogPost = () => {
 
   if (notFound || !post) return <Navigate to="/blog" replace />;
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://glamourstouch.com/blog/${post.slug}`
+    },
+    "headline": post.title_bn || post.title,
+    "name": post.title,
+    "description": post.excerpt,
+    "image": [post.image],
+    "datePublished": post.created_at,
+    "dateModified": (post as any).updated_at || post.created_at,
+    "author": {
+      "@type": "Organization",
+      "name": post.author || "Glamour's Touch Beauty Team",
+      "url": "https://glamourstouch.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Glamour's Touch",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://glamourstouch.com/logo.png"
+      }
+    },
+    "inLanguage": "bn-BD",
+    "articleSection": post.category
+  };
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Blog", item: "/blog" },
+    { name: post.title_bn || post.title, item: `/blog/${post.slug}` }
+  ];
+
   return (
     <>
       <SEO
-        title={post.title}
+        title={`${post.title_bn} — Korean Beauty Guide`}
         description={post.excerpt}
         image={post.image}
         url={`/blog/${post.slug}`}
         type="article"
+        author={post.author || "Glamour's Touch"}
+        publishedTime={post.created_at}
+        modifiedTime={(post as any).updated_at || post.created_at}
+        breadcrumbs={breadcrumbs}
+        schema={articleSchema}
       />
 
       <div className="min-h-screen bg-cream pt-32 pb-20">
