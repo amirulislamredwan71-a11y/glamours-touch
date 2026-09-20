@@ -27,7 +27,7 @@ const json = (res: VercelResponse, code: number, obj: any) => {
 // deploy target is prj_vB9pFH3Ax6xx0L80wG8r789hG2FG under the amirulislamredwan71-a11y account,
 // not the khondokartowsif171-owned "glamours-touch" project. Re-fixed META_CAPI_ACCESS_TOKEN
 // there; this commit triggers the actual production build.)
-const PIXEL_ID = '988182894209503';
+const PIXEL_IDS = ['988182894209503', '900500432991738'];
 
 // Server-side mirror of the browser Meta Pixel (Conversions API). Reaches Meta even when
 // an ad blocker or iOS privacy setting drops the browser-side fbq() call. Shares the same
@@ -57,24 +57,32 @@ export default async function handler(req: IncomingMessage & { method?: string; 
   if (ph) user_data.ph = sha256(String(ph).replace(/\D/g, ''));
 
   try {
-    const r = await fetch(`https://graph.facebook.com/v21.0/${PIXEL_ID}/events`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        data: [{
-          event_name,
-          event_id,
-          event_time: Math.floor(Date.now() / 1000),
-          event_source_url,
-          action_source: 'website',
-          user_data,
-          custom_data,
-        }],
-        access_token: TOKEN,
-      }),
-    });
-    const d = await r.json();
-    return json(res, 200, { ok: true, meta: d });
+    const results = await Promise.all(
+      PIXEL_IDS.map(async (pid) => {
+        try {
+          const r = await fetch(`https://graph.facebook.com/v21.0/${pid}/events`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              data: [{
+                event_name,
+                event_id,
+                event_time: Math.floor(Date.now() / 1000),
+                event_source_url,
+                action_source: 'website',
+                user_data,
+                custom_data,
+              }],
+              access_token: TOKEN,
+            }),
+          });
+          return await r.json();
+        } catch (e: any) {
+          return { error: e?.message };
+        }
+      })
+    );
+    return json(res, 200, { ok: true, meta: results });
   } catch (e: any) {
     return json(res, 200, { ok: false, error: String(e?.message || e).slice(0, 120) });
   }

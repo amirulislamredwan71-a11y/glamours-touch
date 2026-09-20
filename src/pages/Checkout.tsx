@@ -13,8 +13,8 @@ import emailjs from '@emailjs/browser';
 import { trackEvent } from '../lib/fbCapi';
 import { sendOrderEmailsViaResend } from '../lib/resend';
 
-const INSIDE_COST  = 78;
-const OUTSIDE_COST = 150;
+const INSIDE_COST  = 60;
+const OUTSIDE_COST = 120;
 
 /* ── Styled select ─────────────────────────────────────────── */
 const SelectField = ({
@@ -108,6 +108,19 @@ const Checkout = () => {
       fetchAndAdd();
     }
   }, [cart.length, addToCart]);
+
+  // Track InitiateCheckout on checkout mount
+  useEffect(() => {
+    if (cart.length > 0) {
+      trackEvent('InitiateCheckout', {
+        content_ids: cart.map(i => i.id),
+        content_type: 'product',
+        value: grandTotal,
+        currency: 'BDT',
+        num_items: cart.reduce((s, i) => s + i.quantity, 0),
+      });
+    }
+  }, []);
 
   const [shippingMethod, setShippingMethod] = useState<'inside' | 'outside' | null>(null);
   const [form, setForm] = useState({
@@ -254,13 +267,14 @@ const Checkout = () => {
 
       setOrderId(data?.id || null);
 
-      // Facebook Pixel + Conversions API — InitiateCheckout (order form submitted, not yet confirmed)
-      trackEvent('InitiateCheckout', {
+      // Facebook Pixel + Conversions API — Purchase (real-time conversion auto-sync)
+      trackEvent('Purchase', {
         content_ids:  cart.map(i => i.id),
         content_type: 'product',
         value:        grandTotal,
         currency:     'BDT',
         num_items:    cart.reduce((s, i) => s + i.quantity, 0),
+        order_id:     data?.id || undefined,
       });
 
       setOrderSnapshot({ items: cart, total: grandTotal });

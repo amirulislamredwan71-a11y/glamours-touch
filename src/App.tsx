@@ -12,6 +12,7 @@ import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
 import { useAuth } from './hooks/useAuth';
 import { useUI } from './hooks/useUI';
+import { trackEvent } from './lib/fbCapi';
 
 const FloatingCart = lazy(() => import('./components/FloatingCart'));
 const GlowAdvisor = lazy(() => import('./components/GlowAdvisor'));
@@ -92,6 +93,16 @@ const AppContent = () => {
       document.body.style.color = '#ffffff';
     }
   }, [isAdminRoute]);
+
+  // Real-Time Meta Pixel & Conversions API (CAPI) Route Change Auto-Sync
+  React.useEffect(() => {
+    if (!isAdminRoute) {
+      trackEvent('PageView', {
+        page_path: location.pathname,
+        page_title: document.title
+      });
+    }
+  }, [location.pathname, isAdminRoute]);
   
   if (isAdminRoute) {
     return (
