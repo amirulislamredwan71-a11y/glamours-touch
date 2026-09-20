@@ -6,11 +6,7 @@ import ProductCard from '../components/ProductCard';
 import { Filter, ChevronDown, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface Product {
-  id: string; name: string; brand: string; price: number;
-  image: string; category: string; rating: number;
-  reviews: number; isFeatured: boolean; description: string;
-}
+import { Product } from '../types';
 
 const PAGE_SIZE = 20;
 
@@ -35,10 +31,15 @@ const Shop = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data: productsData } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+        const { data: productsData } = await supabase
+          .from('products')
+          .select('*')
+          .order('isFeatured', { ascending: false })
+          .order('featured_rank', { ascending: true, nullsFirst: false })
+          .order('created_at', { ascending: false });
         const { data: catsData }     = await supabase.from('categories').select('name');
         if (productsData) {
-          setAllProducts(productsData);
+          setAllProducts(productsData as Product[]);
           const max = Math.max(...productsData.map(p => p.price), 10000);
           setRangeMax(max);
           setPriceMax(max);
@@ -60,6 +61,14 @@ const Shop = () => {
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.brand.toLowerCase().includes(searchQuery.toLowerCase()));
     products = products.filter(p => p.price >= priceMin && p.price <= priceMax);
+    if (sortBy === 'featured') {
+      products.sort((a, b) => {
+        const ra = a.featured_rank ?? Infinity;
+        const rb = b.featured_rank ?? Infinity;
+        if (ra !== rb) return ra - rb;
+        return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
+      });
+    }
     if (sortBy === 'price-low')  products.sort((a, b) => a.price - b.price);
     if (sortBy === 'price-high') products.sort((a, b) => b.price - a.price);
     if (sortBy === 'rating')     products.sort((a, b) => b.rating - a.rating);

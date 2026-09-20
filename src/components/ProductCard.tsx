@@ -46,14 +46,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority }) => {
     >
       {/* 1. SEPARATE Floating Crisp White Image Card with GT Gold Frame */}
       <div className="relative rounded-[32px] overflow-hidden bg-white aspect-square flex items-center justify-center p-4 shadow-xl border-2 border-gtgold/40 group-hover:border-gtgold transition-all duration-300 group-hover:scale-[1.02]">
-        {/* Discount / Sold-out badge (Cyberpunk Neon Pink) */}
+        {/* Badges (Serial Rank + Discount / Sold-out) */}
         {soldOut ? (
           <div className="absolute top-3 left-3 z-10 bg-gray-900/90 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase">
             SOLD OUT
           </div>
-        ) : hasDiscount && (
-          <div className="absolute top-3 left-3 z-10 bg-gradient-to-r from-[#ff007f] to-[#ff2a85] text-white text-[11px] font-black px-2.5 py-1 rounded-full shadow-md shadow-pink-500/40 tracking-tight">
-            -{discountPct}%
+        ) : (
+          <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 flex-wrap">
+            {product.featured_rank && product.featured_rank > 0 && product.featured_rank <= 100 && (
+              <div className="bg-[#12161a]/95 text-gtgold text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 rounded-full border border-gtgold/60 shadow-lg shadow-black/60 tracking-wider">
+                #{product.featured_rank}
+              </div>
+            )}
+            {hasDiscount && (
+              <div className="bg-gradient-to-r from-[#ff007f] to-[#ff2a85] text-white text-[10px] sm:text-[11px] font-black px-2 py-0.5 rounded-full shadow-md shadow-pink-500/40 tracking-tight">
+                -{discountPct}%
+              </div>
+            )}
           </div>
         )}
 
