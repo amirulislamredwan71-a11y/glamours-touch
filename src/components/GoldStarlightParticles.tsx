@@ -35,6 +35,7 @@ const GoldStarlightParticles: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
+    const isMobile = width < 768;
     // Completely disable continuous particle canvas on mobile to give 100% CPU to UI
     if (isMobile) return;
 
