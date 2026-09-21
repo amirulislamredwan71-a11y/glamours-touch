@@ -38,7 +38,6 @@
       radial-gradient(2px 2px at 340px 95px, rgba(229, 184, 58, 0.3), rgba(0,0,0,0));
     background-repeat: repeat;
     background-size: 100% 100%, 350px 350px, 350px 350px, 350px 350px, 350px 350px, 350px 350px, 350px 350px;
-    background-attachment: fixed;
     color: #ffffff;
     @apply font-sans antialiased;
     text-rendering: optimizeLegibility;
@@ -61,7 +60,12 @@
       radial-gradient(2px 2px at 340px 95px, rgba(229, 184, 58, 0.3), rgba(0,0,0,0));
     background-repeat: repeat;
     background-size: 100% 100%, 350px 350px, 350px 350px, 350px 350px, 350px 350px, 350px 350px, 350px 350px;
-    background-attachment: fixed;
+  }
+
+  @media (min-width: 768px) {
+    body, .bg-midnight-gold-dust {
+      background-attachment: fixed;
+    }
   }
 
   /* Force Bangla font for all Bengali unicode characters */

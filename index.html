@@ -171,30 +171,27 @@
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           })(window, document, "clarity", "script", "wrb6g9dqmt");
 
-          ['pointerdown', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(ev) {
+          ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach(function(ev) {
             window.removeEventListener(ev, loadTrackers, { passive: true });
           });
         }
 
-        ['pointerdown', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(ev) {
+        ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach(function(ev) {
           window.addEventListener(ev, loadTrackers, { passive: true, once: true });
         });
-
-        setTimeout(loadTrackers, 5000);
       })();
     </script>
 
-    <!-- Non-render-blocking web fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <!-- Non-render-blocking web fonts (Optimized weights 400, 600, 700) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" />
     </noscript>
 
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <link rel="apple-touch-icon" href="/logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/logo-512.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/logo-512.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="/logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/webp" href="/logo.webp" />
+    <link rel="apple-touch-icon" href="/logo.webp" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.webp" />
     <meta name="apple-touch-fullscreen" content="yes" />
   </head>
   <body style="background-color:#080c16;color:#ffffff">

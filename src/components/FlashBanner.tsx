@@ -30,12 +30,16 @@ const FlashBanner: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    banners.forEach(b => {
-      if (b.image) {
-        const img = new Image();
-        img.src = optimizeImageUrl(b.image);
-      }
-    });
+    // Defer preloading secondary banners until after critical initial render
+    const timer = setTimeout(() => {
+      banners.slice(1).forEach(b => {
+        if (b.image) {
+          const img = new Image();
+          img.src = optimizeImageUrl(b.image, 1200, 80);
+        }
+      });
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [banners]);
 
   useEffect(() => {
@@ -45,7 +49,7 @@ const FlashBanner: React.FC = () => {
   }, [banners.length]);
 
   const b = banners[Math.min(idx, banners.length - 1)];
-  const imgUrl = optimizeImageUrl(b.image);
+  const imgUrl = optimizeImageUrl(b.image, 1200, 80);
 
   const img = (
     <img

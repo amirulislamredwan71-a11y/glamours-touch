@@ -272,7 +272,7 @@ const ProductDetail = () => {
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
             <div className="relative bg-white rounded-3xl overflow-hidden shadow-xl border-2 border-gtgold/40 aspect-square">
               <img src={optimizeImageUrl(gallery[activeImg] || product.image, 800, 85)} alt={`${product.brand ? `${product.brand} ` : ''}${product.name} - Glamour's Touch`}
-                width="800" height="800" loading="eager" decoding="async" fetchpriority="high"
+                width="800" height="800" loading="eager" decoding="async" fetchPriority="high"
                 className={`w-full h-full object-contain p-4 ${soldOut ? 'opacity-60 grayscale' : ''}`} referrerPolicy="no-referrer" />
               {soldOut ? (
                 <div className="absolute top-4 left-4 bg-gray-800 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-lg tracking-widest">SOLD OUT</div>

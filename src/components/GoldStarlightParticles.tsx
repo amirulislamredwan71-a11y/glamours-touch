@@ -167,10 +167,12 @@ const GoldStarlightParticles: React.FC = () => {
         <picture>
           <source srcSet="/gt-watermark-logo-transparent.webp" type="image/webp" />
           <img
-            src="/gt-watermark-logo-transparent.png"
+            src="/gt-watermark-logo-transparent.webp"
             alt=""
             loading="lazy"
             decoding="async"
+            width="500"
+            height="500"
             className="w-full h-full object-contain filter drop-shadow-[0_0_50px_rgba(229,184,58,0.8)]"
           />
         </picture>

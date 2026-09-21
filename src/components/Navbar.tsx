@@ -8,7 +8,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import Logo from './Logo';
-import SkinScanModal from './SkinScanModal';
+
+const SkinScanModal = React.lazy(() => import('./SkinScanModal'));
 
 /* Each nav item gets its own accent colour */
 const NAV_COLORS = [
@@ -570,7 +571,11 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </nav>
-    <SkinScanModal isOpen={scanOpen} onClose={() => setScanOpen(false)} />
+    {scanOpen && (
+      <React.Suspense fallback={null}>
+        <SkinScanModal isOpen={scanOpen} onClose={() => setScanOpen(false)} />
+      </React.Suspense>
+    )}
     </>
   );
 };
