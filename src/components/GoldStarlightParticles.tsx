@@ -35,9 +35,11 @@ const GoldStarlightParticles: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    const isMobile = width < 768;
-    const maxInnerRadius = isMobile ? 80 : 200;
-    const totalCount = isMobile ? 14 : 65;
+    // Completely disable continuous particle canvas on mobile to give 100% CPU to UI
+    if (isMobile) return;
+
+    const maxInnerRadius = 200;
+    const totalCount = 65;
 
     // Restored exact elegant micro starlight size (0.6px - 2.0px)
     const createEmblemParticle = (): Particle => {
@@ -49,7 +51,7 @@ const GoldStarlightParticles: React.FC = () => {
         x: cx + Math.cos(angle) * r,
         y: cy + Math.sin(angle) * r,
         spawnY: cy + Math.sin(angle) * r,
-        size: isMobile ? Math.random() * 1.0 + 0.5 : Math.random() * 1.8 + 0.7,
+        size: Math.random() * 1.8 + 0.7,
         speedY: -(Math.random() * 0.5 + 0.2),
         speedX: Math.cos(angle) * 0.2 + (Math.random() - 0.5) * 0.15,
         opacity: Math.random() * 0.7 + 0.2,
@@ -63,7 +65,7 @@ const GoldStarlightParticles: React.FC = () => {
     const createAmbientParticle = (): Particle => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: isMobile ? Math.random() * 1.2 + 0.5 : Math.random() * 2.0 + 0.7,
+      size: Math.random() * 2.0 + 0.7,
       speedY: -(Math.random() * 0.5 + 0.2),
       speedX: (Math.random() - 0.5) * 0.2,
       opacity: Math.random() * 0.6 + 0.2,
@@ -76,27 +78,14 @@ const GoldStarlightParticles: React.FC = () => {
       return i % 2 === 0 ? createEmblemParticle() : createAmbientParticle();
     });
 
-    // Throttled frame loop (30 FPS on mobile, 50 FPS on desktop)
+    // Throttled frame loop (50 FPS on desktop)
     let lastTime = performance.now();
-    const fpsInterval = 1000 / (isMobile ? 30 : 50);
-    let isScrolling = false;
-    let scrollTimeout: any = null;
-
-    const handleScroll = () => {
-      if (!isMobile) return;
-      isScrolling = true;
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-      }, 150);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const fpsInterval = 1000 / 50;
 
     const render = (now: number) => {
       animationFrameId = requestAnimationFrame(render);
 
-      if (document.hidden || isScrolling) return;
+      if (document.hidden) return;
 
       const elapsed = now - lastTime;
       if (elapsed < fpsInterval) return;
@@ -130,10 +119,8 @@ const GoldStarlightParticles: React.FC = () => {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
-        if (!isMobile) {
-          ctx.shadowColor = '#e5b83a';
-          ctx.shadowBlur = 4;
-        }
+        ctx.shadowColor = '#e5b83a';
+        ctx.shadowBlur = 4;
         ctx.fill();
         ctx.restore();
       });
@@ -144,43 +131,32 @@ const GoldStarlightParticles: React.FC = () => {
     };
 
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => setTimeout(startAnimation, 300));
+      (window as any).requestIdleCallback(() => setTimeout(startAnimation, 800));
     } else {
-      setTimeout(startAnimation, 500);
+      setTimeout(startAnimation, 1200);
     }
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
     <>
-      {/* Central Regal GT Golden Watermark Emblem Overlay (100% True Transparent PNG Alpha) */}
+      {/* Central Regal GT Golden Watermark Emblem Overlay (CSS Background — Never Hijacks LCP) */}
       <div 
         aria-hidden="true"
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] md:w-[620px] aspect-square pointer-events-none z-[0] opacity-[0.14] select-none flex items-center justify-center transition-all duration-700"
-      >
-        <picture>
-          <source srcSet="/gt-watermark-logo-transparent.webp" type="image/webp" />
-          <img
-            src="/gt-watermark-logo-transparent.webp"
-            alt=""
-            loading="lazy"
-            decoding="async"
-            width="500"
-            height="500"
-            className="w-full h-full object-contain filter drop-shadow-[0_0_50px_rgba(229,184,58,0.8)]"
-          />
-        </picture>
-      </div>
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[500px] md:w-[620px] aspect-square pointer-events-none z-[0] opacity-[0.12] select-none bg-no-repeat bg-center bg-contain"
+        style={{
+          backgroundImage: "url('/gt-watermark-logo-transparent.webp')",
+          filter: "drop-shadow(0 0 40px rgba(229,184,58,0.7))"
+        }}
+      />
 
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-[1]"
+        className="fixed inset-0 pointer-events-none z-[1] hidden md:block"
         style={{ opacity: 0.85 }}
       />
     </>
