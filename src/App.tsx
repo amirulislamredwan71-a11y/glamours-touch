@@ -65,6 +65,15 @@ const AppContent = () => {
   const { isLoginOpen, closeLogin } = useUI();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const [showFloatingWidgets, setShowFloatingWidgets] = React.useState(false);
+
+  React.useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => setShowFloatingWidgets(true));
+    } else {
+      setTimeout(() => setShowFloatingWidgets(true), 1200);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (isAdminRoute) {
@@ -130,7 +139,9 @@ const AppContent = () => {
     <div className="flex flex-col min-h-screen bg-midnight-gold-dust text-white relative">
       <GoldStarlightParticles />
       <Navbar />
-      <Suspense fallback={null}><FloatingCart /></Suspense>
+      {showFloatingWidgets && (
+        <Suspense fallback={null}><FloatingCart /></Suspense>
+      )}
       <main className="flex-grow pb-32 sm:pb-8">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -160,9 +171,11 @@ const AppContent = () => {
           <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
         </Suspense>
       )}
-      <Suspense fallback={null}>
-        <GlowAdvisor />
-      </Suspense>
+      {showFloatingWidgets && (
+        <Suspense fallback={null}>
+          <GlowAdvisor />
+        </Suspense>
+      )}
       <BottomNav />
     </div>
   );

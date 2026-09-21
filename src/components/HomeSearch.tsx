@@ -51,13 +51,21 @@ const HomeSearch = () => {
   const [cats, setCats] = useState<Cat[]>(INITIAL_CATS);
 
   useEffect(() => {
-    supabase
-      .from('categories')
-      .select('id,name,image')
-      .order('created_at', { ascending: true })
-      .then(({ data }) => {
-        if (data && data.length > 0) setCats(data as Cat[]);
-      });
+    const fetchCats = () => {
+      supabase
+        .from('categories')
+        .select('id,name,image')
+        .order('created_at', { ascending: true })
+        .then(({ data }) => {
+          if (data && data.length > 0) setCats(data as Cat[]);
+        });
+    };
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => setTimeout(fetchCats, 800));
+    } else {
+      setTimeout(fetchCats, 1200);
+    }
   }, []);
 
   return (

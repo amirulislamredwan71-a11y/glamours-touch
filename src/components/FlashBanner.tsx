@@ -21,12 +21,20 @@ const FlashBanner: React.FC = () => {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    supabase
-      .from('promo_banners')
-      .select('id, image, link, title')
-      .eq('active', true)
-      .order('sort', { ascending: true })
-      .then(({ data }) => { if (data && data.length > 0) setBanners(data as Banner[]); });
+    const fetchBanners = () => {
+      supabase
+        .from('promo_banners')
+        .select('id, image, link, title')
+        .eq('active', true)
+        .order('sort', { ascending: true })
+        .then(({ data }) => { if (data && data.length > 0) setBanners(data as Banner[]); });
+    };
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => setTimeout(fetchBanners, 600));
+    } else {
+      setTimeout(fetchBanners, 1000);
+    }
   }, []);
 
   useEffect(() => {
