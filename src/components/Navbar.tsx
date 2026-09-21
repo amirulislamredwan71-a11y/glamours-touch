@@ -4,7 +4,6 @@ import { ShoppingBag, User, Search, Menu, X, LogOut, Globe, ShieldCheck, Mic, Ca
 import { useCart } from '../hooks/useCart';
 import { useAuth } from '../hooks/useAuth';
 import { useUI } from '../hooks/useUI';
-import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import Logo from './Logo';
@@ -216,80 +215,75 @@ const Navbar = () => {
             </form>
 
             {/* Instant Live Dynamic Search Suggestions Dropdown */}
-            <AnimatePresence>
-              {showDropdown && searchQuery.trim().length > 0 && (
-                <motion.div
-                  ref={dropdownRef}
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-[#12161a]/98 backdrop-blur-2xl border-2 border-gtgold/50 rounded-2xl shadow-2xl overflow-hidden z-50 p-2 space-y-1"
-                >
-                  {isSearching ? (
-                    <div className="py-4 text-center text-xs text-gtgold font-bold animate-pulse">
-                      অরিজিনাল কোরিয়ান প্রোডাক্ট খোঁজা হচ্ছে...
+            {showDropdown && searchQuery.trim().length > 0 && (
+              <div
+                ref={dropdownRef}
+                className="absolute top-full left-0 right-0 mt-2 bg-[#12161a]/98 backdrop-blur-2xl border-2 border-gtgold/50 rounded-2xl shadow-2xl overflow-hidden z-50 p-2 space-y-1 animate-fade-in"
+              >
+                {isSearching ? (
+                  <div className="py-4 text-center text-xs text-gtgold font-bold animate-pulse">
+                    অরিজিনাল কোরিয়ান প্রোডাক্ট খোঁজা হচ্ছে...
+                  </div>
+                ) : searchResults.length > 0 ? (
+                  <>
+                    <div className="px-3 py-1 text-[10px] font-black uppercase tracking-wider gt-gold-shiny border-b border-gtgold/20 flex justify-between items-center">
+                      <span>ক্যাটালগ প্রোডাক্ট রেজাল্ট ({searchResults.length})</span>
+                      <span className="text-white/40">সরাসরি ক্লিক করুন</span>
                     </div>
-                  ) : searchResults.length > 0 ? (
-                    <>
-                      <div className="px-3 py-1 text-[10px] font-black uppercase tracking-wider gt-gold-shiny border-b border-gtgold/20 flex justify-between items-center">
-                        <span>ক্যাটালগ প্রোডাক্ট রেজাল্ট ({searchResults.length})</span>
-                        <span className="text-white/40">সরাসরি ক্লিক করুন</span>
-                      </div>
-                      {searchResults.map((p) => (
-                        <button
-                          key={p.id}
-                          onClick={() => {
-                            navigate(`/product/${p.id}`);
-                            setShowDropdown(false);
-                            setSearchQuery('');
-                          }}
-                          className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-gtgold/15 transition-all text-left group border border-transparent hover:border-gtgold/30"
-                        >
-                          <img
-                            src={p.image || '/categories/skincare.webp'}
-                            alt={p.name}
-                            className="w-10 h-10 rounded-lg object-cover border border-gtgold/30 flex-shrink-0 group-hover:scale-105 transition-transform"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs font-extrabold text-white truncate group-hover:text-gtgold transition-colors">
-                              {p.name}
-                            </p>
-                            <p className="text-[10px] text-gtgold/80 font-bold">
-                              {p.brand || 'K-Beauty'}
-                            </p>
-                          </div>
-                          <div className="text-xs font-black gt-gold-shiny flex-shrink-0">
-                            ৳{p.price?.toLocaleString()}
-                          </div>
-                        </button>
-                      ))}
+                    {searchResults.map((p) => (
                       <button
+                        key={p.id}
                         onClick={() => {
-                          navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+                          navigate(`/product/${p.id}`);
                           setShowDropdown(false);
+                          setSearchQuery('');
                         }}
-                        className="w-full text-center py-2 text-xs font-black text-gtgold bg-gtgold/10 hover:bg-gtgold/20 rounded-xl transition-all border border-gtgold/30 mt-1"
+                        className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-gtgold/15 transition-all text-left group border border-transparent hover:border-gtgold/30"
                       >
-                        সবগুলো প্রোডাক্ট দেখুন ({searchQuery.trim()}) ➔
+                        <img
+                          src={p.image || '/categories/skincare.webp'}
+                          alt={p.name}
+                          className="w-10 h-10 rounded-lg object-cover border border-gtgold/30 flex-shrink-0 group-hover:scale-105 transition-transform"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-extrabold text-white truncate group-hover:text-gtgold transition-colors">
+                            {p.name}
+                          </p>
+                          <p className="text-[10px] text-gtgold/80 font-bold">
+                            {p.brand || 'K-Beauty'}
+                          </p>
+                        </div>
+                        <div className="text-xs font-black gt-gold-shiny flex-shrink-0">
+                          ৳{p.price?.toLocaleString()}
+                        </div>
                       </button>
-                    </>
-                  ) : (
-                    <div className="py-4 text-center text-xs text-white/70">
-                      "{searchQuery}" দিয়ে কোনো প্রোডাক্ট পাওয়া যায়নি। <br />
-                      <button
-                        onClick={() => {
-                          navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
-                          setShowDropdown(false);
-                        }}
-                        className="mt-2 text-xs font-bold text-gtgold underline"
-                      >
-                        শপ পেজে ক্যাটাগরি ব্রাউজ করুন ➔
-                      </button>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                    ))}
+                    <button
+                      onClick={() => {
+                        navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+                        setShowDropdown(false);
+                      }}
+                      className="w-full text-center py-2 text-xs font-black text-gtgold bg-gtgold/10 hover:bg-gtgold/20 rounded-xl transition-all border border-gtgold/30 mt-1"
+                    >
+                      সবগুলো প্রোডাক্ট দেখুন ({searchQuery.trim()}) ➔
+                    </button>
+                  </>
+                ) : (
+                  <div className="py-4 text-center text-xs text-white/70">
+                    "{searchQuery}" দিয়ে কোনো প্রোডাক্ট পাওয়া যায়নি। <br />
+                    <button
+                      onClick={() => {
+                        navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+                        setShowDropdown(false);
+                      }}
+                      className="mt-2 text-xs font-bold text-gtgold underline"
+                    >
+                      শপ পেজে ক্যাটাগরি ব্রাউজ করুন ➔
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Right Group: Language EN/বা Switcher + Login/Profile Button (Hidden on Mobile Header, Inside 3-line menu) */}
@@ -328,248 +322,242 @@ const Navbar = () => {
       </div>
 
       {/* ── 3-Line Menu (World-Class Mega Mobile Drawer) ── */}
-      <AnimatePresence mode="wait">
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-[#0b0e12]/98 backdrop-blur-2xl border-b border-gtgold/30 text-white shadow-[0_20px_50px_rgba(0,0,0,0.95)] max-h-[78vh] overflow-y-auto overscroll-contain touch-pan-y"
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            <div className="max-w-3xl mx-auto px-4 pt-4 pb-32 space-y-6">
+      {isMenuOpen && (
+        <div
+          className="bg-[#0b0e12]/98 backdrop-blur-2xl border-b border-gtgold/30 text-white shadow-[0_20px_50px_rgba(0,0,0,0.95)] max-h-[78vh] overflow-y-auto overscroll-contain touch-pan-y animate-fade-in-up"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          <div className="max-w-3xl mx-auto px-4 pt-4 pb-32 space-y-6">
 
-              {/* Header Close Bar with Language Switcher */}
-              <div className="flex items-center justify-between border-b border-gtgold/20 pb-3">
-                <div className="flex items-center gap-2">
-                  <Logo className="w-7 h-7" />
-                  <span className="text-xs font-black tracking-wider text-gtgold uppercase">Glamour's Touch Menu</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {/* Top Quick Language Switcher */}
-                  <button
-                    onClick={() => { toggleLanguage(); }}
-                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold text-[11px] font-black hover:bg-gtgold/25 transition-all"
-                  >
-                    <Globe size={13} className="text-gtgold" />
-                    <span>{i18n.language === 'en' ? 'বাংলা' : 'EN'}</span>
-                  </button>
-                  <button
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-1.5 rounded-full bg-white/10 text-white/80 hover:text-gtgold hover:bg-gtgold/20 transition-all"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
+            {/* Header Close Bar with Language Switcher */}
+            <div className="flex items-center justify-between border-b border-gtgold/20 pb-3">
+              <div className="flex items-center gap-2">
+                <Logo className="w-7 h-7" />
+                <span className="text-xs font-black tracking-wider text-gtgold uppercase">Glamour's Touch Menu</span>
               </div>
-              
-              {/* 1. Profile & Track Order Hero Card */}
-              <div className="bg-gradient-to-r from-[#141a20] via-[#101418] to-[#161d24] border border-gtgold/40 rounded-2xl p-4 shadow-xl">
-                {!user ? (
-                  <div className="space-y-3">
-                    <button
-                      onClick={() => { openLogin(); setIsMenuOpen(false); }}
-                      className="w-full flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/50 hover:border-gtgold text-white px-4 py-3 rounded-xl font-bold transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <User size={20} />
-                        </div>
-                        <div className="text-left">
-                          <p className="text-xs font-extrabold text-white">আমার প্রোফাইল (Sign In)</p>
-                          <p className="text-[10px] text-gtgold/80">অর্ডার ট্র্যাকিং ও প্রোফাইল দেখতে লগইন করুন</p>
-                        </div>
-                      </div>
-                      <span className="text-[11px] font-black text-gtgold bg-gtgold/15 px-3 py-1.5 rounded-full border border-gtgold/40">
-                        লগইন ➔
-                      </span>
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/50 hover:border-gtgold text-white px-4 py-3 rounded-xl font-bold transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <User size={20} />
-                        </div>
-                        <div className="text-left">
-                          <p className="text-xs font-extrabold text-white truncate max-w-[170px]">{user.email || 'আমার প্রোফাইল'}</p>
-                          <p className="text-[10px] text-gtgold">প্রোফাইল বিবরণ ও অর্ডার হিস্ট্রি</p>
-                        </div>
-                      </div>
-                      <span className="text-[11px] font-black text-gtgold bg-gtgold/15 px-3 py-1.5 rounded-full border border-gtgold/40">
-                        Profile
-                      </span>
-                    </Link>
-
-                    {isAdmin && (
-                      <Link
-                        to="/admin"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-2.5 w-full bg-gtgold/15 border border-gtgold/40 text-gtgold px-4 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-gtgold/25 transition-all"
-                      >
-                        <ShieldCheck size={16} /> Admin Dashboard
-                      </Link>
-                    )}
-
-                    <button
-                      onClick={() => { logout(); setIsMenuOpen(false); }}
-                      className="flex items-center justify-center gap-2 w-full bg-red-500/10 border border-red-500/30 text-red-400 py-2 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-red-500/20 transition-all"
-                    >
-                      <LogOut size={15} /> {t('nav.signOut')}
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* 2. Primary Navigation Quick Grid */}
-              <div>
-                <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5 flex items-center gap-1.5">
-                  <Sparkles size={12} className="text-gtgold animate-pulse" />
-                  <span>মূল পেজসমূহ (Main Pages)</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Link
-                    to="/"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/40 bg-[#141a20] text-gtgold hover:bg-gtgold/15 font-black text-xs transition-all shadow-md"
-                  >
-                    <span>🏠</span> <span>হোম (Home)</span>
-                  </Link>
-                  <Link
-                    to="/shop"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/40 bg-[#141a20] text-gtgold hover:bg-gtgold/15 font-black text-xs transition-all shadow-md"
-                  >
-                    <span>🛍️</span> <span>সব শপ (Shop)</span>
-                  </Link>
-                  <Link
-                    to="/glow-predictor"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-pink-500/40 bg-pink-500/10 text-pink-300 hover:bg-pink-500/20 font-black text-xs transition-all shadow-md col-span-2"
-                  >
-                    <span>✨</span> <span>AI Glow Predictor Studio</span>
-                  </Link>
-                  <Link
-                    to="/track-order"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 font-black text-xs transition-all shadow-md"
-                  >
-                    <span>📦</span> <span>অর্ডার ট্র্যাক (Track)</span>
-                  </Link>
-                  <Link
-                    to="/blog"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
-                  >
-                    <span>📰</span> <span>ব্লগ ও টিপস (Blog)</span>
-                  </Link>
-                  <Link
-                    to="/about"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
-                  >
-                    <span>ℹ️</span> <span>আমাদের সম্পর্কে</span>
-                  </Link>
-                  <Link
-                    to="/contact"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
-                  >
-                    <span>📞</span> <span>যোগাযোগ (Contact)</span>
-                  </Link>
-                </div>
-              </div>
-
-              {/* 3. Shop by Category Section */}
-              <div>
-                <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5 flex items-center justify-between">
-                  <span>ক্যাটাগরি সিলেক্ট করুন (Shop by Category)</span>
-                  <Link to="/shop" onClick={() => setIsMenuOpen(false)} className="text-[9.5px] font-bold text-white/60 hover:text-gtgold underline">সবগুলো ➔</Link>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { name: 'Serum & Essence', icon: '🧪', cat: 'Serum & Essence' },
-                    { name: 'Moisturizer & Cream', icon: '🧴', cat: 'Moisturizer & Cream' },
-                    { name: 'Cleanser & Oil', icon: '🧼', cat: 'Cleanser' },
-                    { name: 'Sunscreen & Toneup', icon: '☀️', cat: 'Sunscreen' },
-                    { name: 'Eye & Lip Care', icon: '👁️', cat: 'Eye Care' },
-                    { name: 'Hair & Body Care', icon: '💆', cat: 'Hair Care' },
-                  ].map((c) => (
-                    <Link
-                      key={c.name}
-                      to={`/shop?category=${encodeURIComponent(c.cat)}`}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center gap-2 p-2.5 bg-[#141a20] border border-gtgold/20 hover:border-gtgold/50 rounded-xl text-xs font-extrabold text-gray-200 hover:text-gtgold transition-all"
-                    >
-                      <span className="text-base">{c.icon}</span>
-                      <span className="truncate">{c.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* 4. Top K-Beauty Brands Section */}
-              <div>
-                <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5">
-                  অফিশিয়াল কোরিয়ান ব্র্যান্ডস (Popular Brands)
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {['COSRX', 'Anua', 'Beauty of Joseon', 'Medicube', 'SKIN1004', 'K-Secret', 'DABO', 'Christian Dean'].map((b) => (
-                    <Link
-                      key={b}
-                      to={`/shop?brand=${encodeURIComponent(b)}`}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="px-3 py-1.5 bg-[#141a20] border border-gtgold/30 hover:border-gtgold rounded-lg text-[11px] font-bold text-gray-200 hover:text-gtgold transition-all"
-                    >
-                      {b}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* 5. Customer Care & Policies */}
-              <div className="pt-2 border-t border-gtgold/20 space-y-2">
-                <div className="text-[10px] font-black uppercase tracking-widest text-white/50">
-                  কাস্টমার কেয়ার ও পলিসি (Policies)
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-400">
-                  <Link to="/shipping-policy" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
-                    🚚 শিপিং পলিসি
-                  </Link>
-                  <Link to="/returns-exchanges" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
-                    🔄 রিটার্ন ও এক্সচেঞ্জ
-                  </Link>
-                  <Link to="/privacy-policy" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
-                    🛡️ প্রাইভেসি পলিসি
-                  </Link>
-                  <Link to="/terms-of-service" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
-                    📜 টার্মস অফ সার্ভিস
-                  </Link>
-                  <Link to="/faq" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors col-span-2">
-                    ❓ সাধারণ প্রশ্নাবলী (FAQ)
-                  </Link>
-                </div>
-              </div>
-
-              {/* 6. Language Switcher Button */}
-              <div className="pt-3 border-t border-gtgold/20">
-                <button onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
-                  className="flex items-center justify-center gap-3 w-full text-white font-black text-xs tracking-widest py-3 bg-[#141a20] border border-gtgold/40 rounded-xl hover:bg-gtgold/20 transition-all shadow-md">
-                  <Globe size={18} className="text-gtgold" />
-                  {i18n.language === 'en' ? 'বাংলায় দেখুন (Switch to Bangla)' : 'View in English'}
+              <div className="flex items-center gap-2">
+                {/* Top Quick Language Switcher */}
+                <button
+                  onClick={() => { toggleLanguage(); }}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gtgold/15 border border-gtgold/40 text-gtgold text-[11px] font-black hover:bg-gtgold/25 transition-all"
+                >
+                  <Globe size={13} className="text-gtgold" />
+                  <span>{i18n.language === 'en' ? 'বাংলা' : 'EN'}</span>
+                </button>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-1.5 rounded-full bg-white/10 text-white/80 hover:text-gtgold hover:bg-gtgold/20 transition-all"
+                >
+                  <X size={20} />
                 </button>
               </div>
-
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            
+            {/* 1. Profile & Track Order Hero Card */}
+            <div className="bg-gradient-to-r from-[#141a20] via-[#101418] to-[#161d24] border border-gtgold/40 rounded-2xl p-4 shadow-xl">
+              {!user ? (
+                <div className="space-y-3">
+                  <button
+                    onClick={() => { openLogin(); setIsMenuOpen(false); }}
+                    className="w-full flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/50 hover:border-gtgold text-white px-4 py-3 rounded-xl font-bold transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <User size={20} />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-xs font-extrabold text-white">আমার প্রোফাইল (Sign In)</p>
+                        <p className="text-[10px] text-gtgold/80">অর্ডার ট্র্যাকিং ও প্রোফাইল দেখতে লগইন করুন</p>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-black text-gtgold bg-gtgold/15 px-3 py-1.5 rounded-full border border-gtgold/40">
+                      লগইন ➔
+                    </span>
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center justify-between bg-gradient-to-r from-[#1e2630] to-[#141a20] border border-gtgold/50 hover:border-gtgold text-white px-4 py-3 rounded-xl font-bold transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gtgold/20 border border-gtgold/60 text-gtgold flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <User size={20} />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-xs font-extrabold text-white truncate max-w-[170px]">{user.email || 'আমার প্রোফাইল'}</p>
+                        <p className="text-[10px] text-gtgold">প্রোফাইল বিবরণ ও অর্ডার হিস্ট্রি</p>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-black text-gtgold bg-gtgold/15 px-3 py-1.5 rounded-full border border-gtgold/40">
+                      Profile
+                    </span>
+                  </Link>
+
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-2.5 w-full bg-gtgold/15 border border-gtgold/40 text-gtgold px-4 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-gtgold/25 transition-all"
+                    >
+                      <ShieldCheck size={16} /> Admin Dashboard
+                    </Link>
+                  )}
+
+                  <button
+                    onClick={() => { logout(); setIsMenuOpen(false); }}
+                    className="flex items-center justify-center gap-2 w-full bg-red-500/10 border border-red-500/30 text-red-400 py-2 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-red-500/20 transition-all"
+                  >
+                    <LogOut size={15} /> {t('nav.signOut')}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* 2. Primary Navigation Quick Grid */}
+            <div>
+              <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5 flex items-center gap-1.5">
+                <Sparkles size={12} className="text-gtgold animate-pulse" />
+                <span>মূল পেজসমূহ (Main Pages)</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  to="/"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/40 bg-[#141a20] text-gtgold hover:bg-gtgold/15 font-black text-xs transition-all shadow-md"
+                >
+                  <span>🏠</span> <span>হোম (Home)</span>
+                </Link>
+                <Link
+                  to="/shop"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/40 bg-[#141a20] text-gtgold hover:bg-gtgold/15 font-black text-xs transition-all shadow-md"
+                >
+                  <span>🛍️</span> <span>সব শপ (Shop)</span>
+                </Link>
+                <Link
+                  to="/glow-predictor"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-pink-500/40 bg-pink-500/10 text-pink-300 hover:bg-pink-500/20 font-black text-xs transition-all shadow-md col-span-2"
+                >
+                  <span>✨</span> <span>AI Glow Predictor Studio</span>
+                </Link>
+                <Link
+                  to="/track-order"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 font-black text-xs transition-all shadow-md"
+                >
+                  <span>📦</span> <span>অর্ডার ট্র্যাক (Track)</span>
+                </Link>
+                <Link
+                  to="/blog"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
+                >
+                  <span>📰</span> <span>ব্লগ ও টিপস (Blog)</span>
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
+                >
+                  <span>ℹ️</span> <span>আমাদের সম্পর্কে</span>
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gtgold/30 bg-[#141a20] text-white hover:bg-gtgold/15 font-bold text-xs transition-all shadow-md"
+                >
+                  <span>📞</span> <span>যোগাযোগ (Contact)</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* 3. Shop by Category Section */}
+            <div>
+              <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5 flex items-center justify-between">
+                <span>ক্যাটাগরি সিলেক্ট করুন (Shop by Category)</span>
+                <Link to="/shop" onClick={() => setIsMenuOpen(false)} className="text-[9.5px] font-bold text-white/60 hover:text-gtgold underline">সবগুলো ➔</Link>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { name: 'Serum & Essence', icon: '🧪', cat: 'Serum & Essence' },
+                  { name: 'Moisturizer & Cream', icon: '🧴', cat: 'Moisturizer & Cream' },
+                  { name: 'Cleanser & Oil', icon: '🧼', cat: 'Cleanser' },
+                  { name: 'Sunscreen & Toneup', icon: '☀️', cat: 'Sunscreen' },
+                  { name: 'Eye & Lip Care', icon: '👁️', cat: 'Eye Care' },
+                  { name: 'Hair & Body Care', icon: '💆', cat: 'Hair Care' },
+                ].map((c) => (
+                  <Link
+                    key={c.name}
+                    to={`/shop?category=${encodeURIComponent(c.cat)}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 bg-[#141a20] border border-gtgold/20 hover:border-gtgold/50 rounded-xl text-xs font-extrabold text-gray-200 hover:text-gtgold transition-all"
+                  >
+                    <span className="text-base">{c.icon}</span>
+                    <span className="truncate">{c.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. Top K-Beauty Brands Section */}
+            <div>
+              <div className="text-[10px] font-black uppercase tracking-widest text-gtgold mb-2.5">
+                অফিশিয়াল কোরিয়ান ব্র্যান্ডস (Popular Brands)
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {['COSRX', 'Anua', 'Beauty of Joseon', 'Medicube', 'SKIN1004', 'K-Secret', 'DABO', 'Christian Dean'].map((b) => (
+                  <Link
+                    key={b}
+                    to={`/shop?brand=${encodeURIComponent(b)}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="px-3 py-1.5 bg-[#141a20] border border-gtgold/30 hover:border-gtgold rounded-lg text-[11px] font-bold text-gray-200 hover:text-gtgold transition-all"
+                  >
+                    {b}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* 5. Customer Care & Policies */}
+            <div className="pt-2 border-t border-gtgold/20 space-y-2">
+              <div className="text-[10px] font-black uppercase tracking-widest text-white/50">
+                কাস্টমার কেয়ার ও পলিসি (Policies)
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-xs font-bold text-gray-400">
+                <Link to="/shipping-policy" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                  🚚 শিপিং পলিসি
+                </Link>
+                <Link to="/returns-exchanges" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                  🔄 রিটার্ন ও এক্সচেঞ্জ
+                </Link>
+                <Link to="/privacy-policy" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                  🛡️ প্রাইভেসি পলিসি
+                </Link>
+                <Link to="/terms-of-service" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors">
+                  📜 টার্মস অফ সার্ভিস
+                </Link>
+                <Link to="/faq" onClick={() => setIsMenuOpen(false)} className="hover:text-gtgold transition-colors col-span-2">
+                  ❓ সাধারণ প্রশ্নাবলী (FAQ)
+                </Link>
+              </div>
+            </div>
+
+            {/* 6. Language Switcher Button */}
+            <div className="pt-3 border-t border-gtgold/20">
+              <button onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
+                className="flex items-center justify-center gap-3 w-full text-white font-black text-xs tracking-widest py-3 bg-[#141a20] border border-gtgold/40 rounded-xl hover:bg-gtgold/20 transition-all shadow-md">
+                <Globe size={18} className="text-gtgold" />
+                {i18n.language === 'en' ? 'বাংলায় দেখুন (Switch to Bangla)' : 'View in English'}
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
     </nav>
     {scanOpen && (
       <React.Suspense fallback={null}>

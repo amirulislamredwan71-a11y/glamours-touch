@@ -6,7 +6,6 @@ import { UIProvider } from './hooks/useUI';
 import ErrorBoundary from './components/ErrorBoundary';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import LoginModal from './components/LoginModal';
 import ScrollToTop from './components/ScrollToTop';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
@@ -14,6 +13,7 @@ import { useAuth } from './hooks/useAuth';
 import { useUI } from './hooks/useUI';
 import { trackEvent } from './lib/fbCapi';
 
+const LoginModal = lazy(() => import('./components/LoginModal'));
 const FloatingCart = lazy(() => import('./components/FloatingCart'));
 const GlowAdvisor = lazy(() => import('./components/GlowAdvisor'));
 
@@ -155,7 +155,11 @@ const AppContent = () => {
         </Routes>
       </main>
       <Footer />
-      <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
+      {isLoginOpen && (
+        <Suspense fallback={null}>
+          <LoginModal isOpen={isLoginOpen} onClose={closeLogin} />
+        </Suspense>
+      )}
       <Suspense fallback={null}>
         <GlowAdvisor />
       </Suspense>

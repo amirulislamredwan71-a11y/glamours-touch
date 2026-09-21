@@ -207,21 +207,34 @@ const Home = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    let timer: any;
     const fetchData = async () => {
-      const { data: productsData } = await supabase
-        .from('products')
-        .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, featured_rank, stock, in_stock')
-        .order('isFeatured', { ascending: false })
-        .order('featured_rank', { ascending: true, nullsFirst: false })
-        .order('created_at', { ascending: false })
-        .limit(100);
+      try {
+        const { data: productsData } = await supabase
+          .from('products')
+          .select('id, name, brand, price, market_price, image, category, rating, reviews, isFeatured, featured_rank, stock, in_stock')
+          .order('isFeatured', { ascending: false })
+          .order('featured_rank', { ascending: true, nullsFirst: false })
+          .order('created_at', { ascending: false })
+          .limit(100);
 
-      if (productsData && productsData.length > 0) {
-        setFeaturedProducts(productsData as Product[]);
+        if (productsData && productsData.length > 0) {
+          setFeaturedProducts(productsData as Product[]);
+        }
+      } catch (err) {
+        console.error('Products fetch error:', err);
       }
     };
 
-    fetchData();
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => {
+        timer = setTimeout(fetchData, 600);
+      });
+    } else {
+      timer = setTimeout(fetchData, 1000);
+    }
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
