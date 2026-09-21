@@ -201,6 +201,7 @@ const INITIAL_PRODUCTS = [
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const [displayLimit, setDisplayLimit] = useState(20);
   const [categories, setCategories] = useState<Category[]>([]);
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const { t } = useTranslation();
@@ -279,6 +280,8 @@ const Home = () => {
     }
   ];
 
+  const visibleProducts = featuredProducts.slice(0, displayLimit);
+
   return (
     <div className="flex flex-col overflow-hidden bg-gtdark gt-neural-grid">
       <SEO
@@ -302,8 +305,8 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5 md:gap-4 min-h-[320px]">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.map((product, idx) => (
+            {visibleProducts.length > 0 ? (
+              visibleProducts.map((product, idx) => (
                 <div key={product.id}>
                   <ProductCard product={product} priority={idx < 2} />
                 </div>
@@ -319,11 +322,20 @@ const Home = () => {
             )}
           </div>
 
-          {/* View All Products CTA */}
-          <div className="mt-10 text-center">
+          {/* Action CTAs */}
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            {displayLimit < featuredProducts.length && (
+              <button
+                type="button"
+                onClick={() => setDisplayLimit(prev => Math.min(prev + 20, featuredProducts.length))}
+                className="inline-flex items-center gap-2 bg-[#161d22]/90 border border-gtgold/80 text-gtgold font-black px-7 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:bg-gtgold hover:text-black transition-all"
+              >
+                আরো প্রোডাক্ট লোড করুন ({featuredProducts.length - displayLimit} টি বাকি) ↓
+              </button>
+            )}
             <Link
               to="/shop"
-              className="inline-flex items-center gap-2 bg-[#161d22]/90 border-2 border-gtgold text-white font-black px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:bg-gtgold hover:text-charcoal hover:scale-105 transition-all"
+              className="inline-flex items-center gap-2 bg-gtgold text-black font-black px-8 py-3.5 rounded-full text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all"
             >
               সকল প্রোডাক্ট দেখুন →
             </Link>

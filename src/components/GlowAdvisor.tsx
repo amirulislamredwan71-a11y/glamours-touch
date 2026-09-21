@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Headphones, MessageCircle, X, Send, Loader2, Sparkles } from 'lucide-react';
 
-import { processGTBotQuery } from '../lib/gt_bot_engine';
-
 interface Msg { role: 'user' | 'model'; content: string; }
 
 const GREETING =
@@ -53,7 +51,8 @@ const GlowAdvisor: React.FC = () => {
     }
 
     try {
-      // First try local fast engine (handles Order Tracking & exact Catalog Math)
+      // Dynamic import to keep initial bundle ultra-fast
+      const { processGTBotQuery } = await import('../lib/gt_bot_engine');
       const botRes = await processGTBotQuery(t);
       if (botRes && botRes.reply && !botRes.reply.includes('গ্ল্যামারস টাচে পাচ্ছেন')) {
         setMsgs((m) => [...m, { role: 'model', content: botRes.reply }]);

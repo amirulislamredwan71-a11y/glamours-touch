@@ -8,11 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b0e11" />
 
-    <!-- Preload the watermark emblem -- it's the current LCP element on most pages (fixed,
-         centered, renders large) so the browser needs to discover it from the initial document
-         instead of waiting on JS to mount the component that references it. -->
-    <link rel="preload" as="image" href="/gt-watermark-logo-transparent.webp" type="image/webp" fetchpriority="high" />
-
     <!-- iOS & Android Native PWA Standalone Metas -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,7 +61,7 @@
       .gt-gold-txt { color: #e5b83a; font-weight: 900; }
     </style>
 
-    <!-- Critical Performance Preconnects & Ultra-Fast AI Glow Banner Preload (63.6 KB) -->
+    <!-- Critical Performance Preconnects & Ultra-Fast Single LCP Banner Preload (63.6 KB) -->
     <link rel="preconnect" href="https://fmcltrjnuvuooarkvufn.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -138,38 +133,55 @@
     <!-- Google Site Verification -->
     <meta name="google-site-verification" content="v2VfcGvqs4fFmU7mfG7HIzYCUuEcvHlMjinD6k5PMpQ" />
 
-    <!-- Deferred Third-Party Tracking Scripts (Zero Main Thread Blocking Time) -->
+    <!-- High-Performance Zero-TBT Analytics & Tracking on Interaction -->
     <script>
-      function initAnalytics() {
-        // GA4
-        var s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-8T7SMPMTDD';
-        document.head.appendChild(s);
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-8T7SMPMTDD');
+      (function() {
+        var initialized = false;
+        function loadTrackers() {
+          if (initialized) return;
+          initialized = true;
 
-        // Meta Pixel
-        !(function (f, b, e, v, n, t, s) {
-          if (f.fbq) return;
-          n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-          if (!f._fbq) f._fbq = n;
-          n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
-          t = b.createElement(e); t.async = !0; t.src = v;
-          s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-        fbq("init", "900500432991738");
-        fbq("init", "988182894209503");
-        fbq("track", "PageView");
-      }
+          // 1. Google Analytics 4 (GA4)
+          var gaScript = document.createElement('script');
+          gaScript.async = true;
+          gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-8T7SMPMTDD';
+          document.head.appendChild(gaScript);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-8T7SMPMTDD');
 
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(function() { setTimeout(initAnalytics, 1500); });
-      } else {
-        window.addEventListener('load', function() { setTimeout(initAnalytics, 2000); });
-      }
+          // 2. Meta Pixel
+          !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+            if (!f._fbq) f._fbq = n;
+            n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+            t = b.createElement(e); t.async = !0; t.src = v;
+            s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+          })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+          fbq("init", "900500432991738");
+          fbq("init", "988182894209503");
+          fbq("track", "PageView");
+
+          // 3. Microsoft Clarity
+          (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "wrb6g9dqmt");
+
+          ['pointerdown', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(ev) {
+            window.removeEventListener(ev, loadTrackers, { passive: true });
+          });
+        }
+
+        ['pointerdown', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(function(ev) {
+          window.addEventListener(ev, loadTrackers, { passive: true, once: true });
+        });
+
+        setTimeout(loadTrackers, 5000);
+      })();
     </script>
 
     <!-- Non-render-blocking web fonts -->
@@ -185,16 +197,6 @@
     <link rel="apple-touch-icon" sizes="120x120" href="/logo.png" />
     <meta name="apple-touch-fullscreen" content="yes" />
   </head>
-  <!-- Inline style, not the bg-midnight-gold-dust CLASS: same pre-hydration dark background
-       (#080c16, matches the class's own background-color), but without the class name that
-       src/index.css's ".bg-midnight-gold-dust input { color: #fff !important }" rule keys off of.
-       That rule is meant to style inputs on the dark public storefront -- it's supposed to be
-       scoped to the React-rendered wrapper div (App.tsx) that carries the real class, not <body>.
-       Because this static class sat directly on <body> from the very first paint (before React
-       even mounts) and nothing ever removed it, it applied everywhere, all the time, including
-       admin's light-themed forms -- every admin input rendered white-on-white, text invisible
-       while typing, on every admin page (found 2026-08-28: owner reported unreadable input boxes,
-       traced to this). -->
   <body style="background-color:#080c16;color:#ffffff">
     <noscript>
       <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=988182894209503&ev=PageView&noscript=1"/>
@@ -219,23 +221,6 @@
     </div>
 
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- Microsoft Clarity — deferred until after page load -->
-    <script>
-      function initClarity() {
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "wrb6g9dqmt");
-      }
-
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(function() { setTimeout(initClarity, 2500); });
-      } else {
-        window.addEventListener('load', function() { setTimeout(initClarity, 3000); });
-      }
-    </script>
 
     <!-- Register PWA Service Worker -->
     <script>

@@ -139,7 +139,15 @@ const GoldStarlightParticles: React.FC = () => {
       });
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    const startAnimation = () => {
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => setTimeout(startAnimation, 300));
+    } else {
+      setTimeout(startAnimation, 500);
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -161,7 +169,8 @@ const GoldStarlightParticles: React.FC = () => {
           <img
             src="/gt-watermark-logo-transparent.png"
             alt=""
-            fetchPriority="high"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-contain filter drop-shadow-[0_0_50px_rgba(229,184,58,0.8)]"
           />
         </picture>
